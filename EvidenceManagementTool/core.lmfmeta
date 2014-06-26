@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmfmeta:ExtensionPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lmfmeta="http://sei.buaa.edu.cn/lmf/1.3.0/" javaPackage="core" javaClassPrefix="core">
+  <extensions id="core">
+    <classifiers xsi:type="lmfmeta:Type" name="Element"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="ModelElement">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="id" valueType="STRING"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="gid" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="UtilityElement"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2" name="TaggedValue">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="key" valueType="STRING"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="value" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2" name="Annotation">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="content" valueType="STRING"/>
+    </classifiers>
+  </extensions>
+</lmfmeta:ExtensionPackage>

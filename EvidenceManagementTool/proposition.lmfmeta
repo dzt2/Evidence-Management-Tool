@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmfmeta:ExtensionPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:lmfmeta="http://sei.buaa.edu.cn/lmf/1.3.0/" javaPackage="logic" javaClassPrefix="Logic">
+  <extensions id="logic"/>
+</lmfmeta:ExtensionPackage>
