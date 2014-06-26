@@ -1,4 +1,4 @@
-package core;
+package cn.edu.buaa.sei.emt.core;
 import java.util.List;
 
 public interface ModelElement extends Element {

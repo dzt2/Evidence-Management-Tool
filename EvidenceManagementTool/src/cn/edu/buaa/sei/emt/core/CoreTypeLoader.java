@@ -1,4 +1,4 @@
-package core;
+package cn.edu.buaa.sei.emt.core;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,11 +117,11 @@ public class CoreTypeLoader implements TypeLoader {
 	@Override
 	public Map<String, Class<? extends ManagedObjectImpl>> loadImplementationClasses() {
 		Map<String, Class<? extends ManagedObjectImpl>> map = new HashMap<String, Class<? extends ManagedObjectImpl>>();
-		map.put("core.Element", core.ElementImpl.class);
-		map.put("core.ModelElement", core.ModelElementImpl.class);
-		map.put("core.UtilityElement", core.UtilityElementImpl.class);
-		map.put("core.TaggedValue", core.TaggedValueImpl.class);
-		map.put("core.Annotation", core.AnnotationImpl.class);
+		map.put("core.Element", cn.edu.buaa.sei.emt.core.ElementImpl.class);
+		map.put("core.ModelElement", cn.edu.buaa.sei.emt.core.ModelElementImpl.class);
+		map.put("core.UtilityElement", cn.edu.buaa.sei.emt.core.UtilityElementImpl.class);
+		map.put("core.TaggedValue", cn.edu.buaa.sei.emt.core.TaggedValueImpl.class);
+		map.put("core.Annotation", cn.edu.buaa.sei.emt.core.AnnotationImpl.class);
 		return map;
 	}
 	
