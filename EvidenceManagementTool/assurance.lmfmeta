@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmfmeta:ExtensionPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lmfmeta="http://sei.buaa.edu.cn/lmf/1.3.0/" javaPackage="cn.edu.buaa.sei.emt.assurance" javaClassPrefix="Safe">
+  <extensions id="argument">
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" name="SafeModelElement">
+      <superTypes href="core.lmfmeta#//@extensions.0/@classifiers.1"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.0" name="ArgumentElement">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="name" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.1" name="Assertion">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="description" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.1" name="Context">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="description" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.1" name="InformationElement">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="evidence" valueType="//@extensions.1/@classifiers.2"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2" name="Claim">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="assured"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="supported"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.2" name="AssertionRelation">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="objective" valueType="//@extensions.0/@classifiers.5"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="ClaimsRelation">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="sub_claims" valueType="//@extensions.0/@classifiers.5"/>
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.0/@classifiers.8"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="ClaimRelationType">
+      <literals name="Support"/>
+      <literals name="Challenge"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="ClaimEvidenceRelation">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="evidences" valueType="//@extensions.0/@classifiers.4"/>
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.0/@classifiers.10"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="ClaimEvidenceRelationType">
+      <literals name="Support"/>
+      <literals name="Challenge"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="ContextRelation">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="contexts" valueType="//@extensions.0/@classifiers.3"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.1" name="ArgumentReason">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="relation" valueType="//@extensions.0/@classifiers.6"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="reason" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.1" name="ArgumentCitation">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="argumentation" valueType="//@extensions.0/@classifiers.14"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="Argumentation">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="elements" valueType="//@extensions.0/@classifiers.1"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="top_objective" valueType="//@extensions.0/@classifiers.5"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="Assurance">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="objective" valueType="//@extensions.0/@classifiers.5"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="argumentation" valueType="//@extensions.0/@classifiers.14"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="evidence_container" valueType="//@extensions.1/@classifiers.0"/>
+    </classifiers>
+  </extensions>
+  <extensions id="evidence">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="EvidenceContainer">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="evidenceList" valueType="//@extensions.1/@classifiers.2"/>
+      <attributes xsi:type="lmfmeta:ListAttribute" name="evidenceRelations" valueType="//@extensions.1/@classifiers.12"/>
+      <attributes xsi:type="lmfmeta:ListAttribute" name="evidenceEvents" valueType="//@extensions.1/@classifiers.14"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.0" name="EvidenceElement"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="Evidence">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="properties" valueType="//@extensions.1/@classifiers.3"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="EvidenceProperty">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="evidence" valueType="//@extensions.1/@classifiers.2"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.2" name="EvidenceGroup">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="sub_evidences" valueType="//@extensions.1/@classifiers.2"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.3" name="Custody">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="role" valueType="//@extensions.2/@classifiers.0"/>
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.1/@classifiers.6"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="CustodyType">
+      <literals name="own"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.3" name="Time">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="start" valueType="STRING"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="end" valueType="STRING"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.3" name="Provenance">
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.1/@classifiers.9"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="ProvenanceType">
+      <literals name="attribute"/>
+      <literals name="parent"/>
+      <literals name="element"/>
+      <literals name="set"/>
+      <literals name="derivedSource"/>
+      <literals name="derievedTarget"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.3" name="EvidenceStatus">
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.1/@classifiers.11"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="EvidenceStatusType">
+      <literals name="Initial"/>
+      <literals name="UnReady"/>
+      <literals name="Ready"/>
+      <literals name="Revoked"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="EvidenceRelation">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="source" valueType="//@extensions.1/@classifiers.2"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="target" valueType="//@extensions.1/@classifiers.2"/>
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.1/@classifiers.13"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="EvidenceRelationType">
+      <literals name="includedBy"/>
+      <literals name="include"/>
+      <literals name="attributeOf"/>
+      <literals name="parentOf"/>
+      <literals name="derivedFrom"/>
+      <literals name="basedOn"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="EvidenceEvent">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="evidence" valueType="//@extensions.1/@classifiers.2"/>
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.1/@classifiers.15"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="executor" valueType="//@extensions.2/@classifiers.0"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="EvidenceEventType">
+      <literals name="create"/>
+      <literals name="acquire"/>
+      <literals name="derive"/>
+      <literals name="modify"/>
+      <literals name="revoke"/>
+      <literals name="evaluate"/>
+      <literals name="transfer"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.2" name="BasicEvidence"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.16" name="EvidenceRecord">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="name" valueType="STRING"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="boolValue"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="intValue" valueType="INTEGER"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="floatValue" valueType="FLOAT"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="doubleValue" valueType="DOUBLE"/>
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="stringValue" valueType="STRING"/>
+      <attributes xsi:type="lmfmeta:EnumAttribute" name="type" valueType="//@extensions.1/@classifiers.18"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Enum" name="EvidenceRecordType">
+      <literals name="Boolean"/>
+      <literals name="Integer"/>
+      <literals name="Float"/>
+      <literals name="Double"/>
+      <literals name="String"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.16" name="EvidenceReference"/>
+  </extensions>
+  <extensions id="saferole">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="SafeRole">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="name" valueType="STRING"/>
+    </classifiers>
+  </extensions>
+</lmfmeta:ExtensionPackage>
