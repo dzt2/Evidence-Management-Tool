@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<lmfmeta:ExtensionPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lmfmeta="http://sei.buaa.edu.cn/lmf/1.3.0/" javaPackage="cn.edu.buaa.sei.process" javaClassPrefix="product">
+<lmfmeta:ExtensionPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lmfmeta="http://sei.buaa.edu.cn/lmf/1.3.0/" javaPackage="cn.edu.buaa.sei.emt.process" javaClassPrefix="product">
   <extensions id="process">
     <classifiers xsi:type="lmfmeta:Type" name="PMElement">
       <superTypes href="core.lmfmeta#//@extensions.0/@classifiers.1"/>
