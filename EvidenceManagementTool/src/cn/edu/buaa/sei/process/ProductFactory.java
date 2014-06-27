@@ -4,6 +4,10 @@ public class ProductFactory {
 	
 	
 	
+	public static PMElement createPMElement() {
+		return new PMElementImpl();
+	}
+	
 	public static Process createProcess() {
 		return new ProcessImpl();
 	}
@@ -40,14 +44,6 @@ public class ProductFactory {
 		return new ArtifactRelationImpl();
 	}
 	
-	public static Person createPerson() {
-		return new PersonImpl();
-	}
-	
-	public static Organization createOrganization() {
-		return new OrganizationImpl();
-	}
-	
 	public static ProcessRecord createProcessRecord() {
 		return new ProcessRecordImpl();
 	}
@@ -56,8 +52,16 @@ public class ProductFactory {
 		return new ProcessGroupImpl();
 	}
 	
-	public static Project createProject() {
-		return new ProjectImpl();
+	public static PMProject createPMProject() {
+		return new PMProjectImpl();
+	}
+	
+	public static Person createPerson() {
+		return new PersonImpl();
+	}
+	
+	public static Organization createOrganization() {
+		return new OrganizationImpl();
 	}
 	
 }

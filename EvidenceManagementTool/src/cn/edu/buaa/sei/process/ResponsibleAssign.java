@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.process;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface ResponsibleAssign extends ModelElement {
+public interface ResponsibleAssign extends PMElement {
 	
 	public static final String KEY_ARTIFACT = "artifact";
 	public static final String TYPE_NAME = "process.ResponsibleAssign";

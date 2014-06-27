@@ -16,11 +16,20 @@ public class ProductTypeLoader implements TypeLoader {
 	public Set<TypeBuilder> loadTypes(Map<String, TypeBuilder> existingTypes) {
 		Set<TypeBuilder> types = new HashSet<TypeBuilder>();
 		
+		// Type Definition: PMElement
+		TypeBuilder type_PMElement = new TypeBuilder("process", "PMElement");
+		type_PMElement.isAbstract = false;
+		type_PMElement.isFinal = false;
+		type_PMElement.superTypeNames.add("core.ModelElement");
+		{
+		}
+		types.add(type_PMElement);
+		
 		// Type Definition: Process
 		TypeBuilder type_Process = new TypeBuilder("process", "Process");
 		type_Process.isAbstract = false;
 		type_Process.isFinal = false;
-		type_Process.superTypeNames.add("core.ModelElement");
+		type_Process.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: name
 			AttributeBuilder attr_name = new AttributeBuilder("name");
@@ -44,7 +53,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_Role = new TypeBuilder("process", "Role");
 		type_Role.isAbstract = false;
 		type_Role.isFinal = false;
-		type_Role.superTypeNames.add("core.ModelElement");
+		type_Role.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: person
 			AttributeBuilder attr_person = new AttributeBuilder("person");
@@ -67,7 +76,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_Artifact = new TypeBuilder("process", "Artifact");
 		type_Artifact.isAbstract = false;
 		type_Artifact.isFinal = false;
-		type_Artifact.superTypeNames.add("core.ModelElement");
+		type_Artifact.superTypeNames.add("process.PMElement");
 		{
 		}
 		types.add(type_Artifact);
@@ -76,7 +85,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_Performer = new TypeBuilder("process", "Performer");
 		type_Performer.isAbstract = false;
 		type_Performer.isFinal = false;
-		type_Performer.superTypeNames.add("core.ModelElement");
+		type_Performer.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: role
 			AttributeBuilder attr_role = new AttributeBuilder("role");
@@ -107,7 +116,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_ProcessParameter = new TypeBuilder("process", "ProcessParameter");
 		type_ProcessParameter.isAbstract = false;
 		type_ProcessParameter.isFinal = false;
-		type_ProcessParameter.superTypeNames.add("core.ModelElement");
+		type_ProcessParameter.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: artifact
 			AttributeBuilder attr_artifact = new AttributeBuilder("artifact");
@@ -138,7 +147,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_ResponsibleAssign = new TypeBuilder("process", "ResponsibleAssign");
 		type_ResponsibleAssign.isAbstract = false;
 		type_ResponsibleAssign.isFinal = false;
-		type_ResponsibleAssign.superTypeNames.add("core.ModelElement");
+		type_ResponsibleAssign.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: role
 			AttributeBuilder attr_role = new AttributeBuilder("role");
@@ -169,7 +178,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_ProcessSequence = new TypeBuilder("process", "ProcessSequence");
 		type_ProcessSequence.isAbstract = false;
 		type_ProcessSequence.isFinal = false;
-		type_ProcessSequence.superTypeNames.add("core.ModelElement");
+		type_ProcessSequence.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: source
 			AttributeBuilder attr_source = new AttributeBuilder("source");
@@ -200,7 +209,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_RoleRelation = new TypeBuilder("process", "RoleRelation");
 		type_RoleRelation.isAbstract = false;
 		type_RoleRelation.isFinal = false;
-		type_RoleRelation.superTypeNames.add("core.ModelElement");
+		type_RoleRelation.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: source
 			AttributeBuilder attr_source = new AttributeBuilder("source");
@@ -231,7 +240,7 @@ public class ProductTypeLoader implements TypeLoader {
 		TypeBuilder type_ArtifactRelation = new TypeBuilder("process", "ArtifactRelation");
 		type_ArtifactRelation.isAbstract = false;
 		type_ArtifactRelation.isFinal = false;
-		type_ArtifactRelation.superTypeNames.add("core.ModelElement");
+		type_ArtifactRelation.superTypeNames.add("process.PMElement");
 		{
 			// Attribute Definition: source
 			AttributeBuilder attr_source = new AttributeBuilder("source");
@@ -288,6 +297,126 @@ public class ProductTypeLoader implements TypeLoader {
 		type_RoleRelationType.enumValues = new String[] { "guide", };
 		types.add(type_RoleRelationType);
 		
+		// Type Definition: ProcessRecord
+		TypeBuilder type_ProcessRecord = new TypeBuilder("process", "ProcessRecord");
+		type_ProcessRecord.isAbstract = false;
+		type_ProcessRecord.isFinal = false;
+		type_ProcessRecord.superTypeNames.add("process.PMElement");
+		{
+			// Attribute Definition: startTime
+			AttributeBuilder attr_startTime = new AttributeBuilder("startTime");
+			attr_startTime.extensionID = "process";
+			attr_startTime.valueTypeName = "primitives.<string>";
+			attr_startTime.isContainment = true;
+			type_ProcessRecord.attributes.add(attr_startTime);
+			
+			// Attribute Definition: endTime
+			AttributeBuilder attr_endTime = new AttributeBuilder("endTime");
+			attr_endTime.extensionID = "process";
+			attr_endTime.valueTypeName = "primitives.<string>";
+			attr_endTime.isContainment = true;
+			type_ProcessRecord.attributes.add(attr_endTime);
+			
+		}
+		types.add(type_ProcessRecord);
+		
+		// Type Definition: ProcessGroup
+		TypeBuilder type_ProcessGroup = new TypeBuilder("process", "ProcessGroup");
+		type_ProcessGroup.isAbstract = false;
+		type_ProcessGroup.isFinal = false;
+		type_ProcessGroup.superTypeNames.add("process.PMElement");
+		{
+			// Attribute Definition: name
+			AttributeBuilder attr_name = new AttributeBuilder("name");
+			attr_name.extensionID = "process";
+			attr_name.valueTypeName = "primitives.<string>";
+			attr_name.isContainment = true;
+			type_ProcessGroup.attributes.add(attr_name);
+			
+			// Attribute Definition: processes
+			AttributeBuilder attr_processes = new AttributeBuilder("processes");
+			attr_processes.extensionID = "process";
+			attr_processes.valueTypeName = "primitives.<list>";
+			attr_processes.isContainment = false;
+			attr_processes.valueTypeParameter = "process.Process";
+			type_ProcessGroup.attributes.add(attr_processes);
+			
+		}
+		types.add(type_ProcessGroup);
+		
+		// Type Definition: PMProject
+		TypeBuilder type_PMProject = new TypeBuilder("process", "PMProject");
+		type_PMProject.isAbstract = false;
+		type_PMProject.isFinal = false;
+		type_PMProject.superTypeNames.add("process.PMElement");
+		{
+			// Attribute Definition: processList
+			AttributeBuilder attr_processList = new AttributeBuilder("processList");
+			attr_processList.extensionID = "process";
+			attr_processList.valueTypeName = "primitives.<list>";
+			attr_processList.isContainment = false;
+			attr_processList.valueTypeParameter = "process.Process";
+			type_PMProject.attributes.add(attr_processList);
+			
+			// Attribute Definition: processSequenceList
+			AttributeBuilder attr_processSequenceList = new AttributeBuilder("processSequenceList");
+			attr_processSequenceList.extensionID = "process";
+			attr_processSequenceList.valueTypeName = "primitives.<list>";
+			attr_processSequenceList.isContainment = false;
+			attr_processSequenceList.valueTypeParameter = "process.ProcessSequence";
+			type_PMProject.attributes.add(attr_processSequenceList);
+			
+			// Attribute Definition: processGroupList
+			AttributeBuilder attr_processGroupList = new AttributeBuilder("processGroupList");
+			attr_processGroupList.extensionID = "process";
+			attr_processGroupList.valueTypeName = "primitives.<list>";
+			attr_processGroupList.isContainment = false;
+			attr_processGroupList.valueTypeParameter = "process.ProcessGroup";
+			type_PMProject.attributes.add(attr_processGroupList);
+			
+			// Attribute Definition: organizationList
+			AttributeBuilder attr_organizationList = new AttributeBuilder("organizationList");
+			attr_organizationList.extensionID = "process";
+			attr_organizationList.valueTypeName = "primitives.<list>";
+			attr_organizationList.isContainment = false;
+			attr_organizationList.valueTypeParameter = "process.Organization";
+			type_PMProject.attributes.add(attr_organizationList);
+			
+			// Attribute Definition: roleList
+			AttributeBuilder attr_roleList = new AttributeBuilder("roleList");
+			attr_roleList.extensionID = "process";
+			attr_roleList.valueTypeName = "primitives.<list>";
+			attr_roleList.isContainment = false;
+			attr_roleList.valueTypeParameter = "process.Role";
+			type_PMProject.attributes.add(attr_roleList);
+			
+			// Attribute Definition: roleRelationList
+			AttributeBuilder attr_roleRelationList = new AttributeBuilder("roleRelationList");
+			attr_roleRelationList.extensionID = "process";
+			attr_roleRelationList.valueTypeName = "primitives.<list>";
+			attr_roleRelationList.isContainment = false;
+			attr_roleRelationList.valueTypeParameter = "process.RoleRelation";
+			type_PMProject.attributes.add(attr_roleRelationList);
+			
+			// Attribute Definition: artifactList
+			AttributeBuilder attr_artifactList = new AttributeBuilder("artifactList");
+			attr_artifactList.extensionID = "process";
+			attr_artifactList.valueTypeName = "primitives.<list>";
+			attr_artifactList.isContainment = false;
+			attr_artifactList.valueTypeParameter = "process.Artifact";
+			type_PMProject.attributes.add(attr_artifactList);
+			
+			// Attribute Definition: artifactRelationList
+			AttributeBuilder attr_artifactRelationList = new AttributeBuilder("artifactRelationList");
+			attr_artifactRelationList.extensionID = "process";
+			attr_artifactRelationList.valueTypeName = "primitives.<list>";
+			attr_artifactRelationList.isContainment = false;
+			attr_artifactRelationList.valueTypeParameter = "process.ArtifactRelation";
+			type_PMProject.attributes.add(attr_artifactRelationList);
+			
+		}
+		types.add(type_PMProject);
+		
 		// Type Definition: Person
 		TypeBuilder type_Person = new TypeBuilder("process", "Person");
 		type_Person.isAbstract = false;
@@ -342,132 +471,13 @@ public class ProductTypeLoader implements TypeLoader {
 		}
 		types.add(type_Organization);
 		
-		// Type Definition: ProcessRecord
-		TypeBuilder type_ProcessRecord = new TypeBuilder("process", "ProcessRecord");
-		type_ProcessRecord.isAbstract = false;
-		type_ProcessRecord.isFinal = false;
-		type_ProcessRecord.superTypeNames.add("core.ModelElement");
-		{
-			// Attribute Definition: startTime
-			AttributeBuilder attr_startTime = new AttributeBuilder("startTime");
-			attr_startTime.extensionID = "process";
-			attr_startTime.valueTypeName = "primitives.<string>";
-			attr_startTime.isContainment = true;
-			type_ProcessRecord.attributes.add(attr_startTime);
-			
-			// Attribute Definition: endTime
-			AttributeBuilder attr_endTime = new AttributeBuilder("endTime");
-			attr_endTime.extensionID = "process";
-			attr_endTime.valueTypeName = "primitives.<string>";
-			attr_endTime.isContainment = true;
-			type_ProcessRecord.attributes.add(attr_endTime);
-			
-		}
-		types.add(type_ProcessRecord);
-		
-		// Type Definition: ProcessGroup
-		TypeBuilder type_ProcessGroup = new TypeBuilder("process", "ProcessGroup");
-		type_ProcessGroup.isAbstract = false;
-		type_ProcessGroup.isFinal = false;
-		type_ProcessGroup.superTypeNames.add("core.ModelElement");
-		{
-			// Attribute Definition: name
-			AttributeBuilder attr_name = new AttributeBuilder("name");
-			attr_name.extensionID = "process";
-			attr_name.valueTypeName = "primitives.<string>";
-			attr_name.isContainment = true;
-			type_ProcessGroup.attributes.add(attr_name);
-			
-			// Attribute Definition: processes
-			AttributeBuilder attr_processes = new AttributeBuilder("processes");
-			attr_processes.extensionID = "process";
-			attr_processes.valueTypeName = "primitives.<list>";
-			attr_processes.isContainment = false;
-			attr_processes.valueTypeParameter = "process.Process";
-			type_ProcessGroup.attributes.add(attr_processes);
-			
-		}
-		types.add(type_ProcessGroup);
-		
-		// Type Definition: Project
-		TypeBuilder type_Project = new TypeBuilder("process", "Project");
-		type_Project.isAbstract = false;
-		type_Project.isFinal = false;
-		type_Project.superTypeNames.add("core.ModelElement");
-		{
-			// Attribute Definition: processList
-			AttributeBuilder attr_processList = new AttributeBuilder("processList");
-			attr_processList.extensionID = "process";
-			attr_processList.valueTypeName = "primitives.<list>";
-			attr_processList.isContainment = false;
-			attr_processList.valueTypeParameter = "process.Process";
-			type_Project.attributes.add(attr_processList);
-			
-			// Attribute Definition: processSequenceList
-			AttributeBuilder attr_processSequenceList = new AttributeBuilder("processSequenceList");
-			attr_processSequenceList.extensionID = "process";
-			attr_processSequenceList.valueTypeName = "primitives.<list>";
-			attr_processSequenceList.isContainment = false;
-			attr_processSequenceList.valueTypeParameter = "process.ProcessSequence";
-			type_Project.attributes.add(attr_processSequenceList);
-			
-			// Attribute Definition: processGroupList
-			AttributeBuilder attr_processGroupList = new AttributeBuilder("processGroupList");
-			attr_processGroupList.extensionID = "process";
-			attr_processGroupList.valueTypeName = "primitives.<list>";
-			attr_processGroupList.isContainment = false;
-			attr_processGroupList.valueTypeParameter = "process.ProcessGroup";
-			type_Project.attributes.add(attr_processGroupList);
-			
-			// Attribute Definition: organizationList
-			AttributeBuilder attr_organizationList = new AttributeBuilder("organizationList");
-			attr_organizationList.extensionID = "process";
-			attr_organizationList.valueTypeName = "primitives.<list>";
-			attr_organizationList.isContainment = false;
-			attr_organizationList.valueTypeParameter = "process.Organization";
-			type_Project.attributes.add(attr_organizationList);
-			
-			// Attribute Definition: roleList
-			AttributeBuilder attr_roleList = new AttributeBuilder("roleList");
-			attr_roleList.extensionID = "process";
-			attr_roleList.valueTypeName = "primitives.<list>";
-			attr_roleList.isContainment = false;
-			attr_roleList.valueTypeParameter = "process.Role";
-			type_Project.attributes.add(attr_roleList);
-			
-			// Attribute Definition: roleRelationList
-			AttributeBuilder attr_roleRelationList = new AttributeBuilder("roleRelationList");
-			attr_roleRelationList.extensionID = "process";
-			attr_roleRelationList.valueTypeName = "primitives.<list>";
-			attr_roleRelationList.isContainment = false;
-			attr_roleRelationList.valueTypeParameter = "process.RoleRelation";
-			type_Project.attributes.add(attr_roleRelationList);
-			
-			// Attribute Definition: artifactList
-			AttributeBuilder attr_artifactList = new AttributeBuilder("artifactList");
-			attr_artifactList.extensionID = "process";
-			attr_artifactList.valueTypeName = "primitives.<list>";
-			attr_artifactList.isContainment = false;
-			attr_artifactList.valueTypeParameter = "process.Artifact";
-			type_Project.attributes.add(attr_artifactList);
-			
-			// Attribute Definition: artifactRelationList
-			AttributeBuilder attr_artifactRelationList = new AttributeBuilder("artifactRelationList");
-			attr_artifactRelationList.extensionID = "process";
-			attr_artifactRelationList.valueTypeName = "primitives.<list>";
-			attr_artifactRelationList.isContainment = false;
-			attr_artifactRelationList.valueTypeParameter = "process.ArtifactRelation";
-			type_Project.attributes.add(attr_artifactRelationList);
-			
-		}
-		types.add(type_Project);
-		
 		return types;
 	}
 	
 	@Override
 	public Map<String, Class<? extends ManagedObjectImpl>> loadImplementationClasses() {
 		Map<String, Class<? extends ManagedObjectImpl>> map = new HashMap<String, Class<? extends ManagedObjectImpl>>();
+		map.put("process.PMElement", cn.edu.buaa.sei.process.PMElementImpl.class);
 		map.put("process.Process", cn.edu.buaa.sei.process.ProcessImpl.class);
 		map.put("process.Role", cn.edu.buaa.sei.process.RoleImpl.class);
 		map.put("process.Artifact", cn.edu.buaa.sei.process.ArtifactImpl.class);
@@ -477,11 +487,11 @@ public class ProductTypeLoader implements TypeLoader {
 		map.put("process.ProcessSequence", cn.edu.buaa.sei.process.ProcessSequenceImpl.class);
 		map.put("process.RoleRelation", cn.edu.buaa.sei.process.RoleRelationImpl.class);
 		map.put("process.ArtifactRelation", cn.edu.buaa.sei.process.ArtifactRelationImpl.class);
-		map.put("process.Person", cn.edu.buaa.sei.process.PersonImpl.class);
-		map.put("process.Organization", cn.edu.buaa.sei.process.OrganizationImpl.class);
 		map.put("process.ProcessRecord", cn.edu.buaa.sei.process.ProcessRecordImpl.class);
 		map.put("process.ProcessGroup", cn.edu.buaa.sei.process.ProcessGroupImpl.class);
-		map.put("process.Project", cn.edu.buaa.sei.process.ProjectImpl.class);
+		map.put("process.PMProject", cn.edu.buaa.sei.process.PMProjectImpl.class);
+		map.put("process.Person", cn.edu.buaa.sei.process.PersonImpl.class);
+		map.put("process.Organization", cn.edu.buaa.sei.process.OrganizationImpl.class);
 		return map;
 	}
 	

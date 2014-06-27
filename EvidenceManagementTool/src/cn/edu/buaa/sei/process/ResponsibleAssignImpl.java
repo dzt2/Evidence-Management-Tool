@@ -4,9 +4,8 @@ import java.util.List;
 import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public class ResponsibleAssignImpl extends ManagedObjectImpl implements ResponsibleAssign, ModelElement {
+public class ResponsibleAssignImpl extends ManagedObjectImpl implements ResponsibleAssign, PMElement {
 	
 	private static final long serialVersionUID = 1L;
 	

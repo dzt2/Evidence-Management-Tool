@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.process;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface RoleRelation extends ModelElement {
+public interface RoleRelation extends PMElement {
 	
 	public static final String TYPE_NAME = "process.RoleRelation";
 	public static final String KEY_TYPE = "type";

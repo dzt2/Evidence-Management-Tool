@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.process;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface Artifact extends ModelElement {
+public interface Artifact extends PMElement {
 	
 	public static final String TYPE_NAME = "process.Artifact";
 	public static final String KEY_TAGS = "tags";

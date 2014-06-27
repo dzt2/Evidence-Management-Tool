@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.process;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface ArtifactRelation extends ModelElement {
+public interface ArtifactRelation extends PMElement {
 	
 	public static final String TYPE_NAME = "process.ArtifactRelation";
 	public static final String KEY_TYPE = "type";

@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.process;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface Performer extends ModelElement {
+public interface Performer extends PMElement {
 	
 	public static final String TYPE_NAME = "process.Performer";
 	public static final String KEY_TYPE = "type";

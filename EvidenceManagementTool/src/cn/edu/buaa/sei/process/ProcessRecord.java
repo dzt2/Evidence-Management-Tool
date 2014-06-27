@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.process;
-import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface ProcessRecord extends ModelElement {
+public interface ProcessRecord extends PMElement {
 	
 	public static final String TYPE_NAME = "process.ProcessRecord";
 	public static final String KEY_TAGS = "tags";
