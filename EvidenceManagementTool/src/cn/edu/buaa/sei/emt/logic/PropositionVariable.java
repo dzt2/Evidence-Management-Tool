@@ -1,6 +1,6 @@
 package cn.edu.buaa.sei.emt.logic;
 
-public interface PropositionVariable extends AtomicLogicFormulation, Variable {
+public interface PropositionVariable extends AtomicLogicFormulation, ValueVariable {
 	
 	public static final String TYPE_NAME = "logicformulation.PropositionVariable";
 	public static final String KEY_BINDTO = "bindTo";

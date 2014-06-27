@@ -18,7 +18,7 @@ public class CoreTypeLoader implements TypeLoader {
 		
 		// Type Definition: Element
 		TypeBuilder type_Element = new TypeBuilder("core", "Element");
-		type_Element.isAbstract = false;
+		type_Element.isAbstract = true;
 		type_Element.isFinal = false;
 		{
 		}
@@ -26,7 +26,7 @@ public class CoreTypeLoader implements TypeLoader {
 		
 		// Type Definition: ModelElement
 		TypeBuilder type_ModelElement = new TypeBuilder("core", "ModelElement");
-		type_ModelElement.isAbstract = false;
+		type_ModelElement.isAbstract = true;
 		type_ModelElement.isFinal = false;
 		type_ModelElement.superTypeNames.add("core.Element");
 		{
@@ -65,7 +65,7 @@ public class CoreTypeLoader implements TypeLoader {
 		
 		// Type Definition: UtilityElement
 		TypeBuilder type_UtilityElement = new TypeBuilder("core", "UtilityElement");
-		type_UtilityElement.isAbstract = false;
+		type_UtilityElement.isAbstract = true;
 		type_UtilityElement.isFinal = false;
 		type_UtilityElement.superTypeNames.add("core.Element");
 		{
@@ -117,9 +117,6 @@ public class CoreTypeLoader implements TypeLoader {
 	@Override
 	public Map<String, Class<? extends ManagedObjectImpl>> loadImplementationClasses() {
 		Map<String, Class<? extends ManagedObjectImpl>> map = new HashMap<String, Class<? extends ManagedObjectImpl>>();
-		map.put("core.Element", cn.edu.buaa.sei.emt.core.ElementImpl.class);
-		map.put("core.ModelElement", cn.edu.buaa.sei.emt.core.ModelElementImpl.class);
-		map.put("core.UtilityElement", cn.edu.buaa.sei.emt.core.UtilityElementImpl.class);
 		map.put("core.TaggedValue", cn.edu.buaa.sei.emt.core.TaggedValueImpl.class);
 		map.put("core.Annotation", cn.edu.buaa.sei.emt.core.AnnotationImpl.class);
 		return map;

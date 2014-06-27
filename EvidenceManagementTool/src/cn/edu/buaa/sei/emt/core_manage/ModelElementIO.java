@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import cn.edu.buaa.sei.emt.core.CoreFactory;
 import cn.edu.buaa.sei.emt.core.Element;
 import cn.edu.buaa.sei.lmf.LMFContext;
 import cn.edu.buaa.sei.lmf.ManagedObject;
@@ -16,7 +15,7 @@ import cn.edu.buaa.sei.lmf.manage.ISpaceResource;
 import cn.edu.buaa.sei.lmf.manage.ISpaceXMLResource;
 
 public class ModelElementIO {
-	Element e0 = CoreFactory.createElement();
+	//Element e0 = CoreFactory.createElement();
 	
 	ISpace ispace = new ISpaceImpl();
 	ISpaceResource resource;

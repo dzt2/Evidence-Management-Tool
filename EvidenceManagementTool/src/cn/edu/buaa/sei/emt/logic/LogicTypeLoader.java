@@ -78,7 +78,7 @@ public class LogicTypeLoader implements TypeLoader {
 		type_PropositionVariable.isAbstract = false;
 		type_PropositionVariable.isFinal = false;
 		type_PropositionVariable.superTypeNames.add("logicformulation.AtomicLogicFormulation");
-		type_PropositionVariable.superTypeNames.add("variable.Variable");
+		type_PropositionVariable.superTypeNames.add("variable.ValueVariable");
 		{
 		}
 		types.add(type_PropositionVariable);
@@ -88,7 +88,7 @@ public class LogicTypeLoader implements TypeLoader {
 		type_PredicateFormulation.isAbstract = false;
 		type_PredicateFormulation.isFinal = false;
 		type_PredicateFormulation.superTypeNames.add("logicformulation.LogicFormulation");
-		type_PredicateFormulation.superTypeNames.add("variable.Variable");
+		type_PredicateFormulation.superTypeNames.add("variable.RelationVariable");
 		{
 			// Attribute Definition: arguments
 			AttributeBuilder attr_arguments = new AttributeBuilder("arguments");
@@ -532,8 +532,21 @@ public class LogicTypeLoader implements TypeLoader {
 			attr_stringValue.isContainment = true;
 			type_EntityValue.attributes.add(attr_stringValue);
 			
+			// Attribute Definition: type
+			AttributeBuilder attr_type = new AttributeBuilder("type");
+			attr_type.extensionID = "data";
+			attr_type.valueTypeName = "primitives.<enum>";
+			attr_type.isContainment = true;
+			attr_type.valueTypeParameter = "data.EntityValueType";
+			type_EntityValue.attributes.add(attr_type);
+			
 		}
 		types.add(type_EntityValue);
+		
+		// Type Definition: EntityValueType
+		TypeBuilder type_EntityValueType = new TypeBuilder("data", "EntityValueType");
+		type_EntityValueType.enumValues = new String[] { "Boolean", "Integer", "Float", "Double", "String", };
+		types.add(type_EntityValueType);
 		
 		return types;
 	}

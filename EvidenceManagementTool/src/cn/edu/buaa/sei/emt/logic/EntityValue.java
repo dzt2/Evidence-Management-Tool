@@ -4,6 +4,7 @@ public interface EntityValue extends EntityElement {
 	
 	public static final String TYPE_NAME = "data.EntityValue";
 	public static final String KEY_INTVALUE = "intValue";
+	public static final String KEY_TYPE = "type";
 	public static final String KEY_DOUBLEVALUE = "doubleValue";
 	public static final String KEY_TAGS = "tags";
 	public static final String KEY_BOOLVALUE = "boolValue";
@@ -29,6 +30,10 @@ public interface EntityValue extends EntityElement {
 	public boolean getBoolValue();
 	
 	public void setBoolValue(boolean value);
+	
+	public int getType();
+	
+	public void setType(int value);
 	
 	public int getIntValue();
 	

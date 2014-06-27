@@ -86,6 +86,16 @@ public class EntityValueImpl extends ManagedObjectImpl implements EntityValue, E
 	}
 	
 	@Override
+	public int getType() {
+		return get(EntityValue.KEY_TYPE).intValue();
+	}
+	
+	@Override
+	public void setType(int value) {
+		set(EntityValue.KEY_TYPE, value);
+	}
+	
+	@Override
 	public int getIntValue() {
 		return get(EntityValue.KEY_INTVALUE).intValue();
 	}

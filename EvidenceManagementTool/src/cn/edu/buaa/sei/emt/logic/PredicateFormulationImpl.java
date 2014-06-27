@@ -5,7 +5,7 @@ import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class PredicateFormulationImpl extends ManagedObjectImpl implements PredicateFormulation, LogicFormulation, Variable {
+public class PredicateFormulationImpl extends ManagedObjectImpl implements PredicateFormulation, LogicFormulation, RelationVariable {
 	
 	private static final long serialVersionUID = 1L;
 	

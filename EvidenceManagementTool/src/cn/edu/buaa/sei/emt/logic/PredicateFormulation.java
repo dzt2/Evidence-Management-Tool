@@ -1,7 +1,7 @@
 package cn.edu.buaa.sei.emt.logic;
 import java.util.List;
 
-public interface PredicateFormulation extends LogicFormulation, Variable {
+public interface PredicateFormulation extends LogicFormulation, RelationVariable {
 	
 	public static final String TYPE_NAME = "logicformulation.PredicateFormulation";
 	public static final String KEY_ARGUMENTS = "arguments";

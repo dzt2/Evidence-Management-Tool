@@ -5,7 +5,7 @@ import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class PropositionVariableImpl extends ManagedObjectImpl implements PropositionVariable, AtomicLogicFormulation, Variable {
+public class PropositionVariableImpl extends ManagedObjectImpl implements PropositionVariable, AtomicLogicFormulation, ValueVariable {
 	
 	private static final long serialVersionUID = 1L;
 	
