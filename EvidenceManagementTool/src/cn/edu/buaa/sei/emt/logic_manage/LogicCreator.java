@@ -19,6 +19,7 @@ import cn.edu.buaa.sei.emt.logic.Negation;
 import cn.edu.buaa.sei.emt.logic.NumbericRangeQuantification;
 import cn.edu.buaa.sei.emt.logic.PredicateFormulation;
 import cn.edu.buaa.sei.emt.logic.PropositionVariable;
+import cn.edu.buaa.sei.emt.logic.Quantification;
 import cn.edu.buaa.sei.emt.logic.SetVariable;
 import cn.edu.buaa.sei.emt.logic.Statement;
 import cn.edu.buaa.sei.emt.logic.UniversalQuantification;
@@ -130,7 +131,7 @@ public class LogicCreator {
 		eor.setOp2(op2);
 		
 		eor.setName(name);
-		return eor;
+		return eor; 
 	}
 
 	public static Equivalence createEquivalence(String name, String statement, LogicFormulation op1, LogicFormulation op2){
@@ -186,6 +187,12 @@ public class LogicCreator {
 	/*
 	 *	Create Logic Quantification 
 	 */
+	public static void setQuantificationVariable(String var, String domain, Quantification quantification){
+		if(quantification==null)return;
+		quantification.getVariable().setName(var);
+		quantification.getDomain().setName(domain);
+	}
+	
 	public static UniversalQuantification createUniversal(String name, String statement,LogicFormulation formulation){
 		if(name==null||formulation==null)return null;
 		
