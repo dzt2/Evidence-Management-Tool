@@ -51,6 +51,16 @@ public class PropositionVariableImpl extends ManagedObjectImpl implements Propos
 	}
 	
 	@Override
+	public EntityValue getValue() {
+		return (EntityValue) get(PropositionVariable.KEY_VALUE);
+	}
+	
+	@Override
+	public void setValue(EntityValue value) {
+		set(PropositionVariable.KEY_VALUE, value);
+	}
+	
+	@Override
 	public String getGid() {
 		return get(PropositionVariable.KEY_GID).stringValue();
 	}

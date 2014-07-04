@@ -402,6 +402,13 @@ public class LogicTypeLoader implements TypeLoader {
 		type_IndividualVariable.isFinal = false;
 		type_IndividualVariable.superTypeNames.add("variable.Variable");
 		{
+			// Attribute Definition: individual
+			AttributeBuilder attr_individual = new AttributeBuilder("individual");
+			attr_individual.extensionID = "variable";
+			attr_individual.valueTypeName = "data.EntityIndividual";
+			attr_individual.isContainment = false;
+			type_IndividualVariable.attributes.add(attr_individual);
+			
 		}
 		types.add(type_IndividualVariable);
 		
@@ -411,6 +418,13 @@ public class LogicTypeLoader implements TypeLoader {
 		type_SetVariable.isFinal = false;
 		type_SetVariable.superTypeNames.add("variable.Variable");
 		{
+			// Attribute Definition: set
+			AttributeBuilder attr_set = new AttributeBuilder("set");
+			attr_set.extensionID = "variable";
+			attr_set.valueTypeName = "data.EntitySet";
+			attr_set.isContainment = false;
+			type_SetVariable.attributes.add(attr_set);
+			
 		}
 		types.add(type_SetVariable);
 		
@@ -420,6 +434,13 @@ public class LogicTypeLoader implements TypeLoader {
 		type_RelationVariable.isFinal = false;
 		type_RelationVariable.superTypeNames.add("variable.Variable");
 		{
+			// Attribute Definition: relation
+			AttributeBuilder attr_relation = new AttributeBuilder("relation");
+			attr_relation.extensionID = "variable";
+			attr_relation.valueTypeName = "data.EntityRelation";
+			attr_relation.isContainment = false;
+			type_RelationVariable.attributes.add(attr_relation);
+			
 		}
 		types.add(type_RelationVariable);
 		
@@ -429,6 +450,13 @@ public class LogicTypeLoader implements TypeLoader {
 		type_ValueVariable.isFinal = false;
 		type_ValueVariable.superTypeNames.add("variable.Variable");
 		{
+			// Attribute Definition: value
+			AttributeBuilder attr_value = new AttributeBuilder("value");
+			attr_value.extensionID = "variable";
+			attr_value.valueTypeName = "data.EntityValue";
+			attr_value.isContainment = false;
+			type_ValueVariable.attributes.add(attr_value);
+			
 		}
 		types.add(type_ValueVariable);
 		

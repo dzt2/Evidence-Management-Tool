@@ -31,6 +31,16 @@ public class IndividualVariableImpl extends ManagedObjectImpl implements Individ
 	}
 	
 	@Override
+	public EntityIndividual getIndividual() {
+		return (EntityIndividual) get(IndividualVariable.KEY_INDIVIDUAL);
+	}
+	
+	@Override
+	public void setIndividual(EntityIndividual value) {
+		set(IndividualVariable.KEY_INDIVIDUAL, value);
+	}
+	
+	@Override
 	public String getName() {
 		return get(IndividualVariable.KEY_NAME).stringValue();
 	}

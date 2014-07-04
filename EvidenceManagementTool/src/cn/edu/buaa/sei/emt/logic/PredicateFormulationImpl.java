@@ -56,6 +56,16 @@ public class PredicateFormulationImpl extends ManagedObjectImpl implements Predi
 	}
 	
 	@Override
+	public EntityRelation getRelation() {
+		return (EntityRelation) get(PredicateFormulation.KEY_RELATION);
+	}
+	
+	@Override
+	public void setRelation(EntityRelation value) {
+		set(PredicateFormulation.KEY_RELATION, value);
+	}
+	
+	@Override
 	public String getGid() {
 		return get(PredicateFormulation.KEY_GID).stringValue();
 	}

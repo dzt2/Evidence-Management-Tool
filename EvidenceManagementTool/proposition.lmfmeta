@@ -66,10 +66,18 @@
     <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.1/@classifiers.0" name="Variable">
       <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="name" valueType="STRING"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="IndividualVariable"/>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="SetVariable"/>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="RelationVariable"/>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="ValueVariable"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="IndividualVariable">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="individual" valueType="//@extensions.2/@classifiers.1"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="SetVariable">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="set" valueType="//@extensions.2/@classifiers.2"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="RelationVariable">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="relation" valueType="//@extensions.2/@classifiers.3"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="ValueVariable">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="value" valueType="//@extensions.2/@classifiers.4"/>
+    </classifiers>
   </extensions>
   <extensions id="data">
     <classifiers xsi:type="lmfmeta:Type" name="EntityElement">

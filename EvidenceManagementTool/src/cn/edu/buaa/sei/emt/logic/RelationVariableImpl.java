@@ -51,6 +51,16 @@ public class RelationVariableImpl extends ManagedObjectImpl implements RelationV
 	}
 	
 	@Override
+	public EntityRelation getRelation() {
+		return (EntityRelation) get(RelationVariable.KEY_RELATION);
+	}
+	
+	@Override
+	public void setRelation(EntityRelation value) {
+		set(RelationVariable.KEY_RELATION, value);
+	}
+	
+	@Override
 	public List<Annotation> getAnnotations() {
 		return get(RelationVariable.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
 	}

@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.edu.buaa.sei.emt.logic.EntityElement;
+import cn.edu.buaa.sei.emt.logic.EntityIndividual;
+import cn.edu.buaa.sei.emt.logic.EntityRelation;
+import cn.edu.buaa.sei.emt.logic.EntitySet;
+import cn.edu.buaa.sei.emt.logic.EntityValue;
 import cn.edu.buaa.sei.emt.logic.IndividualVariable;
 import cn.edu.buaa.sei.emt.logic.LogicFactory;
 import cn.edu.buaa.sei.emt.logic.RelationVariable;
@@ -62,6 +66,7 @@ public class VariableNameSpace {
 	public static final int NAME_EXIST = 1;
 	public static final int INVALID_ARG = 2;
 	public static final int NAME_UNEXIST = 3;
+	public static final int ERR_TYPE = 4;
 	public int createVariable(String name,int type){
 		if(name==null)return INVALID_ARG;
 		if(this.var_map.containsKey(name))return NAME_EXIST;
@@ -89,6 +94,32 @@ public class VariableNameSpace {
 		if(!this.var_map.containsKey(name))return NAME_UNEXIST;
 		
 		Variable var = this.var_map.get(name);
+		
+		int type = this.getVariableType(name);
+		switch(type){
+		case INDIVIDUAL:
+			if(!(value instanceof EntityIndividual))return ERR_TYPE;
+			IndividualVariable ivar = (IndividualVariable) var;
+			ivar.setIndividual((EntityIndividual) value);
+			break;
+		case SET:
+			if(!(value instanceof EntitySet))return ERR_TYPE;
+			SetVariable svar = (SetVariable) var;
+			svar.setSet((EntitySet) value);
+			break;
+		case RELATION:
+			if(!(value instanceof EntityRelation))return ERR_TYPE;
+			RelationVariable rvar = (RelationVariable) var;
+			rvar.setRelation((EntityRelation) value);
+			break;
+		case VALUE:
+			if(!(value instanceof EntityValue))return ERR_TYPE;
+			ValueVariable vvar = (ValueVariable) var;
+			vvar.setValue((EntityValue) value);
+			break;
+			default: var.setBindTo(null);return ERR_TYPE;
+		}
+		
 		var.setBindTo(value);
 		return SUCCESS;
 	}

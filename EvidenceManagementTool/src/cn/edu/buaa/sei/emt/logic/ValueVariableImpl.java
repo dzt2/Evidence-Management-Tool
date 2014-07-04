@@ -51,6 +51,16 @@ public class ValueVariableImpl extends ManagedObjectImpl implements ValueVariabl
 	}
 	
 	@Override
+	public EntityValue getValue() {
+		return (EntityValue) get(ValueVariable.KEY_VALUE);
+	}
+	
+	@Override
+	public void setValue(EntityValue value) {
+		set(ValueVariable.KEY_VALUE, value);
+	}
+	
+	@Override
 	public List<Annotation> getAnnotations() {
 		return get(ValueVariable.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
 	}

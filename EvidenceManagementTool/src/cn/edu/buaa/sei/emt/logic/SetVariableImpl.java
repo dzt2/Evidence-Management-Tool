@@ -31,6 +31,16 @@ public class SetVariableImpl extends ManagedObjectImpl implements SetVariable, V
 	}
 	
 	@Override
+	public EntitySet getSet() {
+		return (EntitySet) get(SetVariable.KEY_SET);
+	}
+	
+	@Override
+	public void setSet(EntitySet value) {
+		set(SetVariable.KEY_SET, value);
+	}
+	
+	@Override
 	public String getName() {
 		return get(SetVariable.KEY_NAME).stringValue();
 	}

@@ -3,6 +3,7 @@ package cn.edu.buaa.sei.emt.logic;
 public interface RelationVariable extends Variable {
 	
 	public static final String TYPE_NAME = "variable.RelationVariable";
+	public static final String KEY_RELATION = "relation";
 	public static final String KEY_BINDTO = "bindTo";
 	public static final String KEY_NAME = "name";
 	public static final String KEY_TAGS = "tags";
@@ -10,5 +11,9 @@ public interface RelationVariable extends Variable {
 	public static final String KEY_ID = "id";
 	public static final String KEY_ANNOTATIONS = "annotations";
 	
+	
+	public EntityRelation getRelation();
+	
+	public void setRelation(EntityRelation value);
 	
 }
