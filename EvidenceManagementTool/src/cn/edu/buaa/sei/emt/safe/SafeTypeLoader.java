@@ -111,6 +111,22 @@ public class SafeTypeLoader implements TypeLoader {
 		}
 		types.add(type_Claim);
 		
+		// Type Definition: UndevelopedClaim
+		TypeBuilder type_UndevelopedClaim = new TypeBuilder("safe", "UndevelopedClaim");
+		type_UndevelopedClaim.isAbstract = false;
+		type_UndevelopedClaim.isFinal = false;
+		type_UndevelopedClaim.superTypeNames.add("safe.Claim");
+		{
+			// Attribute Definition: case
+			AttributeBuilder attr_case = new AttributeBuilder("case");
+			attr_case.extensionID = "safe";
+			attr_case.valueTypeName = "safe.SafetyCase";
+			attr_case.isContainment = false;
+			type_UndevelopedClaim.attributes.add(attr_case);
+			
+		}
+		types.add(type_UndevelopedClaim);
+		
 		// Type Definition: Assumption
 		TypeBuilder type_Assumption = new TypeBuilder("safe", "Assumption");
 		type_Assumption.isAbstract = false;
@@ -345,6 +361,133 @@ public class SafeTypeLoader implements TypeLoader {
 		}
 		types.add(type_JustifiedBy);
 		
+		// Type Definition: SafetyCase
+		TypeBuilder type_SafetyCase = new TypeBuilder("safe", "SafetyCase");
+		type_SafetyCase.isAbstract = false;
+		type_SafetyCase.isFinal = false;
+		{
+			// Attribute Definition: top_goal
+			AttributeBuilder attr_top_goal = new AttributeBuilder("top_goal");
+			attr_top_goal.extensionID = "safe";
+			attr_top_goal.valueTypeName = "safe.Claim";
+			attr_top_goal.isContainment = false;
+			type_SafetyCase.attributes.add(attr_top_goal);
+			
+			// Attribute Definition: claims
+			AttributeBuilder attr_claims = new AttributeBuilder("claims");
+			attr_claims.extensionID = "safe";
+			attr_claims.valueTypeName = "primitives.<list>";
+			attr_claims.isContainment = false;
+			attr_claims.valueTypeParameter = "safe.Claim";
+			type_SafetyCase.attributes.add(attr_claims);
+			
+			// Attribute Definition: assumptions
+			AttributeBuilder attr_assumptions = new AttributeBuilder("assumptions");
+			attr_assumptions.extensionID = "safe";
+			attr_assumptions.valueTypeName = "primitives.<list>";
+			attr_assumptions.isContainment = false;
+			attr_assumptions.valueTypeParameter = "safe.Assumption";
+			type_SafetyCase.attributes.add(attr_assumptions);
+			
+			// Attribute Definition: justifications
+			AttributeBuilder attr_justifications = new AttributeBuilder("justifications");
+			attr_justifications.extensionID = "safe";
+			attr_justifications.valueTypeName = "primitives.<list>";
+			attr_justifications.isContainment = false;
+			attr_justifications.valueTypeParameter = "safe.Justification";
+			type_SafetyCase.attributes.add(attr_justifications);
+			
+			// Attribute Definition: contexts
+			AttributeBuilder attr_contexts = new AttributeBuilder("contexts");
+			attr_contexts.extensionID = "safe";
+			attr_contexts.valueTypeName = "primitives.<list>";
+			attr_contexts.isContainment = false;
+			attr_contexts.valueTypeParameter = "safe.Context";
+			type_SafetyCase.attributes.add(attr_contexts);
+			
+			// Attribute Definition: evidences
+			AttributeBuilder attr_evidences = new AttributeBuilder("evidences");
+			attr_evidences.extensionID = "safe";
+			attr_evidences.valueTypeName = "primitives.<list>";
+			attr_evidences.isContainment = false;
+			attr_evidences.valueTypeParameter = "safe.EvidenceReference";
+			type_SafetyCase.attributes.add(attr_evidences);
+			
+			// Attribute Definition: extandable_claims
+			AttributeBuilder attr_extandable_claims = new AttributeBuilder("extandable_claims");
+			attr_extandable_claims.extensionID = "safe";
+			attr_extandable_claims.valueTypeName = "primitives.<list>";
+			attr_extandable_claims.isContainment = false;
+			attr_extandable_claims.valueTypeParameter = "safe.Claim";
+			type_SafetyCase.attributes.add(attr_extandable_claims);
+			
+			// Attribute Definition: claim_supports
+			AttributeBuilder attr_claim_supports = new AttributeBuilder("claim_supports");
+			attr_claim_supports.extensionID = "safe";
+			attr_claim_supports.valueTypeName = "primitives.<list>";
+			attr_claim_supports.isContainment = false;
+			attr_claim_supports.valueTypeParameter = "safe.SupportByClaim";
+			type_SafetyCase.attributes.add(attr_claim_supports);
+			
+			// Attribute Definition: claim_challenges
+			AttributeBuilder attr_claim_challenges = new AttributeBuilder("claim_challenges");
+			attr_claim_challenges.extensionID = "safe";
+			attr_claim_challenges.valueTypeName = "primitives.<list>";
+			attr_claim_challenges.isContainment = false;
+			attr_claim_challenges.valueTypeParameter = "safe.ChallengeByClaim";
+			type_SafetyCase.attributes.add(attr_claim_challenges);
+			
+			// Attribute Definition: evidence_supports
+			AttributeBuilder attr_evidence_supports = new AttributeBuilder("evidence_supports");
+			attr_evidence_supports.extensionID = "safe";
+			attr_evidence_supports.valueTypeName = "primitives.<list>";
+			attr_evidence_supports.isContainment = false;
+			attr_evidence_supports.valueTypeParameter = "safe.SupportByEvidence";
+			type_SafetyCase.attributes.add(attr_evidence_supports);
+			
+			// Attribute Definition: evidence_challenges
+			AttributeBuilder attr_evidence_challenges = new AttributeBuilder("evidence_challenges");
+			attr_evidence_challenges.extensionID = "safe";
+			attr_evidence_challenges.valueTypeName = "primitives.<list>";
+			attr_evidence_challenges.isContainment = false;
+			attr_evidence_challenges.valueTypeParameter = "safe.ChallengeByEvidence";
+			type_SafetyCase.attributes.add(attr_evidence_challenges);
+			
+			// Attribute Definition: context_links
+			AttributeBuilder attr_context_links = new AttributeBuilder("context_links");
+			attr_context_links.extensionID = "safe";
+			attr_context_links.valueTypeName = "primitives.<list>";
+			attr_context_links.isContainment = false;
+			attr_context_links.valueTypeParameter = "safe.ContextOf";
+			type_SafetyCase.attributes.add(attr_context_links);
+			
+			// Attribute Definition: assumption_links
+			AttributeBuilder attr_assumption_links = new AttributeBuilder("assumption_links");
+			attr_assumption_links.extensionID = "safe";
+			attr_assumption_links.valueTypeName = "primitives.<list>";
+			attr_assumption_links.isContainment = false;
+			attr_assumption_links.valueTypeParameter = "safe.AssumedBy";
+			type_SafetyCase.attributes.add(attr_assumption_links);
+			
+			// Attribute Definition: justification_links
+			AttributeBuilder attr_justification_links = new AttributeBuilder("justification_links");
+			attr_justification_links.extensionID = "safe";
+			attr_justification_links.valueTypeName = "primitives.<list>";
+			attr_justification_links.isContainment = false;
+			attr_justification_links.valueTypeParameter = "safe.JustifiedBy";
+			type_SafetyCase.attributes.add(attr_justification_links);
+			
+			// Attribute Definition: safetycaseReferences
+			AttributeBuilder attr_safetycaseReferences = new AttributeBuilder("safetycaseReferences");
+			attr_safetycaseReferences.extensionID = "safe";
+			attr_safetycaseReferences.valueTypeName = "primitives.<list>";
+			attr_safetycaseReferences.isContainment = false;
+			attr_safetycaseReferences.valueTypeParameter = "safe.SafetyCase";
+			type_SafetyCase.attributes.add(attr_safetycaseReferences);
+			
+		}
+		types.add(type_SafetyCase);
+		
 		// Type Definition: EvidenceElement
 		TypeBuilder type_EvidenceElement = new TypeBuilder("evidence", "EvidenceElement");
 		type_EvidenceElement.isAbstract = true;
@@ -370,15 +513,6 @@ public class SafeTypeLoader implements TypeLoader {
 		}
 		types.add(type_Evidence);
 		
-		// Type Definition: EvidenceSuggestion
-		TypeBuilder type_EvidenceSuggestion = new TypeBuilder("evidence", "EvidenceSuggestion");
-		type_EvidenceSuggestion.isAbstract = true;
-		type_EvidenceSuggestion.isFinal = false;
-		type_EvidenceSuggestion.superTypeNames.add("evidence.EvidenceElement");
-		{
-		}
-		types.add(type_EvidenceSuggestion);
-		
 		// Type Definition: XMLEvidence
 		TypeBuilder type_XMLEvidence = new TypeBuilder("evidence", "XMLEvidence");
 		type_XMLEvidence.isAbstract = false;
@@ -395,22 +529,6 @@ public class SafeTypeLoader implements TypeLoader {
 		}
 		types.add(type_XMLEvidence);
 		
-		// Type Definition: XMLEvidenceSuggestion
-		TypeBuilder type_XMLEvidenceSuggestion = new TypeBuilder("evidence", "XMLEvidenceSuggestion");
-		type_XMLEvidenceSuggestion.isAbstract = false;
-		type_XMLEvidenceSuggestion.isFinal = false;
-		type_XMLEvidenceSuggestion.superTypeNames.add("evidence.EvidenceSuggestion");
-		{
-			// Attribute Definition: schema_url
-			AttributeBuilder attr_schema_url = new AttributeBuilder("schema_url");
-			attr_schema_url.extensionID = "evidence";
-			attr_schema_url.valueTypeName = "primitives.<string>";
-			attr_schema_url.isContainment = true;
-			type_XMLEvidenceSuggestion.attributes.add(attr_schema_url);
-			
-		}
-		types.add(type_XMLEvidenceSuggestion);
-		
 		return types;
 	}
 	
@@ -418,6 +536,7 @@ public class SafeTypeLoader implements TypeLoader {
 	public Map<String, Class<? extends ManagedObjectImpl>> loadImplementationClasses() {
 		Map<String, Class<? extends ManagedObjectImpl>> map = new HashMap<String, Class<? extends ManagedObjectImpl>>();
 		map.put("safe.Claim", cn.edu.buaa.sei.emt.safe.ClaimImpl.class);
+		map.put("safe.UndevelopedClaim", cn.edu.buaa.sei.emt.safe.UndevelopedClaimImpl.class);
 		map.put("safe.Assumption", cn.edu.buaa.sei.emt.safe.AssumptionImpl.class);
 		map.put("safe.Justification", cn.edu.buaa.sei.emt.safe.JustificationImpl.class);
 		map.put("safe.Context", cn.edu.buaa.sei.emt.safe.ContextImpl.class);
@@ -428,8 +547,8 @@ public class SafeTypeLoader implements TypeLoader {
 		map.put("safe.AssumedBy", cn.edu.buaa.sei.emt.safe.AssumedByImpl.class);
 		map.put("safe.ContextOf", cn.edu.buaa.sei.emt.safe.ContextOfImpl.class);
 		map.put("safe.JustifiedBy", cn.edu.buaa.sei.emt.safe.JustifiedByImpl.class);
+		map.put("safe.SafetyCase", cn.edu.buaa.sei.emt.safe.SafetyCaseImpl.class);
 		map.put("evidence.XMLEvidence", cn.edu.buaa.sei.emt.safe.XMLEvidenceImpl.class);
-		map.put("evidence.XMLEvidenceSuggestion", cn.edu.buaa.sei.emt.safe.XMLEvidenceSuggestionImpl.class);
 		return map;
 	}
 	

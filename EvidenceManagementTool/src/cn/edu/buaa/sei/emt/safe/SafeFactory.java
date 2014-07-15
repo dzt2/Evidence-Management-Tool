@@ -8,6 +8,10 @@ public class SafeFactory {
 		return new ClaimImpl();
 	}
 	
+	public static UndevelopedClaim createUndevelopedClaim() {
+		return new UndevelopedClaimImpl();
+	}
+	
 	public static Assumption createAssumption() {
 		return new AssumptionImpl();
 	}
@@ -48,12 +52,12 @@ public class SafeFactory {
 		return new JustifiedByImpl();
 	}
 	
-	public static XMLEvidence createXMLEvidence() {
-		return new XMLEvidenceImpl();
+	public static SafetyCase createSafetyCase() {
+		return new SafetyCaseImpl();
 	}
 	
-	public static XMLEvidenceSuggestion createXMLEvidenceSuggestion() {
-		return new XMLEvidenceSuggestionImpl();
+	public static XMLEvidence createXMLEvidence() {
+		return new XMLEvidenceImpl();
 	}
 	
 }
