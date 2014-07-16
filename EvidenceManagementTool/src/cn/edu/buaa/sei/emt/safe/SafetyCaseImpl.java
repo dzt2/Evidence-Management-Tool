@@ -71,6 +71,16 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase, SMo
 	}
 	
 	@Override
+	public String getName() {
+		return get(SafetyCase.KEY_NAME).stringValue();
+	}
+	
+	@Override
+	public void setName(String value) {
+		set(SafetyCase.KEY_NAME, value);
+	}
+	
+	@Override
 	public List<JustifiedBy> getJustification_links() {
 		return get(SafetyCase.KEY_JUSTIFICATION_LINKS).listContent().toGenericList(JustifiedBy.class);
 	}
@@ -123,6 +133,11 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase, SMo
 	@Override
 	public List<SafetyCase> getSub_cases() {
 		return get(SafetyCase.KEY_SUB_CASES).listContent().toGenericList(SafetyCase.class);
+	}
+	
+	@Override
+	public List<UndevClaim> getSupport_undev_claims() {
+		return get(SafetyCase.KEY_SUPPORT_UNDEV_CLAIMS).listContent().toGenericList(UndevClaim.class);
 	}
 	
 	@Override

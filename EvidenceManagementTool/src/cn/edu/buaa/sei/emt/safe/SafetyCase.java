@@ -4,6 +4,7 @@ import java.util.List;
 public interface SafetyCase extends SModule {
 	
 	public static final String KEY_INFERENCES = "inferences";
+	public static final String KEY_SUPPORT_UNDEV_CLAIMS = "support_undev_claims";
 	public static final String KEY_JUSTIFICATION_LINKS = "justification_links";
 	public static final String KEY_ASSUMPTIONS = "assumptions";
 	public static final String KEY_TAGS = "tags";
@@ -17,6 +18,7 @@ public interface SafetyCase extends SModule {
 	public static final String KEY_SUBMODULES = "subModules";
 	public static final String KEY_CONTEXT_LINKS = "context_links";
 	public static final String KEY_NODES = "nodes";
+	public static final String KEY_NAME = "name";
 	public static final String KEY_JUSTIFICATIONS = "justifications";
 	public static final String KEY_EVIDENCEREFS = "evidenceRefs";
 	public static final String KEY_SUB_CASES = "sub_cases";
@@ -52,6 +54,8 @@ public interface SafetyCase extends SModule {
 	public List<SupportByInference> getClaim_inference_links();
 	
 	public List<SafetyCase> getSub_cases();
+	
+	public List<UndevClaim> getSupport_undev_claims();
 	
 	public List<ContextOf> getContext_links();
 	

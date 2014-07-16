@@ -46,6 +46,16 @@ public class SModuleImpl extends ManagedObjectImpl implements SModule, SElement 
 	}
 	
 	@Override
+	public String getName() {
+		return get(SModule.KEY_NAME).stringValue();
+	}
+	
+	@Override
+	public void setName(String value) {
+		set(SModule.KEY_NAME, value);
+	}
+	
+	@Override
 	public String getGid() {
 		return get(SModule.KEY_GID).stringValue();
 	}

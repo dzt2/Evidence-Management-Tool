@@ -1,6 +1,6 @@
 package cn.edu.buaa.sei.emt.safe;
-import cn.edu.buaa.sei.emt.core.TaggedValue;
 import java.util.List;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
 import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
@@ -21,16 +21,6 @@ public class UndevClaimImpl extends ManagedObjectImpl implements UndevClaim, Cla
 	}
 	
 	@Override
-	public boolean getResult() {
-		return get(UndevClaim.KEY_RESULT).boolValue();
-	}
-	
-	@Override
-	public void setResult(boolean value) {
-		set(UndevClaim.KEY_RESULT, value);
-	}
-	
-	@Override
 	public boolean getValid() {
 		return get(UndevClaim.KEY_VALID).boolValue();
 	}
@@ -38,6 +28,16 @@ public class UndevClaimImpl extends ManagedObjectImpl implements UndevClaim, Cla
 	@Override
 	public void setValid(boolean value) {
 		set(UndevClaim.KEY_VALID, value);
+	}
+	
+	@Override
+	public boolean getResult() {
+		return get(UndevClaim.KEY_RESULT).boolValue();
+	}
+	
+	@Override
+	public void setResult(boolean value) {
+		set(UndevClaim.KEY_RESULT, value);
 	}
 	
 	@Override
@@ -68,6 +68,16 @@ public class UndevClaimImpl extends ManagedObjectImpl implements UndevClaim, Cla
 	@Override
 	public void setAssumed_result(boolean value) {
 		set(UndevClaim.KEY_ASSUMED_RESULT, value);
+	}
+	
+	@Override
+	public List<Inference> getSupport_inferences() {
+		return get(UndevClaim.KEY_SUPPORT_INFERENCES).listContent().toGenericList(Inference.class);
+	}
+	
+	@Override
+	public List<ImplClaim> getSupport_claims() {
+		return get(UndevClaim.KEY_SUPPORT_CLAIMS).listContent().toGenericList(ImplClaim.class);
 	}
 	
 	@Override

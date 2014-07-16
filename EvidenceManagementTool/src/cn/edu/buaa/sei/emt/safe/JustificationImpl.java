@@ -5,7 +5,7 @@ import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class JustificationImpl extends ManagedObjectImpl implements Justification, SUtilityNode {
+public class JustificationImpl extends ManagedObjectImpl implements Justification, SUtilityNode, Assertion {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,6 +13,16 @@ public class JustificationImpl extends ManagedObjectImpl implements Justificatio
 	
 	public JustificationImpl() {
 		super(LMFContext.typeForName(Justification.TYPE_NAME));
+	}
+	
+	@Override
+	public String getStatement() {
+		return get(Justification.KEY_STATEMENT).stringValue();
+	}
+	
+	@Override
+	public void setStatement(String value) {
+		set(Justification.KEY_STATEMENT, value);
 	}
 	
 	@Override
@@ -31,8 +41,23 @@ public class JustificationImpl extends ManagedObjectImpl implements Justificatio
 	}
 	
 	@Override
+	public boolean getValid() {
+		return get(Justification.KEY_VALID).boolValue();
+	}
+	
+	@Override
+	public void setValid(boolean value) {
+		set(Justification.KEY_VALID, value);
+	}
+	
+	@Override
 	public List<Assertion> getAssertions() {
 		return get(Justification.KEY_ASSERTIONS).listContent().toGenericList(Assertion.class);
+	}
+	
+	@Override
+	public List<Assumption> getAssumptions() {
+		return get(Justification.KEY_ASSUMPTIONS).listContent().toGenericList(Assumption.class);
 	}
 	
 	@Override
@@ -46,6 +71,11 @@ public class JustificationImpl extends ManagedObjectImpl implements Justificatio
 	}
 	
 	@Override
+	public List<Justification> getJustifications() {
+		return get(Justification.KEY_JUSTIFICATIONS).listContent().toGenericList(Justification.class);
+	}
+	
+	@Override
 	public String getGid() {
 		return get(Justification.KEY_GID).stringValue();
 	}
@@ -53,6 +83,11 @@ public class JustificationImpl extends ManagedObjectImpl implements Justificatio
 	@Override
 	public void setGid(String value) {
 		set(Justification.KEY_GID, value);
+	}
+	
+	@Override
+	public List<Context> getContexts() {
+		return get(Justification.KEY_CONTEXTS).listContent().toGenericList(Context.class);
 	}
 	
 	@Override

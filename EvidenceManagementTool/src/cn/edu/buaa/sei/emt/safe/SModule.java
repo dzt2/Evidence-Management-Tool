@@ -5,6 +5,7 @@ public interface SModule extends SElement {
 	
 	public static final String TYPE_NAME = "case.SModule";
 	public static final String KEY_SUBMODULES = "subModules";
+	public static final String KEY_NAME = "name";
 	public static final String KEY_NODES = "nodes";
 	public static final String KEY_TAGS = "tags";
 	public static final String KEY_GID = "gid";
@@ -18,5 +19,9 @@ public interface SModule extends SElement {
 	public List<SRelation> getRelations();
 	
 	public List<SNode> getNodes();
+	
+	public String getName();
+	
+	public void setName(String value);
 	
 }

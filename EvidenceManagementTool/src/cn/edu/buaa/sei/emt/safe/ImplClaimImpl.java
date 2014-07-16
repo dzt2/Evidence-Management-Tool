@@ -71,13 +71,13 @@ public class ImplClaimImpl extends ManagedObjectImpl implements ImplClaim, Claim
 	}
 	
 	@Override
-	public String getId() {
-		return get(ImplClaim.KEY_ID).stringValue();
+	public List<Inference> getSupport_inferences() {
+		return get(ImplClaim.KEY_SUPPORT_INFERENCES).listContent().toGenericList(Inference.class);
 	}
 	
 	@Override
-	public void setId(String value) {
-		set(ImplClaim.KEY_ID, value);
+	public List<ImplClaim> getSupport_claims() {
+		return get(ImplClaim.KEY_SUPPORT_CLAIMS).listContent().toGenericList(ImplClaim.class);
 	}
 	
 	@Override
@@ -88,6 +88,16 @@ public class ImplClaimImpl extends ManagedObjectImpl implements ImplClaim, Claim
 	@Override
 	public void setStatement(String value) {
 		set(ImplClaim.KEY_STATEMENT, value);
+	}
+	
+	@Override
+	public String getId() {
+		return get(ImplClaim.KEY_ID).stringValue();
+	}
+	
+	@Override
+	public void setId(String value) {
+		set(ImplClaim.KEY_ID, value);
 	}
 	
 	@Override

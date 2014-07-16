@@ -1,6 +1,6 @@
 package cn.edu.buaa.sei.emt.safe;
-import cn.edu.buaa.sei.emt.core.TaggedValue;
 import java.util.List;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
 import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
@@ -71,8 +71,23 @@ public class EvidenceRefImpl extends ManagedObjectImpl implements EvidenceRef, S
 	}
 	
 	@Override
+	public int getState() {
+		return get(EvidenceRef.KEY_STATE).intValue();
+	}
+	
+	@Override
+	public void setState(int value) {
+		set(EvidenceRef.KEY_STATE, value);
+	}
+	
+	@Override
 	public List<Annotation> getAnnotations() {
 		return get(EvidenceRef.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
+	}
+	
+	@Override
+	public List<ImplClaim> getSupport_claims() {
+		return get(EvidenceRef.KEY_SUPPORT_CLAIMS).listContent().toGenericList(ImplClaim.class);
 	}
 	
 }

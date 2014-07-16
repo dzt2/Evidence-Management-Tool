@@ -199,6 +199,22 @@ public class SafeTypeLoader implements TypeLoader {
 			attr_state.valueTypeParameter = "safe.ClaimState";
 			type_Claim.attributes.add(attr_state);
 			
+			// Attribute Definition: support_claims
+			AttributeBuilder attr_support_claims = new AttributeBuilder("support_claims");
+			attr_support_claims.extensionID = "safe";
+			attr_support_claims.valueTypeName = "primitives.<list>";
+			attr_support_claims.isContainment = false;
+			attr_support_claims.valueTypeParameter = "safe.ImplClaim";
+			type_Claim.attributes.add(attr_support_claims);
+			
+			// Attribute Definition: support_inferences
+			AttributeBuilder attr_support_inferences = new AttributeBuilder("support_inferences");
+			attr_support_inferences.extensionID = "safe";
+			attr_support_inferences.valueTypeName = "primitives.<list>";
+			attr_support_inferences.isContainment = false;
+			attr_support_inferences.valueTypeParameter = "safe.Inference";
+			type_Claim.attributes.add(attr_support_inferences);
+			
 		}
 		types.add(type_Claim);
 		
@@ -295,8 +311,29 @@ public class SafeTypeLoader implements TypeLoader {
 			attr_evidence.isContainment = false;
 			type_EvidenceRef.attributes.add(attr_evidence);
 			
+			// Attribute Definition: state
+			AttributeBuilder attr_state = new AttributeBuilder("state");
+			attr_state.extensionID = "safe";
+			attr_state.valueTypeName = "primitives.<enum>";
+			attr_state.isContainment = true;
+			attr_state.valueTypeParameter = "safe.EvidenceRefState";
+			type_EvidenceRef.attributes.add(attr_state);
+			
+			// Attribute Definition: support_claims
+			AttributeBuilder attr_support_claims = new AttributeBuilder("support_claims");
+			attr_support_claims.extensionID = "safe";
+			attr_support_claims.valueTypeName = "primitives.<list>";
+			attr_support_claims.isContainment = false;
+			attr_support_claims.valueTypeParameter = "safe.ImplClaim";
+			type_EvidenceRef.attributes.add(attr_support_claims);
+			
 		}
 		types.add(type_EvidenceRef);
+		
+		// Type Definition: EvidenceRefState
+		TypeBuilder type_EvidenceRefState = new TypeBuilder("safe", "EvidenceRefState");
+		type_EvidenceRefState.enumValues = new String[] { "Initial", "Unready", "Ready", "Disposed", };
+		types.add(type_EvidenceRefState);
 		
 		// Type Definition: Context
 		TypeBuilder type_Context = new TypeBuilder("safe", "Context");
@@ -339,6 +376,7 @@ public class SafeTypeLoader implements TypeLoader {
 		type_Justification.isAbstract = false;
 		type_Justification.isFinal = false;
 		type_Justification.superTypeNames.add("safe.SUtilityNode");
+		type_Justification.superTypeNames.add("safe.Assertion");
 		{
 			// Attribute Definition: assertions
 			AttributeBuilder attr_assertions = new AttributeBuilder("assertions");
@@ -401,6 +439,7 @@ public class SafeTypeLoader implements TypeLoader {
 		TypeBuilder type_SupportByClaim = new TypeBuilder("safe", "SupportByClaim");
 		type_SupportByClaim.isAbstract = false;
 		type_SupportByClaim.isFinal = false;
+		type_SupportByClaim.superTypeNames.add("safe.SMainRelation");
 		{
 			// Attribute Definition: conclusion
 			AttributeBuilder attr_conclusion = new AttributeBuilder("conclusion");
@@ -560,6 +599,13 @@ public class SafeTypeLoader implements TypeLoader {
 			attr_subModules.valueTypeParameter = "case.SModule";
 			type_SModule.attributes.add(attr_subModules);
 			
+			// Attribute Definition: name
+			AttributeBuilder attr_name = new AttributeBuilder("name");
+			attr_name.extensionID = "case";
+			attr_name.valueTypeName = "primitives.<string>";
+			attr_name.isContainment = true;
+			type_SModule.attributes.add(attr_name);
+			
 		}
 		types.add(type_SModule);
 		
@@ -680,6 +726,14 @@ public class SafeTypeLoader implements TypeLoader {
 			attr_sub_cases.isContainment = false;
 			attr_sub_cases.valueTypeParameter = "case.SafetyCase";
 			type_SafetyCase.attributes.add(attr_sub_cases);
+			
+			// Attribute Definition: support_undev_claims
+			AttributeBuilder attr_support_undev_claims = new AttributeBuilder("support_undev_claims");
+			attr_support_undev_claims.extensionID = "case";
+			attr_support_undev_claims.valueTypeName = "primitives.<list>";
+			attr_support_undev_claims.isContainment = false;
+			attr_support_undev_claims.valueTypeParameter = "safe.UndevClaim";
+			type_SafetyCase.attributes.add(attr_support_undev_claims);
 			
 		}
 		types.add(type_SafetyCase);
