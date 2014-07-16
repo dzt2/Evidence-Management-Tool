@@ -1,9 +1,11 @@
 package cn.edu.buaa.sei.emt.safe;
 import java.util.List;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
+import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase {
+public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase, SModule {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -14,33 +16,23 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase {
 	}
 	
 	@Override
-	public List<Claim> getClaims() {
-		return get(SafetyCase.KEY_CLAIMS).listContent().toGenericList(Claim.class);
+	public List<TaggedValue> getTags() {
+		return get(SafetyCase.KEY_TAGS).listContent().toGenericList(TaggedValue.class);
 	}
 	
 	@Override
-	public List<SupportByClaim> getClaim_supports() {
-		return get(SafetyCase.KEY_CLAIM_SUPPORTS).listContent().toGenericList(SupportByClaim.class);
+	public List<ImplClaim> getImplClaims() {
+		return get(SafetyCase.KEY_IMPLCLAIMS).listContent().toGenericList(ImplClaim.class);
 	}
 	
 	@Override
-	public List<SupportByEvidence> getEvidence_supports() {
-		return get(SafetyCase.KEY_EVIDENCE_SUPPORTS).listContent().toGenericList(SupportByEvidence.class);
+	public List<Inference> getInferences() {
+		return get(SafetyCase.KEY_INFERENCES).listContent().toGenericList(Inference.class);
 	}
 	
 	@Override
-	public List<SafetyCase> getSafetycaseReferences() {
-		return get(SafetyCase.KEY_SAFETYCASEREFERENCES).listContent().toGenericList(SafetyCase.class);
-	}
-	
-	@Override
-	public List<ChallengeByClaim> getClaim_challenges() {
-		return get(SafetyCase.KEY_CLAIM_CHALLENGES).listContent().toGenericList(ChallengeByClaim.class);
-	}
-	
-	@Override
-	public List<ChallengeByEvidence> getEvidence_challenges() {
-		return get(SafetyCase.KEY_EVIDENCE_CHALLENGES).listContent().toGenericList(ChallengeByEvidence.class);
+	public List<SupportByEvidence> getClaim_evidence_links() {
+		return get(SafetyCase.KEY_CLAIM_EVIDENCE_LINKS).listContent().toGenericList(SupportByEvidence.class);
 	}
 	
 	@Override
@@ -49,13 +41,33 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase {
 	}
 	
 	@Override
-	public Claim getTop_goal() {
-		return (Claim) get(SafetyCase.KEY_TOP_GOAL);
+	public String getId() {
+		return get(SafetyCase.KEY_ID).stringValue();
 	}
 	
 	@Override
-	public void setTop_goal(Claim value) {
-		set(SafetyCase.KEY_TOP_GOAL, value);
+	public void setId(String value) {
+		set(SafetyCase.KEY_ID, value);
+	}
+	
+	@Override
+	public List<SModule> getSubModules() {
+		return get(SafetyCase.KEY_SUBMODULES).listContent().toGenericList(SModule.class);
+	}
+	
+	@Override
+	public List<UndevClaim> getUndevClaims() {
+		return get(SafetyCase.KEY_UNDEVCLAIMS).listContent().toGenericList(UndevClaim.class);
+	}
+	
+	@Override
+	public List<SRelation> getRelations() {
+		return get(SafetyCase.KEY_RELATIONS).listContent().toGenericList(SRelation.class);
+	}
+	
+	@Override
+	public List<SNode> getNodes() {
+		return get(SafetyCase.KEY_NODES).listContent().toGenericList(SNode.class);
 	}
 	
 	@Override
@@ -69,8 +81,18 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase {
 	}
 	
 	@Override
-	public List<Claim> getExtandable_claims() {
-		return get(SafetyCase.KEY_EXTANDABLE_CLAIMS).listContent().toGenericList(Claim.class);
+	public String getGid() {
+		return get(SafetyCase.KEY_GID).stringValue();
+	}
+	
+	@Override
+	public void setGid(String value) {
+		set(SafetyCase.KEY_GID, value);
+	}
+	
+	@Override
+	public List<EvidenceRef> getEvidenceRefs() {
+		return get(SafetyCase.KEY_EVIDENCEREFS).listContent().toGenericList(EvidenceRef.class);
 	}
 	
 	@Override
@@ -84,8 +106,23 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase {
 	}
 	
 	@Override
-	public List<EvidenceReference> getEvidences() {
-		return get(SafetyCase.KEY_EVIDENCES).listContent().toGenericList(EvidenceReference.class);
+	public List<Annotation> getAnnotations() {
+		return get(SafetyCase.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
+	}
+	
+	@Override
+	public List<SupportByClaim> getClaim_claim_links() {
+		return get(SafetyCase.KEY_CLAIM_CLAIM_LINKS).listContent().toGenericList(SupportByClaim.class);
+	}
+	
+	@Override
+	public List<SupportByInference> getClaim_inference_links() {
+		return get(SafetyCase.KEY_CLAIM_INFERENCE_LINKS).listContent().toGenericList(SupportByInference.class);
+	}
+	
+	@Override
+	public List<SafetyCase> getSub_cases() {
+		return get(SafetyCase.KEY_SUB_CASES).listContent().toGenericList(SafetyCase.class);
 	}
 	
 	@Override

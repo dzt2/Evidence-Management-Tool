@@ -1,8 +1,11 @@
 package cn.edu.buaa.sei.emt.safe;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
+import java.util.List;
+import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class AssumedByImpl extends ManagedObjectImpl implements AssumedBy, SRelation {
+public class AssumedByImpl extends ManagedObjectImpl implements AssumedBy, SUtilityRelation {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,13 +16,18 @@ public class AssumedByImpl extends ManagedObjectImpl implements AssumedBy, SRela
 	}
 	
 	@Override
-	public Assertion getObjective() {
-		return (Assertion) get(AssumedBy.KEY_OBJECTIVE);
+	public List<TaggedValue> getTags() {
+		return get(AssumedBy.KEY_TAGS).listContent().toGenericList(TaggedValue.class);
 	}
 	
 	@Override
-	public void setObjective(Assertion value) {
-		set(AssumedBy.KEY_OBJECTIVE, value);
+	public String getId() {
+		return get(AssumedBy.KEY_ID).stringValue();
+	}
+	
+	@Override
+	public void setId(String value) {
+		set(AssumedBy.KEY_ID, value);
 	}
 	
 	@Override
@@ -30,6 +38,16 @@ public class AssumedByImpl extends ManagedObjectImpl implements AssumedBy, SRela
 	@Override
 	public void setSource(SNode value) {
 		set(AssumedBy.KEY_SOURCE, value);
+	}
+	
+	@Override
+	public String getGid() {
+		return get(AssumedBy.KEY_GID).stringValue();
+	}
+	
+	@Override
+	public void setGid(String value) {
+		set(AssumedBy.KEY_GID, value);
 	}
 	
 	@Override
@@ -50,6 +68,21 @@ public class AssumedByImpl extends ManagedObjectImpl implements AssumedBy, SRela
 	@Override
 	public void setAssumption(Assumption value) {
 		set(AssumedBy.KEY_ASSUMPTION, value);
+	}
+	
+	@Override
+	public List<Annotation> getAnnotations() {
+		return get(AssumedBy.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
+	}
+	
+	@Override
+	public Assertion getAssertion() {
+		return (Assertion) get(AssumedBy.KEY_ASSERTION);
+	}
+	
+	@Override
+	public void setAssertion(Assertion value) {
+		set(AssumedBy.KEY_ASSERTION, value);
 	}
 	
 }

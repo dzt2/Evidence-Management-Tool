@@ -1,24 +1,32 @@
 package cn.edu.buaa.sei.emt.safe;
+import java.util.List;
 
-public interface Assertion extends SNode {
+public interface Assertion extends SElement {
 	
 	public static final String TYPE_NAME = "safe.Assertion";
-	public static final String KEY_NAME = "name";
-	public static final String KEY_RESULT = "result";
+	public static final String KEY_ASSUMPTIONS = "assumptions";
+	public static final String KEY_TAGS = "tags";
+	public static final String KEY_JUSTIFICATIONS = "justifications";
 	public static final String KEY_STATEMENT = "statement";
-	public static final String KEY_ASSURED_RESULT = "assured_result";
+	public static final String KEY_VALID = "valid";
+	public static final String KEY_GID = "gid";
+	public static final String KEY_ID = "id";
+	public static final String KEY_ANNOTATIONS = "annotations";
+	public static final String KEY_CONTEXTS = "contexts";
 	
 	
 	public String getStatement();
 	
 	public void setStatement(String value);
 	
-	public boolean getResult();
+	public boolean getValid();
 	
-	public void setResult(boolean value);
+	public void setValid(boolean value);
 	
-	public boolean getAssured_result();
+	public List<Assumption> getAssumptions();
 	
-	public void setAssured_result(boolean value);
+	public List<Justification> getJustifications();
+	
+	public List<Context> getContexts();
 	
 }

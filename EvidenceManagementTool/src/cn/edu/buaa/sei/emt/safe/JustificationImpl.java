@@ -1,8 +1,11 @@
 package cn.edu.buaa.sei.emt.safe;
+import java.util.List;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
+import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class JustificationImpl extends ManagedObjectImpl implements Justification, Assertion {
+public class JustificationImpl extends ManagedObjectImpl implements Justification, SUtilityNode {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,33 +16,23 @@ public class JustificationImpl extends ManagedObjectImpl implements Justificatio
 	}
 	
 	@Override
-	public String getStatement() {
-		return get(Justification.KEY_STATEMENT).stringValue();
+	public List<TaggedValue> getTags() {
+		return get(Justification.KEY_TAGS).listContent().toGenericList(TaggedValue.class);
 	}
 	
 	@Override
-	public void setStatement(String value) {
-		set(Justification.KEY_STATEMENT, value);
+	public String getId() {
+		return get(Justification.KEY_ID).stringValue();
 	}
 	
 	@Override
-	public boolean getResult() {
-		return get(Justification.KEY_RESULT).boolValue();
+	public void setId(String value) {
+		set(Justification.KEY_ID, value);
 	}
 	
 	@Override
-	public void setResult(boolean value) {
-		set(Justification.KEY_RESULT, value);
-	}
-	
-	@Override
-	public boolean getAssured_result() {
-		return get(Justification.KEY_ASSURED_RESULT).boolValue();
-	}
-	
-	@Override
-	public void setAssured_result(boolean value) {
-		set(Justification.KEY_ASSURED_RESULT, value);
+	public List<Assertion> getAssertions() {
+		return get(Justification.KEY_ASSERTIONS).listContent().toGenericList(Assertion.class);
 	}
 	
 	@Override
@@ -50,6 +43,21 @@ public class JustificationImpl extends ManagedObjectImpl implements Justificatio
 	@Override
 	public void setName(String value) {
 		set(Justification.KEY_NAME, value);
+	}
+	
+	@Override
+	public String getGid() {
+		return get(Justification.KEY_GID).stringValue();
+	}
+	
+	@Override
+	public void setGid(String value) {
+		set(Justification.KEY_GID, value);
+	}
+	
+	@Override
+	public List<Annotation> getAnnotations() {
+		return get(Justification.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
 	}
 	
 }

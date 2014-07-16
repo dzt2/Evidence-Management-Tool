@@ -4,12 +4,24 @@ public class SafeFactory {
 	
 	
 	
-	public static Claim createClaim() {
-		return new ClaimImpl();
+	public static ImplClaim createImplClaim() {
+		return new ImplClaimImpl();
 	}
 	
-	public static UndevelopedClaim createUndevelopedClaim() {
-		return new UndevelopedClaimImpl();
+	public static UndevClaim createUndevClaim() {
+		return new UndevClaimImpl();
+	}
+	
+	public static Inference createInference() {
+		return new InferenceImpl();
+	}
+	
+	public static EvidenceRef createEvidenceRef() {
+		return new EvidenceRefImpl();
+	}
+	
+	public static Context createContext() {
+		return new ContextImpl();
 	}
 	
 	public static Assumption createAssumption() {
@@ -20,28 +32,16 @@ public class SafeFactory {
 		return new JustificationImpl();
 	}
 	
-	public static Context createContext() {
-		return new ContextImpl();
-	}
-	
-	public static SupportByClaim createSupportByClaim() {
-		return new SupportByClaimImpl();
-	}
-	
-	public static ChallengeByClaim createChallengeByClaim() {
-		return new ChallengeByClaimImpl();
+	public static SupportByInference createSupportByInference() {
+		return new SupportByInferenceImpl();
 	}
 	
 	public static SupportByEvidence createSupportByEvidence() {
 		return new SupportByEvidenceImpl();
 	}
 	
-	public static ChallengeByEvidence createChallengeByEvidence() {
-		return new ChallengeByEvidenceImpl();
-	}
-	
-	public static AssumedBy createAssumedBy() {
-		return new AssumedByImpl();
+	public static SupportByClaim createSupportByClaim() {
+		return new SupportByClaimImpl();
 	}
 	
 	public static ContextOf createContextOf() {
@@ -52,12 +52,20 @@ public class SafeFactory {
 		return new JustifiedByImpl();
 	}
 	
-	public static SafetyCase createSafetyCase() {
-		return new SafetyCaseImpl();
+	public static AssumedBy createAssumedBy() {
+		return new AssumedByImpl();
 	}
 	
-	public static XMLEvidence createXMLEvidence() {
-		return new XMLEvidenceImpl();
+	public static EvidenceGroup createEvidenceGroup() {
+		return new EvidenceGroupImpl();
+	}
+	
+	public static SModule createSModule() {
+		return new SModuleImpl();
+	}
+	
+	public static SafetyCase createSafetyCase() {
+		return new SafetyCaseImpl();
 	}
 	
 }

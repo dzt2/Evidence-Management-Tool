@@ -1,8 +1,11 @@
 package cn.edu.buaa.sei.emt.safe;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
+import java.util.List;
+import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class JustifiedByImpl extends ManagedObjectImpl implements JustifiedBy, SRelation {
+public class JustifiedByImpl extends ManagedObjectImpl implements JustifiedBy, SUtilityRelation {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,13 +16,18 @@ public class JustifiedByImpl extends ManagedObjectImpl implements JustifiedBy, S
 	}
 	
 	@Override
-	public Assertion getObjective() {
-		return (Assertion) get(JustifiedBy.KEY_OBJECTIVE);
+	public List<TaggedValue> getTags() {
+		return get(JustifiedBy.KEY_TAGS).listContent().toGenericList(TaggedValue.class);
 	}
 	
 	@Override
-	public void setObjective(Assertion value) {
-		set(JustifiedBy.KEY_OBJECTIVE, value);
+	public String getId() {
+		return get(JustifiedBy.KEY_ID).stringValue();
+	}
+	
+	@Override
+	public void setId(String value) {
+		set(JustifiedBy.KEY_ID, value);
 	}
 	
 	@Override
@@ -33,6 +41,16 @@ public class JustifiedByImpl extends ManagedObjectImpl implements JustifiedBy, S
 	}
 	
 	@Override
+	public String getGid() {
+		return get(JustifiedBy.KEY_GID).stringValue();
+	}
+	
+	@Override
+	public void setGid(String value) {
+		set(JustifiedBy.KEY_GID, value);
+	}
+	
+	@Override
 	public SNode getTarget() {
 		return (SNode) get(JustifiedBy.KEY_TARGET);
 	}
@@ -40,6 +58,21 @@ public class JustifiedByImpl extends ManagedObjectImpl implements JustifiedBy, S
 	@Override
 	public void setTarget(SNode value) {
 		set(JustifiedBy.KEY_TARGET, value);
+	}
+	
+	@Override
+	public List<Annotation> getAnnotations() {
+		return get(JustifiedBy.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
+	}
+	
+	@Override
+	public Assertion getAssertion() {
+		return (Assertion) get(JustifiedBy.KEY_ASSERTION);
+	}
+	
+	@Override
+	public void setAssertion(Assertion value) {
+		set(JustifiedBy.KEY_ASSERTION, value);
 	}
 	
 	@Override

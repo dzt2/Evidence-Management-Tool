@@ -1,8 +1,9 @@
 package cn.edu.buaa.sei.emt.safe;
+import cn.edu.buaa.sei.emt.core.ModelElement;
 
-public interface SNode extends SElement {
+public interface SEvidenceElement extends ModelElement {
 	
-	public static final String TYPE_NAME = "safe.SNode";
+	public static final String TYPE_NAME = "evidence.SEvidenceElement";
 	public static final String KEY_NAME = "name";
 	public static final String KEY_TAGS = "tags";
 	public static final String KEY_GID = "gid";

@@ -1,8 +1,11 @@
 package cn.edu.buaa.sei.emt.safe;
+import cn.edu.buaa.sei.emt.core.TaggedValue;
+import java.util.List;
+import cn.edu.buaa.sei.emt.core.Annotation;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class SupportByEvidenceImpl extends ManagedObjectImpl implements SupportByEvidence, SRelation {
+public class SupportByEvidenceImpl extends ManagedObjectImpl implements SupportByEvidence, SMainRelation {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,12 +16,27 @@ public class SupportByEvidenceImpl extends ManagedObjectImpl implements SupportB
 	}
 	
 	@Override
-	public Claim getObjective() {
-		return (Claim) get(SupportByEvidence.KEY_OBJECTIVE);
+	public List<TaggedValue> getTags() {
+		return get(SupportByEvidence.KEY_TAGS).listContent().toGenericList(TaggedValue.class);
 	}
 	
 	@Override
-	public void setObjective(Claim value) {
+	public String getId() {
+		return get(SupportByEvidence.KEY_ID).stringValue();
+	}
+	
+	@Override
+	public void setId(String value) {
+		set(SupportByEvidence.KEY_ID, value);
+	}
+	
+	@Override
+	public ImplClaim getObjective() {
+		return (ImplClaim) get(SupportByEvidence.KEY_OBJECTIVE);
+	}
+	
+	@Override
+	public void setObjective(ImplClaim value) {
 		set(SupportByEvidence.KEY_OBJECTIVE, value);
 	}
 	
@@ -33,13 +51,23 @@ public class SupportByEvidenceImpl extends ManagedObjectImpl implements SupportB
 	}
 	
 	@Override
-	public EvidenceElement getEvidence() {
-		return (EvidenceElement) get(SupportByEvidence.KEY_EVIDENCE);
+	public EvidenceRef getEvidence() {
+		return (EvidenceRef) get(SupportByEvidence.KEY_EVIDENCE);
 	}
 	
 	@Override
-	public void setEvidence(EvidenceElement value) {
+	public void setEvidence(EvidenceRef value) {
 		set(SupportByEvidence.KEY_EVIDENCE, value);
+	}
+	
+	@Override
+	public String getGid() {
+		return get(SupportByEvidence.KEY_GID).stringValue();
+	}
+	
+	@Override
+	public void setGid(String value) {
+		set(SupportByEvidence.KEY_GID, value);
 	}
 	
 	@Override
@@ -50,6 +78,11 @@ public class SupportByEvidenceImpl extends ManagedObjectImpl implements SupportB
 	@Override
 	public void setTarget(SNode value) {
 		set(SupportByEvidence.KEY_TARGET, value);
+	}
+	
+	@Override
+	public List<Annotation> getAnnotations() {
+		return get(SupportByEvidence.KEY_ANNOTATIONS).listContent().toGenericList(Annotation.class);
 	}
 	
 }

@@ -1,10 +1,9 @@
 package cn.edu.buaa.sei.emt.safe;
+import cn.edu.buaa.sei.lmf.ManagedObject;
 
-public interface SupportByClaim extends SRelation {
+public interface SupportByClaim extends ManagedObject {
 	
 	public static final String TYPE_NAME = "safe.SupportByClaim";
-	public static final String KEY_SOURCE = "source";
-	public static final String KEY_TARGET = "target";
 	public static final String KEY_PREMISE = "premise";
 	public static final String KEY_CONCLUSION = "conclusion";
 	
@@ -13,8 +12,8 @@ public interface SupportByClaim extends SRelation {
 	
 	public void setPremise(Claim value);
 	
-	public Claim getConclusion();
+	public ImplClaim getConclusion();
 	
-	public void setConclusion(Claim value);
+	public void setConclusion(ImplClaim value);
 	
 }

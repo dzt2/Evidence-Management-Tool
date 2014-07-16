@@ -2,7 +2,7 @@ package cn.edu.buaa.sei.emt.safe;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
-public class SupportByClaimImpl extends ManagedObjectImpl implements SupportByClaim, SRelation {
+public class SupportByClaimImpl extends ManagedObjectImpl implements SupportByClaim {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -10,16 +10,6 @@ public class SupportByClaimImpl extends ManagedObjectImpl implements SupportByCl
 	
 	public SupportByClaimImpl() {
 		super(LMFContext.typeForName(SupportByClaim.TYPE_NAME));
-	}
-	
-	@Override
-	public SNode getSource() {
-		return (SNode) get(SupportByClaim.KEY_SOURCE);
-	}
-	
-	@Override
-	public void setSource(SNode value) {
-		set(SupportByClaim.KEY_SOURCE, value);
 	}
 	
 	@Override
@@ -33,22 +23,12 @@ public class SupportByClaimImpl extends ManagedObjectImpl implements SupportByCl
 	}
 	
 	@Override
-	public SNode getTarget() {
-		return (SNode) get(SupportByClaim.KEY_TARGET);
+	public ImplClaim getConclusion() {
+		return (ImplClaim) get(SupportByClaim.KEY_CONCLUSION);
 	}
 	
 	@Override
-	public void setTarget(SNode value) {
-		set(SupportByClaim.KEY_TARGET, value);
-	}
-	
-	@Override
-	public Claim getConclusion() {
-		return (Claim) get(SupportByClaim.KEY_CONCLUSION);
-	}
-	
-	@Override
-	public void setConclusion(Claim value) {
+	public void setConclusion(ImplClaim value) {
 		set(SupportByClaim.KEY_CONCLUSION, value);
 	}
 	
