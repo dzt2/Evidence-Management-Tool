@@ -15,9 +15,9 @@ public interface EvidenceRef extends SMainNode, SInformationElement {
 	public static final String KEY_STATE = "state";
 	
 	
-	public SEvidenceElement getEvidence();
+	public Evidence getEvidence();
 	
-	public void setEvidence(SEvidenceElement value);
+	public void setEvidence(Evidence value);
 	
 	public int getState();
 	

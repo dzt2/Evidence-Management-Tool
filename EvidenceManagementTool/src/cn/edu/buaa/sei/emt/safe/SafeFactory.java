@@ -44,6 +44,10 @@ public class SafeFactory {
 		return new SupportByClaimImpl();
 	}
 	
+	public static InferenceSupportByClaim createInferenceSupportByClaim() {
+		return new InferenceSupportByClaimImpl();
+	}
+	
 	public static ContextOf createContextOf() {
 		return new ContextOfImpl();
 	}
@@ -60,8 +64,8 @@ public class SafeFactory {
 		return new EvidenceGroupImpl();
 	}
 	
-	public static SModule createSModule() {
-		return new SModuleImpl();
+	public static EvidenceFile createEvidenceFile() {
+		return new EvidenceFileImpl();
 	}
 	
 	public static SafetyCase createSafetyCase() {

@@ -6,10 +6,14 @@ import cn.edu.buaa.sei.emt.safe.Claim;
 import cn.edu.buaa.sei.emt.safe.ClaimState;
 import cn.edu.buaa.sei.emt.safe.Context;
 import cn.edu.buaa.sei.emt.safe.ContextOf;
+import cn.edu.buaa.sei.emt.safe.Evidence;
+import cn.edu.buaa.sei.emt.safe.EvidenceFile;
+import cn.edu.buaa.sei.emt.safe.EvidenceGroup;
 import cn.edu.buaa.sei.emt.safe.EvidenceRef;
 import cn.edu.buaa.sei.emt.safe.EvidenceRefState;
 import cn.edu.buaa.sei.emt.safe.ImplClaim;
 import cn.edu.buaa.sei.emt.safe.Inference;
+import cn.edu.buaa.sei.emt.safe.InferenceSupportByClaim;
 import cn.edu.buaa.sei.emt.safe.Justification;
 import cn.edu.buaa.sei.emt.safe.JustifiedBy;
 import cn.edu.buaa.sei.emt.safe.SafeFactory;
@@ -29,6 +33,12 @@ public class SCaseConstructor {
 		return sc;
 	}
 	
+	public static void ClaimLinkSafetyCase(UndevClaim claim,SafetyCase scase){
+		if(claim.getRefcase()!=null||scase.getSupport_undev_claims().contains(claim))return;
+		claim.setRefcase(scase);scase.getSupport_undev_claims().add(claim);
+	}
+	
+	/*	Construct Safe Node  */
 	public static ImplClaim createImplClaim(String name,String stmt,boolean assumed){
 		ImplClaim claim = SafeFactory.createImplClaim();
 		// SNode
@@ -120,6 +130,8 @@ public class SCaseConstructor {
 		// SupportByClaim
 		cc.setPremise(premise);cc.setConclusion(conclusion);
 		
+		conclusion.setState(ClaimState.ENUM_SUPPORTED);
+		
 		return cc;
 	}
 	
@@ -136,6 +148,8 @@ public class SCaseConstructor {
 		ce.setSource(evidence);ce.setTarget(objective);
 		// SupportByEvidence
 		ce.setEvidence(evidence);ce.setObjective(objective);
+		
+		objective.setState(ClaimState.ENUM_SUPPORTED);
 		return ce;
 	}
 	
@@ -150,6 +164,8 @@ public class SCaseConstructor {
 		ci.setSource(inference);ci.setTarget(conclusion);
 		// SupportByInference
 		ci.setInference(inference);ci.setConclusion(conclusion);
+		
+		conclusion.setState(ClaimState.ENUM_SUPPORTED);
 		return ci;
 	}
 
@@ -244,4 +260,45 @@ public class SCaseConstructor {
 		return ac;
 	}
 
+	public static InferenceSupportByClaim InferenceLinkClaim(Inference inference,Claim claim){
+		if(inference.getPremises().contains(claim)||claim.getSupport_inferences().contains(claim))
+			return null;
+		// Node
+		inference.getPremises().add(claim); claim.getSupport_inferences().add(inference);
+		
+		// Construct Relation
+		InferenceSupportByClaim ic = SafeFactory.createInferenceSupportByClaim();
+		// SRelation
+		ic.setSource(claim);ic.setTarget(inference);
+		// InferenceSupportByClaim
+		ic.setClaim(claim);ic.setInference(inference);
+		
+		return ic;
+	}
+	
+	
+	
+	/*	Evidence Elements  */
+	public static EvidenceFile createEvidenceFile(String name,String url){
+		EvidenceFile ef = SafeFactory.createEvidenceFile();
+		ef.setName(name);
+		ef.setFile_url(url);
+		return ef;
+	}
+	
+	public static EvidenceGroup createEvidenceGroup(String name){
+		EvidenceGroup eg = SafeFactory.createEvidenceGroup();
+		eg.setName(name);
+		return eg;
+	}
+	
+	public static void RefLinkEvidence(EvidenceRef ref,Evidence evidence){
+		if(ref.getEvidence()!=null||evidence.getSupport_refs().contains(ref))
+			return;
+		// Node
+		ref.setEvidence(evidence);evidence.getSupport_refs().add(ref);
+	}
+
+	
+	
 }

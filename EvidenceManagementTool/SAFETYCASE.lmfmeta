@@ -50,7 +50,7 @@
       <attributes xsi:type="lmfmeta:ListAttribute" name="premises" valueType="//@extensions.0/@classifiers.9"/>
     </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.5 //@extensions.0/@classifiers.3" name="EvidenceRef">
-      <attributes xsi:type="lmfmeta:ObjectAttribute" name="evidence" valueType="//@extensions.1/@classifiers.0"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="evidence" valueType="//@extensions.1/@classifiers.1"/>
       <attributes xsi:type="lmfmeta:EnumAttribute" name="state" valueType="//@extensions.0/@classifiers.15"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="support_claims" valueType="//@extensions.0/@classifiers.11"/>
     </classifiers>
@@ -81,6 +81,10 @@
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="conclusion" valueType="//@extensions.0/@classifiers.11"/>
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="premise" valueType="//@extensions.0/@classifiers.9"/>
     </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.7" name="InferenceSupportByClaim">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="inference" valueType="//@extensions.0/@classifiers.13"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="claim" valueType="//@extensions.0/@classifiers.9"/>
+    </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.8" name="ContextOf">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="context" valueType="//@extensions.0/@classifiers.16"/>
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="assertion" valueType="//@extensions.0/@classifiers.2"/>
@@ -99,13 +103,18 @@
       <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="name" valueType="STRING"/>
       <superTypes href="core.lmfmeta#//@extensions.0/@classifiers.1"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.1/@classifiers.0" name="Evidence"/>
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.1/@classifiers.0" name="Evidence">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="support_refs" valueType="//@extensions.0/@classifiers.14"/>
+    </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="EvidenceGroup">
       <attributes xsi:type="lmfmeta:ListAttribute" name="evidences" valueType="//@extensions.1/@classifiers.1"/>
     </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.1" name="EvidenceFile">
+      <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="file_url" valueType="STRING"/>
+    </classifiers>
   </extensions>
   <extensions id="case">
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="SModule">
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.0" name="SModule">
       <attributes xsi:type="lmfmeta:ListAttribute" name="nodes" valueType="//@extensions.0/@classifiers.1"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="relations" valueType="//@extensions.0/@classifiers.4"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="subModules" valueType="//@extensions.2/@classifiers.0"/>
@@ -122,9 +131,10 @@
       <attributes xsi:type="lmfmeta:ListAttribute" name="claim_claim_links" valueType="//@extensions.0/@classifiers.21"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="claim_evidence_links" valueType="//@extensions.0/@classifiers.20"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="claim_inference_links" valueType="//@extensions.0/@classifiers.19"/>
-      <attributes xsi:type="lmfmeta:ListAttribute" name="context_links" valueType="//@extensions.0/@classifiers.22"/>
-      <attributes xsi:type="lmfmeta:ListAttribute" name="assumption_links" valueType="//@extensions.0/@classifiers.24"/>
-      <attributes xsi:type="lmfmeta:ListAttribute" name="justification_links" valueType="//@extensions.0/@classifiers.23"/>
+      <attributes xsi:type="lmfmeta:ListAttribute" name="inference_claim_links" valueType="//@extensions.0/@classifiers.22"/>
+      <attributes xsi:type="lmfmeta:ListAttribute" name="context_links" valueType="//@extensions.0/@classifiers.23"/>
+      <attributes xsi:type="lmfmeta:ListAttribute" name="assumption_links" valueType="//@extensions.0/@classifiers.25"/>
+      <attributes xsi:type="lmfmeta:ListAttribute" name="justification_links" valueType="//@extensions.0/@classifiers.24"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="sub_cases" valueType="//@extensions.2/@classifiers.1"/>
       <attributes xsi:type="lmfmeta:ListAttribute" name="support_undev_claims" valueType="//@extensions.0/@classifiers.12"/>
     </classifiers>

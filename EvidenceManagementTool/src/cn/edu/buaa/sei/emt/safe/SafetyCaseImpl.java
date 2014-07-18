@@ -26,6 +26,11 @@ public class SafetyCaseImpl extends ManagedObjectImpl implements SafetyCase, SMo
 	}
 	
 	@Override
+	public List<InferenceSupportByClaim> getInference_claim_links() {
+		return get(SafetyCase.KEY_INFERENCE_CLAIM_LINKS).listContent().toGenericList(InferenceSupportByClaim.class);
+	}
+	
+	@Override
 	public List<Inference> getInferences() {
 		return get(SafetyCase.KEY_INFERENCES).listContent().toGenericList(Inference.class);
 	}

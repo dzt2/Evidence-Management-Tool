@@ -307,7 +307,7 @@ public class SafeTypeLoader implements TypeLoader {
 			// Attribute Definition: evidence
 			AttributeBuilder attr_evidence = new AttributeBuilder("evidence");
 			attr_evidence.extensionID = "safe";
-			attr_evidence.valueTypeName = "evidence.SEvidenceElement";
+			attr_evidence.valueTypeName = "evidence.Evidence";
 			attr_evidence.isContainment = false;
 			type_EvidenceRef.attributes.add(attr_evidence);
 			
@@ -458,6 +458,29 @@ public class SafeTypeLoader implements TypeLoader {
 		}
 		types.add(type_SupportByClaim);
 		
+		// Type Definition: InferenceSupportByClaim
+		TypeBuilder type_InferenceSupportByClaim = new TypeBuilder("safe", "InferenceSupportByClaim");
+		type_InferenceSupportByClaim.isAbstract = false;
+		type_InferenceSupportByClaim.isFinal = false;
+		type_InferenceSupportByClaim.superTypeNames.add("safe.SMainRelation");
+		{
+			// Attribute Definition: inference
+			AttributeBuilder attr_inference = new AttributeBuilder("inference");
+			attr_inference.extensionID = "safe";
+			attr_inference.valueTypeName = "safe.Inference";
+			attr_inference.isContainment = false;
+			type_InferenceSupportByClaim.attributes.add(attr_inference);
+			
+			// Attribute Definition: claim
+			AttributeBuilder attr_claim = new AttributeBuilder("claim");
+			attr_claim.extensionID = "safe";
+			attr_claim.valueTypeName = "safe.Claim";
+			attr_claim.isContainment = false;
+			type_InferenceSupportByClaim.attributes.add(attr_claim);
+			
+		}
+		types.add(type_InferenceSupportByClaim);
+		
 		// Type Definition: ContextOf
 		TypeBuilder type_ContextOf = new TypeBuilder("safe", "ContextOf");
 		type_ContextOf.isAbstract = false;
@@ -549,6 +572,14 @@ public class SafeTypeLoader implements TypeLoader {
 		type_Evidence.isFinal = false;
 		type_Evidence.superTypeNames.add("evidence.SEvidenceElement");
 		{
+			// Attribute Definition: support_refs
+			AttributeBuilder attr_support_refs = new AttributeBuilder("support_refs");
+			attr_support_refs.extensionID = "evidence";
+			attr_support_refs.valueTypeName = "primitives.<list>";
+			attr_support_refs.isContainment = false;
+			attr_support_refs.valueTypeParameter = "safe.EvidenceRef";
+			type_Evidence.attributes.add(attr_support_refs);
+			
 		}
 		types.add(type_Evidence);
 		
@@ -569,9 +600,25 @@ public class SafeTypeLoader implements TypeLoader {
 		}
 		types.add(type_EvidenceGroup);
 		
+		// Type Definition: EvidenceFile
+		TypeBuilder type_EvidenceFile = new TypeBuilder("evidence", "EvidenceFile");
+		type_EvidenceFile.isAbstract = false;
+		type_EvidenceFile.isFinal = false;
+		type_EvidenceFile.superTypeNames.add("evidence.Evidence");
+		{
+			// Attribute Definition: file_url
+			AttributeBuilder attr_file_url = new AttributeBuilder("file_url");
+			attr_file_url.extensionID = "evidence";
+			attr_file_url.valueTypeName = "primitives.<string>";
+			attr_file_url.isContainment = true;
+			type_EvidenceFile.attributes.add(attr_file_url);
+			
+		}
+		types.add(type_EvidenceFile);
+		
 		// Type Definition: SModule
 		TypeBuilder type_SModule = new TypeBuilder("case", "SModule");
-		type_SModule.isAbstract = false;
+		type_SModule.isAbstract = true;
 		type_SModule.isFinal = false;
 		type_SModule.superTypeNames.add("safe.SElement");
 		{
@@ -695,6 +742,14 @@ public class SafeTypeLoader implements TypeLoader {
 			attr_claim_inference_links.valueTypeParameter = "safe.SupportByInference";
 			type_SafetyCase.attributes.add(attr_claim_inference_links);
 			
+			// Attribute Definition: inference_claim_links
+			AttributeBuilder attr_inference_claim_links = new AttributeBuilder("inference_claim_links");
+			attr_inference_claim_links.extensionID = "case";
+			attr_inference_claim_links.valueTypeName = "primitives.<list>";
+			attr_inference_claim_links.isContainment = false;
+			attr_inference_claim_links.valueTypeParameter = "safe.InferenceSupportByClaim";
+			type_SafetyCase.attributes.add(attr_inference_claim_links);
+			
 			// Attribute Definition: context_links
 			AttributeBuilder attr_context_links = new AttributeBuilder("context_links");
 			attr_context_links.extensionID = "case";
@@ -754,11 +809,12 @@ public class SafeTypeLoader implements TypeLoader {
 		map.put("safe.SupportByInference", cn.edu.buaa.sei.emt.safe.SupportByInferenceImpl.class);
 		map.put("safe.SupportByEvidence", cn.edu.buaa.sei.emt.safe.SupportByEvidenceImpl.class);
 		map.put("safe.SupportByClaim", cn.edu.buaa.sei.emt.safe.SupportByClaimImpl.class);
+		map.put("safe.InferenceSupportByClaim", cn.edu.buaa.sei.emt.safe.InferenceSupportByClaimImpl.class);
 		map.put("safe.ContextOf", cn.edu.buaa.sei.emt.safe.ContextOfImpl.class);
 		map.put("safe.JustifiedBy", cn.edu.buaa.sei.emt.safe.JustifiedByImpl.class);
 		map.put("safe.AssumedBy", cn.edu.buaa.sei.emt.safe.AssumedByImpl.class);
 		map.put("evidence.EvidenceGroup", cn.edu.buaa.sei.emt.safe.EvidenceGroupImpl.class);
-		map.put("case.SModule", cn.edu.buaa.sei.emt.safe.SModuleImpl.class);
+		map.put("evidence.EvidenceFile", cn.edu.buaa.sei.emt.safe.EvidenceFileImpl.class);
 		map.put("case.SafetyCase", cn.edu.buaa.sei.emt.safe.SafetyCaseImpl.class);
 		return map;
 	}

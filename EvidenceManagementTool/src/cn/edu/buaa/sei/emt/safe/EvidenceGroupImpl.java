@@ -31,6 +31,11 @@ public class EvidenceGroupImpl extends ManagedObjectImpl implements EvidenceGrou
 	}
 	
 	@Override
+	public List<EvidenceRef> getSupport_refs() {
+		return get(EvidenceGroup.KEY_SUPPORT_REFS).listContent().toGenericList(EvidenceRef.class);
+	}
+	
+	@Override
 	public String getName() {
 		return get(EvidenceGroup.KEY_NAME).stringValue();
 	}

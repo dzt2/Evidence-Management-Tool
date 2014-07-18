@@ -51,12 +51,12 @@ public class EvidenceRefImpl extends ManagedObjectImpl implements EvidenceRef, S
 	}
 	
 	@Override
-	public SEvidenceElement getEvidence() {
-		return (SEvidenceElement) get(EvidenceRef.KEY_EVIDENCE);
+	public Evidence getEvidence() {
+		return (Evidence) get(EvidenceRef.KEY_EVIDENCE);
 	}
 	
 	@Override
-	public void setEvidence(SEvidenceElement value) {
+	public void setEvidence(Evidence value) {
 		set(EvidenceRef.KEY_EVIDENCE, value);
 	}
 	
