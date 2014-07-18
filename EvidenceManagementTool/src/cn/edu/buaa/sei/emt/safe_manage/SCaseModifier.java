@@ -499,9 +499,4 @@ public class SCaseModifier {
 		claim.setRefcase(scase);scase.getSupport_undev_claims().add(claim);
 	}
 	
-	
-	/*Link the Node*/
-	
-	
-	
 }

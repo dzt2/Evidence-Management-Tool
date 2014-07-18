@@ -77,7 +77,7 @@ public class SCaseConstructor {
 		return e;
 	}
 	
-	public static Inference createInference(String name,String stmt,boolean assumed){
+	public static Inference createInference(String name,String stmt){
 		Inference i = SafeFactory.createInference();
 		// SNode
 		i.setName(name);
