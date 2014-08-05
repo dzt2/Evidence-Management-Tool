@@ -6,7 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.edu.buaa.sei.emt.logic.predicate.core.Bindable;
+import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LObject;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LRelationSet;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LSet;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationFactory;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
@@ -179,4 +183,232 @@ public class VariableSpace {
 	}
 	
 	
+	/*
+	 *	Assigner Functions
+	 *		1. Variable := LObject
+	 *		2. DiscourseDomain := LSet
+	 *		3. PropositionVariable := BooleanObject
+	 *		4. PredicateFormulation := Variables<LObject *> 
+	 */
+	void assignVariable(String name,LObject value){
+		if(!this.containVariable(name)){
+			try {
+				throw this.getArgError("name", "assignVariable", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		// assign variable
+		Bindable var = this.map.get(name);
+		if(var instanceof Variable){
+			var.setValue(value);
+			((Variable) var).setObject(value);
+		}
+		else{
+			try {
+				throw this.getArgError("name", "assignVariable", 
+						"Type Errors, Requires "+name+" as Variable.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+	}
+	void assignDiscourseDomain(String name,LSet set){
+		if(!this.containVariable(name)){
+			try {
+				throw this.getArgError("name", "assignDiscourseDomain", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		Bindable var = this.map.get(name);
+		
+		if(var instanceof DiscourseDomain){
+			var.setValue(set);
+			((DiscourseDomain) var).setSet(set);
+		}
+		else{
+			try {
+				throw this.getArgError("value", "assignDiscourseDomain", 
+						"Type Errors, Requires "+name+" DiscourseDomain.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+	}
+	void assignPropositionVariable(String name,BooleanObject value){
+		if(!this.containVariable(name)){
+			try {
+				throw this.getArgError("name", "assignPropositionVariable", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		Bindable var = this.map.get(name);
+		
+		if(var instanceof PropositionVariable){
+			var.setValue(value);
+			((PropositionVariable) var).setObject(value);
+			((PropositionVariable) var).setT_value(value);
+		}
+		else{
+			try {
+				throw this.getArgError("value", "assignPropositionVariable", 
+						"Type Errors, Requires "+name+" PropositionVariable.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		
+	}
+	void assignPredicateFormulation(String name,List<LObject> args){
+		/*
+		 * 	Verify possible faults:
+		 * 		1. Undefined Name
+		 * 		2. Null Args
+		 * 		3. Empty argument list
+		 * 
+		 */
+		if(!this.containVariable(name)){
+			try {
+				throw this.getArgError("name", "assignPredicateFormulation", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(args==null){
+			try {
+				throw this.getArgError("args", "assignPredicateFormulation", 
+						"try to call assignPredicateFormulation("+name+", null)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(args.isEmpty()){
+			try {
+				throw this.getArgError("args", "assignPredicateFormulation", 
+						"try to call assignPredicateFormulation("+name+", empty_set)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		// assignment
+		Bindable var = this.map.get(name);
+		if(var instanceof PredicateFormulation){
+			List<Variable> vars = ((PredicateFormulation) var).getVariables();
+			if(vars.size()!=args.size()){
+				try {
+					throw this.getArgError("args", "assignPredicateFormulation", 
+							"Length of Argument Match Failure");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.err.println(e.getMessage());
+					return;
+				}
+			}
+			
+			for(int i=0;i<args.size();i++){
+				Variable vi = vars.get(i);
+				LObject vali = args.get(i);
+				vi.setValue(vali);
+				vi.setObject(vali);
+			}
+			
+		}
+		else{
+			try {
+				throw this.getArgError("name", "assignPredicateFormulation", 
+						"Type Errors, Requires "+name+" PredicateFormulation.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		
+	}
+	void assignPredicate(String name,LRelationSet relations){
+		/*
+		 * 	Verify possible faults:
+		 * 		1. Undefined Name
+		 * 		2. Null relations
+		 * 		3. Empty relations
+		 * 
+		 */
+		if(!this.containVariable(name)){
+			try {
+				throw this.getArgError("name", "assignPredicate", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(relations==null){
+			try {
+				throw this.getArgError("relations", "assignPredicate", 
+						"call assignPredicate("+name+", null)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(relations.getRelations().isEmpty()){
+			try {
+				throw this.getArgError("relations", "assignPredicate", 
+						"call assignPredicate("+name+", empty_set)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		// assignment
+		Bindable var = this.getVariable(name);
+		if(var instanceof PredicateFormulation){
+			var.setValue(relations);
+			((PredicateFormulation) var).setAssociated_relations(relations);
+		}
+		else{
+			try {
+				throw this.getArgError("name", "assignPredicateFormulation", 
+						"Type Errors, Requires "+name+" PredicateFormulation.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+	}
 }

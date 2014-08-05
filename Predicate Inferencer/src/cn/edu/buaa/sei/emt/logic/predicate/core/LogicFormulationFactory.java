@@ -8,14 +8,6 @@ public class LogicFormulationFactory {
 		return new LogicExpressionImpl();
 	}
 	
-	public static PropositionVariable createPropositionVariable() {
-		return new PropositionVariableImpl();
-	}
-	
-	public static PredicateFormulation createPredicateFormulation() {
-		return new PredicateFormulationImpl();
-	}
-	
 	public static Universal createUniversal() {
 		return new UniversalImpl();
 	}
@@ -50,6 +42,14 @@ public class LogicFormulationFactory {
 	
 	public static DiscourseDomain createDiscourseDomain() {
 		return new DiscourseDomainImpl();
+	}
+	
+	public static PropositionVariable createPropositionVariable() {
+		return new PropositionVariableImpl();
+	}
+	
+	public static PredicateFormulation createPredicateFormulation() {
+		return new PredicateFormulationImpl();
 	}
 	
 	public static Value createValue() {

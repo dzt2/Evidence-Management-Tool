@@ -1,5 +1,4 @@
 package cn.edu.buaa.sei.emt.logic.predicate.core;
-import java.util.List;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
@@ -11,11 +10,6 @@ public class UniversalImpl extends ManagedObjectImpl implements Universal, Quant
 	
 	public UniversalImpl() {
 		super(LMFContext.typeForName(Universal.TYPE_NAME));
-	}
-	
-	@Override
-	public List<Variable> getArguments() {
-		return get(Universal.KEY_ARGUMENTS).listContent().toGenericList(Variable.class);
 	}
 	
 	@Override

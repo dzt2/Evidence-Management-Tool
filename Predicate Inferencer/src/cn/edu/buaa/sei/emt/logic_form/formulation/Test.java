@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.edu.buaa.sei.emt.logic.predicate.core.Bindable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Existential;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicExpression;
@@ -21,7 +22,19 @@ public class Test {
 		LMFContext.load(new LogicFormulationTypeLoader());
 		LMFContext.pack();
 		
-		test3();
+		LogicFormulation f1 = form3();
+		VariableAnalyzier a = new VariableAnalyzier(f1);
+		
+		Set<Bindable> extern = a.getExternalVariables();
+		System.out.println("=========== External Variables ==========");
+		for(Bindable v:extern)
+			System.out.println(v.getName());
+		
+		Set<Bindable> intern = a.getInternalVariables();
+		System.out.println("=========== Internal Variables ==========");
+		for(Bindable v:intern)
+			System.out.println(v.getName());
+		
 	}
 	
 	public static void test1(){
@@ -98,5 +111,62 @@ public class Test {
 		System.out.println("L:= "+printer.printFormulation(L));
 		System.out.println("A:= "+printer.printFormulation(A));
 		System.out.println("B:= "+printer.printFormulation(B));
+	}
+	
+	public static LogicFormulation form1(){
+		VariableSpace vspace = new VariableSpace("vars");
+		DiscourseDomain X = vspace.createDiscourseDomain("X");
+		DiscourseDomain Y = vspace.createDiscourseDomain("Y");
+		//vspace.createPredicateFormulation("Q", null);
+		
+		List<Variable> avars = new ArrayList<Variable>();
+		avars.add(X.getIter());avars.add(Y.getIter());
+		PredicateFormulation A = vspace.createPredicateFormulation("A", avars);
+		
+		List<Variable> bvars = new ArrayList<Variable>();
+		bvars.add(Y.getIter());
+		PredicateFormulation B = vspace.createPredicateFormulation("B", bvars);
+		
+		LogicSpace lspace = new LogicSpace("logic");
+		Set<LogicFormulation> lfs = new HashSet<LogicFormulation>();
+		lfs.add(A);lfs.add(B);
+		LogicExpression L = lspace.createConjunction("L", lfs);
+		
+		Existential Q = lspace.createExistential("Q", Y, L);
+		Universal P = lspace.createUniversal("P", X, Q);
+		return P;
+	}
+	public static LogicFormulation form2(){
+		VariableSpace vspace = new VariableSpace("vars");
+		DiscourseDomain X = vspace.createDiscourseDomain("X");
+		DiscourseDomain Y = vspace.createDiscourseDomain("Y");
+		
+		LogicSpace lspace = new LogicSpace("logic");
+		List<Variable> vars = new ArrayList<Variable>();
+		vars.add(X.getIter());vars.add(Y.getIter());
+		PredicateFormulation A = lspace.createPredicateFormulation("A", vars);
+		
+		Existential Q = lspace.createExistential("Q", Y, A);
+		Universal P = lspace.createUniversal("P", X, Q);
+		return P;
+	}
+	public static LogicFormulation form3(){
+		LogicSpace lspace = new LogicSpace("test");
+		PropositionVariable a = lspace.createPropositionVariable("a");
+		PropositionVariable b = lspace.createPropositionVariable("b");
+		PropositionVariable c = lspace.createPropositionVariable("c");
+		PropositionVariable d = lspace.createPropositionVariable("d");
+		PropositionVariable e = lspace.createPropositionVariable("e");
+		
+		LogicExpression g = lspace.createNegation("g", e);
+		Set<LogicFormulation> fs = new HashSet<LogicFormulation>();
+		fs.add(c); fs.add(d); fs.add(g);
+		LogicExpression f = lspace.createDisjunction("f", fs);
+		
+		Set<LogicFormulation> gs = new HashSet<LogicFormulation>();
+		gs.add(a);gs.add(b);gs.add(f);
+		LogicExpression p = lspace.createConjunction("p", gs);
+		
+		return p;
 	}
 }

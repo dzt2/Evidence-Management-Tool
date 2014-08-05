@@ -28,14 +28,6 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 			attr_name.isContainment = true;
 			type_LogicFormulation.attributes.add(attr_name);
 			
-			// Attribute Definition: arguments
-			AttributeBuilder attr_arguments = new AttributeBuilder("arguments");
-			attr_arguments.extensionID = "logic_form";
-			attr_arguments.valueTypeName = "primitives.<list>";
-			attr_arguments.isContainment = false;
-			attr_arguments.valueTypeParameter = "variable.Variable";
-			type_LogicFormulation.attributes.add(attr_arguments);
-			
 		}
 		types.add(type_LogicFormulation);
 		
@@ -63,41 +55,6 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 		{
 		}
 		types.add(type_AtomFormulation);
-		
-		// Type Definition: PropositionVariable
-		TypeBuilder type_PropositionVariable = new TypeBuilder("logic_form", "PropositionVariable");
-		type_PropositionVariable.isAbstract = false;
-		type_PropositionVariable.isFinal = false;
-		type_PropositionVariable.superTypeNames.add("logic_form.AtomFormulation");
-		type_PropositionVariable.superTypeNames.add("variable.Variable");
-		{
-			// Attribute Definition: t_value
-			AttributeBuilder attr_t_value = new AttributeBuilder("t_value");
-			attr_t_value.extensionID = "logic_form";
-			attr_t_value.valueTypeName = "value.BooleanObject";
-			attr_t_value.isContainment = false;
-			type_PropositionVariable.attributes.add(attr_t_value);
-			
-		}
-		types.add(type_PropositionVariable);
-		
-		// Type Definition: PredicateFormulation
-		TypeBuilder type_PredicateFormulation = new TypeBuilder("logic_form", "PredicateFormulation");
-		type_PredicateFormulation.isAbstract = false;
-		type_PredicateFormulation.isFinal = false;
-		type_PredicateFormulation.superTypeNames.add("logic_form.AtomFormulation");
-		type_PredicateFormulation.superTypeNames.add("variable.Bindable");
-		{
-			// Attribute Definition: variables
-			AttributeBuilder attr_variables = new AttributeBuilder("variables");
-			attr_variables.extensionID = "logic_form";
-			attr_variables.valueTypeName = "primitives.<list>";
-			attr_variables.isContainment = false;
-			attr_variables.valueTypeParameter = "variable.Variable";
-			type_PredicateFormulation.attributes.add(attr_variables);
-			
-		}
-		types.add(type_PredicateFormulation);
 		
 		// Type Definition: Quantification
 		TypeBuilder type_Quantification = new TypeBuilder("logic_form", "Quantification");
@@ -305,6 +262,48 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 		}
 		types.add(type_DiscourseDomain);
 		
+		// Type Definition: PropositionVariable
+		TypeBuilder type_PropositionVariable = new TypeBuilder("variable", "PropositionVariable");
+		type_PropositionVariable.isAbstract = false;
+		type_PropositionVariable.isFinal = false;
+		type_PropositionVariable.superTypeNames.add("logic_form.AtomFormulation");
+		type_PropositionVariable.superTypeNames.add("variable.Variable");
+		{
+			// Attribute Definition: t_value
+			AttributeBuilder attr_t_value = new AttributeBuilder("t_value");
+			attr_t_value.extensionID = "variable";
+			attr_t_value.valueTypeName = "value.BooleanObject";
+			attr_t_value.isContainment = false;
+			type_PropositionVariable.attributes.add(attr_t_value);
+			
+		}
+		types.add(type_PropositionVariable);
+		
+		// Type Definition: PredicateFormulation
+		TypeBuilder type_PredicateFormulation = new TypeBuilder("variable", "PredicateFormulation");
+		type_PredicateFormulation.isAbstract = false;
+		type_PredicateFormulation.isFinal = false;
+		type_PredicateFormulation.superTypeNames.add("logic_form.AtomFormulation");
+		type_PredicateFormulation.superTypeNames.add("variable.Bindable");
+		{
+			// Attribute Definition: variables
+			AttributeBuilder attr_variables = new AttributeBuilder("variables");
+			attr_variables.extensionID = "variable";
+			attr_variables.valueTypeName = "primitives.<list>";
+			attr_variables.isContainment = false;
+			attr_variables.valueTypeParameter = "variable.Variable";
+			type_PredicateFormulation.attributes.add(attr_variables);
+			
+			// Attribute Definition: associated_relations
+			AttributeBuilder attr_associated_relations = new AttributeBuilder("associated_relations");
+			attr_associated_relations.extensionID = "variable";
+			attr_associated_relations.valueTypeName = "value.LRelationSet";
+			attr_associated_relations.isContainment = false;
+			type_PredicateFormulation.attributes.add(attr_associated_relations);
+			
+		}
+		types.add(type_PredicateFormulation);
+		
 		// Type Definition: Value
 		TypeBuilder type_Value = new TypeBuilder("value", "Value");
 		type_Value.isAbstract = false;
@@ -410,8 +409,6 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 	public Map<String, Class<? extends ManagedObjectImpl>> loadImplementationClasses() {
 		Map<String, Class<? extends ManagedObjectImpl>> map = new HashMap<String, Class<? extends ManagedObjectImpl>>();
 		map.put("logic_form.LogicExpression", cn.edu.buaa.sei.emt.logic.predicate.core.LogicExpressionImpl.class);
-		map.put("logic_form.PropositionVariable", cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariableImpl.class);
-		map.put("logic_form.PredicateFormulation", cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulationImpl.class);
 		map.put("logic_form.Universal", cn.edu.buaa.sei.emt.logic.predicate.core.UniversalImpl.class);
 		map.put("logic_form.Existential", cn.edu.buaa.sei.emt.logic.predicate.core.ExistentialImpl.class);
 		map.put("logic_form.Conjunction", cn.edu.buaa.sei.emt.logic.predicate.core.ConjunctionImpl.class);
@@ -421,6 +418,8 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 		map.put("logic_form.Equivalence", cn.edu.buaa.sei.emt.logic.predicate.core.EquivalenceImpl.class);
 		map.put("variable.Variable", cn.edu.buaa.sei.emt.logic.predicate.core.VariableImpl.class);
 		map.put("variable.DiscourseDomain", cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomainImpl.class);
+		map.put("variable.PropositionVariable", cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariableImpl.class);
+		map.put("variable.PredicateFormulation", cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulationImpl.class);
 		map.put("value.Value", cn.edu.buaa.sei.emt.logic.predicate.core.ValueImpl.class);
 		map.put("value.LObject", cn.edu.buaa.sei.emt.logic.predicate.core.LObjectImpl.class);
 		map.put("value.BooleanObject", cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObjectImpl.class);

@@ -14,11 +14,6 @@ public class PredicateFormulationImpl extends ManagedObjectImpl implements Predi
 	}
 	
 	@Override
-	public List<Variable> getArguments() {
-		return get(PredicateFormulation.KEY_ARGUMENTS).listContent().toGenericList(Variable.class);
-	}
-	
-	@Override
 	public String getName() {
 		return get(PredicateFormulation.KEY_NAME).stringValue();
 	}
@@ -36,6 +31,16 @@ public class PredicateFormulationImpl extends ManagedObjectImpl implements Predi
 	@Override
 	public void setValue(Value value) {
 		set(PredicateFormulation.KEY_VALUE, value);
+	}
+	
+	@Override
+	public LRelationSet getAssociated_relations() {
+		return (LRelationSet) get(PredicateFormulation.KEY_ASSOCIATED_RELATIONS);
+	}
+	
+	@Override
+	public void setAssociated_relations(LRelationSet value) {
+		set(PredicateFormulation.KEY_ASSOCIATED_RELATIONS, value);
 	}
 	
 	@Override

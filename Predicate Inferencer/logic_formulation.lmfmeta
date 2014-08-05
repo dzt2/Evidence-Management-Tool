@@ -3,7 +3,6 @@
   <extensions id="logic_form">
     <classifiers xsi:type="lmfmeta:Type" abstract="true" name="LogicFormulation">
       <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="name" valueType="STRING"/>
-      <attributes xsi:type="lmfmeta:ListAttribute" name="arguments" valueType="//@extensions.1/@classifiers.1"/>
     </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="LogicExpression">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="operator" valueType="//@extensions.0/@classifiers.6"/>
@@ -51,6 +50,7 @@
     </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2 //@extensions.1/@classifiers.0" name="PredicateFormulation">
       <attributes xsi:type="lmfmeta:ListAttribute" name="variables" valueType="//@extensions.1/@classifiers.1"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="associated_relations" valueType="//@extensions.2/@classifiers.5"/>
     </classifiers>
   </extensions>
   <extensions id="value">
