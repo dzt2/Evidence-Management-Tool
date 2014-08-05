@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import cn.edu.buaa.sei.emt.logic.predicate.core.Bindable;
+import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Existential;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicExpression;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulation;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationFactory;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationTypeLoader;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
@@ -22,18 +24,48 @@ public class Test {
 		LMFContext.load(new LogicFormulationTypeLoader());
 		LMFContext.pack();
 		
-		LogicFormulation f1 = form3();
-		VariableAnalyzier a = new VariableAnalyzier(f1);
+		LogicFormulation p = form4();
+		LogicPrinter printer = new LogicPrinter();
+		System.out.println(printer.printFormulation(p));
 		
-		Set<Bindable> extern = a.getExternalVariables();
-		System.out.println("=========== External Variables ==========");
-		for(Bindable v:extern)
-			System.out.println(v.getName());
+		LogicInferencer inferencer = new LogicInferencer();
+		inferencer.setFormulation(p);
 		
-		Set<Bindable> intern = a.getInternalVariables();
-		System.out.println("=========== Internal Variables ==========");
-		for(Bindable v:intern)
-			System.out.println(v.getName());
+		Set<Bindable> vars = inferencer.getVariables();
+		//System.out.println("============ Variables List ==============");
+		List<PropositionVariable> pvars = new ArrayList<PropositionVariable>();
+		for(Bindable var:vars)
+			pvars.add((PropositionVariable) var);
+		
+		BooleanObject TRUE = LogicFormulationFactory.createBooleanObject();
+		BooleanObject FALSE = LogicFormulationFactory.createBooleanObject();
+		TRUE.setBool_val(true);FALSE.setBool_val(false);
+		
+		for(int i=0;i<16;i++){
+			System.out.println("========= Iterator "+i+" =========");
+			int i1 = i%2;
+			int i2 = (i/2)%2;
+			int i3 = (i/4)%2;
+			int i4 = (i/8)%2;
+			
+			System.out.println("X:= ["+i1+", "+i2+", "+i3+", "+i4+"]");
+			
+			if(i1!=0)LogicAssigner.assignPropositionVariable(pvars.get(0), TRUE);
+			else LogicAssigner.assignPropositionVariable(pvars.get(0), FALSE);
+			
+			if(i2!=0)LogicAssigner.assignPropositionVariable(pvars.get(1), TRUE);
+			else LogicAssigner.assignPropositionVariable(pvars.get(1), FALSE);
+			
+			if(i3!=0)LogicAssigner.assignPropositionVariable(pvars.get(2), TRUE);
+			else LogicAssigner.assignPropositionVariable(pvars.get(2), FALSE);
+			
+			if(i4!=0)LogicAssigner.assignPropositionVariable(pvars.get(3), TRUE);
+			else LogicAssigner.assignPropositionVariable(pvars.get(3), FALSE);
+			
+			System.out.println("Ready for that? "+inferencer.prepare_inference());
+			System.out.println("Y:= "+inferencer.inference());
+			
+		}
 		
 	}
 	
@@ -169,4 +201,26 @@ public class Test {
 		
 		return p;
 	}
+
+	public static LogicFormulation form4(){
+		LogicSpace lspace = new LogicSpace("logic");
+		PropositionVariable a = lspace.createPropositionVariable("A");
+		PropositionVariable b = lspace.createPropositionVariable("B");
+		PropositionVariable c = lspace.createPropositionVariable("C");
+		PropositionVariable d = lspace.createPropositionVariable("D");
+		
+		LogicExpression e1 = lspace.createNegation("!d", d);
+		
+		Set<LogicFormulation> e2s = new HashSet<LogicFormulation>();
+		e2s.add(c);e2s.add(e1);
+		LogicExpression e2 = lspace.createDisjunction("c||e1", e2s);
+		
+		Set<LogicFormulation> ps = new HashSet<LogicFormulation>();
+		ps.add(a);ps.add(b);ps.add(e2);
+		LogicExpression p = lspace.createConjunction("p", ps);
+		
+		return p;
+		
+	}
+
 }

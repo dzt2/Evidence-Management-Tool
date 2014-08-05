@@ -111,7 +111,7 @@ public class LogicInferencer {
 			if(var instanceof LRelationSet)
 				searcher.put((LRelationSet) var);
 		
-		return false;
+		return true;
 	}
 	void revoke(){
 		//...
@@ -132,8 +132,17 @@ public class LogicInferencer {
 		if(form==null)return null;
 		
 		if(form instanceof PropositionVariable){
-			
+			return this.inference_propositionVariable((PropositionVariable) form);
 		}
+		if(form instanceof PredicateFormulation){
+			return this.inference_predicateFormulation((PredicateFormulation) form);
+		}
+		if(form instanceof LogicExpression)
+			return this.inference_expression((LogicExpression) form);
+		if(form instanceof Universal)
+			return this.inference_universal((Universal) form);
+		if(form instanceof Existential)
+			return this.inference_existential((Existential) form);
 		
 		return null;
 	}
