@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Conjunction;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Disjunction;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Equivalence;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Existential;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Implication;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LObject;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LRelationSet;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicExpression;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationFactory;
@@ -498,5 +501,174 @@ public class LogicSpace {
 		return expr;
 	}
 	
+	/*
+	 *	Assignment Functions:
+	 *		1. assignPropositionVariable(String name, BooleanObject);
+	 *		2. assignPredicateFormulation(String name, LRelations);
+	 *		3. assignPredicateVariables(String name, List<Variable>);
+	 */
+	void assignPropositionVariable(String name,BooleanObject value){
+		if(!this.map.containsKey(name)){
+			try {
+				throw this.getArgError("name", "assignPropositionVariable", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		LogicFormulation var = this.map.get(name);
+		
+		if(var instanceof PropositionVariable){
+			((PropositionVariable) var).setValue(value);
+			((PropositionVariable) var).setObject(value);
+			((PropositionVariable) var).setT_value(value);
+		}
+		else{
+			try {
+				throw this.getArgError("value", "assignPropositionVariable", 
+						"Type Errors, Requires "+name+" PropositionVariable.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		
+	}
+	void assignPredicateVariables(String name,List<LObject> args){
+		/*
+		 * 	Verify possible faults:
+		 * 		1. Undefined Name
+		 * 		2. Null Args
+		 * 		3. Empty argument list
+		 * 
+		 */
+		if(!this.map.containsKey(name)){
+			try {
+				throw this.getArgError("name", "assignPredicateVariables", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(args==null){
+			try {
+				throw this.getArgError("args", "assignPredicateVariables", 
+						"try to call assignPredicateVariables("+name+", null)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(args.isEmpty()){
+			try {
+				throw this.getArgError("args", "assignPredicateVariables", 
+						"try to call assignPredicateVariables("+name+", empty_set)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		// assignment
+		LogicFormulation var = this.map.get(name);
+		if(var instanceof PredicateFormulation){
+			List<Variable> vars = ((PredicateFormulation) var).getVariables();
+			if(vars.size()!=args.size()){
+				try {
+					throw this.getArgError("args", "assignPredicateVariables", 
+							"Length of Argument Match Failure");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.err.println(e.getMessage());
+					return;
+				}
+			}
+			
+			for(int i=0;i<args.size();i++){
+				Variable vi = vars.get(i);
+				LObject vali = args.get(i);
+				vi.setValue(vali);
+				vi.setObject(vali);
+			}
+			
+		}
+		else{
+			try {
+				throw this.getArgError("name", "assignPredicateVariables", 
+						"Type Errors, Requires "+name+" PredicateFormulation.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		
+	}
+	void assignPredicateFormulation(String name,LRelationSet relations){
+		/*
+		 * 	Verify possible faults:
+		 * 		1. Undefined Name
+		 * 		2. Null relations
+		 * 		3. Empty relations
+		 * 
+		 */
+		if(!this.map.containsKey(name)){
+			try {
+				throw this.getArgError("name", "assignPredicateFormulation", 
+						"Undefined Variable: "+name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(relations==null){
+			try {
+				throw this.getArgError("relations", "assignPredicateFormulation", 
+						"call assignPredicate("+name+", null)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		if(relations.getRelations().isEmpty()){
+			try {
+				throw this.getArgError("relations", "assignPredicateFormulation", 
+						"call assignPredicate("+name+", empty_set)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+		
+		// assignment
+		LogicFormulation var =  this.getFormulation(name);
+		if(var instanceof PredicateFormulation){
+			((PredicateFormulation) var).setValue(relations);
+			((PredicateFormulation) var).setAssociated_relations(relations);
+		}
+		else{
+			try {
+				throw this.getArgError("name", "assignPredicateFormulation", 
+						"Type Errors, Requires "+name+" PredicateFormulation.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+				return;
+			}
+		}
+	}
 	
 }
