@@ -14,6 +14,11 @@ public class PredicateFormulationImpl extends ManagedObjectImpl implements Predi
 	}
 	
 	@Override
+	public List<Variable> getArguments() {
+		return get(PredicateFormulation.KEY_ARGUMENTS).listContent().toGenericList(Variable.class);
+	}
+	
+	@Override
 	public String getName() {
 		return get(PredicateFormulation.KEY_NAME).stringValue();
 	}

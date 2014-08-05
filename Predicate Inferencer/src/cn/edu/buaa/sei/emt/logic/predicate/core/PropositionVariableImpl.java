@@ -1,4 +1,5 @@
 package cn.edu.buaa.sei.emt.logic.predicate.core;
+import java.util.List;
 import cn.edu.buaa.sei.lmf.ManagedObjectImpl;
 import cn.edu.buaa.sei.lmf.LMFContext;
 
@@ -10,6 +11,11 @@ public class PropositionVariableImpl extends ManagedObjectImpl implements Propos
 	
 	public PropositionVariableImpl() {
 		super(LMFContext.typeForName(PropositionVariable.TYPE_NAME));
+	}
+	
+	@Override
+	public List<Variable> getArguments() {
+		return get(PropositionVariable.KEY_ARGUMENTS).listContent().toGenericList(Variable.class);
 	}
 	
 	@Override

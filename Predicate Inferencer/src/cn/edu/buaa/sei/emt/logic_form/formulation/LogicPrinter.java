@@ -101,9 +101,8 @@ public class LogicPrinter {
 		if(u==null||u.getDomain()==null||u.getScope_formulation()==null)return null;
 		StringBuilder code = new StringBuilder();
 		
-		code.append("for each in ").append(u.getDomain().getName()).append("(");
-		code.append(this.printFormulation(u.getScope_formulation()));
-		code.append(")");
+		code.append("for each "+u.getDomain().getIter().getName()+" in ").append(u.getDomain().getName()).append(" [");
+		code.append(this.printFormulation(u.getScope_formulation())).append("]");
 		
 		return code.toString();
 	}
@@ -111,9 +110,8 @@ public class LogicPrinter {
 		if(e==null||e.getDomain()==null||e.getScope_formulation()==null)return null;
 		StringBuilder code = new StringBuilder();
 		
-		code.append("for some in ").append(e.getDomain().getName()).append("(");
-		code.append(this.printFormulation(e.getScope_formulation()));
-		code.append(")");
+		code.append("for some "+e.getDomain().getIter().getName()+" in ").append(e.getDomain().getName()).append(" [");
+		code.append(this.printFormulation(e.getScope_formulation())).append("]");
 		
 		return code.toString();
 	}

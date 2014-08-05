@@ -1,6 +1,7 @@
 package cn.edu.buaa.sei.emt.logic_form.formulation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ public class LogicSpace {
 	public LogicSpace(String space_name){
 		this.space_name = space_name;
 	}
+	public String getSpaceName(){return this.space_name;}
 	
 	/*
 	 * 	void prepare_creat(string name) ==> check whether the name has been used to link an object.
@@ -45,7 +47,6 @@ public class LogicSpace {
 			throw new Exception(msg.toString());
 		}
 	}
-	
 	Exception getArgError(String name, String function, String reason){
 		StringBuilder msg = new StringBuilder();
 		msg.append("Error Type: Argument Errors\n");
@@ -56,7 +57,6 @@ public class LogicSpace {
 		msg.append("Reason: "+reason);
 		return new Exception(msg.toString());
 	}
-	
 	String getTemporaryName(ManagedObject obj){
 		if(obj==null)return null;
 		return obj.type().getFullName()+"["+obj.hashCode()+"]";
@@ -80,7 +80,6 @@ public class LogicSpace {
 	public LogicFormulation removeFormulation(String name){
 		return this.map.remove(name);
 	}
-	
 	public Set<String> getNames(){return this.map.keySet();}
 	
 	
@@ -367,7 +366,7 @@ public class LogicSpace {
 		return var;
 	}
 	
-	public PredicateFormulation createPredicateFormulation(String name,Set<Variable> variables){
+	public PredicateFormulation createPredicateFormulation(String name,List<Variable> variables){
 		/*
 		 *	Verify three possible faults:
 		 *		1) name conflicts

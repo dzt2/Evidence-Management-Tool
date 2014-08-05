@@ -42,4 +42,14 @@ public class DiscourseDomainImpl extends ManagedObjectImpl implements DiscourseD
 		set(DiscourseDomain.KEY_VALUE, value);
 	}
 	
+	@Override
+	public Variable getIter() {
+		return (Variable) get(DiscourseDomain.KEY_ITER);
+	}
+	
+	@Override
+	public void setIter(Variable value) {
+		set(DiscourseDomain.KEY_ITER, value);
+	}
+	
 }

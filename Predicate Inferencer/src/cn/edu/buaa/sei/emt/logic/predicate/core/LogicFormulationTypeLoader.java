@@ -28,6 +28,14 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 			attr_name.isContainment = true;
 			type_LogicFormulation.attributes.add(attr_name);
 			
+			// Attribute Definition: arguments
+			AttributeBuilder attr_arguments = new AttributeBuilder("arguments");
+			attr_arguments.extensionID = "logic_form";
+			attr_arguments.valueTypeName = "primitives.<list>";
+			attr_arguments.isContainment = false;
+			attr_arguments.valueTypeParameter = "variable.Variable";
+			type_LogicFormulation.attributes.add(attr_arguments);
+			
 		}
 		types.add(type_LogicFormulation);
 		
@@ -286,6 +294,13 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 			attr_set.valueTypeName = "value.LSet";
 			attr_set.isContainment = false;
 			type_DiscourseDomain.attributes.add(attr_set);
+			
+			// Attribute Definition: iter
+			AttributeBuilder attr_iter = new AttributeBuilder("iter");
+			attr_iter.extensionID = "variable";
+			attr_iter.valueTypeName = "variable.Variable";
+			attr_iter.isContainment = false;
+			type_DiscourseDomain.attributes.add(attr_iter);
 			
 		}
 		types.add(type_DiscourseDomain);

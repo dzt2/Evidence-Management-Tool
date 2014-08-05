@@ -6,36 +6,30 @@
       <attributes xsi:type="lmfmeta:ListAttribute" name="arguments" valueType="//@extensions.1/@classifiers.1"/>
     </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.0" name="LogicExpression">
-      <attributes xsi:type="lmfmeta:ObjectAttribute" name="operator" valueType="//@extensions.0/@classifiers.8"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="operator" valueType="//@extensions.0/@classifiers.6"/>
     </classifiers>
     <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.0" name="AtomFormulation"/>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2 //@extensions.1/@classifiers.1" name="PropositionVariable">
-      <attributes xsi:type="lmfmeta:ObjectAttribute" name="t_value" valueType="//@extensions.2/@classifiers.2"/>
-    </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2 //@extensions.1/@classifiers.0" name="PredicateFormulation">
-      <attributes xsi:type="lmfmeta:ListAttribute" name="variables" valueType="//@extensions.1/@classifiers.1"/>
-    </classifiers>
     <classifiers xsi:type="lmfmeta:Type" abstract="true" superTypes="//@extensions.0/@classifiers.0" name="Quantification">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="domain" valueType="//@extensions.1/@classifiers.2"/>
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="scope_formulation" valueType="//@extensions.0/@classifiers.0"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.5" name="Universal"/>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.5" name="Existential"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.3" name="Universal"/>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.3" name="Existential"/>
     <classifiers xsi:type="lmfmeta:Type" abstract="true" name="LogicOperator"/>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.8" name="Conjunction">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="Conjunction">
       <attributes xsi:type="lmfmeta:ListAttribute" name="formulations" valueType="//@extensions.0/@classifiers.0"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.8" name="Disjunction">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="Disjunction">
       <attributes xsi:type="lmfmeta:ListAttribute" name="formulations" valueType="//@extensions.0/@classifiers.0"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.8" name="Negation">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="Negation">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="formulation" valueType="//@extensions.0/@classifiers.0"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.8" name="Implication">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="Implication">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="premise" valueType="//@extensions.0/@classifiers.0"/>
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="conclusion" valueType="//@extensions.0/@classifiers.0"/>
     </classifiers>
-    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.8" name="Equivalence">
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.6" name="Equivalence">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="formulation1" valueType="//@extensions.0/@classifiers.0"/>
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="formulation2" valueType="//@extensions.0/@classifiers.0"/>
     </classifiers>
@@ -50,6 +44,13 @@
     </classifiers>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.1/@classifiers.0" name="DiscourseDomain">
       <attributes xsi:type="lmfmeta:ObjectAttribute" name="set" valueType="//@extensions.2/@classifiers.3"/>
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="iter" valueType="//@extensions.1/@classifiers.1"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2 //@extensions.1/@classifiers.1" name="PropositionVariable">
+      <attributes xsi:type="lmfmeta:ObjectAttribute" name="t_value" valueType="//@extensions.2/@classifiers.2"/>
+    </classifiers>
+    <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.0/@classifiers.2 //@extensions.1/@classifiers.0" name="PredicateFormulation">
+      <attributes xsi:type="lmfmeta:ListAttribute" name="variables" valueType="//@extensions.1/@classifiers.1"/>
     </classifiers>
   </extensions>
   <extensions id="value">
