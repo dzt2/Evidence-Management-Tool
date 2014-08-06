@@ -306,7 +306,7 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 		
 		// Type Definition: Value
 		TypeBuilder type_Value = new TypeBuilder("value", "Value");
-		type_Value.isAbstract = false;
+		type_Value.isAbstract = true;
 		type_Value.isFinal = false;
 		{
 		}
@@ -420,7 +420,6 @@ public class LogicFormulationTypeLoader implements TypeLoader {
 		map.put("variable.DiscourseDomain", cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomainImpl.class);
 		map.put("variable.PropositionVariable", cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariableImpl.class);
 		map.put("variable.PredicateFormulation", cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulationImpl.class);
-		map.put("value.Value", cn.edu.buaa.sei.emt.logic.predicate.core.ValueImpl.class);
 		map.put("value.LObject", cn.edu.buaa.sei.emt.logic.predicate.core.LObjectImpl.class);
 		map.put("value.BooleanObject", cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObjectImpl.class);
 		map.put("value.LSet", cn.edu.buaa.sei.emt.logic.predicate.core.LSetImpl.class);

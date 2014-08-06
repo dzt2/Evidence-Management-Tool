@@ -52,10 +52,6 @@ public class LogicFormulationFactory {
 		return new PredicateFormulationImpl();
 	}
 	
-	public static Value createValue() {
-		return new ValueImpl();
-	}
-	
 	public static LObject createLObject() {
 		return new LObjectImpl();
 	}

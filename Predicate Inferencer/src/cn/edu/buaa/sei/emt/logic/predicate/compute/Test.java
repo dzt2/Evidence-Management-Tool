@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.emt.logic_form.formulation;
+package cn.edu.buaa.sei.emt.logic.predicate.compute;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -201,7 +201,6 @@ public class Test {
 		
 		return p;
 	}
-
 	public static LogicFormulation form4(){
 		LogicSpace lspace = new LogicSpace("logic");
 		PropositionVariable a = lspace.createPropositionVariable("A");

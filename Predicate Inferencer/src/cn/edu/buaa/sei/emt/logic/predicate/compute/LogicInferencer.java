@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.emt.logic_form.formulation;
+package cn.edu.buaa.sei.emt.logic.predicate.compute;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,25 +174,32 @@ public class LogicInferencer {
 		if(op instanceof Conjunction){
 			List<LogicFormulation> forms = ((Conjunction) op).getFormulations();
 			for(LogicFormulation form:forms)
-				if(!this.inference_formulation(form))
+				if(this.inference_formulation(form)==false)
 					return false;
 			return true;
 		}
 		if(op instanceof Disjunction){
 			List<LogicFormulation> forms = ((Disjunction) op).getFormulations();
 			for(LogicFormulation form:forms)
-				if(this.inference_formulation(form))
+				if(this.inference_formulation(form)==true)
 					return true;
 			return false;
 		}
-		if(op instanceof Negation)
-			return !this.inference_formulation(((Negation) op).getFormulation());
-		if(op instanceof Implication)
-			return !this.inference_formulation(((Implication) op).getPremise())||
-					this.inference_formulation(((Implication) op).getConclusion());
+		if(op instanceof Negation){
+			Boolean r = this.inference_formulation(((Negation) op).getFormulation());
+			if(r==null)return null;
+			return !r;
+		}
+		if(op instanceof Implication){
+			Boolean r1 = this.inference_formulation(((Implication) op).getPremise());
+			Boolean r2 = this.inference_formulation(((Implication) op).getConclusion());
+			if(r1==null||r2==null)return null;
+			return (!r1)||r2;
+		}
 		if(op instanceof Equivalence){
 			Boolean r1 = this.inference_formulation(((Equivalence) op).getFormulation1());
 			Boolean r2 = this.inference_formulation(((Equivalence) op).getFormulation2());
+			if(r1==null||r2==null)return null;
 			return (r1&&(!r2))||((!r1)&&r2);
 		}
 		

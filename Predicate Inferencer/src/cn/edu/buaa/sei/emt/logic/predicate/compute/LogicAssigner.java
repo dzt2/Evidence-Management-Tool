@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.emt.logic_form.formulation;
+package cn.edu.buaa.sei.emt.logic.predicate.compute;
 
 import java.util.List;
 

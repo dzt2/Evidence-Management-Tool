@@ -54,7 +54,7 @@
     </classifiers>
   </extensions>
   <extensions id="value">
-    <classifiers xsi:type="lmfmeta:Type" name="Value"/>
+    <classifiers xsi:type="lmfmeta:Type" abstract="true" name="Value"/>
     <classifiers xsi:type="lmfmeta:Type" superTypes="//@extensions.2/@classifiers.0" name="LObject">
       <attributes xsi:type="lmfmeta:PrimitiveAttribute" name="id" valueType="STRING"/>
     </classifiers>
