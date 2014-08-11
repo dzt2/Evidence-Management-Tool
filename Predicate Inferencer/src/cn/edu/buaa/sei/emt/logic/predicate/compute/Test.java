@@ -16,6 +16,7 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.Universal;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 import cn.edu.buaa.sei.lmf.LMFContext;
 import cn.edu.buaa.sei.lmf.ManagedObject;
+import cn.edu.buss.sei.emt.creator.LogicFormulationAccessor;
 
 public class Test {
 	public static void main(String[] args){

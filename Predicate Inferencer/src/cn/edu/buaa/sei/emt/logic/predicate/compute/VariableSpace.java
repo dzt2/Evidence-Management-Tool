@@ -16,6 +16,7 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 import cn.edu.buaa.sei.lmf.Type;
+import cn.edu.buss.sei.emt.creator.LogicAssigner;
 
 public class VariableSpace {
 	Map<String,Bindable> map = new HashMap<String,Bindable>();

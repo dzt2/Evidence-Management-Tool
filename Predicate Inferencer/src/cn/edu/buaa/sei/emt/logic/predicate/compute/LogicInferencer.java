@@ -26,6 +26,7 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Universal;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
+import cn.edu.buss.sei.emt.creator.LogicAssigner;
 
 public class LogicInferencer {
 	LogicFormulation formulation;
