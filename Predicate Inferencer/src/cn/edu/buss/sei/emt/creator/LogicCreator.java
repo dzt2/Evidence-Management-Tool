@@ -139,6 +139,35 @@ public class LogicCreator {
 		return true;
 	}
 
+	protected LogicFormulation removeFormulation(String name){
+		if(this.form_map.containsKey(name))
+			return this.form_map.remove(name);
+		else{
+			try {
+				throw this.getArgException("name", "removeFormulation", 
+						"try to remove undefined formulation \""+name+"\" in form_map");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	protected Bindable removeBindable(String name){
+		if(this.var_map.containsKey(name))
+			return this.var_map.remove(name);
+		else{
+			try {
+				throw this.getArgException("name", "removeBindable", 
+						"try to remove undefined bindable \""+name+"\" in var_map");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	/*
 	 *	Creator 
 	 */
@@ -277,7 +306,7 @@ public class LogicCreator {
 			 * Initial Internal Iterator: Using external names cannot find this iterator variable
 			 */
 			Variable var = LogicFormulationFactory.createVariable();
-			var.setName(name+".iter");
+			var.setName(name+"_iter");
 			domain.setIter(var);
 			
 			this.var_map.put(name, domain);
@@ -307,7 +336,7 @@ public class LogicCreator {
 		 *	Iterator Variable 
 		 */
 		Variable var = LogicFormulationFactory.createVariable();
-		var.setName(name+".iter");
+		var.setName(name+"_iter");
 		domain.setIter(var);
 		
 		this.var_map.put(name, domain);
