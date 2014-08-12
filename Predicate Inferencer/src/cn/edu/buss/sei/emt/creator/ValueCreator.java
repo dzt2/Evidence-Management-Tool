@@ -2,8 +2,9 @@ package cn.edu.buss.sei.emt.creator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
@@ -19,8 +20,8 @@ public class ValueCreator {
 	 *	Tool Functions 
 	 */
 	static final int MAX_TRY_TIMES = 16;
-	Set<String> objID = new HashSet<String>();
-	Set<String> relationID = new HashSet<String>();
+	Map<String,LObject> objID = new HashMap<String,LObject>();
+	Map<String,LRelation> relationID = new HashMap<String,LRelation>();
 	String creator_name;
 	static final BooleanObject TRUE= LogicFormulationFactory.createBooleanObject(),
 			FALSE= LogicFormulationFactory.createBooleanObject();
@@ -38,8 +39,88 @@ public class ValueCreator {
 	 *	Getter and Setter. 
 	 */
 	public String getName(){return this.creator_name;}
-	public Set<String> getObjectID(){return this.objID;}
-	public Set<String> getRelationID(){return this.relationID;}
+	public Set<String> getObjectID(){return this.objID.keySet();}
+	public Set<String> getRelationID(){return this.relationID.keySet();}
+	public LObject getObject(String id){
+		if(id==null||!this.objID.containsKey(id)){
+			try {
+				throw getArgException("id","getObject(id)",id+" has not been defined");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		return this.objID.get(id);
+	}
+	public LRelation getRelation(String name,List<LObject> elements){
+		String id = getRelationID(name,elements);
+		if(id==null){
+			try {
+				throw getArgException("name|elements","getRelation(name,elements)",
+						"Invalid argument to generate invalid ID: "+id);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(this.relationID.containsKey(id))
+			return this.relationID.get(id);
+		else{
+			try {
+				throw getArgException("name|elements","getRelation(name,elements)",
+						"relation \""+id+"\" have not been created.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	public Boolean removeObject(String id){
+		if(id==null||!this.objID.containsKey(id)){
+			try {
+				throw getArgException("id","removeObject(id)",
+						"LObject \""+id+"\" have not been created.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
+		this.objID.remove(id);
+		return true;
+	}
+	public Boolean removeObject(String name,List<LObject> elements){
+		String id = getRelationID(name,elements);
+		if(id==null){
+			try {
+				throw getArgException("name|elements","removeRelation(name,elements)",
+						"Invalid argument to generate invalid ID: "+id);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(this.relationID.containsKey(id)){
+			this.relationID.remove(id);
+			return true;
+		}
+		else{
+			try {
+				throw getArgException("name|elements","removeRelation(name,elements)",
+						"relation \""+id+"\" have not been created.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
 	
 	/*
 	 *	Tool Functions 
@@ -66,7 +147,7 @@ public class ValueCreator {
 		if(obj==null)return null;
 		for(int i=0;i<MAX_TRY_TIMES;i++){
 			String id = getNewID(obj);
-			if(!objID.contains(id))
+			if(!objID.containsKey(id))
 				return id;
 		}
 		try {
@@ -93,7 +174,22 @@ public class ValueCreator {
 		
 		return id.toString();
 	}
-	
+	static String getRelationID(String name,List<LObject> elements){
+		if(name==null||elements==null)return null;
+		StringBuilder id = new StringBuilder();
+		
+		id.append(name).append("(");
+		for(int i=0;i<elements.size();i++){
+			if(elements.get(i)!=null)
+				id.append(elements.get(i).getId());
+			else continue;
+			if(i<elements.size()-1)
+				id.append(",");
+		}
+		id.append(")");
+		
+		return id.toString();
+	}
 	
 	/*
 	 *	Creator Functions:
@@ -107,11 +203,11 @@ public class ValueCreator {
 		String id = getNextID(obj);
 		if(id==null)return null;
 		obj.setId(id);
-		objID.add(id);
+		objID.put(id, obj);
 		return obj;
 	}
 	public LObject createObject(String id){
-		if(id==null||objID.contains(id)){
+		if(id==null||objID.containsKey(id)){
 			try {
 				throw getArgException("id","createObject(id)","ID Conflict: "+id);
 			} catch (Exception e) {
@@ -123,7 +219,7 @@ public class ValueCreator {
 		
 		LObject obj = LogicFormulationFactory.createLObject();
 		obj.setId(id);
-		objID.add(id);
+		objID.put(id, obj);
 		return obj;
 	}
 	
@@ -162,7 +258,7 @@ public class ValueCreator {
 		}
 		
 		String id = getRelationID(r);
-		if(relationID.contains(id)){
+		if(relationID.containsKey(id)){
 			try {
 				throw getArgException("elements","createRelation(name,elements)",
 						"ID Conflicts in Relations: "+id);
@@ -172,6 +268,7 @@ public class ValueCreator {
 			}
 			return null;
 		}
+		relationID.put(id, r);
 		return r;
 	}
 	public LRelation createRelation(List<LObject> elements){

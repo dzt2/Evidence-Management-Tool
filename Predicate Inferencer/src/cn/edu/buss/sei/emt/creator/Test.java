@@ -1,9 +1,13 @@
 package cn.edu.buss.sei.emt.creator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import cn.edu.buaa.sei.emt.logic.predicate.compute.LogicInferencer;
 import cn.edu.buaa.sei.emt.logic.predicate.compute.LogicPrinter;
+import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Existential;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicExpression;
@@ -12,6 +16,7 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationTypeLoader;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Universal;
+import cn.edu.buaa.sei.emt.logic.predicate.core.Value;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 import cn.edu.buaa.sei.lmf.LMFContext;
 import cn.edu.buaa.sei.lmf.ManagedObject;
@@ -23,7 +28,7 @@ public class Test {
 		LMFContext.load(new LogicFormulationTypeLoader());
 		LMFContext.pack();
 		
-		test2();
+		assign1();
 	}
 	
 	public static void test1(){
@@ -144,4 +149,41 @@ public class Test {
 		
 		return ux;
 	}
+
+	public static void assign1(){
+		LogicCreator creator = new LogicCreator("creator");
+		
+		LogicFormulation P = form1(creator);
+		LogicPrinter printer = new LogicPrinter();
+		
+		System.out.println("Creating P: "+printer.printFormulation(P));
+		
+		BooleanObject TRUE = ValueCreator.getTrue();
+		BooleanObject FALSE = ValueCreator.getFalse();
+		
+		Map<String,Value> map = new HashMap<String,Value>();
+		
+		map.put("P.A",TRUE);
+		map.put("P._arg1", TRUE);
+		map.put("P.C.D", FALSE);
+		map.put("P._arg2.E", FALSE);
+		map.put("P.C.F.G", FALSE);
+		
+		LogicValueMapper mapper = new LogicValueMapper(P,map);
+		boolean flag = mapper.assign();
+		
+		System.out.println("Assignment: "+flag);
+		
+		LogicInferencer infer = new LogicInferencer();
+		infer.setFormulation(P);
+		Boolean result = infer.inference();
+		
+		System.out.println("Is that acceptable? "+result);
+	}
+	public static void assign2(){
+		
+	}
+	
+	
+	
 }
