@@ -1,6 +1,5 @@
 package cn.edu.buss.sei.emt.creator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -151,7 +150,7 @@ public class LogicValueMapper {
 				}
 			}
 			else if(elm instanceof PredicateFormulation){
-				if((value instanceof LRelationSet)||(value instanceof List)){
+				if(value instanceof LRelationSet){
 					continue;
 				}
 				else{
@@ -181,7 +180,6 @@ public class LogicValueMapper {
 		return true;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Boolean assign(){
 		if(!this.validity()){
 			try {
@@ -211,11 +209,7 @@ public class LogicValueMapper {
 				LogicAssigner.assignDiscourseDomain((DiscourseDomain)elm, (LSet)value);
 			}
 			else if(elm instanceof PredicateFormulation){
-				if(value instanceof List){
-					LogicAssigner.assignPredicateVariables((PredicateFormulation)elm, 
-							(List<LObject>)value);
-				}
-				else if(value instanceof LRelationSet){
+				if(value instanceof LRelationSet){
 					LogicAssigner.assignPredicateFormulation((PredicateFormulation)elm,
 							(LRelationSet)value);
 				}

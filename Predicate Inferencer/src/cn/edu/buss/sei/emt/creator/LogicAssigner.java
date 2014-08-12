@@ -38,6 +38,5 @@ public class LogicAssigner {
 		var.setValue(value);
 		var.setAssociated_relations(value);
 	}
-
 	
 }

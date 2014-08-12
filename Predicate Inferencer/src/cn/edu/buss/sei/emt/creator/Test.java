@@ -5,11 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.buaa.sei.emt.logic.predicate.compute.LogicInferencer;
-import cn.edu.buaa.sei.emt.logic.predicate.compute.LogicPrinter;
+import cn.edu.buaa.sei.emt.computation.ComputableAnalyzer;
+import cn.edu.buaa.sei.emt.computation.IMachine_Iterater;
+import cn.edu.buaa.sei.emt.computation.InferenceMachine;
+import cn.edu.buaa.sei.emt.computation.LogicPrinter;
 import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Existential;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LObject;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LRelation;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LRelationSet;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LSet;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicExpression;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulation;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationTypeLoader;
@@ -28,7 +34,7 @@ public class Test {
 		LMFContext.load(new LogicFormulationTypeLoader());
 		LMFContext.pack();
 		
-		assign1();
+		assign3();
 	}
 	
 	public static void test1(){
@@ -149,7 +155,21 @@ public class Test {
 		
 		return ux;
 	}
-
+	public static LogicFormulation form3(LogicCreator creator){
+		DiscourseDomain HLR = creator.createDiscourseDomain("HLR");
+		DiscourseDomain LLR = creator.createDiscourseDomain("LLR");
+		List<Variable> vars = new ArrayList<Variable>();
+		vars.add(HLR.getIter());vars.add(LLR.getIter());
+		PredicateFormulation trace = creator.createPredicate("traceable", vars);
+		
+		Existential Q = creator.createExistential(LLR, trace);
+		Universal P = creator.createUniversal("P", HLR, Q);
+		
+		return P;
+	}
+	
+	
+	
 	public static void assign1(){
 		LogicCreator creator = new LogicCreator("creator");
 		
@@ -174,16 +194,146 @@ public class Test {
 		
 		System.out.println("Assignment: "+flag);
 		
-		LogicInferencer infer = new LogicInferencer();
+		/*LogicInferencer infer = new LogicInferencer();
 		infer.setFormulation(P);
 		Boolean result = infer.inference();
 		
-		System.out.println("Is that acceptable? "+result);
+		System.out.println("Is that acceptable? "+result);*/
 	}
 	public static void assign2(){
 		
 	}
+	@SuppressWarnings("static-access")
+	public static void assign3(){
+		LogicCreator creator = new LogicCreator("creator");
+		LogicFormulation P = form3(creator);
+		LogicPrinter printer = new LogicPrinter();
+		
+		System.out.println("Complete to construct P:"+printer.printFormulation(P));
+		ValueCreator vcreator = new ValueCreator("value-space");
+		
+		LSet hlr_set = vcreator.createSet();
+		LSet llr_set = vcreator.createSet();
+		
+		ValueModifier.appendSet(hlr_set, vcreator.createObject("hlr1"));
+		ValueModifier.appendSet(hlr_set, vcreator.createObject("hlr2"));
+		ValueModifier.appendSet(hlr_set, vcreator.createObject("hlr3"));
+		ValueModifier.appendSet(hlr_set, vcreator.createObject("hlr4"));
+		ValueModifier.appendSet(hlr_set, vcreator.createObject("hlr5"));
+		
+		ValueModifier.appendSet(llr_set, vcreator.createObject("llr1"));
+		ValueModifier.appendSet(llr_set, vcreator.createObject("llr2"));
+		ValueModifier.appendSet(llr_set, vcreator.createObject("llr3"));
+		ValueModifier.appendSet(llr_set, vcreator.createObject("llr4"));
+		
+		System.out.println("\nCreating HLRs: "+hlr_set.getValues().size());
+		for(LObject val:hlr_set.getValues())
+			System.out.print(val.getId()+" ");
+		System.out.println("\nCreating LLRs: "+llr_set.getValues().size());
+		for(LObject val:llr_set.getValues())
+			System.out.print(val.getId()+" ");
+		
+		LRelationSet trace_map = vcreator.createRelationSet();
+		List<LObject> elements = new ArrayList<LObject>();
+		
+		elements.clear(); elements.add(hlr_set.getValues().get(0)); elements.add(llr_set.getValues().get(1));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));
+		
+		elements.clear(); elements.add(hlr_set.getValues().get(0)); elements.add(llr_set.getValues().get(2));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));
+		
+		elements.clear(); elements.add(hlr_set.getValues().get(1)); elements.add(llr_set.getValues().get(0));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));
+		
+		elements.clear(); elements.add(vcreator.getObject("hlr3")); elements.add(vcreator.getObject("llr3"));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));
+		
+		elements.clear(); elements.add(vcreator.getObject("hlr4")); elements.add(vcreator.getObject("llr1"));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));
+		
+		/*elements.clear(); elements.add(vcreator.getObject("hlr4")); elements.add(vcreator.getObject("llr2"));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));*/
+		
+		/*elements.clear(); elements.add(vcreator.getObject("hlr5")); elements.add(vcreator.getObject("llr3"));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));*/
+		
+		System.out.println("\n\nThe traceable relations: "+trace_map.getRelations().size());
+		for(int i=0;i<trace_map.getRelations().size();i++){
+			LRelation relation = trace_map.getRelations().get(i);
+			String name = relation.getName();
+			List<LObject> values = relation.getElements();
+			
+			StringBuilder code = new StringBuilder();
+			code.append(name).append("(");
+			for(int j=0;j<values.size();j++){
+				code.append(values.get(j).getId());
+				if(j<values.size()-1)
+					code.append(",");
+			}
+			code.append(")");
+			System.out.println("\t"+code.toString());
+		}
+		
+		Map<String,Value> val_map = new HashMap<String,Value>();
+		val_map.put("P.HLR", hlr_set);
+		val_map.put("P.scope.LLR", llr_set);
+		val_map.put("P.scope.scope", trace_map);
+		
+		LogicValueMapper mapper = new LogicValueMapper(P,val_map);
+		Boolean assign_res = mapper.assign();
+		
+		System.out.println("\n\nAssignment success? "+assign_res);
+		
+		
+		ComputableAnalyzer analyzer = new ComputableAnalyzer("assign3");
+		analyzer.setAnalyzed(P);
+		Boolean computable = analyzer.computable();
+		System.out.println("\nIs the P computable? "+computable);
+		
+		InferenceMachine im = new IMachine_Iterater("assign3_I");
+		im.setFormulation(P);
+		Boolean result = im.inference();
+		
+		System.out.println("Is the inference passed? "+result);
+	}
 	
+	
+	
+	
+	public static void analysis1(){
+		LogicCreator creator = new LogicCreator("creator");
+		
+		LogicFormulation P = form1(creator);
+		LogicPrinter printer = new LogicPrinter();
+		
+		System.out.println("Creating P: "+printer.printFormulation(P));
+		
+		BooleanObject TRUE = ValueCreator.getTrue();
+		BooleanObject FALSE = ValueCreator.getFalse();
+		
+		Map<String,Value> map = new HashMap<String,Value>();
+		
+		map.put("P.A",TRUE);
+		map.put("P._arg1", FALSE);
+		map.put("P.C.D", FALSE);
+		map.put("P._arg2.E", TRUE);
+		map.put("P.C.F.G", FALSE);
+		
+		LogicValueMapper mapper = new LogicValueMapper(P,map);
+		mapper.assign();
+		
+		ComputableAnalyzer analyzer = new ComputableAnalyzer("Analyzer Smith");
+		Boolean res = analyzer.computable(P);
+		System.out.println("Is that computable? "+res);
+		
+		IMachine_Iterater inferencer = new IMachine_Iterater("Dzt_Inferencer");
+		inferencer.setFormulation(P);
+		res = inferencer.inference();
+		System.out.println("Result: "+res);
+	}
+	public static void analysis2(){
+		
+	}
 	
 	
 }
