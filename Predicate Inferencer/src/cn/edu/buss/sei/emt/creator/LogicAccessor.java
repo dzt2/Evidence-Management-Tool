@@ -19,9 +19,8 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.Quantification;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Value;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 
-public class LogicFormulationAccessor {
-	
-	public static final String SPLIT = ".";
+public class LogicAccessor {
+public static final String SPLIT = ".";
 	
 	public static final String ARG_PREFIX = "_arg";
 	public static final String NEG_CHILD = "child";
@@ -44,7 +43,7 @@ public class LogicFormulationAccessor {
 	static Exception getArgException(String args,String func,String reason){
 		StringBuilder code = new StringBuilder();
 		code.append("Type: Argument Errors: ");
-		code.append("argument <"+args).append(">");
+		code.append("\nArgument <"+args).append(">");
 		code.append(" in function <").append(func).append(">");
 		code.append("\nReason: ").append(reason);
 		return new Exception(code.toString());
@@ -387,5 +386,4 @@ public class LogicFormulationAccessor {
 		}
 		return null;
 	}
-	
 }

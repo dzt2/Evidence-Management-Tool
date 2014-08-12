@@ -34,27 +34,27 @@ public class Test {
 		System.out.println(printer.printFormulation(p));
 		
 		String id = "P.A";
-		LogicFormulation form = (LogicFormulation) LogicFormulationAccessor.getElementByName(id, p);
+		LogicFormulation form = (LogicFormulation) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+" --> "+form.getName());
 		
 		id = "P._arg2";
-		form = (LogicFormulation) LogicFormulationAccessor.getElementByName(id, p);
+		form = (LogicFormulation) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+" --> "+form.getName());
 		
 		id = "P.C";
-		form = (LogicFormulation) LogicFormulationAccessor.getElementByName(id, p);
+		form = (LogicFormulation) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+" --> "+form.getName());
 		
 		id = "P._arg2.E";
-		form = (LogicFormulation) LogicFormulationAccessor.getElementByName(id, p);
+		form = (LogicFormulation) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+" --> "+form.getName());
 		
 		id = "P.C.F.child";
-		form = (LogicFormulation) LogicFormulationAccessor.getElementByName(id, p);
+		form = (LogicFormulation) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+" --> "+form.getName());
 		
 		id = "P";
-		form = (LogicFormulation) LogicFormulationAccessor.getElementByName(id, p);
+		form = (LogicFormulation) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+" --> "+form.getName());
 	}
 	public static void test2(){
@@ -65,43 +65,43 @@ public class Test {
 		System.out.println(printer.printFormulation(p));
 		
 		String id = "R";
-		ManagedObject obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		ManagedObject obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.domain";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.X";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope.Y";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope.scope";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope.scope.P";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope.scope._arg1";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope.scope.P._arg0";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 		id = "R.scope.scope.P.Y_iter";
-		obj = (ManagedObject) LogicFormulationAccessor.getElementByName(id, p);
+		obj = (ManagedObject) LogicAccessor.getElementByName(id, p);
 		System.out.println(id+"-->"+obj.type().getFullName());
 		
 	}

@@ -15,20 +15,13 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Universal;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 import cn.edu.buaa.sei.lmf.LMFContext;
-import cn.edu.buaa.sei.lmf.ManagedObject;
-import cn.edu.buss.sei.emt.creator.LogicFormulationAccessor;
 
 public class Test {
 	public static void main(String[] args){
 		LMFContext.load(new LogicFormulationTypeLoader());
 		LMFContext.pack();
 		
-		LogicFormulation f = form4();
-		String path = "p"+LogicFormulationAccessor.SPLIT + LogicFormulationAccessor.ARG_PREFIX +  "0"
-				+ LogicFormulationAccessor.SPLIT + LogicFormulationAccessor.ARG_PREFIX+"1";
-		ManagedObject obj = (ManagedObject) LogicFormulationAccessor.getElementByName(path, f);
 		
-		System.out.println(path + "-->" + "Object Type: "+obj.type().getFullName());
 		
 	}
 	
