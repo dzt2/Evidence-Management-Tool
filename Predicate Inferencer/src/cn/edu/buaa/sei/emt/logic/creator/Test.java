@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.edu.buaa.sei.emt.logic.computer.ComputableAnalyzer;
 import cn.edu.buaa.sei.emt.logic.computer.IMachine_Iterater;
@@ -34,7 +35,18 @@ public class Test {
 		LMFContext.load(new LogicFormulationTypeLoader());
 		LMFContext.pack();
 		
-		assign3();
+		LogicCreator creator = new LogicCreator("test_III");
+		LogicFormulation p = form2(creator);
+		LogicPrinter printer = new LogicPrinter();
+		System.out.println(printer.printFormulation(p)+"\n");
+		
+		PathGenerator generator = new PathGenerator("Searcher Simon");
+		generator.setContext(p);
+		
+		Set<String> ids = generator.getAllIDs();
+		for(String id:ids){
+				System.out.println(id);
+		}
 	}
 	
 	public static void test1(){

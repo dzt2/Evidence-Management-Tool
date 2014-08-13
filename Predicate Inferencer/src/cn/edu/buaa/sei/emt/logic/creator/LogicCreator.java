@@ -58,7 +58,7 @@ public class LogicCreator {
 		}
 		StringBuilder id = new StringBuilder();
 		long code = obj.hashCode() + Calendar.getInstance().getTimeInMillis();
-		id.append(obj.type().getFullName()+"["+code+"]");		
+		id.append(obj.type().getSimpleName()+"["+code+"]");		
 		return id.toString();
 	}
 	@SuppressWarnings("rawtypes")
