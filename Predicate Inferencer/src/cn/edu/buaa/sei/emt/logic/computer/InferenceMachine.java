@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.emt.computation;
+package cn.edu.buaa.sei.emt.logic.computer;
 
 import cn.edu.buaa.sei.emt.logic.predicate.core.Bindable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulation;

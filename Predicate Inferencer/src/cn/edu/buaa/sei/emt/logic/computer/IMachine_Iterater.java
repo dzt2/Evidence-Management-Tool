@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.emt.computation;
+package cn.edu.buaa.sei.emt.logic.computer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.edu.buaa.sei.emt.logic.creator.LogicAccessor;
+import cn.edu.buaa.sei.emt.logic.creator.LogicAssigner;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Bindable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Conjunction;
@@ -28,8 +30,6 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.Quantification;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Universal;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Value;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
-import cn.edu.buss.sei.emt.creator.LogicAccessor;
-import cn.edu.buss.sei.emt.creator.LogicAssigner;
 
 public class IMachine_Iterater implements InferenceMachine{
 	
@@ -178,11 +178,8 @@ public class IMachine_Iterater implements InferenceMachine{
 	@Override
 	public Boolean inference() {
 		// TODO Auto-generated method stub
-		if(this.computable()){
-			this.ready();
-			return this.computeFormulation(form);
-		}
-		return null;
+		this.ready();
+		return this.computeFormulation(form);
 	}
 	
 	Map<PredicateFormulation,Map<String,LRelation>> relation_searcher =

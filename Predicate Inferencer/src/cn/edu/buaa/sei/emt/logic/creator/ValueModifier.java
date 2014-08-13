@@ -1,4 +1,4 @@
-package cn.edu.buss.sei.emt.creator;
+package cn.edu.buaa.sei.emt.logic.creator;
 
 import cn.edu.buaa.sei.emt.logic.predicate.core.LObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LRelation;

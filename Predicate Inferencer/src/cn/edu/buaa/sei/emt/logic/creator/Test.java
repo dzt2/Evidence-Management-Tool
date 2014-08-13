@@ -1,14 +1,14 @@
-package cn.edu.buss.sei.emt.creator;
+package cn.edu.buaa.sei.emt.logic.creator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.buaa.sei.emt.computation.ComputableAnalyzer;
-import cn.edu.buaa.sei.emt.computation.IMachine_Iterater;
-import cn.edu.buaa.sei.emt.computation.InferenceMachine;
-import cn.edu.buaa.sei.emt.computation.LogicPrinter;
+import cn.edu.buaa.sei.emt.logic.computer.ComputableAnalyzer;
+import cn.edu.buaa.sei.emt.logic.computer.IMachine_Iterater;
+import cn.edu.buaa.sei.emt.logic.computer.InferenceMachine;
+import cn.edu.buaa.sei.emt.logic.computer.LogicPrinter;
 import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Existential;
@@ -28,7 +28,7 @@ import cn.edu.buaa.sei.lmf.LMFContext;
 import cn.edu.buaa.sei.lmf.ManagedObject;
 
 public class Test {
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LMFContext.load(new LogicFormulationTypeLoader());
@@ -168,8 +168,6 @@ public class Test {
 		return P;
 	}
 	
-	
-	
 	public static void assign1(){
 		LogicCreator creator = new LogicCreator("creator");
 		
@@ -254,8 +252,8 @@ public class Test {
 		/*elements.clear(); elements.add(vcreator.getObject("hlr4")); elements.add(vcreator.getObject("llr2"));
 		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));*/
 		
-		/*elements.clear(); elements.add(vcreator.getObject("hlr5")); elements.add(vcreator.getObject("llr3"));
-		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));*/
+		elements.clear(); elements.add(vcreator.getObject("hlr5")); elements.add(vcreator.getObject("llr3"));
+		ValueModifier.appendLRelationSet(trace_map, vcreator.createRelation("traceable",elements));
 		
 		System.out.println("\n\nThe traceable relations: "+trace_map.getRelations().size());
 		for(int i=0;i<trace_map.getRelations().size();i++){
@@ -292,13 +290,10 @@ public class Test {
 		
 		InferenceMachine im = new IMachine_Iterater("assign3_I");
 		im.setFormulation(P);
-		Boolean result = im.inference();
+		Boolean result = im.safeInference();
 		
 		System.out.println("Is the inference passed? "+result);
 	}
-	
-	
-	
 	
 	public static void analysis1(){
 		LogicCreator creator = new LogicCreator("creator");

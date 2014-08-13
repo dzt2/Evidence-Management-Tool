@@ -1,4 +1,4 @@
-package cn.edu.buss.sei.emt.creator;
+package cn.edu.buaa.sei.emt.logic.creator;
 
 import cn.edu.buaa.sei.emt.logic.predicate.core.Conjunction;
 import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
