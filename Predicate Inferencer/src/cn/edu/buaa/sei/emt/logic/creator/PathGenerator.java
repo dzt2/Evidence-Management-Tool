@@ -662,8 +662,48 @@ public class PathGenerator {
 		return this.processDiscourseDomain(domain)&&this.processFormulation(scope);
 	}
 	
-	
-	
-	
+	public Boolean validate(){
+		if(this.context==null)return false;
+		
+		// verify the map.
+		Set<String> ids = this.map.keySet();
+		for(String id:ids){
+			if(!this.match(id, this.map.get(id))){
+				try {
+					throw this.getArgException("id in map", "validate()", id+" generated failed");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return false;
+			}
+		}
+		
+		Set<Object> objs = this.reMap.keySet();
+		for(Object obj:objs){
+			ids = this.reMap.get(obj);
+			if(ids==null||ids.isEmpty()){
+				try {
+					throw this.getArgException("reMap", "validate()", "no id is generated for object");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return false;
+			}
+			for(String id:ids)
+				if(this.map.get(id)!=obj){
+					try {
+						throw this.getArgException("map-reMap", "validate()", id+" match failure between map and reMap");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return false;
+				}
+		}
+		
+		return true;
+	}
 	
 }

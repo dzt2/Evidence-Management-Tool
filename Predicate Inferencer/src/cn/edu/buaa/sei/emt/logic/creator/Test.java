@@ -36,7 +36,7 @@ public class Test {
 		LMFContext.pack();
 		
 		LogicCreator creator = new LogicCreator("test_III");
-		LogicFormulation p = form2(creator);
+		LogicFormulation p = form3(creator);
 		LogicPrinter printer = new LogicPrinter();
 		System.out.println(printer.printFormulation(p)+"\n");
 		
@@ -44,9 +44,11 @@ public class Test {
 		generator.setContext(p);
 		
 		Set<String> ids = generator.getAllIDs();
-		for(String id:ids){
-				System.out.println(id);
-		}
+		for(String id:ids)
+			System.out.println(id);
+		
+		Boolean res = generator.validate();
+		System.out.println("\nValidation passed? "+res);
 	}
 	
 	public static void test1(){
