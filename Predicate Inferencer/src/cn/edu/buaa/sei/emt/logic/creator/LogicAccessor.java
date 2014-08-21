@@ -42,10 +42,10 @@ public static final String SPLIT = ".";
 	
 	static Exception getArgException(String args,String func,String reason){
 		StringBuilder code = new StringBuilder();
-		code.append("Type: Argument Errors: ");
-		code.append("\nArgument <"+args).append(">");
+		code.append("Accessor found errors: ");
+		code.append("\n\tArgument <"+args).append(">");
 		code.append(" in function <").append(func).append(">");
-		code.append("\nReason: ").append(reason);
+		code.append("\n\tReason: ").append(reason);
 		return new Exception(code.toString());
 	}
 	

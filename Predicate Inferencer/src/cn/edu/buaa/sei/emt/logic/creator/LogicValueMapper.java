@@ -178,8 +178,7 @@ public class LogicValueMapper {
 		}
 		
 		return true;
-	}
-	
+	}	
 	public Boolean assign(){
 		if(!this.validity()){
 			try {

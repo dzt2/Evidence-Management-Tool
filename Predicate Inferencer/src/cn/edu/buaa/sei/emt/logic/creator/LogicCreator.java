@@ -168,6 +168,10 @@ public class LogicCreator {
 		return null;
 	}
 	
+	public void clear(){
+		this.form_map.clear();
+		this.var_map.clear();
+	}
 	/*
 	 *	Creator 
 	 */
