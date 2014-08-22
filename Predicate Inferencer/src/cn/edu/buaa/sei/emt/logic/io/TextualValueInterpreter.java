@@ -18,6 +18,8 @@ public class TextualValueInterpreter implements ValueInterpreter{
 	public static final char SET_DOT = ';';
 	public static final char RELATION_DOT=',';
 	public static final String RELATION_NAME = "_relation";
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
 	
 	String name;
 	ValueCreator creator = new ValueCreator("value_creator");
@@ -50,6 +52,8 @@ public class TextualValueInterpreter implements ValueInterpreter{
 		if(type==null){
 			throw this.getArgException("text", "isValid(text)", "Type interpreted failed");
 		}
+		
+		text=text.trim();
 		
 		if(type==ValueType.LObject){return true;}
 		else if(type==ValueType.LRelation){
@@ -170,6 +174,7 @@ public class TextualValueInterpreter implements ValueInterpreter{
 		return ValueType.LObject;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public Value interprete(String text) throws Exception{
 		// TODO Auto-generated method stub
@@ -177,10 +182,16 @@ public class TextualValueInterpreter implements ValueInterpreter{
 			throw this.getArgException("text", "interprete(text)", "generate Value failed: "+text);
 		}
 		
+		text = text.trim();
+		
 		ValueType type = this.getType(text);
 		if(type==ValueType.LObject){
 			LObject val = null;
 			String id = text.trim();
+			
+			if(TRUE.equals(id))return this.creator.getTrue();
+			if(FALSE.equals(id))return this.creator.getFalse();
+			
 			if(this.creator.containObject(id))return this.creator.getObject(id);
 			val = this.creator.createObject(id);
 			return val;
@@ -188,7 +199,7 @@ public class TextualValueInterpreter implements ValueInterpreter{
 		else if(type==ValueType.LRelation){
 			int s = text.indexOf(RELATION_LEFT);
 			int e = text.lastIndexOf(RELATION_RIGHT);
-			String name = text.substring(0, s);
+			String name = text.substring(0, s).trim();
 			String etext = text.substring(s+1, e).trim();
 			
 			char[] dot = {RELATION_DOT};
@@ -198,7 +209,7 @@ public class TextualValueInterpreter implements ValueInterpreter{
 			List<LObject> elements = new ArrayList<LObject>();
 			if(items!=null){
 				for(int i=0;i<items.length;i++){
-					Value item = this.interprete(items[i]);
+					Value item = this.interprete(items[i].trim());
 					if(item==null||!(item instanceof LObject))
 						throw this.getArgException("items["+i+"]", "interprete(text)", 
 								"items["+i+"] is invalid text in relation: "+items[i]);
@@ -232,7 +243,6 @@ public class TextualValueInterpreter implements ValueInterpreter{
 				}
 			}
 			
-			@SuppressWarnings("static-access")
 			LSet val = this.creator.createSet();
 			for(LObject element:elements)
 				val.getValues().add(element);
@@ -259,7 +269,6 @@ public class TextualValueInterpreter implements ValueInterpreter{
 				}
 			}
 			
-			@SuppressWarnings("static-access")
 			LRelationSet relations = this.creator.createRelationSet();
 			for(LRelation element:elements)
 				relations.getRelations().add(element);

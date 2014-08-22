@@ -397,8 +397,12 @@ public class IMachine_Iterater implements InferenceMachine{
 			List<LogicFormulation> children = ((Conjunction) op).getFormulations();
 			for(int i=0;i<children.size();i++){
 				Boolean res = this.computeFormulation(children.get(i));
+				
+				if(res==null){
+					containNull=true;
+					continue;
+				}
 				if(res==false)return false;
-				else if(res==null)containNull=true;
 			}
 			
 			if(!containNull)return true;
@@ -410,8 +414,10 @@ public class IMachine_Iterater implements InferenceMachine{
 			List<LogicFormulation> children = ((Disjunction) op).getFormulations();
 			for(int i=0;i<children.size();i++){
 				Boolean res = this.computeFormulation(children.get(i));
+				
+				if(res==null){containNull=true;continue;}
 				if(res==true)return true;
-				else if(res==null)containNull=true;
+				
 			}
 			
 			if(!containNull)return false;
@@ -424,8 +430,8 @@ public class IMachine_Iterater implements InferenceMachine{
 		}
 		else if(op instanceof Implication){
 			Boolean res1 = this.computeFormulation(((Implication) op).getPremise());
+			if(res1==null){return null;}
 			if(res1==false)return true;
-			else if(res1==null)return null;
 			
 			return this.computeFormulation(((Implication) op).getConclusion());
 		}
@@ -504,8 +510,8 @@ public class IMachine_Iterater implements InferenceMachine{
 		for(LObject val:values){
 			LogicAssigner.assignVariable(u.getDomain().getIter(), val);
 			Boolean res = this.computeFormulation(u.getScope_formulation());
+			if(res==null){containNull=true;continue;}
 			if(res==false)return false;
-			else if(res==null)containNull = true;
 		}
 		if(containNull)return null;
 		else return true;
@@ -528,8 +534,9 @@ public class IMachine_Iterater implements InferenceMachine{
 		for(LObject val:values){
 			LogicAssigner.assignVariable(u.getDomain().getIter(), val);
 			Boolean res = this.computeFormulation(u.getScope_formulation());
+			if(res==null){containNull=true;continue;}
 			if(res==true)return true;
-			else if(res==null)containNull = true;
+			
 		}
 		if(containNull)return null;
 		else return false;

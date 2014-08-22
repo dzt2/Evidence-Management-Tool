@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssignerTextualAnalyzerImpl implements AssignerTextualAnalyzer{
-	public static final String END = ".";
+	public static final String END = "\n";
 	public static final String ASSIGN = "=";
 	
 	String text;
@@ -63,14 +63,15 @@ public class AssignerTextualAnalyzerImpl implements AssignerTextualAnalyzer{
 		for(int i=0;i<sentences.length;i++){
 			String sentence = sentences[i];
 			if(sentence==null||sentence.trim().length()==0){
-				try {
+				continue;
+				/*try {
 					throw this.getArgException("this.text.sentences["+i+"]",
 							"validate()", "Empty Sentence.");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return false;
+				return false;*/
 			}
 			sentence=sentence.trim();
 			if(sentence.indexOf(ASSIGN)<0){
@@ -105,7 +106,9 @@ public class AssignerTextualAnalyzerImpl implements AssignerTextualAnalyzer{
 		
 		String[] sentences = this.text.trim().split("\\"+END);
 		for(int i=0;i<sentences.length;i++){
-			String stmt = sentences[i].trim();
+			String stmt = sentences[i];
+			if(stmt==null||stmt.trim().length()==0)continue;
+			stmt = stmt.trim();
 			int k = stmt.indexOf(ASSIGN);
 			
 			String name = stmt.substring(0, k).trim();

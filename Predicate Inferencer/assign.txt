@@ -1,8 +1,4 @@
-a = 1.
-b = 12.
-b = x72j.
-c = 932.
-d = eoaep.
-
-l = 03882.
-
+A = false
+B =true
+D =  true
+F =  true

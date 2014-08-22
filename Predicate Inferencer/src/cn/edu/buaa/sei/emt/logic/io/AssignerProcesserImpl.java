@@ -4,7 +4,18 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.edu.buaa.sei.emt.logic.creator.LogicAccessor;
+import cn.edu.buaa.sei.emt.logic.creator.LogicAssigner;
+import cn.edu.buaa.sei.emt.logic.predicate.core.BooleanObject;
+import cn.edu.buaa.sei.emt.logic.predicate.core.DiscourseDomain;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LObject;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LRelationSet;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LSet;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulation;
+import cn.edu.buaa.sei.emt.logic.predicate.core.PredicateFormulation;
+import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
+import cn.edu.buaa.sei.emt.logic.predicate.core.Value;
+import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
+import cn.edu.buaa.sei.lmf.ManagedObject;
 
 public class AssignerProcesserImpl implements AssignerProcesser{
 	Map<String,Object> space;
@@ -24,6 +35,17 @@ public class AssignerProcesserImpl implements AssignerProcesser{
 		code.append(" in function <").append(func).append(">");
 		code.append("\n\tReason: ").append(reason);
 		return new Exception(code.toString());
+	}
+	Object getVariable(String name){
+		if(name==null)return null;
+		if(this.space.containsKey(name))return this.space.get(name);
+		else{
+			int k = name.indexOf("\\.");
+			if(k<0)return null;
+			Object obj = this.space.get(name.subSequence(0, k));
+			if(obj==null||!(obj instanceof LogicFormulation))return null;
+			return LogicAccessor.getElementByName(name, (LogicFormulation) obj);
+		}
 	}
 	
 	/*
@@ -116,7 +138,7 @@ public class AssignerProcesserImpl implements AssignerProcesser{
 		int k = name.indexOf("\\.");
 		if(k<0){
 			try {
-				throw this.getArgException("name", "validateVariable(name)", 
+				throw this.getArgException(name, "validateVariable(name)", 
 						name + "has not been found in space");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -172,10 +194,52 @@ public class AssignerProcesserImpl implements AssignerProcesser{
 		
 		return true;
 	}
-
+	
 	@Override
 	public void assign() {
-		// TODO Auto-generated method stub
+		if(!this.validate()){
+			try {
+				throw this.getArgException("???", "assign()", "validation failed");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		Set<String> names = this.assign_map.keySet();
+		
+		for(String name:names){
+			try {
+				String value = this.assign_map.get(name);
+				Object var = this.getVariable(name);
+				Value val = this.interpreter.interprete(value);
+				
+				if(var == null)
+					throw this.getArgException("name", "assign()", name+" was not found in space");
+				if(value == null)
+					throw this.getArgException("value[name]", "assign()", name+"\'s was generated failed.");
+				
+				if((var instanceof PropositionVariable)&&(val instanceof BooleanObject))
+					LogicAssigner.assignPropositionVariable((PropositionVariable)var, (BooleanObject)val);
+				else if((var instanceof Variable)&&(val instanceof LObject))
+					LogicAssigner.assignVariable((Variable)var, (LObject)val);
+				else if((var instanceof DiscourseDomain)&&(val instanceof LSet)){
+					LogicAssigner.assignDiscourseDomain((DiscourseDomain)var, (LSet)val);
+				}
+				else if((var instanceof PredicateFormulation)&&(val instanceof LRelationSet)){
+					LogicAssigner.assignPredicateFormulation((PredicateFormulation)var, (LRelationSet)val);
+				}
+				else{
+					throw this.getArgException(name, "assign()", 
+							"Type Assignment Error: "+((ManagedObject)var).type().getSimpleName()+" -- " + ((ManagedObject)val).type().getSimpleName());
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 }
