@@ -8,6 +8,7 @@ public interface SyntaxProcesser {
 	public void appendUnit(LogicSyntaxUnit unit);
 	public LogicSyntaxUnit getUnit(int i);
 	public LogicSyntaxUnit removeUnit(int i);
+	public void clear();
 	public int size();
 	
 	public Map<String,Object> compile();

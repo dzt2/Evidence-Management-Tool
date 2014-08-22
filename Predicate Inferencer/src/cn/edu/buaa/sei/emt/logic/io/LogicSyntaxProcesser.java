@@ -443,6 +443,12 @@ public class LogicSyntaxProcesser implements SyntaxProcesser{
 			this.interprete(unit, value, var_map);
 		}
 	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		this.units.clear();
+	}
 	
 	
 
