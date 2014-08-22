@@ -121,6 +121,11 @@ public class ValueCreator {
 		}
 	}
 	
+	public Boolean containObject(String id){return this.objID.containsKey(id);}
+	public Boolean containRelation(String name,List<LObject> elements){
+		String id = getRelationID(name,elements);
+		return this.relationID.containsKey(id);
+	}
 	
 	/*
 	 *	Tool Functions 
