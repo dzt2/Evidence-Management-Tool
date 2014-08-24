@@ -1,7 +1,4 @@
 A = true
-
-
-B =true
+B = false
 D =  true  
 F =  true
-
