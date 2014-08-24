@@ -34,12 +34,35 @@ public class LogicCreator {
 	
 	/*
 	 *	Tool Functions 
+	 *		1) getArgException(args,func,reason): return exception to report errors in code.
+	 *			args: the fault argument names.
+	 *			func: the function where faults happened.
+	 *			reason: what is the fault
+	 *			return: XXX <name> report errors:  argument <args> in function <func>. Reason: <reason>
+	 *		2) getNewID(obj)
+	 *			obj: a ManagedObject (LMF Domain-model instance)
+	 *			return: obj.type[<obj.hashCode+current_time>]
+	 *			exceptions:
+	 *				-ex1: obj = null
+	 *			Note: this function return ID for any object for one time, 
+	 *			and be used for generate a random ID for each object of LMF.
+	 *			It cannot be called by other creator functions directly.
+	 *		3) getNextID(obj,space)
+	 *			obj: a ManagedObject (LMF Domain-model instance)
+	 *			space: a map<String,ManagedObject>, it contains the pair of ID and its object.
+	 *			return: the next new ID of a given object.
+	 *			exceptions:
+	 *				-ex1: if the times to try new ID by getNewID(obj) more than MAX_ID_TIMES
+	 *			Note: this function try to generate new ID for an instance for at most MAX_ID_TIMES
+	 *			or until it, report errors -- the ID space has been used out. It can be directly 
+	 *			used by other creator functions.
+	 *
 	 */
 	static final int MAX_ID_TIMES = 16;
 	Exception getArgException(String args,String func,String reason){
 		StringBuilder code = new StringBuilder();
-		code.append("Argument Errors Found!");
-		code.append("\nType: Argument Errors: ");
+		code.append("Logic Creator "+creator_name+" report errors");
+		//code.append("\nType: Argument Errors: ");
 		code.append("\nArgument <"+args).append(">");
 		code.append(" in function <").append(func).append(">");
 		code.append("\nReason: ").append(reason);
@@ -73,7 +96,47 @@ public class LogicCreator {
 	}
 	
 	/*
-	 *	Setter & Getter 
+	 *	Setter & Getter Functions
+	 *		1) form_map<String,LogicFormulation>: manage logic formulations
+	 *			LogicExpression [Conjunction,Disjunction,Negation,Implication,Equivalence]
+	 *			Quantification  [Universal,Existential]
+	 *		2) var_map<String,LogicFormulation>: manage variables in formulation
+	 *			Variable, PropositionVariable
+	 *			PredicateFormulation [variables]
+	 *			DiscourseDomain [iter:Variable]
+	 *		3) Un-exception thrown functions:
+	 *			getName()
+	 *			getFormulationNames()
+	 *			getBindableName()
+	 *		4) Exception thrown functions:
+	 *			a. getFormulation(name)
+	 *				exceptions:
+	 *					-ex1: !this.form_map.contain(name) --> try to access un_defined formulation
+	 *			b. getBindable(name)
+	 *				exceptions:
+	 *					-ex1: !this.var_map.contain(name) --> try to access un_defined variable
+	 *			c. putFormulation(name,form)
+	 *				note: the function would put the name(ID) and form into form_map to be managed,
+	 *				while the old name(conflict) would be overwritten
+	 *				exception:
+	 *					-ex1: null name
+	 *					-ex2: null form
+	 *			d. putBindable(name,var)
+	 *				note: the function would put the name(ID) and form into var_map to be managed,
+	 *				while the old name(conflict) would be overwritten
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: null var
+	 *			e. removeFormulation(name)/removeBindable(name)
+	 *				note: the function would remove by using the reference ID (name)
+	 *				exceptions:
+	 *					-ex1: !this.form_map.contain(name)
+	 *						  !this.var_map.contain(name)
+	 *						  undefined formulation/variable cannot be removed from the creator space.
+	 *			d. clear()
+	 *				note: clear the form_map & var_map.
+	 *
+	 *
 	 */
 	public String getName(){return this.creator_name;}
 	public Set<String> getFormulationNames(){return this.form_map.keySet();}
@@ -174,12 +237,141 @@ public class LogicCreator {
 	}
 	/*
 	 *	Creator 
+	 *	==========================================================================================
+	 *		1) PropositionVariable
+	 *			a. createPropositionVariable(): 
+	 *				note: create a proposition variable with random ID (as its ID and name)
+	 *				exceptions: 
+	 *					-ex1: failed when ID space is used out
+	 *				othr: the new proposition with its random ID put into var_map, ID as its name
+	 *				 and returned
+	 *			b. createPropositionVariable(name):
+	 *				note: create a proposition variable with specified name (as its ID and name)
+	 *				exceptions:
+	 *					-ex1: null name --> invalid ID and name
+	 *					-ex2: used name --> invalid ID and name (used in var_map)
+	 *				othr: the new proposition variable is added into var_map, name as its name,
+	 *				 and returned.
+	 *	==========================================================================================
+	 *		2) Predicate Formulation
+	 *			a. createPredicate(name, vars)
+	 *				note: create a predicate formulation, put it into var_map, set its name as name
+	 *				manage it by ID (name) in the var_map, and set its variables as vars.
+	 *				exceptions:
+	 *					-ex1: null name --> invalid ID+name
+	 *					-ex2: used name --> invalid ID+name
+	 *					-ex3: null vars --> invalid variables List 
+	 *			b. createPredicate(name)
+	 *				note: createPredicate(name,[])
+	 *			c. createPredicate(vars)
+	 *				note: createPredicate(random_id,vars)
+	 *			d. createPredicate()
+	 *				note: createPredicate(random_id,[])
+	 *	==========================================================================================
+	 *		3) Variable
+	 *			a. createVariable(name)
+	 *				note: new var; var.name = name; var_map.put(name,var); return var.
+	 *					-ex1: null name --> invalid variable name
+	 *					-ex2: used name --> invalid variable name
+	 *			b. createVariable()
+	 *				note: createVariable(random_id)
+	 *				exceptions:
+	 *					-ex1: ID space is used out
+	 *	==========================================================================================
+	 *		4) DiscourseDomain
+	 *			a. createDiscourseDomain(name)
+	 *				note: new domain; domain.name = name; new var; domain.iter = var; 
+	 *					  var.name = domain.name + "_iter"; var_map.put(name,domain); 
+	 *					  return domain.
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *			b. createDiscourseDomain()
+	 *				note: createDiscourseDomain(random_id);
+	 *				exception: ID space is used out.
+	 * 	==========================================================================================
+	 *		5) LogicExpression(Conjunction) [Disjunction]
+	 *			a. createConjunction(name,children)
+	 *				note: new expr; expr.name = name; expr.op = new and; and.children = children; form_map.put(name,expr); return expr;
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *					-ex3: null children
+	 *			b. createConjunction(name)
+	 *				note: createConjunction(name,[])
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *			c. createConjunction(children)
+	 *				note: createConjunction(random_id,children);
+	 *				exceptions:
+	 *					-ex1: id space used out
+	 *					-ex2: null children
+	 *			d. createConjunction()
+	 *				note: createConjunction(random_id,children);
+	 *				exceptions:
+	 *					-ex1: id space used out
+	 *	==========================================================================================
+	 *		6) LogicExpression(Negation)
+	 *			a. createNegation(name,child)
+	 *				note: new expr; expr.name=name; expr.op=new not; not.child=child; form_map.put(name,child); return expr;
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *					{permit null child!!!}
+	 *			b. createNegation(name)
+	 *				note: createNegation(name,null)
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *			c. createNegation(child)
+	 *				note: createNegation(random_id,child)
+	 *				exceptions:
+	 *					-ex1: id space used out
+	 *			d. createNegation()	
+	 *				note: createNegation(random_id,null)
+	 *				exceptions:
+	 *					-ex1: id space used out
+	 *	==========================================================================================
+	 *		7) LogicExpression(Implication/Equivalence)
+	 *			a. createImplication(name,premise,conclusion)
+	 *				note: new expr; expr.name=name; expr.op=new impl; impl.premise=premise; impl.conclusion=conclusion; form_map.put(name,expr); return expr;
+	 *				exceptions:
+	 *					--ex1: null name
+	 *					--ex2: used name
+	 *					(permit null premise+conclusion)
+	 *			b. createImplication(name)
+	 *				note: createImplication(name,null,null);
+	 *				exceptions:	
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *			c. createImplication(premise,conclusion)
+	 *				note: createImplication(random_id,premise,conclusion)
+	 *				exceptions:
+	 *					-ex1: id space used out
+	 *			d. createImplication()
+	 *				note: createImplication(random_id,null.null)
+	 *				exceptions:
+	 *					-ex1: id space used out
+	 *	==========================================================================================
+	 *		8) Quantification(Universal/Equivalence)
+	 *			a. createUniversal(name,domain,scope)
+	 *				note: new u; u.name = name; u.domain = domain; u.scope = scope; form_map.put(name,u); return u;
+	 *				exceptions
+	 *					-ex1: null name	
+	 *					-ex2: used name
+	 *			b. createUniversal(name)
+	 *				note: createUniversal(name,null,null)
+	 *				exceptions:
+	 *					-ex1: null name
+	 *					-ex2: used name
+	 *
+	 *
 	 */
 	public PropositionVariable createPropositionVariable(){
 		PropositionVariable var = LogicFormulationFactory.createPropositionVariable();
 		try {
 			String name = this.getNextID(var, this.var_map);
-			
 			var.setName(name);
 			this.var_map.put(name, var);
 			
@@ -227,7 +419,7 @@ public class LogicCreator {
 		return null;
 	}
 	public PredicateFormulation createPredicate(String name){
-		if(this.var_map.containsKey(name)){
+		if(name==null||this.var_map.containsKey(name)){
 			try {
 				throw this.getArgException("name", "createPredicate(name)", 
 						"Conflict Name \""+name+"\"");
@@ -251,9 +443,19 @@ public class LogicCreator {
 			for(int i=0;i<vars.size();i++){
 				form.getVariables().add(vars.get(i));
 			}
+			return form;
 		}
 		
-		return form;
+		else{
+			try {
+				throw this.getArgException("vars", "createPredicate(name,vars)", 
+						"null vars is not permited to create a predicate");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 	public PredicateFormulation createPredicate(List<Variable> vars){
 		PredicateFormulation form = this.createPredicate();
@@ -261,10 +463,20 @@ public class LogicCreator {
 			for(int i=0;i<vars.size();i++){
 				form.getVariables().add(vars.get(i));
 			}
+			return form;
 		}
-		
-		return form;
+		else{
+			try {
+				throw this.getArgException("vars", "createPredicate(vars)",
+						"null variables is unpermitted");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
+	
 	
 	public Variable createVariable(){
 		Variable var = LogicFormulationFactory.createVariable();
@@ -298,6 +510,7 @@ public class LogicCreator {
 		this.var_map.put(name, var);
 		return var;
 	}
+	
 	
 	public DiscourseDomain createDiscourseDomain(){
 		DiscourseDomain domain = LogicFormulationFactory.createDiscourseDomain();
@@ -348,6 +561,7 @@ public class LogicCreator {
 	}
 	
 	
+	
 	LogicExpression createExpression(){
 		LogicExpression expr = LogicFormulationFactory.createLogicExpression();
 		
@@ -366,7 +580,7 @@ public class LogicCreator {
 		return null;
 	}
 	LogicExpression createExpression(String name){
-		if(this.form_map.containsKey(name)){
+		if(name==null||this.form_map.containsKey(name)){
 			try {
 				throw this.getArgException("name", "createExpression(name)", 
 						"Conflict Name \""+name+"\"");
@@ -384,6 +598,7 @@ public class LogicCreator {
 	}
 	
 	
+	
 	public LogicExpression createConjunction(){
 		LogicExpression expr = this.createExpression();
 		expr.setOperator(LogicFormulationFactory.createConjunction());
@@ -395,8 +610,17 @@ public class LogicCreator {
 		return expr;
 	}
 	public LogicExpression createConjunction(List<LogicFormulation> children){
-		LogicExpression expr = this.createConjunction();
+		if(children==null){
+			try {
+				throw this.getArgException("children", "createConjunction(children)", "Null children");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 		
+		LogicExpression expr = this.createConjunction();
 		if(children!=null){
 			Conjunction op = (Conjunction) expr.getOperator();
 			for(int i=0;i<children.size();i++){
@@ -406,6 +630,16 @@ public class LogicCreator {
 		return expr;
 	}
 	public LogicExpression createConjunction(String name,List<LogicFormulation> children){
+		if(children==null){
+			try {
+				throw this.getArgException("children", "createConjunction(name,children)", "Null children");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
 		LogicExpression expr = this.createConjunction(name);
 		
 		if(children!=null){
@@ -428,6 +662,16 @@ public class LogicCreator {
 		return expr;
 	}
 	public LogicExpression createDisjunction(List<LogicFormulation> children){
+		if(children==null){
+			try {
+				throw this.getArgException("children", "createDisjunction(children)", "Null children");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
 		LogicExpression expr = this.createDisjunction();
 		if(children!=null){
 			Disjunction op = (Disjunction) expr.getOperator();
@@ -437,6 +681,16 @@ public class LogicCreator {
 		return expr;
 	}
 	public LogicExpression createDisjuntion(String name,List<LogicFormulation> children){
+		if(children==null){
+			try {
+				throw this.getArgException("children", "createDisjunction(name,children)", "Null children");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
 		LogicExpression expr = this.createDisjunction(name);
 		if(children!=null){
 			Disjunction op = (Disjunction) expr.getOperator();
@@ -445,6 +699,7 @@ public class LogicCreator {
 		}
 		return expr;
 	}
+	
 	
 	public LogicExpression createNegation(){
 		LogicExpression expr = this.createExpression();
@@ -457,17 +712,38 @@ public class LogicCreator {
 		return expr;
 	}
 	public LogicExpression createNegation(LogicFormulation child){
+		/*if(child==null){
+			try {
+				throw this.getArgException("child", "createNegation(child)", "Null child");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}*/
+		
 		LogicExpression expr = this.createNegation();
 		Negation op = (Negation) expr.getOperator();
 		op.setFormulation(child);
 		return expr;
 	}
 	public LogicExpression createNegation(String name,LogicFormulation child){
+		/*if(child==null){
+			try {
+				throw this.getArgException("child", "createNegation(name,child)", "Null child");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}*/
+		
 		LogicExpression expr = this.createNegation(name);
 		Negation op = (Negation) expr.getOperator();
 		op.setFormulation(child);
 		return expr;
 	}
+	
 	
 	public LogicExpression createImplication(){
 		LogicExpression expr = this.createExpression();
@@ -499,6 +775,7 @@ public class LogicCreator {
 		return expr;
 	}
 	
+	
 	public LogicExpression createEquivalence(){
 		LogicExpression expr = this.createExpression();
 		expr.setOperator(LogicFormulationFactory.createEquivalence());
@@ -528,6 +805,7 @@ public class LogicCreator {
 		return expr;
 	}
 
+	
 	public Universal createUniversal(){
 		Universal u = LogicFormulationFactory.createUniversal();
 		
@@ -573,6 +851,7 @@ public class LogicCreator {
 		u.setDomain(domain);u.setScope_formulation(scope);
 		return u;
 	}
+	
 	
 	public Existential createExistential(){
 		Existential e = LogicFormulationFactory.createExistential();

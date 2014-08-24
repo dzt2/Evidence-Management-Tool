@@ -17,7 +17,12 @@ import cn.edu.buaa.sei.lmf.ManagedObject;
 
 public class ValueCreator {
 	/*
-	 *	Tool Functions 
+	 *	ValueCreator provide creator instance for creating and managed the generated instance in maps.
+	 *		-objID: Map<String,LObject>
+	 *			- manage the generated LObject, with no id conflicts.
+	 *		-relationID: Map<String,LRelation>
+	 *			- manage the generated LRelation, with no relation.name[relation.values] conflicts.
+	 *			- 
 	 */
 	static final int MAX_TRY_TIMES = 16;
 	Map<String,LObject> objID = new HashMap<String,LObject>();
@@ -168,12 +173,14 @@ public class ValueCreator {
 		StringBuilder id = new StringBuilder();
 		
 		id.append(r.getName()).append("(");
-		for(int i=0;i<r.getElements().size();i++){
-			if(r.getElements().get(i)!=null)
-				id.append(r.getElements().get(i).getId());
-			else continue;
-			if(i<r.getElements().size()-1)
-				id.append(",");
+		if(r.getElements()!=null){
+			for(int i=0;i<r.getElements().size();i++){
+				if(r.getElements().get(i)!=null)
+					id.append(r.getElements().get(i).getId());
+				else continue;
+				if(i<r.getElements().size()-1)
+					id.append(",");
+			}
 		}
 		id.append(")");
 		

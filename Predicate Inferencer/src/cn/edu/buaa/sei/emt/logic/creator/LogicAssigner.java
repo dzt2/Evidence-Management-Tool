@@ -12,6 +12,18 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.PropositionVariable;
 import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 
 public class LogicAssigner {
+	/*
+	 *	LogicAssigner provide static functions for assignment [allow null value]
+	 *	1. PropositionVariable := BooleanObject
+	 *		note: object + value + t_value
+	 *	2. Variable := LObject
+	 *		note: object + value
+	 * 	3. DiscourseDomain := LSet
+	 * 		note: value + set
+	 * 	4. PredicateFormulation := LRelationSet
+	 * 		note: associated_relations + value
+	 */
+	
 	public static void assignVariable(Variable var,LObject value){
 		if(var==null)return;
 		var.setValue(value);
@@ -27,14 +39,15 @@ public class LogicAssigner {
 		assignVariable(var,value);
 		var.setT_value(value);
 	}
-	public static void assignPredicateVariables(PredicateFormulation var,List<LObject> values){
+	@SuppressWarnings("unused")
+	private static void assignPredicateVariables(PredicateFormulation var,List<LObject> values){
 		if(var==null||values==null||var.getVariables().size()!=values.size())return;
 		List<Variable> vars = var.getVariables();
 		for(int i=0;i<vars.size();i++)
 			assignVariable(vars.get(i),values.get(i));
 	}
 	public static void assignPredicateFormulation(PredicateFormulation var,LRelationSet value){
-		if(var==null||value==null||value.getRelations().size()<1)return;
+		if(var==null||value==null)return;
 		var.setValue(value);
 		var.setAssociated_relations(value);
 	}

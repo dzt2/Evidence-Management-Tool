@@ -13,9 +13,17 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 
 public class LogicModifier {
 	
+	/*
+	 *	LogicModifier provides static functions for modify the attributes in logic formulation or values in variables 
+	 */
+	
+	/*
+	 *	Tool Functions 
+	 * 
+	 */
 	static Exception getArgException(String args,String func,String reason){
 		StringBuilder code = new StringBuilder();
-		code.append("Type: Argument Errors ");
+		code.append("Logic Modifier reports errors: ");
 		code.append("\nArgument <"+args).append(">");
 		code.append(" in function <").append(func).append(">");
 		code.append("\nReason: ").append(reason);
@@ -23,7 +31,79 @@ public class LogicModifier {
 	}
 	
 	/*
-	 *	Formulation Modifier: change formulations 
+	 *	Formulation Modifier: change formulations
+	 *	- setter/appender
+	 *		Null formulation/variables [subject] cannot be modified.
+	 *		Null [child] cannot be added/set in the subject.
+	 *		The failure above only return false as a result (no exception)
+	 *	- remover
+	 *		Null child/items in subject cannot be removed.
+	 *		Or throw exceptions.
+	 *	
+	 *	-only modify the attributes not values!
+	 *	=================================================Modifier=============================================
+	 *	1) modifyNegation(op,child)
+	 *		note: op.formulation = child.
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: null child
+	 *	2) modifyImplication(op,premise,conclusion)
+	 *		note: [!premise]op.premise = premise; [!conclusion]op.conclusion = conclusion;
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: null premise && null conclusion
+	 *	3) modifyEquivalence(op,f1,f2)
+	 *		note: [!f1]op.formulation1=f1;[!f2]op.formulation2=f2;
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: null f1 && null f2
+	 *	4) modifyQuantification(q,domain,scope)
+	 *		note: [!domain]q.domain=domain;[!scope]q.scope=scope;
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: null domain && null scope
+	 *	=================================================Appender=============================================
+	 *	1) appendConjunction(op,child) [Disjunction]
+	 *		note: [!child]op.children.add(child)
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: null child
+	 *	2) appendPredicate(p,var)
+	 *		note: [!var]p.variables.add(var);
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: null child
+	 *	=================================================Remover==============================================
+	 *	1) removeNegation(op)
+	 *		note: op.formulation = null || modifyNegation(op,null) [roll back]
+	 *		normal exceptions:
+	 *			-ex1: null op;
+	 *	2) removeImplication(op,premise,conclusion)
+	 *		note: [premise]op.premise=null;[conclusion]op.conclusion=null;
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: !premise && !conclusion
+	 *	3) removeEquivalence(op,f1,f2)
+	 *		note: [f1]op.formulation1=null;[f2]op.formulation2=null;
+	 *		normal exceptions:
+	 *			-ex1: null op
+	 *			-ex2: !f1 && !f2
+	 *	4) removeQuantification(q,domain,scope)
+	 *		note: [domain]q.domain=null;[scope]q.scope=null;
+	 *		normal exceptions:
+	 *			-ex1: null q
+	 *			-ex2: !domain && !scope
+	 *	5) removeConjunction(op,i) [Disjunction]
+	 *		note: op.children.remove(i);
+	 *		exceptions:
+	 *			-ex1: null op
+	 *			-ex2: i out of range
+	 *	6) removePredicate(p,i)
+	 *		note: p.variables.remove[i]
+	 *		exceptions:
+	 *			-ex1: null p
+	 *			-ex2: i out of range
+	 *
 	 */
 	public static Boolean modifyNegation(Negation op,LogicFormulation child){
 		if(op==null||child==null)return false;
