@@ -22,7 +22,8 @@ public class ValueCreator {
 	 *			- manage the generated LObject, with no id conflicts.
 	 *		-relationID: Map<String,LRelation>
 	 *			- manage the generated LRelation, with no relation.name[relation.values] conflicts.
-	 *			- 
+	 *			- the same relation name and variable names would conflict with each other. 
+	 *		-TRUE/FALSE: BooleanObject values.
 	 */
 	static final int MAX_TRY_TIMES = 16;
 	Map<String,LObject> objID = new HashMap<String,LObject>();
@@ -41,7 +42,30 @@ public class ValueCreator {
 	}
 	
 	/*
-	 *	Getter and Setter. 
+	 *	Getter and Remover. [un-changable] 
+	 *	---------------------------------------------------------------------------------
+	 *	1) -objID
+	 *		getObjectID(): return the set of all ID in objID map;
+	 *		getObject(id): return the object from objID by using id;
+	 *					   	-ex1:null id
+	 *					   	-ex2:undefined id
+	 *		removeObject(id): remove the object of id in objID map;
+	 *						-ex1: null id
+	 *						-ex2:undefined id
+	 *		containObject(id): return whether the objID contain id of object.
+	 *		clearObject(id): clear all the objects in current space objID
+	 *	---------------------------------------------------------------------------------
+	 *	2) relationID <generated>
+	 *		getRelationID(): return the set of all ID in relationID map 
+	 *		getRelation(id): return the relation with id in relationID
+	 *						-ex1: null id
+	 *						-ex2: undefined id
+	 *		removeRelation(id): remove the relation by using id in relationID
+	 *						-ex1: null id
+	 *						-ex2: undefined id
+	 *		containRelation(name,elements): return whether name[elements.id] exist in relationID
+	 *		clearRelations(): clear all the relations in relationID
+	 *	---------------------------------------------------------------------------------
 	 */
 	public String getName(){return this.creator_name;}
 	public Set<String> getObjectID(){return this.objID.keySet();}
@@ -132,12 +156,18 @@ public class ValueCreator {
 		return this.relationID.containsKey(id);
 	}
 	
+	public void clearObjects(){this.objID.clear();}
+	public void clearRelations(){this.relationID.clear();}
+	
 	/*
 	 *	Tool Functions 
+	 *	---------------------------------------------------------------------------------
+	 *	relation ID: r.name + ( + r.elements[i].id + )
+	 *	****** allow the elements is empty [] !!!!! ********** ==> name()
 	 */
 	static Exception getArgException(String args,String func,String reason){
 		StringBuilder code = new StringBuilder();
-		code.append("Type: Argument Errors: ");
+		code.append("Value Creator reports faults.");
 		code.append("\nArgument <"+args).append(">");
 		code.append(" in function <").append(func).append(">");
 		code.append("\nReason: ").append(reason);
@@ -153,20 +183,14 @@ public class ValueCreator {
 		
 		return id.toString();
 	}
-	String getNextID(ManagedObject obj){
+	String getNextID(ManagedObject obj) throws Exception{
 		if(obj==null)return null;
 		for(int i=0;i<MAX_TRY_TIMES;i++){
 			String id = getNewID(obj);
 			if(!objID.containsKey(id))
 				return id;
 		}
-		try {
-			throw getArgException("obj","getNextID(obj)","Object Name Space used out.");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		throw getArgException("obj","getNextID(obj)","Object Name Space used out.");
 	}
 	static String getRelationID(LRelation r){
 		if(r==null||r.getName()==null)return null;
@@ -209,14 +233,47 @@ public class ValueCreator {
 	 *		2. BooleanObject <TRUE,FALSE>
 	 *		3. LRelation
 	 *		4. LSet/LRelationSet
+	 *
+	 *	---------------------------------------------------------------------------------
+	 *	I. LObject
+	 *		I.1 createObject()
+	 *			note: id = nextID(); obj = new LObject; obj.id = id; objID.put(id,obj); return obj;
+	 *			-ex1: id space used out
+	 *		I.2 createObject(id)
+	 *			note: obj = new LObject; obj.id = id; objID.put(id,obj); return obj;
+	 *			-ex1: null id
+	 *			-ex2: exist id
+	 *	II. BooleanObject
+	 *		II.1 getTrue(): return BooleanObject with t_value = true
+	 *		II.2 getFalse(): return BooleanObject with t_value = false
+	 *	III. LSet/LRelationSet
+	 *		return empty set of LObject/LRelation
+	 *	IV. LRelation
+	 *		createRelation(name,elements)
+	 *			note: r = new LRelation; r.name = name; r.elements = elements; id = getRelationID(r); 
+	 *				relationID.put(id,r); return r;
+	 *			-ex1: null name
+	 *			-ex2: null elements
+	 *			-ex3: elements.contain(null)
+	 *			-ex4: exist id
+	 *		createRelation(elements)
+	 *			note: createRelation("value.LObject",elements)
+	 *		createRelation(name)
+	 *			note: createRelation(name,[])
+	 *
 	 */
 	public LObject createObject(){
-		LObject obj = LogicFormulationFactory.createLObject();
-		String id = getNextID(obj);
-		if(id==null)return null;
-		obj.setId(id);
-		objID.put(id, obj);
-		return obj;
+		try {
+			LObject obj = LogicFormulationFactory.createLObject();
+			String id = getNextID(obj);
+			obj.setId(id);
+			objID.put(id, obj);
+			return obj;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	public LObject createObject(String id){
 		if(id==null||objID.containsKey(id)){
@@ -252,6 +309,7 @@ public class ValueCreator {
 			}
 			return null;
 		}
+		
 		LRelation r = LogicFormulationFactory.createLRelation();
 		r.setName(name);
 		for(int i=0;i<elements.size();i++){
@@ -283,8 +341,10 @@ public class ValueCreator {
 		relationID.put(id, r);
 		return r;
 	}
-	public LRelation createRelation(List<LObject> elements){
-		if(elements==null||elements.size()<1){
+	@SuppressWarnings("unused")
+	private LRelation createRelation(List<LObject> elements){
+		return createRelation(LObject.TYPE_NAME,elements);
+		/*if(elements==null||elements.size()<1){
 			try {
 				throw getArgException("elements","createRelation()",
 						"the elements cannot be null or empty!");
@@ -295,9 +355,10 @@ public class ValueCreator {
 			return null;
 		}
 		String name = LObject.TYPE_NAME;
-		return createRelation(name,elements);
+		return createRelation(name,elements);*/
 	}
-	public LRelation createRelation(String name){
+	@SuppressWarnings("unused")
+	private LRelation createRelation(String name){
 		List<LObject> elements = new ArrayList<LObject>();
 		return createRelation(name,elements);
 	}

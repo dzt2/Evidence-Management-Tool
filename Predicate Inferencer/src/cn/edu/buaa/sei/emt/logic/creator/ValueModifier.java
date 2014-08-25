@@ -6,10 +6,15 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.LRelationSet;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LSet;
 
 public class ValueModifier {
+	/*
+	 *	ValueModifier provide static functions 
+	 */
+	private ValueModifier(){}
 	
+	// Tool Functions
 	static Exception getArgException(String args,String func,String reason){
 		StringBuilder code = new StringBuilder();
-		code.append("Type: Argument Errors: ");
+		code.append("Logic Modifier reports errors. ");
 		code.append("\nArgument <"+args).append(">");
 		code.append(" in function <").append(func).append(">");
 		code.append("\nReason: ").append(reason);
@@ -21,6 +26,38 @@ public class ValueModifier {
 	 *		1. LRelation
 	 *		2. LSet
 	 *		3. LRelationSet
+	 *	-------------------------------------------------------------------------------
+	 *	LSet (similar with LRelationSet)
+	 *		1. appendSet(set,obj)
+	 *			note: set.add(obj)
+	 *			****: do not validate whether obj has been added in set. [effective]
+	 *			-ex1: null set
+	 *			-ex2: null obj
+	 *		2. removeSet(set,obj)
+	 *			note: set.remove(obj);
+	 *			****: remove the first obj in list.
+	 *			-ex1: null set
+	 *			-ex2: null obj
+	 *			-ex3: !set.contain(obj)
+	 *		3. clearSet(set)
+	 *			note: set.clear()
+	 *			-ex1: null set
+	 *
+	 *	-------------------------------------------------------------------------------
+	 *	LRelation
+	 *		1. appendRelation(r,e)
+	 *			note: r.getElements().add(e);
+	 *			-ex1: null r
+	 *			-ex2: null e
+	 *		2. removeRelation(r,i)
+	 *			note: r.getElements().remove(i)
+	 *			-ex1: null r
+	 *			-ex2: i out of range
+	 *		3. clearRelation(r)
+	 *			note: r.getElements().clear();
+	 *			-ex1: null r
+	 *
+	 *	-------------------------------------------------------------------------------
 	 */
 	public static Boolean appendSet(LSet set, LObject obj){
 		if(set==null||obj==null){
@@ -47,22 +84,6 @@ public class ValueModifier {
 		set.getValues().add(obj);
 		return true;
 	}
-	/*public static Boolean removeSet(LSet set, int i){
-		if(set==null)return false;
-		if(i<0||i>=set.getValues().size()){
-			try {
-				throw getArgException("i","removedSet(set,i)",
-						i+" have been out of range: size = "+set.getValues().size());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
-		}
-		
-		set.getValues().remove(i);
-		return true;
-	}*/
 	public static Boolean removeSet(LSet set,LObject obj){
 		if(set==null||obj==null)return false;
 		if(set.getValues().contains(obj)){
@@ -214,7 +235,6 @@ public class ValueModifier {
 			}
 			return false;
 		}
-		
 		r.getElements().clear();
 		return true;
 	}

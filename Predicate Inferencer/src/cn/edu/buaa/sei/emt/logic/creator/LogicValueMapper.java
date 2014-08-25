@@ -16,6 +16,14 @@ import cn.edu.buaa.sei.emt.logic.predicate.core.Variable;
 import cn.edu.buaa.sei.lmf.ManagedObject;
 
 public class LogicValueMapper {
+	
+	/*
+	 *	LogicValueMapper provide functions for mapping values into variables in formulation
+	 *		-form: the target <formulation>
+	 *		-map:  the source <value> 
+	 * 		#objective: set the value in map into the variables in formulation.
+	 */
+	
 	LogicFormulation form;
 	Map<String,Value> map;
 	
@@ -47,6 +55,18 @@ public class LogicValueMapper {
 	
 	/*
 	 *	Validity Verification: check whether the value mapper could success.
+	 *	-----------------------------------------------------------------------------
+	 *	I. validate()
+	 *		inner function called in the initial of the assign()
+	 *		-ex1: null form
+	 *		-ex2: null map
+	 *		-ex3: map.containKey(null)
+	 *		-ex4: map.containValue(null)
+	 *		-ex5: id <path errors> ==> Logic Accessor
+	 *		-ex6: elm<id> is element that cannot be assigned.
+	 *		-ex7: elm<id> and value ==> type unmatched
+	 *	II. assign()
+	 *		for(id:map) {elm = form.accesser(id); assign(elm,map[id]);
 	 */
 	Boolean validity(){
 		if(form==null||map==null){
