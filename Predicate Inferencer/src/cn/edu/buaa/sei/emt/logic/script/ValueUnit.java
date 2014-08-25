@@ -1,0 +1,59 @@
+package cn.edu.buaa.sei.emt.logic.script;
+
+public class ValueUnit {
+	public static enum ValueType {Bool,Object,Relation,Set,RelationSet};
+	
+	String name;
+	ValueType type;
+	String value;
+	
+	public ValueUnit(String name,ValueType type,String value) throws Exception{
+		this.setName(name);
+		this.setValue(type, value);
+	}
+	
+	/*
+	 *	Tool Functions 
+	 */
+	Exception getArgException(String args,String func,String reason){
+		StringBuilder code = new StringBuilder();
+		code.append("Value Unit generation failed.");
+		code.append("\n\tArgument <"+args).append(">");
+		code.append(" in function <").append(func).append(">");
+		code.append("\n\tReason: ").append(reason);
+		return new Exception(code.toString());
+	}
+	
+	// Getter & Setter
+	public String getName(){return this.name;}
+	public void setName(String name) throws Exception{
+		if(name==null||name.trim().length()<1){
+			throw this.getArgException("name", "setName(name)", 
+					"null/empty name cannot be used for specifying target variables");
+		}
+		this.name=name.trim();
+	}
+	public ValueType getType(){return this.type;}
+	public String getValue(){return this.value;}
+	public void setValue(ValueType type,String value) throws Exception{
+		if(type==null||value==null||value.trim().length()==0)
+			throw this.getArgException("type|value", "setValue(type,value)", "null arguments are invalid");
+		
+		switch(type){
+		case Bool:break;
+		case Object:break;
+		case Relation:break;
+		case Set:break;
+		case RelationSet:break;
+		default: throw this.getArgException("type", "setValue(type,value)", type+" is invalid type");
+		}
+		
+		this.type=type;
+		this.value=value.trim();
+	}
+	
+	
+	
+	
+	
+}
