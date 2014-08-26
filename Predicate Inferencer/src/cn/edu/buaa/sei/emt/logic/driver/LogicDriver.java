@@ -2,20 +2,23 @@ package cn.edu.buaa.sei.emt.logic.driver;
 
 import java.io.InputStream;
 
-import cn.edu.buaa.sei.emt.logic.computer.InferenceMachine;
-import cn.edu.buaa.sei.emt.logic.io.AssignerProcesser;
-import cn.edu.buaa.sei.emt.logic.io.AssignerTextualAnalyzer;
-import cn.edu.buaa.sei.emt.logic.io.SyntaxProcesser;
-import cn.edu.buaa.sei.emt.logic.io.TextualAnalyzer;
-import cn.edu.buaa.sei.emt.logic.io.ValueInterpreter;
-
-public interface LogicDriver {
-	public void configDefinition(TextualAnalyzer analyzer,SyntaxProcesser processer);
-	public void configValueInterpreter(ValueInterpreter interpreter);
-	public void configAssigner(AssignerTextualAnalyzer analyzer,AssignerProcesser processer);
+public class LogicDriver {
+	private InputStream def_in;
+	private InputStream val_in;
 	
-	public void configInferencer(InferenceMachine im);
 	
-	public void configDefinitionInput(InputStream in);
-	public void configAssignmentInput(InputStream in);
+	
+	
+	public InputStream getDef_in() {
+		return def_in;
+	}
+	public void setDef_in(InputStream def_in) {
+		this.def_in = def_in;
+	}
+	public InputStream getVal_in() {
+		return val_in;
+	}
+	public void setVal_in(InputStream val_in) {
+		this.val_in = val_in;
+	}
 }

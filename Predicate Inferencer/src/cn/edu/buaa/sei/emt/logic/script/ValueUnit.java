@@ -1,15 +1,14 @@
 package cn.edu.buaa.sei.emt.logic.script;
 
 public class ValueUnit {
-	public static enum ValueType {Bool,Object,Relation,Set,RelationSet};
 	
 	String name;
-	ValueType type;
+	//ValueType type;
 	String value;
 	
-	public ValueUnit(String name,ValueType type,String value) throws Exception{
+	public ValueUnit(String name,String value) throws Exception{
 		this.setName(name);
-		this.setValue(type, value);
+		this.setValue(value);
 	}
 	
 	/*
@@ -33,22 +32,10 @@ public class ValueUnit {
 		}
 		this.name=name.trim();
 	}
-	public ValueType getType(){return this.type;}
 	public String getValue(){return this.value;}
-	public void setValue(ValueType type,String value) throws Exception{
-		if(type==null||value==null||value.trim().length()==0)
+	public void setValue(String value) throws Exception{
+		if(value==null||value.trim().length()==0)
 			throw this.getArgException("type|value", "setValue(type,value)", "null arguments are invalid");
-		
-		switch(type){
-		case Bool:break;
-		case Object:break;
-		case Relation:break;
-		case Set:break;
-		case RelationSet:break;
-		default: throw this.getArgException("type", "setValue(type,value)", type+" is invalid type");
-		}
-		
-		this.type=type;
 		this.value=value.trim();
 	}
 	

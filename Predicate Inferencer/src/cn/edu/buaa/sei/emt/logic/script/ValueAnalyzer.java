@@ -5,6 +5,6 @@ import java.util.List;
 public interface ValueAnalyzer {
 	public void input(String text) throws Exception;
 	public String getText();
-	public Boolean validate();
-	public List<ValueUnit> analyze();
+	public Boolean validate() throws Exception;
+	public List<ValueUnit> analyze() throws Exception;
 }

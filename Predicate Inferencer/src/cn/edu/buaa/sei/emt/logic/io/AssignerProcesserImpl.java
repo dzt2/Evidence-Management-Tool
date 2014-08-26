@@ -63,7 +63,6 @@ public class AssignerProcesserImpl implements AssignerProcesser{
 	 */
 	@Override
 	public Boolean validate() {
-		// TODO Auto-generated method stub
 		if(this.interpreter==null){
 			try {
 				throw this.getArgException("this.interpreter", "validate()", 

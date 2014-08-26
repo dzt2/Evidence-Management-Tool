@@ -13,6 +13,6 @@ public interface ValueProcesser {
 	public int getUnitListSize();
 	public void clearUnitList();
 	
-	public Boolean validate();
-	public Map<String,Value> compile();
+	public Boolean validate() throws Exception;
+	public Map<String,Value> compile() throws Exception;
 }
