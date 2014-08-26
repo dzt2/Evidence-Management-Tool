@@ -53,7 +53,7 @@ public class DefinitionConstructor {
 	/*
 	 * Core Functions
 	 */
-	LogicCreator compile() throws Exception{
+	public LogicCreator compile() throws Exception{
 		if(this.analyzer==null||this.processer==null||this.input==null){
 			throw this.getArgException("analyzer|processer|inputstream", "compile()", "Unready");
 		}
