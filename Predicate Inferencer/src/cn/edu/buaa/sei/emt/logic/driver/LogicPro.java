@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import cn.edu.buaa.sei.emt.logic.computer.IMachine_Iterater;
 import cn.edu.buaa.sei.emt.logic.computer.InferenceMachine;
 import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulation;
+import cn.edu.buaa.sei.emt.logic.predicate.core.LogicFormulationTypeLoader;
+import cn.edu.buaa.sei.lmf.LMFContext;
 
 public class LogicPro {
 
@@ -16,6 +18,9 @@ public class LogicPro {
 			System.err.println("Format errors: IM def_file value_file target_name");
 			return;
 		}
+		
+		LMFContext.load(new LogicFormulationTypeLoader());
+		LMFContext.pack();
 		
 		File def_file = new File(args[1]);
 		File val_file = new File(args[2]);

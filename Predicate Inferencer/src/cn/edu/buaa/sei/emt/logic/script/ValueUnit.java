@@ -39,8 +39,6 @@ public class ValueUnit {
 		this.value=value.trim();
 	}
 	
-	
-	
-	
+	public String toString(){return this.name+":="+this.value;}
 	
 }

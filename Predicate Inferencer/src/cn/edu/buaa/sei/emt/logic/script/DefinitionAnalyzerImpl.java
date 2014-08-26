@@ -110,6 +110,9 @@ public class DefinitionAnalyzerImpl implements DefinitionAnalyzer{
 				}
 			}
 		}
+		
+		if(pre<text.length())
+			this.lines.add(text.substring(pre).trim());
 		return true;
 	}
 	protected List<String> args = new ArrayList<String>();

@@ -72,7 +72,7 @@ public class ValueInterpreterImpl implements ValueInterpreter{
 			}
 			return false;
 		}
-		return false;
+		return true;
 	}
 	@Override
 	public Value interprete(ValueUnit unit) {
@@ -140,6 +140,8 @@ public class ValueInterpreterImpl implements ValueInterpreter{
 	}
 
 	
+	
+	
 	LObject interpreteObject(ValueUnit unit){
 		if(unit==null){
 			try {
@@ -153,9 +155,13 @@ public class ValueInterpreterImpl implements ValueInterpreter{
 		String value = unit.getValue();
 		return this.interpreteObject(value);
 	}
+	@SuppressWarnings("static-access")
 	LObject interpreteObject(String value){
 		if(value==null||value.trim().length()==0)return null;
 		value=value.trim();
+		
+		if(value.equals(TRUE))return this.creator.getTrue();
+		if(value.equals(FALSE))return this.creator.getFalse();
 		
 		if(this.creator.containObject(value))return this.creator.getObject(value);
 		else return this.creator.createObject(value.trim());

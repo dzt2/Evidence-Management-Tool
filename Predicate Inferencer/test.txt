@@ -1,7 +1,5 @@
-P: and(A,B,C)
-A: prop
-B: prop
-C: or(D,E)
-D: prop
-E: not(F)
-F: prop
+HLR: domain
+LLR: domain
+trace: predicate(HLR.iter, LLR.iter)
+Q: any(LLR,trace)
+P: all(HLR, Q)
