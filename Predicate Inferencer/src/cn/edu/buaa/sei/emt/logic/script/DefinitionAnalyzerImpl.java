@@ -63,6 +63,27 @@ public class DefinitionAnalyzerImpl implements DefinitionAnalyzer{
 	public String getName(){return this.name;}
 	public String getText(){return this.text;}
 
+	/*
+	 * 	Core Functions
+	 *  --------------------------------------------------------------------
+	 *  1)validate()
+	 *  	-ex1: null this.text
+	 *  	-ex2: null statement generation (line)
+	 *  	statement end with '\n' or ';' or '%'
+	 *  	comment start with '%' and end with '\n'
+	 *  	-ee3: skip all the comments in code
+	 *  --------------------------------------------------------------------
+	 *  2) generateUnit(stmt)
+	 *  	-ex1: null/empty stmt	 --> invalid statement
+	 *  	-ex2: !stmt.contain(":") --> no type specified
+	 *  	-ex3: stmt.containt('(')&&!stmt.contain(')') --> invalid formation
+	 *  	-ex4: stmt --> name : type() ==> name: type
+	 *  	-ex5: stmt --> name : type(n1,,n3) ==> null argument[i]
+	 *  --------------------------------------------------------------------
+	 *  3) analyze()
+	 *  	-ex1: validate() failed
+	 *  	-ex2: generateUnit(line) failed and return null;
+	 */
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
@@ -208,20 +229,20 @@ public class DefinitionAnalyzerImpl implements DefinitionAnalyzer{
 					char ch = strs[cur];
 					if(ch==DOT){
 						String arg = stmt.substring(per, cur);
-						if(arg==null||arg.length()<1)
+						if(arg==null||arg.trim().length()<1)
 							throw this.getArgException("stmt.args", "generateUnit(stmt)", 
 									"The "+args.size()+"th argument is empty.");
-						args.add(arg);
+						args.add(arg.trim());
 						per=cur+1;
 						continue;
 					}
 				}
 				// getting the last arg
 				String arg = stmt.substring(per, cur);
-				if(arg==null||arg.length()<1)
+				if(arg==null||arg.trim().length()<1)
 					throw this.getArgException("stmt.args", "generateUnit(stmt)", 
 							"The "+args.size()+"th argument is empty.");
-				args.add(arg);
+				args.add(arg.trim());
 				
 				// perpare to return the unit.
 				String[] nargs = new String[args.size()];

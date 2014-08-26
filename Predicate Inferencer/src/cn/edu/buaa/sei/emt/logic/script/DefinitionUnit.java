@@ -1,10 +1,18 @@
 package cn.edu.buaa.sei.emt.logic.script;
 
 public class DefinitionUnit {
+	/*
+	 *	-var: variable name
+	 *	-type: type name [in type value set]
+	 *	-args: list of names for other variables 
+	 */
 	String var;
 	String type;
 	String[] args;
 	
+	/*
+	 *	type value set 
+	 */
 	public static final String AND = "and";
 	public static final String OR = "or";
 	public static final String NOT = "not";
@@ -17,6 +25,7 @@ public class DefinitionUnit {
 	public static final String PRED = "predicate";
 	public static final String DOMAIN = "domain";
 	public static final String ITER = ".iter";
+	
 	
 	public DefinitionUnit(String var,String type,String[] args) throws Exception{
 		this.setVar(var);
@@ -38,6 +47,26 @@ public class DefinitionUnit {
 	
 	/*
 	 *	Setter 
+	 *	------------------------------------------------------------------------
+	 *	1. var: variable name
+	 *		-match: ([a-z][A-Z])+
+	 *		examples: a, A, Pop, stmt
+	 *		fault: _a, A1, #Q
+	 *	------------------------------------------------------------------------
+	 *	2. type: type name
+	 *		-match: in (and,or,not,impl,eq,all,any,prop,predicate,var,domain)
+	 *	------------------------------------------------------------------------
+	 *	3. args: arguments names
+	 *		-match:
+	 *			[and|or]: 	args.length>=2
+	 *			[not]: 		args.length==1
+	 *			[impl|eq]:	args.length==2
+	 *			[any|all]:	args.length==2
+	 *			[prop|var]:	args == null
+	 *			[predicate]:args.length>=1
+	 *			[domain]:	args == null
+	 *	------------------------------------------------------------------------
+	 *
 	 */
 	void setVar(String var) throws Exception{
 		if(var==null||var.length()==0){
