@@ -8,4 +8,7 @@ public interface LEnum extends LDataType{
 	
 	public LEnumLiteral getLiteralByValue(int value);
 	public LEnumLiteral getLiteralByName(String literal);
+
+	public void removeLiteral(LEnumLiteral literal);
+	public Boolean containLiteral(LEnumLiteral literal);
 }
