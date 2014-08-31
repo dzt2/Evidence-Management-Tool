@@ -3,6 +3,8 @@ package cn.edu.buaa.exLmf.metamodel;
 import java.util.List;
 
 public interface LPackage extends LNamedElement{
+	public LFactory eFactory=null;
+	
 	public List<LPackage> getSubPackages();
 	public void addSubPackage(LPackage pack);
 	public void removeSubPackage(LPackage pack);
