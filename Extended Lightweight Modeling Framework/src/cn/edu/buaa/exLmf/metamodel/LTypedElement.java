@@ -8,8 +8,8 @@ public interface LTypedElement extends LNamedElement{
 	public int getUpperBound();
 	public int getLowerBound();
 	
-	public void setOrdered(Boolean ordered);
-	public void setUnique(Boolean unique);
+	public void setOrdered(boolean ordered);
+	public void setUnique(boolean unique);
 	public void setUpperBound(int upperBound);
 	public void setLowerBound(int lowerBound);
 }
