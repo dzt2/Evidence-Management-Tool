@@ -5,7 +5,7 @@ public interface LStructuralFeature extends LTypedElement{
 	public void setContainer(LClassifier type);
 	public Boolean isChangable();
 	public void setChangable(boolean changable);
-	public int getFeatureID();
+	public int getFeatureID();	/*Local Identification*/
 	public LObject getDefaultValue();
 	public void setDefaultValue(LObject value);
 }

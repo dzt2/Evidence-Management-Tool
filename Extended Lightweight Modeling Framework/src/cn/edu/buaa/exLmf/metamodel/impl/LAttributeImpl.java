@@ -23,7 +23,7 @@ public class LAttributeImpl extends LStructuralFeatureImpl implements LAttribute
 		this.setType(type);
 	}
 	public void setType(LClassifier type){
-		if(!(type instanceof LDataType)){
+		if((type==null)||!(type instanceof LDataType)){
 			try {
 				throw this.getException("setType(type)", "type", "Attribute's type must be LDataType");
 			} catch (Exception e) {

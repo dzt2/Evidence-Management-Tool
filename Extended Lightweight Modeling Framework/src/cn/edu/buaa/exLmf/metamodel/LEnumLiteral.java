@@ -1,7 +1,6 @@
 package cn.edu.buaa.exLmf.metamodel;
 
 public interface LEnumLiteral extends LStructuralFeature{
-	public LEnum getEnum();
 	public int getValue();
 	public void setValue(int value);
 	public String getLiteral();

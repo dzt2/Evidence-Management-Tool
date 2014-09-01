@@ -136,13 +136,26 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 
 	@Override
 	public LStructuralFeature getFeatureByName(String name) {
-		if(name==null||!this.name_feature.containsKey(name))return null;
-		else return this.name_feature.get(name);
+		if(name==null)return null;
+		else if(this.name_feature.containsKey(name)) 
+			return this.name_feature.get(name);
+		else
+			for(int i=0;i<this.supers.size();i++){
+				LStructuralFeature f = this.supers.get(i).getFeatureByName(name);
+				if(f!=null)return f;
+			}
+		return null;
 	}
 	@Override
 	public LStructuralFeature getFeatureByID(int id) {
 		if(this.id_feature.containsKey(id))return this.id_feature.get(id);
-		return null;
+		else{
+			/*for(int i=0;i<this.supers.size();i++){
+				LStructuralFeature f = this.supers.get(i).getFeatureByID(id);
+				if(f!=null)return f;
+			}*/
+			return null;
+		}
 	}
 	@Override
 	public int[] getFeatureIDSet() {
@@ -154,7 +167,9 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		return ids;
 	}
 	
-	
+	/*
+	 *	Only add features in local space 
+	 */
 	void _addFeature(LStructuralFeature feature){
 		if(feature==null){
 			try {
@@ -166,10 +181,9 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			return;
 		}
 		
-		if(this.features.contains(feature))return;
+		// including the super classes.
+		if(this.containFeature(feature))return;
 		
-		this.features.add(feature);
-		feature.setContainer(this);
 		int fid = feature.getFeatureID();
 		String name = feature.getName();
 		
@@ -192,6 +206,8 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			return;
 		}
 		
+		this.features.add(feature);
+		feature.setContainer(this);
 		this.name_feature.put(name, feature);
 		this.id_feature.put(fid, feature);
 	}
@@ -256,6 +272,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		}
 	}
 
+	/*	Adding or Removing only limited in the local attributes not including super classes*/
 	@Override
 	public void removeAttribute(LAttribute attribute) {
 		if(attribute==null||!this.attributes.contains(attribute)){
@@ -325,6 +342,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		}
 	}
 
+	/*Only remove the local attribute (would no affect the super classes)*/
 	@Override
 	public LStructuralFeature removeFeatureByID(int id) {
 		if(!this.id_feature.containsKey(id)){
