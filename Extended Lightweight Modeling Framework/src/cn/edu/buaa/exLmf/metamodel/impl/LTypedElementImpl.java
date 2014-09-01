@@ -13,7 +13,6 @@ public abstract class LTypedElementImpl extends LNamedElementImpl implements LTy
 	
 	public static final int UNBOUNDED = -1;
 	
-	LTypedElementImpl(){super();}
 	LTypedElementImpl(String name){super(name);}
 
 	@Override

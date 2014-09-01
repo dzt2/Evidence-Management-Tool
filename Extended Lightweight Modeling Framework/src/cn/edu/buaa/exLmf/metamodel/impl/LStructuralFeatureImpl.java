@@ -11,7 +11,6 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 	int fid;
 	LObject default_val;
 	
-	LStructuralFeatureImpl(int fid,LClassifier container){super();this.container=container;this.fid=fid;}
 	LStructuralFeatureImpl(int fid,String name,LClassifier container){super(name);this.container=container;this.fid=fid;}
 
 	@Override

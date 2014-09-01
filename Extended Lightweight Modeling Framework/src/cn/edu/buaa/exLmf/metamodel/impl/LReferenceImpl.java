@@ -9,9 +9,6 @@ public class LReferenceImpl extends LStructuralFeatureImpl implements LReference
 	LReference opposite;
 	Boolean containment = false;
 	
-	public LReferenceImpl(int fid, LClassifier container) {
-		super(fid, container);
-	}
 	public LReferenceImpl(int fid,String name,LClassifier container){
 		super(fid,name,container);
 	}

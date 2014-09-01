@@ -11,9 +11,6 @@ public class LEnumLiteralImpl extends LStructuralFeatureImpl implements LEnumLit
 	LEnumLiteralImpl(int fid, String name, LClassifier container) {
 		super(fid, name, container);
 	}
-	LEnumLiteralImpl(int fid, LClassifier container) {
-		super(fid, container);
-	}
 	
 	@Override
 	public int getValue() {return this.value;}

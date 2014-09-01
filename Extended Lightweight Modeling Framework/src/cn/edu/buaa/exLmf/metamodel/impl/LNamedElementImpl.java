@@ -5,12 +5,7 @@ import cn.edu.buaa.exLmf.metamodel.LNamedElement;
 public abstract class LNamedElementImpl extends LModelElementImpl implements LNamedElement{
 	
 	String name;
-	public static final String DEFAULT = "Unknown";
 	
-	LNamedElementImpl(){
-		super();
-		this.setName(DEFAULT);
-	}
 	LNamedElementImpl(String name){
 		super();
 		this.setName(name);

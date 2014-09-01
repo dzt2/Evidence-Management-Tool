@@ -10,7 +10,6 @@ public abstract class LClassifierImpl extends LNamedElementImpl implements LClas
 	int id=DEFAULT_ID;
 	public static final int DEFAULT_ID = -1;
 	
-	LClassifierImpl(){super();}
 	LClassifierImpl(String name){super(name);}
 	
 	@Override

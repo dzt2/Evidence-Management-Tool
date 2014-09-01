@@ -14,7 +14,6 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	Map<Integer,LEnumLiteral> id_literals = new HashMap<Integer,LEnumLiteral>();
 	Map<String,LEnumLiteral> name_literals = new HashMap<String,LEnumLiteral>();
 	
-	public LEnumImpl(){super();}
 	public LEnumImpl(String name){super(name);}
 	
 	@Override

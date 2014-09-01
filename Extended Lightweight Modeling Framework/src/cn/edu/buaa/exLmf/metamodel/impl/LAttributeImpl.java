@@ -8,9 +8,6 @@ public class LAttributeImpl extends LStructuralFeatureImpl implements LAttribute
 	
 	LDataType dtype;
 	
-	public LAttributeImpl(int fid, LClassifier container) {
-		super(fid, container);
-	}
 	public LAttributeImpl(int fid,String name,LClassifier container){
 		super(fid,name,container);
 	}
