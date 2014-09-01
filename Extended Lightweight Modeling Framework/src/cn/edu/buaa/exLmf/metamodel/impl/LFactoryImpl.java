@@ -9,10 +9,16 @@ import cn.edu.buaa.exLmf.metamodel.LObject;
 import cn.edu.buaa.exLmf.metamodel.LPackage;
 
 public class LFactoryImpl extends LModelElementImpl implements LFactory{
-	
 	public static final String TRUE_CODE = "true";
 	public static final String FALSE_CODE = "false";
+	public static final LDataObjectImpl TRUE,FALSE;
 	
+	static{
+		TRUE = new LDataObjectImpl(LPrimitiveTypeImpl.BOOL);
+		FALSE = new LDataObjectImpl(LPrimitiveTypeImpl.BOOL);
+		TRUE.val=true;
+		FALSE.val=false;
+	}
 	
 	public LPackage ePackage;
 	public LFactoryImpl(LPackage p){super();this.ePackage=p;}
@@ -25,6 +31,15 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 			try {
 				throw this.getException("create(type)", "type", "Null");
 			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(!this.ePackage.containType(type)){
+			try {
+				throw this.getException("create(type)", "type", "Undefined in Package");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -71,12 +86,10 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		if(code==null){
 			return null;
 		}
-		
-		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.BOOL);
 		if(TRUE_CODE.equals(code.trim()))
-			val.val=true;
+			return TRUE;
 		else if(FALSE_CODE.equals(code.trim()))
-			val.val=false;
+			return FALSE;
 		else{
 			try {
 				throw this.getException("createBool(type,code)", "code", "\""+code.trim()+"\" is invalid for Boolean");
@@ -86,8 +99,6 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 			}
 			return null;
 		}
-		
-		return val;
 	}
 	LObject createInteger(String code){
 		if(code==null)return null;
