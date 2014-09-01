@@ -29,6 +29,16 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 
 	@Override
 	public LObject get(LStructuralFeature feature) {
+		if(feature==null){
+			try {
+				throw this.getException("get(feature)", "feature", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
 		LClass ctype = (LClass) this.type;
 		if(!this.feature_val.containsKey(feature)){
 			try {
@@ -44,10 +54,20 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 	}
 	@Override
 	public void set(LStructuralFeature feature, LObject value) {
+		if(feature==null){
+			try {
+				throw this.getException("set(feature,value)", "feature", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
 			try {
-				throw this.getException("set(feature)", "feature", "Class <"+ctype.getName()
+				throw this.getException("set(feature,value)", "feature", "Class <"+ctype.getName()
 						+"> does not define feature <"+feature.getName()+":"+feature.getFeatureID()+">");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -55,11 +75,32 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
+		if(value!=null&&value.type()!=feature.getType()){
+			try {
+				throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
+						+"> does not match <"+feature.getType().getName()+">");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		this.feature_val.put(feature, value);
 		this.status_map.put(feature, true);
 	}
 	@Override
 	public Boolean isSet(LStructuralFeature feature) {
+		if(feature==null){
+			try {
+				throw this.getException("isSet(feature)", "feature", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
 			try {
@@ -75,6 +116,16 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 	}
 	@Override
 	public void unSet(LStructuralFeature feature) {
+		if(feature==null){
+			try {
+				throw this.getException("unSet(feature)", "feature", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
 			try {

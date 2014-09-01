@@ -1,11 +1,12 @@
 package cn.edu.buaa.exLmf.metamodel.impl;
 
 import cn.edu.buaa.exLmf.metamodel.LClass;
+import cn.edu.buaa.exLmf.metamodel.LClassObject;
+import cn.edu.buaa.exLmf.metamodel.LDataObject;
 import cn.edu.buaa.exLmf.metamodel.LDataType;
 import cn.edu.buaa.exLmf.metamodel.LEnum;
 import cn.edu.buaa.exLmf.metamodel.LEnumLiteral;
 import cn.edu.buaa.exLmf.metamodel.LFactory;
-import cn.edu.buaa.exLmf.metamodel.LObject;
 import cn.edu.buaa.exLmf.metamodel.LPackage;
 
 public class LFactoryImpl extends LModelElementImpl implements LFactory{
@@ -26,7 +27,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 	public LPackage getContainer() {return this.ePackage;}
 
 	@Override
-	public LObject create(LClass type) {
+	public LClassObject create(LClass type) {
 		if(type==null){
 			try {
 				throw this.getException("create(type)", "type", "Null");
@@ -47,7 +48,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		return new LClassObjectImpl(type);
 	}
 	@Override
-	public LObject create(LDataType type, String code) {
+	public LDataObject create(LDataType type, String code) {
 		if(type==null){
 			try {
 				throw this.getException("create(type, code)", "type", "Null");
@@ -82,7 +83,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		}
 	}
 	
-	LObject createBool(String code){
+	LDataObject createBool(String code){
 		if(code==null){
 			return null;
 		}
@@ -100,7 +101,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 			return null;
 		}
 	}
-	LObject createInteger(String code){
+	LDataObject createInteger(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.INT);
@@ -119,7 +120,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		}
 		return val;
 	}
-	LObject createLong(String code){
+	LDataObject createLong(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.LONG);
@@ -138,7 +139,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		}
 		return val;
 	}
-	LObject createFloat(String code){
+	LDataObject createFloat(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.FLOAT);
@@ -157,7 +158,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		}
 		return val;
 	}
-	LObject createDouble(String code){
+	LDataObject createDouble(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.DOUBLE);
@@ -176,14 +177,14 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		}
 		return val;
 	}
-	LObject createString(String code){
+	LDataObject createString(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.STRING);
 		val.val=code;
 		return val;
 	}
-	LObject createLiteral(LEnum type,String name){
+	LDataObject createLiteral(LEnum type,String name){
 		if(type==null||name==null)return null;
 		
 		LEnumLiteral literal = type.getLiteralByName(name);
@@ -191,6 +192,4 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		val.val=literal;
 		return val;
 	}
-	
-	
 }
