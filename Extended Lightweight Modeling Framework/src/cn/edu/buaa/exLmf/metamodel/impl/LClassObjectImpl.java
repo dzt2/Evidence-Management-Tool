@@ -97,6 +97,16 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			return;
 		}
 		
+		if(!feature.isChangable()&&this.status_map.get(feature)==false){
+			try {
+				throw this.getException("set(feature,value)", "feature", "try to update unchangable feature value");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){
 			/*LMultipleObject val = (LMultipleObject) this.feature_val.get(feature);
 			val.addObject(value);*/

@@ -1,6 +1,7 @@
 package cn.edu.buaa.exLmf.test;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
@@ -9,6 +10,7 @@ import cn.edu.buaa.exLmf.metamodel.LClassObject;
 import cn.edu.buaa.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.exLmf.metamodel.LDataObject;
 import cn.edu.buaa.exLmf.metamodel.LFactory;
+import cn.edu.buaa.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.exLmf.metamodel.LObject;
 import cn.edu.buaa.exLmf.metamodel.LPackage;
 import cn.edu.buaa.exLmf.metamodel.LReference;
@@ -22,18 +24,11 @@ import cn.edu.buaa.exLmf.metamodel.impl.LTypedElementImpl;
 
 public class Test {
 	public static void main(String[] args) {
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(0);
-		list.add(1);
-		list.add(2);
-		
-		list.add(4, 8);
-		
-		System.out.println(list);
+		test1();
 	}
 	
 	public static void test1(){
-LPackage p = createPackage1();
+		LPackage p = createPackage1();
 		
 		System.out.println(p.getName());
 		System.out.println(p.getNsPrefix());
@@ -41,8 +36,6 @@ LPackage p = createPackage1();
 		
 		List<LClassifier> types = p.getTypes();
 		System.out.println(types.size());
-		
-		
 		
 		LFactory factory = p.getFactory();
 		LClass person = (LClass) p.getClassifierByName("Person");
@@ -63,6 +56,9 @@ LPackage p = createPackage1();
 		
 		a.set(person.getFeatureByName("father"), b);
 		a.set(person.getFeatureByName("mother"), c);
+		
+		a.add(person.getFeatureByName("friends"), b);
+		a.add(person.getFeatureByName("friends"), c);
 		
 		System.out.println(printLClassObject(a));
 		System.out.println(printLClassObject(b));
@@ -166,6 +162,7 @@ LPackage p = createPackage1();
 			if(val==null)code.append("null");
 			else if(val instanceof LDataObject)code.append(printDataObject((LDataObject) val));
 			else if(val instanceof LClassObject)code.append(val.hashCode());
+			else if(val instanceof LMultipleObject) code.append(printMultipleObject((LMultipleObject) val));
 			else code.append("Unknown");
 		}
 		
@@ -175,5 +172,26 @@ LPackage p = createPackage1();
 	public static String printDataObject(LDataObject obj){
 		if(obj==null)return null;
 		return obj.getValue().toString();
+	}
+	public static String printMultipleObject(LMultipleObject obj){
+		if(obj==null)return null;
+		StringBuilder code = new StringBuilder();
+		
+		if(obj.isUnique())code.append("{");
+		else code.append("[");
+		
+		Collection<LObject> list = obj.getAllObjects();
+		Iterator<LObject> itor = list.iterator();
+		
+		while(itor.hasNext()){
+			LObject elm = itor.next();
+			if(elm instanceof LDataObject)code.append(printDataObject((LDataObject) elm));
+			else code.append(elm.hashCode());
+			if(itor.hasNext())code.append(", ");
+		}
+		
+		if(obj.isUnique())code.append("}");
+		else code.append("]");
+		return code.toString();
 	}
 }
