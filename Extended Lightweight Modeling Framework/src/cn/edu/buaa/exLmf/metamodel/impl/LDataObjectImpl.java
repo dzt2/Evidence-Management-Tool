@@ -125,7 +125,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 	public Object getValue() {
 		return this.val;
 	}
-
 	@Override
 	public void setValue(Object val) {
 		if(val==null){
@@ -172,7 +171,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-
 	@Override
 	public void setInt(Integer val) {
 		if(this.type==LPrimitiveTypeImpl.INT)
@@ -186,7 +184,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-
 	@Override
 	public void setLong(Long val) {
 		if(this.type==LPrimitiveTypeImpl.LONG)
@@ -199,7 +196,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-
 	@Override
 	public void setFloat(Float val) {
 		if(this.type==LPrimitiveTypeImpl.FLOAT)
@@ -212,7 +208,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-
 	@Override
 	public void setDouble(Double val) {
 		if(this.type==LPrimitiveTypeImpl.DOUBLE)
@@ -225,7 +220,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-
 	@Override
 	public void setString(String val) {
 		if(this.type==LPrimitiveTypeImpl.STRING)
@@ -238,7 +232,6 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-
 	@Override
 	public void setLiteral(LEnumLiteral literal) {
 		if(literal==null){
@@ -266,5 +259,4 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
-	
 }

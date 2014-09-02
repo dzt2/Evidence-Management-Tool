@@ -9,6 +9,8 @@ public interface LClassObject extends LObject{
 	public Boolean isSet(LStructuralFeature feature);
 	public void unSet(LStructuralFeature feature);
 	
+	public void add(LStructuralFeature feature,LObject val);
+	public void remove(LStructuralFeature feature,LObject val);
 	/*public Boolean isMultiple(LStructuralFeature feature);
 	public Collection<LObject> getFromMultiple(LStructuralFeature mul_feature);
 	public void appendMultiple(LStructuralFeature mul_feature,LObject val);

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;
+import cn.edu.buaa.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.exLmf.metamodel.LObject;
 import cn.edu.buaa.exLmf.metamodel.LStructuralFeature;
 
@@ -19,8 +20,18 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		/*Initialization*/
 		List<LStructuralFeature> features = type.getAllFeatures();
 		for(int i=0;i<features.size();i++){
-			feature_val.put(features.get(i), null);
 			status_map.put(features.get(i), false);
+			if(features.get(i).getUpperBound()>1||
+					features.get(i).getUpperBound()==LMultipleObject.UNBOUNDED){
+				LStructuralFeature feature = features.get(i);
+				LMultipleObject val = new LMultipleObjectImpl(feature.getType(),feature.getLowerBound(),
+						feature.getUpperBound(),feature.isOrdered(),feature.isUnique());
+				feature_val.put(features.get(i), val);
+			}
+			else{
+				feature_val.put(features.get(i), features.get(i).getDefaultValue());
+			}
+			
 		}
 	}
 
@@ -86,7 +97,20 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			return;
 		}
 		
-		this.feature_val.put(feature, value);
+		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){
+			/*LMultipleObject val = (LMultipleObject) this.feature_val.get(feature);
+			val.addObject(value);*/
+			try {
+				throw this.getException("set(feature,value)", "feature-value", "Multiple Object Set cannot be set directly");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		else{
+			this.feature_val.put(feature, value);
+		}
 		this.status_map.put(feature, true);
 	}
 	@Override
@@ -138,5 +162,53 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			return;
 		}
 		this.status_map.put(feature, false);
+	}
+
+	@Override
+	public void add(LStructuralFeature feature, LObject val) {
+		if(feature==null||(feature.getUpperBound()<=1
+				&&feature.getUpperBound()!=LMultipleObject.UNBOUNDED)){
+			try {
+				throw this.getException("add(feature,val)","feature", "feature is not a multiple feature");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		if(!this.feature_val.containsKey(feature)){
+			try {
+				throw this.getException("add(feature,val)","feature", feature.getName()+" is not defined");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		LMultipleObject list = (LMultipleObject) this.feature_val.get(feature);
+		list.addObject(val);
+	}
+
+	@Override
+	public void remove(LStructuralFeature feature, LObject val) {
+		if(feature==null||!this.feature_val.containsKey(feature)){
+			try {
+				throw this.getException("remove(feature,val)", "feature", "Undefined");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){
+			LMultipleObject list = (LMultipleObject) this.feature_val.get(feature);
+			list.removeObject(val);
+		}
+		else{
+			this.feature_val.put(feature, null);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package cn.edu.buaa.exLmf.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
@@ -21,7 +22,18 @@ import cn.edu.buaa.exLmf.metamodel.impl.LTypedElementImpl;
 
 public class Test {
 	public static void main(String[] args) {
-		LPackage p = createPackage1();
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(0);
+		list.add(1);
+		list.add(2);
+		
+		list.add(4, 8);
+		
+		System.out.println(list);
+	}
+	
+	public static void test1(){
+LPackage p = createPackage1();
 		
 		System.out.println(p.getName());
 		System.out.println(p.getNsPrefix());
@@ -34,12 +46,6 @@ public class Test {
 		
 		LFactory factory = p.getFactory();
 		LClass person = (LClass) p.getClassifierByName("Person");
-		LClass family = (LClass) p.getClassifierByID(1);
-		LClass house  = (LClass) p.getClassifierByName("House");
-		//System.out.println(printClass(person));
-		//System.out.println(printClass(family));
-		//System.out.println(printClass(house));
-		
 		LClassObject a = factory.create(person);
 		a.set(person.getFeatureByName("name"), factory.create(LPrimitiveTypeImpl.STRING, "John Horse"));
 		a.set(person.getFeatureByName("age"),factory.create(LPrimitiveTypeImpl.INT, "20"));
