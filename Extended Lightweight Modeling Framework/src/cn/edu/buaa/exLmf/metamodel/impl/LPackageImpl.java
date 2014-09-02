@@ -38,7 +38,9 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 			}
 			return;
 		}
+		
 		if(this.supPackages.contains(pack))return;
+		
 		if(this.package_index.containsKey(pack.getName())){
 			try {
 				throw this.getException("addSubPackage(pack)", "pack", pack.getName()+" has been defined");
@@ -48,6 +50,12 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		
 		this.supPackages.add(pack);
 		this.package_index.put(pack.getName(), pack);
+		
+		LPackage ct = pack.getContainer();
+		if(ct!=null&&ct!=this){
+			ct.removeSubPackage(pack);
+		}
+		pack.setContainer(null);
 	}
 	@Override
 	public void removeSubPackage(LPackage pack) {
@@ -123,6 +131,11 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		this.types.add(type);
 		this.id_type.put(type.getClassifierID(), type);
 		this.type_index.put(type.getName(), type);
+		LPackage ct = type.getContainer();
+		if(ct!=null&&ct!=this){
+			ct.removeType(type);
+		}
+		type.setContainer(this);
 	}
 	@Override
 	public void removeType(LClassifier type) {
@@ -139,6 +152,8 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		this.types.remove(type);
 		this.id_type.remove(type.getClassifierID());
 		this.type_index.remove(type.getName());
+		
+		type.setContainer(null);
 	}
 	@Override
 	public Boolean containType(LClassifier type) {return this.types.contains(type);}
@@ -181,4 +196,10 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 
 	@Override
 	public LFactory getFactory() {return this.factory;}
+
+	LPackage container;
+	@Override
+	public LPackage getContainer() {return this.container;}
+	@Override
+	public void setContainer(LPackage container) {this.container=container;}
 }

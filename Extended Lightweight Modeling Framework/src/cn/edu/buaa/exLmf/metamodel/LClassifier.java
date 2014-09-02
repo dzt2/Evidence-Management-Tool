@@ -7,4 +7,7 @@ public interface LClassifier extends LNamedElement{
 	public void setInstanceName(String ins);
 	public LObject getDefaultValue();
 	public LObject setDefaultValue(LObject val);
+	
+	public LPackage getContainer();
+	public void setContainer(LPackage container);
 }

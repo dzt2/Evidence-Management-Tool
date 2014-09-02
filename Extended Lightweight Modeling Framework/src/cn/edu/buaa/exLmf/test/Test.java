@@ -24,6 +24,12 @@ import cn.edu.buaa.exLmf.metamodel.impl.LTypedElementImpl;
 
 public class Test {
 	public static void main(String[] args) {
+		/*LPackage p = createPackage1();
+		List<LClassifier> types = p.getTypes();
+		for(int i=0;i<types.size();i++){
+			LClass type = (LClass) types.get(i);
+			System.out.println(printClass(type));
+		}*/
 		test1();
 	}
 	
@@ -68,9 +74,9 @@ public class Test {
 	public static LPackage createPackage1(){
 		LPackage p = new LPackageImpl("test","www.example.com/Test","Test");
 		
-		LClass person = new LClassImpl("Person");person.setClassifierID(0);
-		LClass family = new LClassImpl("Family");family.setClassifierID(1);
-		LClass house = new LClassImpl("House");house.setClassifierID(2);
+		LClass person = new LClassImpl("Person",p);person.setClassifierID(0);
+		LClass family = new LClassImpl("Family",p);family.setClassifierID(1);
+		LClass house = new LClassImpl("House",null);house.setClassifierID(2);
 		
 		LAttribute p_name = new LAttributeImpl(0,"name",person);
 		LAttribute p_age  = new LAttributeImpl(1,"age",person);

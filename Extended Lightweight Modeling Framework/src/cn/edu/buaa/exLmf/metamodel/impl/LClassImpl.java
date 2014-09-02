@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.exLmf.metamodel.LClass;
+import cn.edu.buaa.exLmf.metamodel.LPackage;
 import cn.edu.buaa.exLmf.metamodel.LReference;
 import cn.edu.buaa.exLmf.metamodel.LStructuralFeature;
 
@@ -25,7 +26,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	
 	LAttribute id_attr=null;
 
-	public LClassImpl(String name){super(name);}
+	public LClassImpl(String name,LPackage container){super(name,container);}
 	
 	@Override
 	public List<LClass> getSuperTypes() {return this.supers;}

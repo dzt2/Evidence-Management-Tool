@@ -97,7 +97,8 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			return;
 		}
 		
-		if(!feature.isChangable()&&this.status_map.get(feature)==false){
+		if(!feature.isChangable()&&
+				this.status_map.get(feature)==false){
 			try {
 				throw this.getException("set(feature,value)", "feature", "try to update unchangable feature value");
 			} catch (Exception e) {

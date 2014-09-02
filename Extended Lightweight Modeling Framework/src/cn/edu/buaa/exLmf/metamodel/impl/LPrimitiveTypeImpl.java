@@ -77,5 +77,6 @@ public class LPrimitiveTypeImpl extends LDataTypeImpl implements LPrimitiveType{
 		STRING.setDefaultValue(STRING_DEFAULT);
 	}
 	
-	LPrimitiveTypeImpl(String name){super(name);}
+	LPrimitiveTypeImpl(String name){super(name,null);}
+
 }

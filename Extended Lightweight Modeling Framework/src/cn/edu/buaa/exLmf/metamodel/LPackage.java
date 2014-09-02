@@ -20,6 +20,8 @@ public interface LPackage extends LNamedElement{
 	public LClassifier getClassifierByID(int id);
 	public LClassifier getClassifierByName(String name);
 	
+	public LPackage getContainer();
+	public void setContainer(LPackage container);
 	
 	public LFactory getFactory();
 }

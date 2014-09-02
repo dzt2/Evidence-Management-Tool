@@ -62,7 +62,7 @@ public class LPackageCreator {
 		this.id_space.add(id);
 		return id;
 	}
-	void releaseID(){
+	void releaseID(int id){
 		if(this.id_space.contains(id))
 			this.id_space.remove(id);
 	}
@@ -134,7 +134,7 @@ public class LPackageCreator {
 			return null;
 		}
 		
-		LClass type = new LClassImpl(name.trim());
+		LClass type = new LClassImpl(name.trim(),p);
 		type.setDefaultValue(null);
 		type.setInstanceName(name.trim());
 		type.setClassifierID(this.generateID());
@@ -171,7 +171,7 @@ public class LPackageCreator {
 			return null;
 		}
 		
-		LClass type = new LClassImpl(name.trim());
+		LClass type = new LClassImpl(name.trim(),p);
 		type.setDefaultValue(null);
 		type.setInstanceName(ins.trim());
 		type.setClassifierID(this.generateID());
@@ -200,7 +200,7 @@ public class LPackageCreator {
 			return null;
 		}
 		
-		LEnum e = new LEnumImpl(name.trim());
+		LEnum e = new LEnumImpl(name.trim(),p);
 		e.setDefaultValue(null);
 		e.setInstanceName(name.trim());
 		e.setClassifierID(this.generateID());
@@ -237,7 +237,7 @@ public class LPackageCreator {
 			return null;
 		}
 		
-		LEnum e = new LEnumImpl(name.trim());
+		LEnum e = new LEnumImpl(name.trim(),p);
 		e.setDefaultValue(null);
 		e.setInstanceName(ins.trim());
 		e.setClassifierID(this.generateID());
@@ -470,4 +470,109 @@ public class LPackageCreator {
 		
 		return l;
 	}
+
+	public void removeLAttribute(LAttribute attr){
+		if(attr==null||!this.id_space.contains(attr.getFeatureID())){
+			try {
+				throw this.getException("removeAttribute(attr)", "attr", "Undefined");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		LClass container = (LClass) attr.getContainer();
+		if(container==null){
+			try {
+				throw this.getException("removeAttribute(attr)", "attr", "UnIncluded");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		container.removeAttribute(attr);
+		
+		this.releaseID(attr.getFeatureID());
+	}
+	public void removeLReference(LReference ref){
+		if(ref==null||!this.id_space.contains(ref.getFeatureID())){
+			try {
+				throw this.getException("removeLReference(ref)", "ref", "Undefined");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		LClass container = (LClass) ref.getContainer();
+		if(container==null){
+			try {
+				throw this.getException("removeLReference(ref)", "ref", "UnIncluded");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		container.removeReference(ref);
+		if(ref.getOpposite()!=null)ref.getOpposite().release_opposite();
+		this.releaseID(ref.getFeatureID());
+	}
+	public void removeLiteral(LEnumLiteral literal){
+		if(literal==null||!this.id_space.contains(literal.getFeatureID())){
+			try {
+				throw this.getException("removeLiteral(literal)", "literal", "Undefined");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		LEnum container = (LEnum) literal.getContainer();
+		if(container==null){
+			try {
+				throw this.getException("removeLiteral(literal)", "literal", "UnIncluded");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		container.removeLiteral(literal);
+		
+		this.releaseID(literal.getFeatureID());
+	}
+	public void removeLEnum(LEnum e){
+		if(e==null||!this.id_space.contains(e.getClassifierID())){
+			try {
+				throw this.getException("removeLEnum(e)", "e", "Undefined");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return;
+		}
+		
+		LPackage container = e.getContainer();
+		if(container==null){
+			try {
+				throw this.getException("removeLEnum(e)", "e", "UnIncluded");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return;
+		}
+		
+		container.removeType(e);
+		
+		this.releaseID(e.getClassifierID());
+	}
+	
+	
 }

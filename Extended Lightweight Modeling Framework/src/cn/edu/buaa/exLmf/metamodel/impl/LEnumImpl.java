@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cn.edu.buaa.exLmf.metamodel.LEnum;
 import cn.edu.buaa.exLmf.metamodel.LEnumLiteral;
+import cn.edu.buaa.exLmf.metamodel.LPackage;
 
 public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	
@@ -14,7 +15,7 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	Map<Integer,LEnumLiteral> id_literals = new HashMap<Integer,LEnumLiteral>();
 	Map<String,LEnumLiteral> name_literals = new HashMap<String,LEnumLiteral>();
 	
-	public LEnumImpl(String name){super(name);}
+	public LEnumImpl(String name,LPackage container){super(name,container);}
 	
 	@Override
 	public List<LEnumLiteral> getLiterals() {return this.literals;}

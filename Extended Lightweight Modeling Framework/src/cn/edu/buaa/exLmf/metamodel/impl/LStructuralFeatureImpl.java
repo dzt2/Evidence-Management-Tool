@@ -7,7 +7,7 @@ import cn.edu.buaa.exLmf.metamodel.LStructuralFeature;
 public abstract class LStructuralFeatureImpl extends LTypedElementImpl implements LStructuralFeature{
 	
 	LClassifier container;
-	Boolean changable;
+	Boolean changable=true;
 	int fid;
 	LObject default_val;
 	
