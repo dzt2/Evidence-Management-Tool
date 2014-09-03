@@ -1,6 +1,7 @@
 package cn.edu.buaa.exLmf.manager;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
@@ -11,6 +12,7 @@ import cn.edu.buaa.exLmf.metamodel.LEnumLiteral;
 import cn.edu.buaa.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.exLmf.metamodel.LPackage;
 import cn.edu.buaa.exLmf.metamodel.LReference;
+import cn.edu.buaa.exLmf.metamodel.LStructuralFeature;
 import cn.edu.buaa.exLmf.metamodel.impl.LAttributeImpl;
 import cn.edu.buaa.exLmf.metamodel.impl.LClassImpl;
 import cn.edu.buaa.exLmf.metamodel.impl.LEnumImpl;
@@ -19,8 +21,7 @@ import cn.edu.buaa.exLmf.metamodel.impl.LMFException;
 import cn.edu.buaa.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.exLmf.metamodel.impl.LReferenceImpl;
 
-public class LPackageCreator {
-	
+public class LModelManager {
 	public static final String nsURI = "edu.cn.buaa.sei.exLmf";
 	public static final String prefix = "";
 	
@@ -33,13 +34,13 @@ public class LPackageCreator {
 	Set<Integer> id_space = new HashSet<Integer>();
 	String name;
 	
-	public LPackageCreator(String name){this.name=name;}
+	public LModelManager(String name){this.name=name;}
 	
 	/*
 	 *	Tool Functions 
 	 */
 	Exception getException(String func,String arg,String reason){
-		return LMFException.create("Manager_Package", "LMFCreator", func, arg, reason);
+		return LMFException.create("Model_Manager "+this.name, "LMFCreator", func, arg, reason);
 	}
 	int nextID(){
 		if(id<0)id=0;
@@ -470,6 +471,26 @@ public class LPackageCreator {
 		
 		return l;
 	}
+	public LEnumLiteral createLiteral(LEnum container,String name,String literal,int value){
+		if(container==null||name==null||name.trim().length()==0||literal==null||literal.trim().length()==0){
+			try {
+				throw this.getException("createLiteral(container,name,Null)", "container|name", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LEnumLiteral l = new LEnumLiteralImpl(this.generateID(),name.trim(),container);
+		l.setChangable(false);
+		l.setLiteral(literal.trim());
+		l.setLowerBound(1);l.setUpperBound(1);
+		l.setOrdered(false);l.setUnique(true);
+		l.setValue(value);
+		
+		return l;
+	}
 
 	public void removeLAttribute(LAttribute attr){
 		if(attr==null||!this.id_space.contains(attr.getFeatureID())){
@@ -571,8 +592,55 @@ public class LPackageCreator {
 		
 		container.removeType(e);
 		
+		List<LEnumLiteral> literals = e.getLiterals();
+		for(int i=0;i<literals.size();i++)
+			this.removeLiteral(literals.get(i));
+		
 		this.releaseID(e.getClassifierID());
 	}
-	
-	
+	public void removeLClass(LClass type){
+		if(type==null||!this.id_space.contains(type.getClassifierID())){
+			try {
+				throw this.getException("removeLClass(type)", "type", "Undefined");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		LPackage container = type.getContainer();
+		if(container==null){
+			try {
+				throw this.getException("removeLClass(type)", "type", "UnIncluded");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		container.removeType(type);
+		
+		List<LStructuralFeature> features = type.getFeatures();
+		for(int i=0;i<features.size();i++){
+			LStructuralFeature fi = features.get(i);
+			if(fi instanceof LReference){
+				this.removeLReference((LReference) fi);
+			}
+			else if(fi instanceof LAttribute)
+				this.removeLAttribute((LAttribute) fi);
+			else{
+				try {
+					throw this.getException("removeLClass(type)", "type.feature["+i+"]", "UnKnown-Type Features in Class: "+fi.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			}
+		}
+		
+		this.releaseID(type.getClassifierID());
+	}
 }
