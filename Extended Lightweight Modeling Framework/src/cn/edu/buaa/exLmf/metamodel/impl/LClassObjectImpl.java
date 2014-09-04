@@ -31,7 +31,6 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			else{
 				feature_val.put(features.get(i), features.get(i).getDefaultValue());
 			}
-			
 		}
 	}
 
@@ -98,7 +97,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		}
 		
 		if(!feature.isChangable()&&
-				this.status_map.get(feature)==false){
+				this.status_map.get(feature)==true){
 			try {
 				throw this.getException("set(feature,value)", "feature", "try to update unchangable feature value");
 			} catch (Exception e) {

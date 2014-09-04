@@ -45,6 +45,15 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 			}
 			return null;
 		}
+		if(type.isAbstract()){
+			try {
+				throw this.getException("create(type)", "type", "Abstract type \""+type.getName()+"\" cannot be instantiated.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 		return new LClassObjectImpl(type);
 	}
 	@Override

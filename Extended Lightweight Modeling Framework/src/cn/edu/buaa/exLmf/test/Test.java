@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.edu.buaa.exLmf.manager.ISearcherRunner;
+import cn.edu.buaa.exLmf.manager.LModelManager;
+import cn.edu.buaa.exLmf.manager.SearcherRunner;
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;
@@ -30,7 +33,18 @@ public class Test {
 			LClass type = (LClass) types.get(i);
 			System.out.println(printClass(type));
 		}*/
-		test1();
+		LPackage p = createPackage2();
+		
+		ISearcherRunner runner = new SearcherRunner("RUNNER_II");
+		runner.setMainObject(p);
+		try {
+			runner.pushTask("class[HLR].reference[6]");
+			LReference r = (LReference) runner.runOne();
+			System.out.println(r.getName());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void test1(){
@@ -127,28 +141,44 @@ public class Test {
 		return p;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@SuppressWarnings("static-access")
+	public static LPackage createPackage2(){
+		LModelManager manager = new LModelManager("Manager_II");
+		LPackage p = manager.createPackage("req");
+		
+		LClass requirement = manager.createAbstractClass(p, "Requirement");
+		manager.createAttribute(requirement, "rid", LPrimitiveTypeImpl.STRING);
+		
+		LClass hlr = manager.createClass(p, "HLR");
+		LClass llr = manager.createClass(p, "LLR");
+		LClass sr = manager.createClass(p, "SR");
+		
+		hlr.addSuperType(requirement);
+		llr.addSuperType(requirement);
+		sr.addSuperType(requirement);
+		
+		manager.createMultipleReference(sr, "hlrs", hlr, 1, LMultipleObject.UNBOUNDED, manager.UNIQUE_SET);
+		manager.createMultipleReference(hlr, "llrs", llr, 1, LMultipleObject.UNBOUNDED, manager.UNIQUE_SET);
+		
+		return p;
+	}
 	
 	public static String printClass(LClass type){
 		if(type==null)return null;
 		StringBuilder code = new StringBuilder();
 		
 		code.append(type.getName()).append("[").append(type.getClassifierID()).append("]:");
+		if(type.isAbstract())code.append("<abstract>");
+		if(type.isFinal())code.append("<final>");
 		for(int i=0;i<type.getFeatures().size();i++){
 			LStructuralFeature feature = type.getFeatures().get(i);
 			code.append("\n\t-").append(feature.getName()).append("[").append(feature.getFeatureID()).
 			append("]: ").append(feature.getType().getName()).append("(").append(feature.getLowerBound()).
-			append("-").append(feature.getUpperBound()).append(")");
+			append("-");
+			if(feature.getUpperBound()==LMultipleObject.UNBOUNDED)
+				code.append("*").append(")");
+			else
+				code.append(feature.getUpperBound()).append(")");
 		}
 		
 		return code.toString();

@@ -139,6 +139,8 @@ public class LModelManager {
 		type.setDefaultValue(null);
 		type.setInstanceName(name.trim());
 		type.setClassifierID(this.generateID());
+		type.setAbstract(false);
+		type.setFinal(false);
 		p.addType(type);
 		
 		return type;
@@ -176,11 +178,153 @@ public class LModelManager {
 		type.setDefaultValue(null);
 		type.setInstanceName(ins.trim());
 		type.setClassifierID(this.generateID());
+		type.setAbstract(false);
+		type.setFinal(false);
 		p.addType(type);
 		
 		return type;
 	}
 
+	public LClass createAbstractClass(LPackage p,String name){
+		if(p==null){
+			try {
+				throw getException("createAbstractClass(p,name)","p","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(name==null||name.trim().length()==0){
+			try {
+				throw getException("createAbstractClass(p,name)","name","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LClass type = new LClassImpl(name.trim(),p);
+		type.setDefaultValue(null);
+		type.setInstanceName(name.trim());
+		type.setClassifierID(this.generateID());
+		type.setAbstract(true);
+		type.setFinal(false);
+		p.addType(type);
+		
+		return type;
+	}
+	public LClass createAbstractClass(LPackage p,String name,String ins){
+		if(p==null){
+			try {
+				throw getException("createAbstractClass(p,name,ins)","p","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(name==null||name.trim().length()==0){
+			try {
+				throw getException("createAbstractClass(p,name,ins)","name","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(ins==null||ins.trim().length()==0){
+			try {
+				throw getException("createAbstractClass(p,name,ins)","ins","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LClass type = new LClassImpl(name.trim(),p);
+		type.setDefaultValue(null);
+		type.setInstanceName(ins.trim());
+		type.setClassifierID(this.generateID());
+		type.setAbstract(true);
+		type.setFinal(false);
+		p.addType(type);
+		
+		return type;
+	}
+	
+	public LClass createFinalClass(LPackage p,String name){
+		if(p==null){
+			try {
+				throw getException("createFinalClass(p,name)","p","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(name==null||name.trim().length()==0){
+			try {
+				throw getException("createFinalClass(p,name)","name","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LClass type = new LClassImpl(name.trim(),p);
+		type.setDefaultValue(null);
+		type.setInstanceName(name.trim());
+		type.setClassifierID(this.generateID());
+		type.setAbstract(true);
+		type.setFinal(false);
+		p.addType(type);
+		
+		return type;
+	}
+	public LClass createFinalClass(LPackage p,String name,String ins){
+		if(p==null){
+			try {
+				throw getException("createFinalClass(p,name,ins)","p","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(name==null||name.trim().length()==0){
+			try {
+				throw getException("createFinalClass(p,name,ins)","name","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		if(ins==null||ins.trim().length()==0){
+			try {
+				throw getException("createFinalClass(p,name,ins)","ins","Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LClass type = new LClassImpl(name.trim(),p);
+		type.setDefaultValue(null);
+		type.setInstanceName(ins.trim());
+		type.setClassifierID(this.generateID());
+		type.setAbstract(false);
+		type.setFinal(true);
+		p.addType(type);
+		
+		return type;
+	}
+	
 	public LEnum createEnum(LPackage p,String name){
 		if(p==null){
 			try {
@@ -266,6 +410,7 @@ public class LModelManager {
 		attr.setOrdered(true);
 		attr.setUnique(false);
 		
+		container.addAttribute(attr);
 		return attr;
 	}
 	public LAttribute createMultipleAttribute(LClass container,String name,LDataType type,int lower,int upper,int multiple_type){
@@ -321,6 +466,11 @@ public class LModelManager {
 		}
 		}
 		
+		attr.setChangable(false);
+		attr.setDataType(type);
+		attr.setDefaultValue(type.getDefaultValue());
+		container.addAttribute(attr);
+		
 		return attr;
 	}
 	public LAttribute createConstantAttribute(LClass container,String name,LDataType type){
@@ -342,6 +492,7 @@ public class LModelManager {
 		attr.setUpperBound(1);
 		attr.setOrdered(true);
 		attr.setUnique(false);
+		container.addAttribute(attr);
 		
 		return attr;
 	}
@@ -368,6 +519,8 @@ public class LModelManager {
 		ref.setUnique(false);
 		ref.setOpposite(null);
 		
+		container.addReference(ref);
+		
 		return ref;
 	}
 	public LReference createConstantReference(LClass container,String name,LClass type){
@@ -382,7 +535,7 @@ public class LModelManager {
 		}
 		
 		LReference ref = new LReferenceImpl(this.generateID(),name.trim(),container);
-		ref.setChangable(true);
+		ref.setChangable(false);
 		ref.setContainment(false);
 		ref.setDefaultValue(type.getDefaultValue());
 		ref.setLClass(type);
@@ -391,6 +544,7 @@ public class LModelManager {
 		ref.setOrdered(true);
 		ref.setUnique(false);
 		ref.setOpposite(null);
+		container.addReference(ref);
 		
 		return ref;
 	}
@@ -447,6 +601,13 @@ public class LModelManager {
 		}
 		}
 		
+		ref.setChangable(false);
+		ref.setContainment(false);
+		ref.setDefaultValue(type.getDefaultValue());
+		ref.setLClass(type);
+		ref.setOpposite(null);
+		container.addReference(ref);
+		
 		return ref;
 		
 	}
@@ -468,6 +629,7 @@ public class LModelManager {
 		l.setLowerBound(1);l.setUpperBound(1);
 		l.setOrdered(false);l.setUnique(true);
 		l.setValue(value);
+		container.addLiteral(l);
 		
 		return l;
 	}
@@ -488,6 +650,7 @@ public class LModelManager {
 		l.setLowerBound(1);l.setUpperBound(1);
 		l.setOrdered(false);l.setUnique(true);
 		l.setValue(value);
+		container.addLiteral(l);
 		
 		return l;
 	}
@@ -642,5 +805,52 @@ public class LModelManager {
 		}
 		
 		this.releaseID(type.getClassifierID());
+	}
+
+	public LAttribute createIDAttribute(LClass container,String name,LDataType type){
+		if(container==null||name==null||name.trim().length()==0||type==null){
+			try {
+				throw this.getException("createIDAttribute(container,name,type)", "container|name|type", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LAttribute attr = new LAttributeImpl(this.generateID(),name.trim(),container);
+		attr.setChangable(true);
+		attr.setDataType(type);
+		attr.setDefaultValue(type.getDefaultValue());
+		attr.setLowerBound(0);
+		attr.setUpperBound(1);
+		attr.setOrdered(true);
+		attr.setUnique(false);
+		container.setIDAttribute(attr);
+		
+		return attr;
+	}
+	public LAttribute createIDAttribute(LClass container,String name,LDataType type,Boolean constant){
+		if(container==null||name==null||name.trim().length()==0||type==null||constant==null){
+			try {
+				throw this.getException("createIDAttribute(container,name,type,constant)", "container|name|type|constant", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		LAttribute attr = new LAttributeImpl(this.generateID(),name.trim(),container);
+		attr.setChangable(!constant);
+		attr.setDataType(type);
+		attr.setDefaultValue(type.getDefaultValue());
+		attr.setLowerBound(0);
+		attr.setUpperBound(1);
+		attr.setOrdered(true);
+		attr.setUnique(false);
+		container.setIDAttribute(attr);
+		
+		return attr;
 	}
 }

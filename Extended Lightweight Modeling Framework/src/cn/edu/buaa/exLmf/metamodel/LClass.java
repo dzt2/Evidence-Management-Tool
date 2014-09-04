@@ -9,6 +9,11 @@ public interface LClass extends LClassifier{
 	public Boolean isSuperOf(LClass type);
 	public Boolean isSubOf(LClass type);
 	
+	public Boolean isAbstract();
+	public Boolean isFinal();
+	public void setAbstract(Boolean isAbstract);
+	public void setFinal(Boolean isFinal);
+	
 	public LAttribute getIDAttribute();
 	public void setIDAttribute(LAttribute attribute);
 	

@@ -52,6 +52,16 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			}
 			return;
 		}
+		if(type.isFinal()){
+			try {
+				throw this.getException("addSuperType(type)", "type", 
+						"Final type \""+type.getName()+"\" cannot be generalized to sub-class");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
 		
 		this.supers.add(type);
 	}
@@ -376,5 +386,16 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		this.removeFeature(f);
 		return f;
 	}
+
+	Boolean isAbstract=false;
+	Boolean isFinal=false;
+	@Override
+	public Boolean isAbstract() {return this.isAbstract;}
+	@Override
+	public Boolean isFinal() {return this.isFinal;}
+	@Override
+	public void setAbstract(Boolean isAbstract) {this.isAbstract=isAbstract;}
+	@Override
+	public void setFinal(Boolean isFinal) {this.isFinal=isFinal;}
 
 }

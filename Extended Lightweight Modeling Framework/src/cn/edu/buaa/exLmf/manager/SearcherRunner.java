@@ -184,8 +184,11 @@ public class SearcherRunner implements ISearcherRunner{
 			if(searcher==null)
 				throw getException("iterator(obj,next)","obj","Undefined Type at: "+next);
 			
-			searcher.setElement(element);
-			return searcher.next(next);
+			if(obj instanceof LModelElement){
+				searcher.setElement((LModelElement) obj);
+				return searcher.next(next);
+			}
+			throw getException("iterator(obj,next)","obj","Undefined Type at: "+next);
 		}
 		
 	}
