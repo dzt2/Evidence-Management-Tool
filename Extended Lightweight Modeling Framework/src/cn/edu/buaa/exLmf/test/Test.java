@@ -38,9 +38,9 @@ public class Test {
 		ISearcherRunner runner = new SearcherRunner("RUNNER_II");
 		runner.setMainObject(p);
 		try {
-			runner.pushTask("class[HLR].reference[6]");
-			LReference r = (LReference) runner.runOne();
-			System.out.println(r.getName());
+			runner.pushTask("class[HLR].attribute[rid]");
+			LAttribute a = (LAttribute) runner.runOne();
+			System.out.println(a.getName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -55,6 +55,44 @@ public class SearcherRunner implements ISearcherRunner{
 		this.install_map.put(MULTIPLEOBJECT, new LMultipleObjectSearcher());
 		this.install_map.put(CLASSOBJECT, new LClassObjectSearcher());
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	Object getResult(Object parant,String next) throws Exception{
+		if(parant==null||next==null)
+			throw this.getException("getResult(parant,next)", "parant|next", "Null");
+		
+		ILModeSearcher searcher = null;
+		if(parant instanceof LPackage)searcher = this.install_map.get(PACKAGE);
+		if(parant instanceof LClass)searcher = this.install_map.get(CLASS);
+		if(parant instanceof LEnum)searcher = this.install_map.get(ENUM);
+		if(parant instanceof LAttribute)searcher = this.install_map.get(ATTRIBUTE);
+		if(parant instanceof LReference)searcher = this.install_map.get(REFERENCE);
+		if(parant instanceof LEnumLiteral)searcher = this.install_map.get(LITERAL);
+		if(parant instanceof LDataObject)searcher = this.install_map.get(DATAOBJECT);
+		if(parant instanceof LMultipleObject)searcher = this.install_map.get(MULTIPLEOBJECT);
+		if(parant instanceof LClassObject)searcher = this.install_map.get(CLASSOBJECT);
+		
+		if(parant instanceof List){
+			List list = (List) parant;
+			List<Object> results = new ArrayList<Object>();
+			for(int i=0;i<list.size();i++){
+				if(list.get(i) instanceof LModelElement){
+					Object result = this.getResult(list.get(i), next);
+					if(result instanceof List)
+						results.addAll((List) result);
+					else
+						results.add(result);
+				}
+			}
+			return results;
+		}
+		
+		if(searcher==null||!(parant instanceof LModelElement))
+			throw this.getException("getResult(parant,next)", "parant", 
+					"Undefined class parant: \""+parant.getClass().getName()+"\"");
+		
+		searcher.setElement((LModelElement) parant);
+		return searcher.next(next);
+	}
 	
 	
 	@Override
@@ -96,46 +134,27 @@ public class SearcherRunner implements ISearcherRunner{
 	@Override
 	public Object runOne() throws Exception {
 		String path = this.popTask();
-		TaskRunner runner = new TaskRunner();
-		runner.path=path;
-		runner.element=this.element;
+		String[] ans = path.split("\\"+ILModeSearcher.DOT);
 		
-		Thread t = new Thread(runner);
-		t.start();
-		
-		t.join();
-		return runner.result;
+		Object parant = element;
+		for(int i=0;i<ans.length;i++){
+			String next = ans[i];
+			parant = this.getResult(parant, next);
+			if(parant==null)
+				throw this.getException("runOne()", "path", 
+						"path is too long and failed at ["+i+"]: \""+ans[i]+"\"");
+		}
+		return parant;
 	}
 
 	@Override
 	public Map<String, Object> runAll() throws Exception {
 		Map<String,Object> results = new HashMap<String,Object>();
 		
-		List<TaskRunner> runners = new ArrayList<TaskRunner>();
-		for(int i=0;i<this.ins.size();i++){
-			TaskRunner runner = new TaskRunner();
-			runner.element=this.element;
-			runner.path=this.ins.get(i);
-			runners.add(runner);
-		}
-		
-		List<Thread> threads = new ArrayList<Thread>();
-		for(int i=0;i<runners.size();i++)
-			threads.add(new Thread(runners.get(i)));
-		
-		for(int i=0;i<threads.size();i++)
-			threads.get(i).start();
-		
-		for(int i=0;i<threads.size();i++)
-			threads.get(i).join();
-		
-		for(int i=0;i<runners.size();i++)
-			results.put(runners.get(i).path, runners.get(i).result);
-		
 		return results;
 	}
 	
-	class TaskRunner implements Runnable{
+	/*class TaskRunner implements Runnable{
 		public String path;
 		public LModelElement element;
 		public Object result;
@@ -180,17 +199,21 @@ public class SearcherRunner implements ISearcherRunner{
 			if(obj instanceof LDataObject)searcher = install_map.get(DATAOBJECT);
 			if(obj instanceof LMultipleObject)searcher = install_map.get(MULTIPLEOBJECT);
 			if(obj instanceof LClassObject)searcher = install_map.get(CLASSOBJECT);
+			if(obj instanceof List){
+				List<Thread> threads = new ArrayList<Thread>();
+				for(int i=0;i<threads.size();i++){
+					//???
+				}
+			}
 			
-			if(searcher==null)
-				throw getException("iterator(obj,next)","obj","Undefined Type at: "+next);
-			
-			if(obj instanceof LModelElement){
+			if(searcher!=null&&obj instanceof LModelElement){
 				searcher.setElement((LModelElement) obj);
 				return searcher.next(next);
 			}
 			throw getException("iterator(obj,next)","obj","Undefined Type at: "+next);
 		}
 		
-	}
+	}*/
 
+	
 }
