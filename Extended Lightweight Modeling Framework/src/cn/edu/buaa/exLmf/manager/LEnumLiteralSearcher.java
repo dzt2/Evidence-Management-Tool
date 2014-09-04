@@ -5,8 +5,7 @@ import java.util.List;
 import cn.edu.buaa.exLmf.metamodel.LEnumLiteral;
 import cn.edu.buaa.exLmf.metamodel.LModelElement;
 
-public class LEnulLiteralSearcher extends LModelSearcher{
-
+public class LEnumLiteralSearcher extends LModelSearcher{
 	@Override
 	public void verifyElement() throws Exception {
 		if(this.element==null||!(this.element instanceof LEnumLiteral))
