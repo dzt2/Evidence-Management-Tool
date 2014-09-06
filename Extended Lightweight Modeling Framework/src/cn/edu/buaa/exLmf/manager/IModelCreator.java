@@ -13,36 +13,41 @@ import cn.edu.buaa.exLmf.metamodel.LReference;
 
 public interface IModelCreator {
 	
-	public static int UNIQUE_ORDER = 0;
-	public static int UNIQUE_INORDER = 1;
-	public static int INUNIQUE_ORDER = 2;
-	public static int INUNIQUE_INORDER = 3;
+	public static final int UNIQUE_ORDER = 0;
+	public static final int UNIQUE_INORDER = 1;
+	public static final int INUNIQUE_ORDER = 2;
+	public static final int INUNIQUE_INORDER = 3;
+	public static final String _ROOT = "";
+	public static final String nsURI = "www.lmf.com/manager";
+	public static final String prefix = "";
 	
-	public LPackage createPackage(String name);
-	public LPackage createPackage(String name,String nsURI,String prefix);
+	public LPackage getRoot();
 	
-	public LClass createClass(String name);
-	public LClass createClass(String name,String ins);
+	public LPackage createPackage(LPackage container,String name) throws Exception;
+	public LPackage createPackage(LPackage container,String name,String nsURI,String prefix) throws Exception;
 	
-	public LClass createAbstractClass(String name);
-	public LClass createAbstractClass(String name,String ins);
+	public LClass createClass(LPackage container,String name) throws Exception;
+	public LClass createClass(LPackage container,String name,String ins) throws Exception;
 	
-	public LClass createFinalClass(String name);
-	public LClass createFinalClass(String name,String ins);
+	public LClass createAbstractClass(LPackage container,String name) throws Exception;
+	public LClass createAbstractClass(LPackage container,String name,String ins) throws Exception;
 	
-	public LEnum createEnum(String name);
-	public LEnum createEnum(String name,String ins);
+	public LClass createFinalClass(LPackage container,String name) throws Exception;
+	public LClass createFinalClass(LPackage container,String name,String ins) throws Exception;
 	
-	public LAttribute createAttribute(String name,LDataType type);
-	public LAttribute createConstantAttribute(String name,LDataType type);
-	public LAttribute createMultipleAttribute(String name,LDataType type,int lower,int upper,int multipleType);
+	public LEnum createEnum(LPackage container,String name) throws Exception;
+	public LEnum createEnum(LPackage container,String name,String ins) throws Exception;
 	
-	public LReference createReference(String name,LClass type);
-	public LReference createConstantReference(String name,LClass type);
-	public LReference createMultipleReference(String name,LClass type,int lower,int upper,int multipleType);
+	public LAttribute createAttribute(LClass container,String name,LDataType type) throws Exception;
+	public LAttribute createConstantAttribute(LClass container,String name,LDataType type) throws Exception;
+	public LAttribute createMultipleAttribute(LClass container,String name,LDataType type,int lower,int upper,int multipleType) throws Exception;
 	
-	public LEnumLiteral createLiteral(String name,int value);
-	public LEnumLiteral createLiteral(String name,int value,String literal);
+	public LReference createReference(LClass container,String name,LClass type) throws Exception;
+	public LReference createConstantReference(LClass container,String name,LClass type) throws Exception;
+	public LReference createMultipleReference(LClass container,String name,LClass type,int lower,int upper,int multipleType) throws Exception;
+	
+	public LEnumLiteral createLiteral(LEnum container,String name,int value) throws Exception;
+	public LEnumLiteral createLiteral(LEnum container,String name,int value,String literal) throws Exception;
 	
 	public Set<Integer> getIDs();
 	public LModelElement getElement(Integer id);
@@ -50,5 +55,5 @@ public interface IModelCreator {
 	public Boolean containElement(LModelElement elm);
 	public Boolean removeElement(LModelElement elm);
 	
-	public Boolean updateSpace();
+	public Boolean updateSpace() throws Exception;
 }
