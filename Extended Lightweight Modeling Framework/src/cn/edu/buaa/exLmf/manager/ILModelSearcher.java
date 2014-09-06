@@ -4,8 +4,7 @@ import java.util.List;
 
 import cn.edu.buaa.exLmf.metamodel.LModelElement;
 
-public interface ILModeSearcher {
-	
+public interface ILModelSearcher {
 	public static final String DOT = ".";
 	public static final String ROOT= "";
 	

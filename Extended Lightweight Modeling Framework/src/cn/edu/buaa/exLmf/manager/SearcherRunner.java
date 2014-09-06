@@ -30,7 +30,7 @@ public class SearcherRunner implements ISearcherRunner{
  	
 	String name;
 	LModelElement element;
-	Map<String,ILModeSearcher> install_map = new HashMap<String,ILModeSearcher>();
+	Map<String,ILModelSearcher> install_map = new HashMap<String,ILModelSearcher>();
 	
 	List<String> ins = new ArrayList<String>();
 	int cur = 0;
@@ -60,7 +60,7 @@ public class SearcherRunner implements ISearcherRunner{
 		if(parant==null||next==null)
 			throw this.getException("getResult(parant,next)", "parant|next", "Null");
 		
-		ILModeSearcher searcher = null;
+		ILModelSearcher searcher = null;
 		if(parant instanceof LPackage)searcher = this.install_map.get(PACKAGE);
 		if(parant instanceof LClass)searcher = this.install_map.get(CLASS);
 		if(parant instanceof LEnum)searcher = this.install_map.get(ENUM);
@@ -96,7 +96,7 @@ public class SearcherRunner implements ISearcherRunner{
 	
 	
 	@Override
-	public void install(String name, ILModeSearcher searcher) {
+	public void install(String name, ILModelSearcher searcher) {
 		if(this.install_map.containsKey(name)){
 			System.err.println("Installed Searcher \""+name+"\" is coverred.");
 		}
@@ -134,7 +134,7 @@ public class SearcherRunner implements ISearcherRunner{
 	@Override
 	public Object runOne() throws Exception {
 		String path = this.popTask();
-		String[] ans = path.split("\\"+ILModeSearcher.DOT);
+		String[] ans = path.split("\\"+ILModelSearcher.DOT);
 		
 		Object parant = element;
 		for(int i=0;i<ans.length;i++){

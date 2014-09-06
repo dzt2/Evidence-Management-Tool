@@ -6,7 +6,7 @@ import cn.edu.buaa.exLmf.metamodel.LModelElement;
 
 public interface ISearcherRunner {
 	
-	public void install(String name,ILModeSearcher searcher);
+	public void install(String name,ILModelSearcher searcher);
 	public void uninstall(String name);
 	public Boolean isInstalled(String name);
 	

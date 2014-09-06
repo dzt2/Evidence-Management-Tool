@@ -68,7 +68,6 @@ public class LModelManager {
 			this.id_space.remove(id);
 	}
 	
-	
 	/*
 	 *	Manager Functions 
 	 */

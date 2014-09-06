@@ -3,7 +3,7 @@ package cn.edu.buaa.exLmf.manager;
 import cn.edu.buaa.exLmf.metamodel.LModelElement;
 import cn.edu.buaa.exLmf.metamodel.impl.LMFException;
 
-public abstract class LModelSearcher implements ILModeSearcher{
+public abstract class LModelSearcher implements ILModelSearcher{
 	
 	LModelElement element;
 	
