@@ -1,4 +1,4 @@
-package cn.edu.buaa.exLmf.manager;
+package cn.edu.buaa.exLmf.manager.impl;
 
 import java.util.HashSet;
 import java.util.List;

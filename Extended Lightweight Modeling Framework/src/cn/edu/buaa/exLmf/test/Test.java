@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import cn.edu.buaa.exLmf.manager.ISearcherRunner;
-import cn.edu.buaa.exLmf.manager.LModelManager;
-import cn.edu.buaa.exLmf.manager.SearcherRunner;
+import cn.edu.buaa.exLmf.manager.impl.LModelManager;
+import cn.edu.buaa.exLmf.manager.impl.SearcherRunner;
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;

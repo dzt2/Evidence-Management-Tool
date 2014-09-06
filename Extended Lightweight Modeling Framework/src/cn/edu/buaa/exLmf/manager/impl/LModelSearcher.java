@@ -1,5 +1,6 @@
-package cn.edu.buaa.exLmf.manager;
+package cn.edu.buaa.exLmf.manager.impl;
 
+import cn.edu.buaa.exLmf.manager.ILModelSearcher;
 import cn.edu.buaa.exLmf.metamodel.LModelElement;
 import cn.edu.buaa.exLmf.metamodel.impl.LMFException;
 

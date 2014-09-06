@@ -1,10 +1,12 @@
-package cn.edu.buaa.exLmf.manager;
+package cn.edu.buaa.exLmf.manager.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.edu.buaa.exLmf.manager.ILModelSearcher;
+import cn.edu.buaa.exLmf.manager.ISearcherRunner;
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;

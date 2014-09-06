@@ -1,15 +1,16 @@
-package cn.edu.buaa.exLmf.manager;
+package cn.edu.buaa.exLmf.manager.impl;
 
 import java.util.List;
 
-import cn.edu.buaa.exLmf.metamodel.LEnumLiteral;
 import cn.edu.buaa.exLmf.metamodel.LModelElement;
+import cn.edu.buaa.exLmf.metamodel.LReference;
 
-public class LEnumLiteralSearcher extends LModelSearcher{
+public class LReferenceSearcher extends LModelSearcher{
+
 	@Override
 	public void verifyElement() throws Exception {
-		if(this.element==null||!(this.element instanceof LEnumLiteral))
-			throw this.getException("verifyElement()","element","Not Literal");
+		if(this.element==null||!(this.element instanceof LReference))
+			throw this.getException("verifyElement()", "element", "Not Reference");
 	}
 
 	@Override
@@ -17,9 +18,13 @@ public class LEnumLiteralSearcher extends LModelSearcher{
 		this.nullVerify(name);
 		this.verifyElement();
 		
-		LEnumLiteral l = (LEnumLiteral) this.element;
-
-		if(name.equals(CONTAINER))return l.getContainer();
+		LReference r = (LReference) this.element;
+		
+		if(name.equals(CONTAINER))return r.getContainer();
+		if(name.equals(DEFAULT))return r.getDefaultValue();
+		if(name.equals(OPPOSITE))return r.getOpposite();
+		if(name.equals(TYPE))return r.getType();
+		if(name.equals(CLASS))return r.getLClass();
 		
 		throw this.getException("nextElement(name)", "name", "Invalid Argument: "+name);
 	}
@@ -32,4 +37,5 @@ public class LEnumLiteralSearcher extends LModelSearcher{
 		
 		throw this.getException("nextElements(name)", "name", "Invalid Argument: "+name);
 	}
+
 }
