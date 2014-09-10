@@ -12,7 +12,7 @@ import cn.edu.buaa.exLmf.metamodel.LPackage;
 public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	String nsURI;
 	String prefix;
-	public LFactory factory = new LFactoryImpl(this,false);
+	public LFactory factory;
 	List<LPackage> supPackages = new ArrayList<LPackage>();
 	List<LClassifier> types = new ArrayList<LClassifier>();
 	Map<String,LPackage> package_index = new HashMap<String,LPackage>();
@@ -23,6 +23,13 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		super(name);
 		this.nsURI=nsURI;
 		this.prefix=prefix;
+		this.factory=new LFactoryImpl(this,false);
+	}
+	public LPackageImpl(String name,String nsURI,String prefix,Boolean isLight){
+		super(name);
+		this.nsURI=nsURI;
+		this.prefix=prefix;
+		this.factory=new LFactoryImpl(this,isLight);
 	}
 
 	@Override
