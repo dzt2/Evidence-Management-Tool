@@ -1,0 +1,5 @@
+HLR: domain
+LLR: domain
+trace: predicate(HLR.iter, LLR.iter)
+Q: any(LLR,trace)
+P: all(HLR, Q)
