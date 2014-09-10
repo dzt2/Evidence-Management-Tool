@@ -21,8 +21,10 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		FALSE.val=false;
 	}
 	
+	Boolean isLight=false;
+	
 	public LPackage ePackage;
-	public LFactoryImpl(LPackage p){super();this.ePackage=p;}
+	public LFactoryImpl(LPackage p,Boolean isLight){super();this.ePackage=p;this.isLight=isLight;}
 	@Override
 	public LPackage getContainer() {return this.ePackage;}
 
@@ -54,7 +56,10 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 			}
 			return null;
 		}
-		return new LClassObjectImpl(type);
+		if(this.isLight)
+			return new SimpleLClassObject(type);
+		else
+			return new LClassObjectImpl(type);
 	}
 	@Override
 	public LDataObject create(LDataType type, String code) {
