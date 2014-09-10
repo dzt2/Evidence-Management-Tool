@@ -139,7 +139,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		
 		alls.addAll(this.features);
 		for(int i=0;i<this.supers.size();i++){
-			alls.addAll(this.supers.get(i).getAllReferences());
+			alls.addAll(this.supers.get(i).getAllFeatures());
 		}
 		
 		return alls;

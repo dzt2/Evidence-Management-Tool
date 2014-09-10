@@ -14,6 +14,7 @@ import cn.edu.buaa.exLmf.metamodel.LDataType;
 import cn.edu.buaa.exLmf.metamodel.LFactory;
 import cn.edu.buaa.exLmf.metamodel.LObject;
 import cn.edu.buaa.exLmf.metamodel.LPackage;
+import cn.edu.buaa.exLmf.metamodel.LPrimitiveType;
 import cn.edu.buaa.exLmf.metamodel.impl.LMFException;
 
 public class ObjectSpace implements IObjectSpace{
@@ -23,7 +24,7 @@ public class ObjectSpace implements IObjectSpace{
 	Map<Integer,LClassObject> objMap = new HashMap<Integer,LClassObject>();
 	Map<LClass,Set<LClassObject>> typeMap = new HashMap<LClass,Set<LClassObject>>();
 	
-	public ObjectSpace(String name){this.name=name;}
+	public ObjectSpace(String name,LPackage container){this.name=name;this.container=container;}
 	
 	/*
 	 *	Tool Functions 
@@ -37,7 +38,7 @@ public class ObjectSpace implements IObjectSpace{
 	@Override
 	public Boolean isInstancable(LClassifier type) {
 		if(type==null)return false;
-		if(!this.container.containType(type))return false;
+		if(!(type instanceof LPrimitiveType)&&!this.container.containType(type))return false;
 		if(type instanceof LClass){
 			if(((LClass) type).isAbstract())return false;
 		}

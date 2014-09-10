@@ -4,8 +4,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.edu.buaa.exLmf.manager.IModelCreator;
 import cn.edu.buaa.exLmf.manager.IModelPrinter;
+import cn.edu.buaa.exLmf.manager.IObjectSpace;
+import cn.edu.buaa.exLmf.manager.impl.ModelCreatorImpl;
 import cn.edu.buaa.exLmf.manager.impl.ModelPrinter;
+import cn.edu.buaa.exLmf.manager.impl.ObjectSpace;
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;
@@ -33,19 +37,31 @@ public class Test {
 			LClass type = (LClass) types.get(i);
 			System.out.println(printClass(type));
 		}*/
-		LPackage p = createPackage1();
-		
-		IModelPrinter printer = new ModelPrinter("Printer");
-		System.out.println(printer.printLPackage(p));
-		
-		List<LClassifier> types = p.getTypes();
-		for(int i=0;i<types.size();i++){
-			LClassifier type = types.get(i);
-			if(type instanceof LClass)
-				System.out.println(printer.printLClass((LClass) type));
-			else if(type instanceof LEnum)
-				System.out.println(printer.printLEnum((LEnum) type));
+		LPackage p;
+		try {
+			p = createPackage2();
+			IModelPrinter printer = new ModelPrinter("Printer");
+			System.out.println(printer.printLPackage(p));
+			
+			List<LClassifier> types = p.getTypes();
+			for(int i=0;i<types.size();i++){
+				LClassifier type = types.get(i);
+				if(type instanceof LClass)
+					System.out.println(printer.printLClass((LClass) type));
+			}
+			
+			LClass HLR = (LClass) p.getClassifierByName("HLR");
+			IObjectSpace os = new ObjectSpace("TEST_II_OS",p);
+			
+			LDataObject obj = os.createDataObject(LPrimitiveTypeImpl.INT, "15");
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	public static void test1(){
@@ -142,9 +158,10 @@ public class Test {
 		return p;
 	}
 
-	public static LPackage createPackage2(){
-		/*LModelManager manager = new LModelManager("Manager_II");
-		LPackage p = manager.createPackage("req");
+	@SuppressWarnings("static-access")
+	public static LPackage createPackage2() throws Exception{
+		IModelCreator manager = new ModelCreatorImpl("TEST_II");
+		LPackage p = manager.getRoot();
 		
 		LClass requirement = manager.createAbstractClass(p, "Requirement");
 		manager.createAttribute(requirement, "rid", LPrimitiveTypeImpl.STRING);
@@ -157,11 +174,10 @@ public class Test {
 		llr.addSuperType(requirement);
 		sr.addSuperType(requirement);
 		
-		manager.createMultipleReference(sr, "hlrs", hlr, 1, LMultipleObject.UNBOUNDED, manager.UNIQUE_SET);
-		manager.createMultipleReference(hlr, "llrs", llr, 1, LMultipleObject.UNBOUNDED, manager.UNIQUE_SET);
+		manager.createMultipleReference(sr, "hlrs", hlr, 1, LMultipleObject.UNBOUNDED, manager.UNIQUE_INORDER);
+		manager.createMultipleReference(hlr, "llrs", llr, 1, LMultipleObject.UNBOUNDED, manager.UNIQUE_INORDER);
 		
-		return p;*/
-		return null;
+		return p;
 	}
 	
 	public static String printClass(LClass type){
