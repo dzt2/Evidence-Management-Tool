@@ -34,6 +34,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return false;
 	}
 	
+	/*Core Functions*/
 	@Override
 	public Boolean generalize(LClass parant, LClass child) {
 		if(parant==null||child==null)return false;
