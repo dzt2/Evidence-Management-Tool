@@ -15,7 +15,6 @@ import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;
 import cn.edu.buaa.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.exLmf.metamodel.LDataObject;
-import cn.edu.buaa.exLmf.metamodel.LEnum;
 import cn.edu.buaa.exLmf.metamodel.LFactory;
 import cn.edu.buaa.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.exLmf.metamodel.LObject;
@@ -53,8 +52,8 @@ public class Test {
 			LClass HLR = (LClass) p.getClassifierByName("HLR");
 			IObjectSpace os = new ObjectSpace("TEST_II_OS",p);
 			
-			LDataObject obj = os.createDataObject(LPrimitiveTypeImpl.INT, "15");
-			
+			//LDataObject obj = os.createDataObject(LPrimitiveTypeImpl.INT, "15");
+			os.createClassObject(HLR);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
