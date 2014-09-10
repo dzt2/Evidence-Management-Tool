@@ -4,13 +4,14 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import cn.edu.buaa.exLmf.manager.ISearcherRunner;
-import cn.edu.buaa.exLmf.manager.impl.SearcherRunner;
+import cn.edu.buaa.exLmf.manager.IModelPrinter;
+import cn.edu.buaa.exLmf.manager.impl.ModelPrinter;
 import cn.edu.buaa.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.exLmf.metamodel.LClass;
 import cn.edu.buaa.exLmf.metamodel.LClassObject;
 import cn.edu.buaa.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.exLmf.metamodel.LDataObject;
+import cn.edu.buaa.exLmf.metamodel.LEnum;
 import cn.edu.buaa.exLmf.metamodel.LFactory;
 import cn.edu.buaa.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.exLmf.metamodel.LObject;
@@ -32,17 +33,18 @@ public class Test {
 			LClass type = (LClass) types.get(i);
 			System.out.println(printClass(type));
 		}*/
-		LPackage p = createPackage2();
+		LPackage p = createPackage1();
 		
-		ISearcherRunner runner = new SearcherRunner("RUNNER_II");
-		runner.setMainObject(p);
-		try {
-			runner.pushTask("class[HLR].attribute[rid]");
-			LAttribute a = (LAttribute) runner.runOne();
-			System.out.println(a.getName());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		IModelPrinter printer = new ModelPrinter("Printer");
+		System.out.println(printer.printLPackage(p));
+		
+		List<LClassifier> types = p.getTypes();
+		for(int i=0;i<types.size();i++){
+			LClassifier type = types.get(i);
+			if(type instanceof LClass)
+				System.out.println(printer.printLClass((LClass) type));
+			else if(type instanceof LEnum)
+				System.out.println(printer.printLEnum((LEnum) type));
 		}
 	}
 	
