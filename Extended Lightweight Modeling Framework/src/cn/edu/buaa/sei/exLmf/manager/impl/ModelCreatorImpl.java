@@ -304,7 +304,7 @@ public class ModelCreatorImpl implements IModelCreator{
 		l.setContainer(container);
 		l.setDefaultValue(null);
 		l.setLiteral(name.trim());
-		l.setType(null);
+		//l.setType(null);
 		l.setUnique(true);l.setOrdered(false);
 		l.setLowerBound(1);l.setUpperBound(1);
 		l.setValue(value);

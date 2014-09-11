@@ -29,6 +29,7 @@ import cn.edu.buaa.sei.exLmf.metamodel.LDataType;
 import cn.edu.buaa.sei.exLmf.metamodel.LEnum;
 import cn.edu.buaa.sei.exLmf.metamodel.LEnumLiteral;
 import cn.edu.buaa.sei.exLmf.metamodel.LModelElement;
+import cn.edu.buaa.sei.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
 import cn.edu.buaa.sei.exLmf.metamodel.LReference;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LMFException;
@@ -107,7 +108,7 @@ public class EcoreModelImporter implements IModelImporter{
 		throw this.getException("generateElement(elm)", "elm", "Unknown Ecore Model Elements (\""+elm.getClass().getName()+"\")");
 	}
 	LPackage generatePackage(EPackage p) throws Exception{
-		LPackage np = this.creator.createPackage(this.creator.getRoot(), name,p.getNsURI(),p.getNsPrefix());
+		LPackage np = this.creator.createPackage(this.creator.getRoot(), p.getName(),p.getNsURI(),p.getNsPrefix());
 		this.map.put(p, np);
 		
 		List<EPackage> subs = p.getESubpackages();
@@ -135,7 +136,7 @@ public class EcoreModelImporter implements IModelImporter{
 		if(type.getEIDAttribute()!=null)
 			ctype.setIDAttribute((LAttribute) this.generateElement(type.getEIDAttribute()));
 		
-		List<EAttribute> attributes = type.getEAllAttributes();
+		List<EAttribute> attributes = type.getEAttributes();
 		for(int i=0;i<attributes.size();i++){
 			EAttribute a = attributes.get(i);
 			LAttribute attr = (LAttribute) this.generateElement(a);
@@ -171,8 +172,16 @@ public class EcoreModelImporter implements IModelImporter{
 		return etype;
 	}
 	LAttribute generateAttribute(EAttribute attribute) throws Exception{
-		LAttribute attr = this.creator.createAttribute((LClass)this.generateElement(attribute.getEContainingClass()), 
-				attribute.getName(), (LDataType)this.generateElement(attribute.getEAttributeType()));
+		LAttribute attr = null;
+		
+		if(attribute.getUpperBound()>1||attribute.getUpperBound()==-1)
+			attr = this.creator.createMultipleAttribute((LClass)this.generateElement(attribute.getEContainingClass()), 
+				attribute.getName(), (LDataType)this.generateElement(attribute.getEAttributeType()),
+				attribute.getLowerBound(),attribute.getUpperBound(),IModelCreator.UNIQUE_ORDER);
+		else
+			attr = this.creator.createAttribute((LClass)this.generateElement(attribute.getEContainingClass()), 
+					attribute.getName(), (LDataType)this.generateElement(attribute.getEAttributeType()));
+		
 		this.map.put(attribute, attr);
 		
 		attr.setChangable(attribute.isChangeable());
@@ -184,14 +193,23 @@ public class EcoreModelImporter implements IModelImporter{
 		return attr;
 	}
 	LReference generateReference(EReference ref) throws Exception{
-		LReference r = this.creator.createReference((LClass)this.generateElement(ref.getEContainingClass()), 
-				ref.getName(), (LClass)this.generateElement(ref.getEReferenceType()));
+		LReference r = null;
+		
+		if(ref.getUpperBound()>1||ref.getUpperBound()==-1)
+			r = this.creator.createMultipleReference((LClass)this.generateElement(ref.getEContainingClass()), 
+					ref.getName(), (LClass)this.generateElement(ref.getEReferenceType()),
+					ref.getLowerBound(),ref.getUpperBound(),IModelCreator.UNIQUE_ORDER);
+		else
+			r = this.creator.createReference((LClass)this.generateElement(ref.getEContainingClass()), 
+					ref.getName(), (LClass)this.generateElement(ref.getEReferenceType()));
 		this.map.put(ref, r);
 		
 		r.setChangable(ref.isChangeable());
 		r.setContainment(ref.isContainment());
 		r.setLowerBound(ref.getLowerBound());
-		r.setUpperBound(ref.getUpperBound());
+		if(ref.getUpperBound()==-1)r.setUpperBound(LMultipleObject.UNBOUNDED);
+		else r.setUpperBound(ref.getUpperBound());
+		
 		r.setOrdered(ref.isOrdered());
 		r.setUnique(ref.isUnique());
 		r.setOpposite((LReference) this.generateElement(ref.getEOpposite()));

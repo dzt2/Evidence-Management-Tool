@@ -5,8 +5,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="0" iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="driver" eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clients" upperBound="4"
+        eType="#//Person"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Person">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="friends" ordered="false"
+        upperBound="-1" eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sex" eType="#//SEX"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Student" eSuperTypes="#//Person">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SEX">
+    <eLiterals name="MAN"/>
+    <eLiterals name="WOMAN" value="1"/>
   </eClassifiers>
 </ecore:EPackage>

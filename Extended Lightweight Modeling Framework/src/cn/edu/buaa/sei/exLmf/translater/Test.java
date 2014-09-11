@@ -29,9 +29,7 @@ public class Test {
 					System.out.println(printer.printLEnum((LEnum) types.get(i)));
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }
