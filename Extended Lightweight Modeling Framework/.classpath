@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/java/eclipse model tool/eclipse/plugins/org.eclipse.core.resources_3.8.101.v20130717-0806.jar"/>
+	<classpathentry kind="lib" path="D:/java/eclipse model tool/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.9.1.v20131212-0545.jar"/>
+	<classpathentry kind="lib" path="D:/java/eclipse model tool/eclipse/plugins/org.eclipse.emf.ecore_2.9.2.v20131212-0545.jar"/>
+	<classpathentry kind="lib" path="D:/java/eclipse model tool/eclipse/plugins/org.eclipse.emf.common_2.9.2.v20131212-0545.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
