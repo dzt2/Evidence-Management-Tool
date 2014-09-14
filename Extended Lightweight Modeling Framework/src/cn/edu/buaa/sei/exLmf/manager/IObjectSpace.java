@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.exLmf.manager;
 
+import java.util.Collection;
 import java.util.Set;
 
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
@@ -24,6 +25,7 @@ public interface IObjectSpace {
 	public Integer getIDof(LObject obj);
 	public LObject getObject(int id);
 	public Set<LClassObject> getObjects(LClass type);
+	public Collection<LClassObject> getAllObjects();
 	
 	public void clearSpace();
 }

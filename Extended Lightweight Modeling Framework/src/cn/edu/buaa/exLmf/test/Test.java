@@ -1,14 +1,13 @@
 package cn.edu.buaa.exLmf.test;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import cn.edu.buaa.sei.exLmf.manager.IModelCreator;
-import cn.edu.buaa.sei.exLmf.manager.IModelPrinter;
 import cn.edu.buaa.sei.exLmf.manager.IObjectSpace;
 import cn.edu.buaa.sei.exLmf.manager.impl.ModelCreatorImpl;
-import cn.edu.buaa.sei.exLmf.manager.impl.ModelPrinter;
 import cn.edu.buaa.sei.exLmf.manager.impl.ObjectSpace;
 import cn.edu.buaa.sei.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
@@ -27,6 +26,8 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
+import cn.edu.buaa.sei.exLmf.translater.IObjectWriter;
+import cn.edu.buaa.sei.exLmf.translater.XMLObjectWriter;
 
 public class Test {
 	public static void main(String[] args) {
@@ -36,7 +37,7 @@ public class Test {
 			LClass type = (LClass) types.get(i);
 			System.out.println(printClass(type));
 		}*/
-		LPackage p;
+		/*LPackage p;
 		try {
 			p = createPackage2();
 			IModelPrinter printer = new ModelPrinter("Printer");
@@ -58,10 +59,49 @@ public class Test {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}*/
+		
+		IObjectSpace os = createSpace1();
+		IObjectWriter writer = new XMLObjectWriter("PROM_II");
+		writer.setObjectSpace(os);
+		writer.setResource(new File("obj.xml"));
+		try {
+			writer.translate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
 	}
+	
+	public static IObjectSpace createSpace1(){
+		LPackage p = createPackage1();
+		IObjectSpace os = new ObjectSpace("OSpace",p);
+		
+		LClass person = (LClass) p.getClassifierByName("Person");
+		LClassObject a = os.createClassObject(person);
+		a.set(person.getFeatureByName("name"), os.createDataObject(LPrimitiveTypeImpl.STRING, "John Horse"));
+		a.set(person.getFeatureByName("age"),os.createDataObject(LPrimitiveTypeImpl.INT, "20"));
+		a.set(person.getFeatureByName("tall"), os.createDataObject(LPrimitiveTypeImpl.FLOAT, "180.0"));
+		
+		LClassObject b = os.createClassObject(person);
+		b.set(person.getFeatureByName("name"), os.createDataObject(LPrimitiveTypeImpl.STRING, "John Steve"));
+		b.set(person.getFeatureByName("age"),os.createDataObject(LPrimitiveTypeImpl.INT, "50"));
+		b.set(person.getFeatureByName("tall"), os.createDataObject(LPrimitiveTypeImpl.FLOAT, "170.0"));
+		
+		LClassObject c = os.createClassObject(person);
+		c.set(person.getFeatureByName("name"), os.createDataObject(LPrimitiveTypeImpl.STRING, "QA"));
+		c.set(person.getFeatureByName("age"),os.createDataObject(LPrimitiveTypeImpl.INT, "48"));
+		c.set(person.getFeatureByName("tall"), os.createDataObject(LPrimitiveTypeImpl.FLOAT, "170.0"));
+		
+		a.set(person.getFeatureByName("father"), b);
+		a.set(person.getFeatureByName("mother"), c);
+		
+		a.add(person.getFeatureByName("friends"), b);
+		a.add(person.getFeatureByName("friends"), c);
+		
+		return os;
+	}
+	
 	
 	public static void test1(){
 		LPackage p = createPackage1();

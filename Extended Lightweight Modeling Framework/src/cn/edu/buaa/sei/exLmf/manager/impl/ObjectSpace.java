@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.exLmf.manager.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -109,6 +110,12 @@ public class ObjectSpace implements IObjectSpace{
 	public void clearSpace() {
 		this.objMap.clear();
 		this.typeMap.clear();
+	}
+
+	@Override
+	public Collection<LClassObject> getAllObjects() {
+		// TODO Auto-generated method stub
+		return this.objMap.values();
 	}
 
 }
