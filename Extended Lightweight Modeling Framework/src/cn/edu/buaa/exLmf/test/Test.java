@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
 import cn.edu.buaa.sei.exLmf.manager.IModelCreator;
 import cn.edu.buaa.sei.exLmf.manager.IObjectSpace;
 import cn.edu.buaa.sei.exLmf.manager.impl.ModelCreatorImpl;
@@ -26,8 +25,8 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
-import cn.edu.buaa.sei.exLmf.translater.IObjectWriter;
-import cn.edu.buaa.sei.exLmf.translater.XMLObjectWriter;
+import cn.edu.buaa.sei.exLmf.translater.IObjectImporter;
+import cn.edu.buaa.sei.exLmf.translater.XMLObjectImporter;
 
 public class Test {
 	public static void main(String[] args) {
@@ -61,7 +60,7 @@ public class Test {
 			e.printStackTrace();
 		}*/
 		
-		IObjectSpace os = createSpace1();
+		/*IObjectSpace os = createSpace1();
 		IObjectWriter writer = new XMLObjectWriter("PROM_II");
 		writer.setObjectSpace(os);
 		writer.setResource(new File("obj.xml"));
@@ -70,7 +69,24 @@ public class Test {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}*/
+		
+		IObjectImporter im = new XMLObjectImporter("TEST_II");
+		im.setModel(createPackage1());
+		im.setResource(new File("obj.xml"));
+		try {
+			IObjectSpace os = im.translate();
+			Collection<LClassObject> objs = os.getAllObjects();
+			for(LClassObject obj:objs){
+				System.out.println(printLClassObject(obj));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		test1();
+		
 	}
 	
 	public static IObjectSpace createSpace1(){
