@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
 import cn.edu.buaa.sei.exLmf.manager.IModelCreator;
 import cn.edu.buaa.sei.exLmf.manager.IObjectSpace;
 import cn.edu.buaa.sei.exLmf.manager.impl.ModelCreatorImpl;
@@ -70,7 +71,6 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		
 		IObjectImporter im = new XMLObjectImporter("TEST_II");
 		im.setModel(createPackage1());
 		im.setResource(new File("obj.xml"));

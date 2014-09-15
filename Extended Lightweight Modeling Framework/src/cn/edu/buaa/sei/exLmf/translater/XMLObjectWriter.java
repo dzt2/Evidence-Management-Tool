@@ -30,6 +30,16 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LMFException;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 
 public class XMLObjectWriter implements IObjectWriter{
+	
+	public static String ROOT = "OSpace";
+	public static String _ID = "_id";
+	public static String TRUE = "true";
+	public static String FALSE = "false";
+	public static String NULL = "null";
+	public static String LIST = "__list";
+	public static String ITEM = "__item";
+	public static String NAME = "name";
+	
 	File file;
 	String name;
 	IObjectSpace os;

@@ -71,7 +71,7 @@ public class XMLObjectImporter implements IObjectImporter{
 			if(ctype==null)
 				throw this.getException("translate()","root.elements["+i+"]", "Unknown Tag: \""+objElm.getTagName()+"\"");
 			
-			Integer id = Integer.parseInt(objElm.getAttribute(IObjectWriter._ID));
+			Integer id = Integer.parseInt(objElm.getAttribute(XMLObjectWriter._ID));
 			if(this.tmap.containsKey(id))
 				throw this.getException("translate()","root.elements["+i+"].id", "Conflict ID: \""+id+"\"");
 			
@@ -85,7 +85,7 @@ public class XMLObjectImporter implements IObjectImporter{
 			if(!(list.item(i) instanceof Element))continue;
 			Element objElm = (Element) list.item(i);
 			
-			Integer id = Integer.parseInt(objElm.getAttribute(IObjectWriter._ID));
+			Integer id = Integer.parseInt(objElm.getAttribute(XMLObjectWriter._ID));
 			if(!this.tmap.containsKey(id))
 				throw this.getException("translate()","root.elements["+i+"].id", "Undefined ID: \""+id+"\"");
 			Integer tid = this.tmap.get(id);
@@ -138,7 +138,7 @@ public class XMLObjectImporter implements IObjectImporter{
 		if(fnode==null||attribute==null||list==null)return;
 		
 		LDataType atype = attribute.getDataType();
-		NodeList items = fnode.getElementsByTagName(IObjectWriter.ITEM);
+		NodeList items = fnode.getElementsByTagName(XMLObjectWriter.ITEM);
 		for(int i=0;i<items.getLength();i++){
 			Element itemNode = (Element) items.item(i);
 			String text = itemNode.getTextContent();
@@ -159,7 +159,7 @@ public class XMLObjectImporter implements IObjectImporter{
 	void interpreteReferences(Element fnode,LReference ref,LMultipleObject list) throws Exception{
 		if(fnode==null||ref==null||list==null)return;
 		
-		NodeList items = fnode.getElementsByTagName(IObjectWriter.ITEM);
+		NodeList items = fnode.getElementsByTagName(XMLObjectWriter.ITEM);
 		for(int i=0;i<items.getLength();i++){
 			Element itemNode = (Element) items.item(i);
 			Integer id = Integer.parseInt(itemNode.getTextContent());
