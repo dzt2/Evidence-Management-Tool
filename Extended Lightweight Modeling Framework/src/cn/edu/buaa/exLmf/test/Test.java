@@ -3,7 +3,6 @@ package cn.edu.buaa.exLmf.test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -45,10 +44,6 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
-import cn.edu.buaa.sei.exLmf.schema.ISchemaGenerator;
-import cn.edu.buaa.sei.exLmf.schema.impl.XMLSchemaGenerator;
-import cn.edu.buaa.sei.exLmf.translater.EcoreModelImporter;
-import cn.edu.buaa.sei.exLmf.translater.IModelImporter;
 import cn.edu.buaa.sei.exLmf.translater.IObjectImporter;
 import cn.edu.buaa.sei.exLmf.translater.XMLObjectImporter;
 
@@ -95,10 +90,10 @@ public class Test {
 			e.printStackTrace();
 		}*/
 		
-		IModelImporter mi = new EcoreModelImporter("TEST_I");
+		/*IModelImporter mi = new EcoreModelImporter("TEST_I");
 		mi.setResource(new File("test.ecore"));
 		try {
-			LPackage p = mi.translate();
+			LPackage p = createPackage1();
 			ISchemaGenerator sg = new XMLSchemaGenerator("TEST_II");
 			sg.setModel(p);
 			sg.setOPipe(new FileOutputStream(new File("generate.xsd")));
@@ -106,8 +101,60 @@ public class Test {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}*/
+		/*IObjectSpace os = createSpace1();
+		IObjectWriter ow = new XMLObjectWriter("TEST_III");
+		ow.setObjectSpace(os);
+		try {
+			ow.setOutputStream(new FileOutputStream(new File("obj.xml")));
+			ow.translate();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		testSchemaObject(new File("generate.xsd"),new File("obj.xml"));
+	}
+	
+	public static void testSchemaObject(File xsd,File xml){
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		try {
+			Schema schema = schemaFactory.newSchema(new SAXSource(new InputSource(new FileInputStream(xsd))));
+			factory.setSchema(schema);
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setErrorHandler(new ErrorHandler() {  
+		          @Override  
+		          public void warning(SAXParseException exception) throws SAXException {  
+		              throw new RuntimeException(exception);  
+		          }  
+		          @Override  
+		          public void fatalError(SAXParseException exception) throws SAXException {  
+		              throw new RuntimeException(exception);  
+		          }  
+		          @Override  
+		          public void error(SAXParseException exception) throws SAXException {  
+		              throw new RuntimeException(exception);  
+		          }  
+		      });
+			
+			Document document = builder.parse(new FileInputStream(xml));
+			System.out.println(document);
+			Element root = (Element) document.getChildNodes().item(0);
+			System.out.println(root.getTagName());
+		} catch (FileNotFoundException | SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
 	
 	public static void test3(){

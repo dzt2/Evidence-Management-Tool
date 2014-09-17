@@ -6,6 +6,7 @@ public class XMLFormatDefinition {
 	public static final String UNBOUNDED = "unbounded";
 	public static final String ITEM = "__item";
 	public static final String ID_ATTR = "_id";
+	public static final String ID_PREFIX = "_";
 	
 	public static final String SCHEMA_NSpace = "xs";
 	public static final String SCHEMA_INT_TYPE = "xs:int";

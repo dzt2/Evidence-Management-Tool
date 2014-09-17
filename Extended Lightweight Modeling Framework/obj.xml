@@ -1,26 +1,2 @@
-<?xml version="1.0" encoding="GB2312" standalone="no"?>
-<OSpace>
-<Person _id="3840954">
-<name>John Horse</name>
-<age>20</age>
-<tall>180.0</tall>
-<father>23328673</father>
-<mother>1478827</mother>
-<__list name="friends">
-<__item>23328673</__item>
-<__item>1478827</__item>
-</__list>
-</Person>
-<Person _id="23328673">
-<name>John Steve</name>
-<age>50</age>
-<tall>170.0</tall>
-<__list name="friends"/>
-</Person>
-<Person _id="1478827">
-<name>QA</name>
-<age>48</age>
-<tall>170.0</tall>
-<__list name="friends"/>
-</Person>
-</OSpace>
+<?xml version="1.0" encoding="UTF-8"?>
+<root><Person _id="_16749745"><name>QA</name><age>48</age><tall>170.0</tall><friends /></Person><Person _id="_22949069"><name>John Horse</name><age>20</age><tall>180.0</tall><father>_15595312</father><mother>_16749745</mother><friends><__item>_15595312</__item><__item>_16749745</__item></friends></Person><Person _id="_15595312"><name>John Steve</name><age>50</age><tall>170.0</tall><friends /></Person></root>
