@@ -8,5 +8,5 @@ public interface ISchemaGenerator {
 	public void setModel(LPackage p);
 	public void setOPipe(OutputStream out);
 	public boolean validate();
-	public void generateSchema();
+	public void generateSchema() throws Exception;
 }

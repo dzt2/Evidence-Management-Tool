@@ -3,6 +3,7 @@ package cn.edu.buaa.exLmf.test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -44,6 +45,10 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
+import cn.edu.buaa.sei.exLmf.schema.ISchemaGenerator;
+import cn.edu.buaa.sei.exLmf.schema.impl.XMLSchemaGenerator;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelImporter;
+import cn.edu.buaa.sei.exLmf.translater.IModelImporter;
 import cn.edu.buaa.sei.exLmf.translater.IObjectImporter;
 import cn.edu.buaa.sei.exLmf.translater.XMLObjectImporter;
 
@@ -89,6 +94,23 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		
+		IModelImporter mi = new EcoreModelImporter("TEST_I");
+		mi.setResource(new File("test.ecore"));
+		try {
+			LPackage p = mi.translate();
+			ISchemaGenerator sg = new XMLSchemaGenerator("TEST_II");
+			sg.setModel(p);
+			sg.setOPipe(new FileOutputStream(new File("generate.xsd")));
+			sg.generateSchema();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void test3(){
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -126,7 +148,6 @@ public class Test {
 			e.printStackTrace();
 		}
 	}
-	
 	public static void test2(){
 		IObjectImporter im = new XMLObjectImporter("TEST_II");
 		im.setModel(createPackage1());
