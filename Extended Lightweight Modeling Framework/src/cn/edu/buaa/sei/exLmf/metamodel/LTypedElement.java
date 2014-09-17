@@ -1,5 +1,18 @@
 package cn.edu.buaa.sei.exLmf.metamodel;
 
+/*
+ *	LTypedElement: a model element with typed ==> feature but without structure (no container)
+ *	LTypedElement {
+ *		******** LModelElement *********
+ *		- annotations
+ *		******** LNamedElement *********
+ *		- name
+ *		******** LTypedElement *********
+ *		- type: LClassifier
+ *		- isOrdered/isUnique: boolean	(M)
+ *		- upper/lower: int				(M)
+ *	}
+ */
 public interface LTypedElement extends LNamedElement{
 	public LClassifier getType();
 	public void setType(LClassifier type);

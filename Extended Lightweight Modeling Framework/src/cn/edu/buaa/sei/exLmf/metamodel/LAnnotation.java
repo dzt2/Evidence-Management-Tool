@@ -2,6 +2,11 @@ package cn.edu.buaa.sei.exLmf.metamodel;
 
 import java.util.List;
 
+/*
+ *	LAnnotation -- Notation for Model Element
+ *	LAnnotation{source,container,referencedElements}
+ *	Container{name}-->referencedElements 
+ */
 public interface LAnnotation {
 	public LModelElement getContainer();
 	public void setContainer(LModelElement elm);

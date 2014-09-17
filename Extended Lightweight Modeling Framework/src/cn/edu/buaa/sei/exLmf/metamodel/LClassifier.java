@@ -1,5 +1,20 @@
 package cn.edu.buaa.sei.exLmf.metamodel;
 
+/*
+ *	LClassifier: a Model Element to present type in model
+ *	LClassifier{
+ *		******** LModelElement *********
+ *		-annotations
+ *		******** LNamedElement *********
+ *		-name: String
+ *		******** LClassifier *********
+ *		- classifier id: int	[identification in package space]
+ *		- instance name: string [class name for generating code]		
+ *		- default value: LObject[used in creating attribute/reference value]
+ *		- container: LPackage	[package space for managing it]
+ *	}
+ * 
+ */
 public interface LClassifier extends LNamedElement{
 	public int getClassifierID();
 	public void setClassifierID(int id);
