@@ -44,6 +44,8 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
+import cn.edu.buaa.sei.exLmf.schema.IObjectReader;
+import cn.edu.buaa.sei.exLmf.schema.impl.XMLObjectReader;
 import cn.edu.buaa.sei.exLmf.translater.IObjectImporter;
 import cn.edu.buaa.sei.exLmf.translater.XMLObjectImporter;
 
@@ -90,18 +92,7 @@ public class Test {
 			e.printStackTrace();
 		}*/
 		
-		/*IModelImporter mi = new EcoreModelImporter("TEST_I");
-		mi.setResource(new File("test.ecore"));
-		try {
-			LPackage p = createPackage1();
-			ISchemaGenerator sg = new XMLSchemaGenerator("TEST_II");
-			sg.setModel(p);
-			sg.setOPipe(new FileOutputStream(new File("generate.xsd")));
-			sg.generateSchema();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
 		/*IObjectSpace os = createSpace1();
 		IObjectWriter ow = new XMLObjectWriter("TEST_III");
 		ow.setObjectSpace(os);
@@ -115,7 +106,22 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		testSchemaObject(new File("generate.xsd"),new File("obj.xml"));
+		
+		try {
+			LPackage p = createPackage1();
+			IObjectReader oi = new XMLObjectReader("READER I");
+			oi.setInputStream(new FileInputStream("obj.xml"));
+			oi.setTemplate(p);
+			IObjectSpace os = oi.translate();
+			
+			Collection<LClassObject> objs = os.getAllObjects();
+			for(LClassObject obj:objs)
+				System.out.println(printLClassObject(obj));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void testSchemaObject(File xsd,File xml){
