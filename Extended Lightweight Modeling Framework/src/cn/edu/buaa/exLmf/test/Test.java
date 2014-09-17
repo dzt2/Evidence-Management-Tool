@@ -1,9 +1,27 @@
 package cn.edu.buaa.exLmf.test;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import cn.edu.buaa.sei.exLmf.manager.IModelCreator;
 import cn.edu.buaa.sei.exLmf.manager.IObjectSpace;
@@ -71,6 +89,45 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		try {
+			Schema schema = schemaFactory.newSchema(new SAXSource(new InputSource(new FileInputStream(new File("test.xsd")))));
+			factory.setSchema(schema);
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setErrorHandler(new ErrorHandler() {  
+		          @Override  
+		          public void warning(SAXParseException exception) throws SAXException {  
+		              throw new RuntimeException(exception);  
+		          }  
+		          @Override  
+		          public void fatalError(SAXParseException exception) throws SAXException {  
+		              throw new RuntimeException(exception);  
+		          }  
+		          @Override  
+		          public void error(SAXParseException exception) throws SAXException {  
+		              throw new RuntimeException(exception);  
+		          }  
+		      });
+			
+			Document document = builder.parse(new FileInputStream(new File("test.xml")));
+			System.out.println(document);
+			Element root = (Element) document.getChildNodes().item(0);
+			System.out.println(root.getTagName());
+		} catch (FileNotFoundException | SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void test2(){
 		IObjectImporter im = new XMLObjectImporter("TEST_II");
 		im.setModel(createPackage1());
 		im.setResource(new File("obj.xml"));
@@ -86,7 +143,6 @@ public class Test {
 		}
 		
 		test1();
-		
 	}
 	
 	public static IObjectSpace createSpace1(){
