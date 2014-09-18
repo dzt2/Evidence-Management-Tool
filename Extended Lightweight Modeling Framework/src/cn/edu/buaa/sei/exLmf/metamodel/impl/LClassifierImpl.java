@@ -13,6 +13,13 @@ public class LClassifierImpl extends LNamedElementImpl implements LClassifier{
 	LPackage container;
 	
 	LClassifierImpl(String name,LPackage container){super(name);this.container=container;}
+	/*
+	 *	Tool Functions for all model elements. 
+	 */
+	Exception getException(String func,String arg,String reason){
+		return LMFException.create("LMFException", this.getClass().getName(), func, arg, reason);
+	}
+	
 	
 	@Override
 	public int getClassifierID() {return this.id;}
@@ -32,15 +39,23 @@ public class LClassifierImpl extends LNamedElementImpl implements LClassifier{
 		// TODO Auto-generated method stub
 		this.ins_name=ins;
 	}
+	// Need to be modified in sub class
 	@Override
 	public LObject setDefaultValue(LObject val) {
-		// TODO Auto-generated method stub
+		if(val!=null){
+			if(this!=val.type())
+				try {
+					throw this.getException("setDefaultValue(val)", "val", "val.type do not match this classifier");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 		return this.default_val=val;
 	}
 
 	@Override
 	public LPackage getContainer() {return this.container;}
-
 	@Override
 	public void setContainer(LPackage container) {this.container=container;}
 	

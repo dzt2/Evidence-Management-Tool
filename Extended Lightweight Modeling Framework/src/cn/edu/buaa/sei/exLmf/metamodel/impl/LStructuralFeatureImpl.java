@@ -27,11 +27,17 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 	public int getFeatureID() {return this.fid;}
 	void setFeatureID(int id) {this.fid=id;}
 
+	/*	!!! getDefaultValue() !!!
+	 * 	Semi-automatic selection for default value: from user-defined or default value of the value type
+	 * 	1) this.default_val: 			attribute = '01';
+	 * 	2) this.type.getDefaultValue(): String attribute; [default to be null]
+	 * */
 	@Override
-	public LObject getDefaultValue() {return this.default_val;}
+	public LObject getDefaultValue() {
+		if(this.default_val==null)return this.type.getDefaultValue();
+		else return this.default_val;
+	}
 	@Override
 	public void setDefaultValue(LObject value) {this.default_val=value;}
 	
-	
-
 }

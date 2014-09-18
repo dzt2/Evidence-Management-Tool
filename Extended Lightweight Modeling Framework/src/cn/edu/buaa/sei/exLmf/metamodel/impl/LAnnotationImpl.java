@@ -6,6 +6,11 @@ import java.util.List;
 import cn.edu.buaa.sei.exLmf.metamodel.LAnnotation;
 import cn.edu.buaa.sei.exLmf.metamodel.LModelElement;
 
+/*
+ *	Relations between Model Elements <Annotations>
+ *	LModelElement ---(Annotation.source)---> LModelElement 
+ *====complete
+ */
 public class LAnnotationImpl implements LAnnotation{
 	
 	LModelElement container;

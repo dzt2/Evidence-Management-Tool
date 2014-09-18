@@ -60,7 +60,13 @@ public class LPrimitiveTypeImpl extends LDataTypeImpl implements LPrimitiveType{
 		BOOL.setInstanceName(BOOL_INS);
 		
 		/*
-		 *	Initial the default values.!!!!!! 
+		 *	Initialization the Default Values:
+		 *	1) Bool: 	false
+		 *	2) Int: 	0
+		 *	3) Long: 	0L
+		 *	4) Float:	0.0F
+		 *	5) Double:	0.0
+		 *	6) String: 	""
 		 */
 		BOOL_DEFAULT= new LDataObjectImpl(BOOL); ((LDataObjectImpl)BOOL_DEFAULT).setBool(false);
 		INT_DEFAULT = new LDataObjectImpl(INT); ((LDataObjectImpl)INT_DEFAULT).setInt(0);

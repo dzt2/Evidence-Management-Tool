@@ -2,6 +2,7 @@ package cn.edu.buaa.sei.exLmf.metamodel.impl;
 import cn.edu.buaa.sei.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.sei.exLmf.metamodel.LObject;
 
+// LObject is abstract: LDataObject (LDataType), LClassObject (LClass), LMultipleObject (LStructuralFeature *: contain sub objects)
 public abstract class LObjectImpl extends LModelElementImpl implements LObject{
 	LClassifier type;
 	

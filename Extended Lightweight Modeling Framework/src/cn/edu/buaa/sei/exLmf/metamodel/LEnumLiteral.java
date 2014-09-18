@@ -7,14 +7,14 @@ package cn.edu.buaa.sei.exLmf.metamodel;
  *		******** LNamedElement *********
  *		- name: String
  *		******** LTypedElement *********
- *		- type: LClassifier
- *		- isOrdered/isUnique: boolean	(M)
- *		- upper/lower: int				(M)
+ *		- type: LClassifier	--> No used in literal
+ *		- isOrdered/isUnique: boolean	(M)	--> No used in literal
+ *		- upper/lower: int				(M) --> No used in literal
  *		******** LStructuralFeature *********
  *		- container: LClassifier
- *		- isChangable: boolean
+ *		- isChangable: boolean									--> No used in literal
  *		- feature id: int {identification in container space}
- *		- default value: LObject (used in constructing attribute/reference values when creating LObject)
+ *		- default value: LObject (used in constructing attribute/reference values when creating LObject)	--> No used in literal
  *	 	******** LEnumLiteral *********
  *		- literal: String [--> name]
  *		- value: int

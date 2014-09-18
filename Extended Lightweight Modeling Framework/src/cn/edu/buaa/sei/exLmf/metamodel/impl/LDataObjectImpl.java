@@ -7,6 +7,7 @@ import cn.edu.buaa.sei.exLmf.metamodel.LEnumLiteral;
 public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 	Object val;
 	
+	/* Control the input type from constructor */
 	public LDataObjectImpl(LDataType type) {
 		super(type);
 	}
@@ -120,7 +121,12 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 		}
 	}
 
-	
+	/*
+	 *	General Setter/Getter
+	 *	setValue(Object):
+	 *		- null: just set null and return, we permit to set null to a data object so that it present Null Data Object
+	 *		- class: must be <Boolean, Integer, Long, Float, Double, String> or <LEnumLiteral> 
+	 */
 	@Override
 	public Object getValue() {
 		return this.val;
@@ -157,7 +163,7 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 		}
 	}
 
-	
+	// Setter has type checking.
 	@Override
 	public void setBool(Boolean val) {
 		if(this.type==LPrimitiveTypeImpl.BOOL)
@@ -232,6 +238,7 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			}
 		}
 	}
+	// LEnumLiteral must be one element in the enumeration type.
 	@Override
 	public void setLiteral(LEnumLiteral literal) {
 		if(literal==null){

@@ -11,14 +11,11 @@ public class LAttributeImpl extends LStructuralFeatureImpl implements LAttribute
 	public LAttributeImpl(int fid,String name,LClassifier container){
 		super(fid,name,container);
 	}
-	
-	
 	@Override
 	public LDataType getDataType() {return this.dtype;}
 	@Override
-	public void setDataType(LDataType type) {
-		this.setType(type);
-	}
+	public void setDataType(LDataType type) {this.setType(type);}
+	
 	public void setType(LClassifier type){
 		if((type==null)||!(type instanceof LDataType)){
 			try {

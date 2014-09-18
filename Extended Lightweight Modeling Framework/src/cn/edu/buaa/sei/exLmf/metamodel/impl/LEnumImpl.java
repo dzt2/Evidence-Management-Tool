@@ -19,6 +19,12 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	
 	@Override
 	public List<LEnumLiteral> getLiterals() {return this.literals;}
+	/*
+	 *	addLiteral(l):
+	 *	1) this.containLiteral(l)==>do nothing
+	 *	2) conflict with name/value of existing literals ==> exception
+	 *	3) literal.container!=null ==> remove literal from former container.
+	 */
 	@Override
 	public void addLiteral(LEnumLiteral literal) {
 		if(literal==null||this.literals.contains(literal))return;
@@ -44,6 +50,10 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 			}
 			return;
 		}
+		if(literal.getContainer()!=null){
+			LEnum ltype = (LEnum) literal.getContainer();
+			ltype.removeLiteral(literal);
+		}
 		
 		this.literals.add(literal);
 		this.id_literals.put(value, literal);
@@ -52,12 +62,10 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	}
 	@Override
 	public LEnumLiteral getLiteralByValue(int value) {
-		// TODO Auto-generated method stub
 		if(!this.id_literals.containsKey(value)){
 			try {
 				throw this.getException("getLiteralByValue(value)", "value", value+" Undefined");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -66,13 +74,11 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	}
 	@Override
 	public LEnumLiteral getLiteralByName(String literal) {
-		// TODO Auto-generated method stub
 		if(!this.name_literals.containsKey(literal))
 		{
 			try {
 				throw this.getException("getLiteralByName(literal)", "literal", literal+" Undefined");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

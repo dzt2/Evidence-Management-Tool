@@ -17,7 +17,12 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 	LClassObjectImpl(LClass type) {
 		super(type);
 		
-		/*Initialization*/
+		/*
+		 * Initialization
+		 * 	1) set all single attribute/reference as the feature.getDefaultValue() [perhaps automatically located to the default value of the value type]
+		 * 	2) set all multiple attribute/reference the empty LMultipleObject, set its parameter type and bound numbers.
+		 * 	3) initialize the status of attribute/reference values.
+		 */
 		List<LStructuralFeature> features = type.getAllFeatures();
 		for(int i=0;i<features.size();i++){
 			status_map.put(features.get(i), false);
@@ -37,6 +42,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 	@Override
 	public LClass getType() {return (LClass) this.type;}
 
+	// If no value is set, then return null.
 	@Override
 	public LObject get(LStructuralFeature feature) {
 		if(feature==null){
@@ -62,8 +68,10 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		}
 		return this.feature_val.get(feature);
 	}
+	// We can set null in any un-multiple object.
 	@Override
 	public void set(LStructuralFeature feature, LObject value) {
+		// Null Check
 		if(feature==null){
 			try {
 				throw this.getException("set(feature,value)", "feature", "Null");
@@ -73,7 +81,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
-		
+		// Existence of Feature
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
 			try {
@@ -85,6 +93,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
+		// Type Match
 		if(value!=null&&value.type()!=feature.getType()){
 			try {
 				throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
@@ -95,7 +104,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
-		
+		// Constant Check 
 		if(!feature.isChangable()&&
 				this.status_map.get(feature)==true){
 			try {
@@ -106,14 +115,13 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
-		
+		// Multiple Check
 		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){
 			/*LMultipleObject val = (LMultipleObject) this.feature_val.get(feature);
 			val.addObject(value);*/
 			try {
 				throw this.getException("set(feature,value)", "feature-value", "Multiple Object Set cannot be set directly");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return;
@@ -199,8 +207,8 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		
 		LMultipleObject list = (LMultipleObject) this.feature_val.get(feature);
 		list.addObject(val);
+		this.status_map.put(feature, true);
 	}
-
 	@Override
 	public void remove(LStructuralFeature feature, LObject val) {
 		if(feature==null||!this.feature_val.containsKey(feature)){
@@ -220,5 +228,6 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		else{
 			this.feature_val.put(feature, null);
 		}
+		this.status_map.put(feature, true);
 	}
 }

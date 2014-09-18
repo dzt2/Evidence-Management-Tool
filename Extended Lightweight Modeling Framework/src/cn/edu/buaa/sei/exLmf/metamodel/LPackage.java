@@ -24,6 +24,7 @@ public interface LPackage extends LNamedElement{
 	public void addSubPackage(LPackage pack);
 	public void removeSubPackage(LPackage pack);
 	public LPackage getSubPackageByName(String name);
+	public boolean containSubPackage(LPackage p);
 	
 	public String getNsURI();
 	public void setNsURI(String nsUri);

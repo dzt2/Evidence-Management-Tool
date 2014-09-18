@@ -37,6 +37,8 @@ public abstract class LModelElementImpl implements LModelElement{
 			}
 			return;
 		}
+		if(annotation.getContainer()!=null)
+			annotation.getContainer().removeAnnotation(annotation);
 		
 		annotation.setContainer(this);
 		this.annotations.add(annotation);
@@ -55,17 +57,19 @@ public abstract class LModelElementImpl implements LModelElement{
 		return this.annotations.get(i);
 	}
 	@Override
-	public void removeAnnotation(int i) {
-		if(i<0||i>=this.annotations.size()){
+	public void removeAnnotation(LAnnotation annotation) {
+		if(!this.annotations.contains(annotation)){
 			try {
-				throw this.getException("getAnnotation(i)", "i", i+" has been out of range");
+				throw this.getException("getAnnotation(annotation)", "annotation", "Undefined in model elements");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return;
 		}
-		this.annotations.remove(i);
+		this.annotations.remove(annotation);
 	}
+	@Override
+	public boolean containAnnotation(LAnnotation annotation){return this.annotations.contains(annotation);}
 
 }

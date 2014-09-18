@@ -17,7 +17,7 @@ public abstract class LNamedElementImpl extends LModelElementImpl implements LNa
 	public void setName(String name) {
 		if(name==null){
 			try {
-				throw this.getException("setName()","name", "Null");
+				throw this.getException("setName(name)","name", "Null");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

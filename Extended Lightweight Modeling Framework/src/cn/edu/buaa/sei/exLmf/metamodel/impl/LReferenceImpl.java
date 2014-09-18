@@ -38,6 +38,7 @@ public class LReferenceImpl extends LStructuralFeatureImpl implements LReference
 	public LReference getOpposite() {
 		return this.opposite;
 	}
+	// Only to call setOpposite(), don't use release_opposite or link_opposite !!!!
 	@Override
 	public void setOpposite(LReference opposite) {
 		if(this.opposite!=null){

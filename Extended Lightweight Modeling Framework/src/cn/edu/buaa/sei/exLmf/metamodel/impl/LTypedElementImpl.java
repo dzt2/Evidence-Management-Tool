@@ -17,6 +17,7 @@ public abstract class LTypedElementImpl extends LNamedElementImpl implements LTy
 
 	@Override
 	public LClassifier getType() {return this.type;}
+	// Would be rewritten in sub class
 	@Override
 	public void setType(LClassifier type) {
 		if(type==null){

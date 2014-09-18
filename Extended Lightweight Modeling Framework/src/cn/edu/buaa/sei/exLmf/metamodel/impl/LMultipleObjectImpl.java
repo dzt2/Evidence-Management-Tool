@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import cn.edu.buaa.sei.exLmf.metamodel.LClass;
 import cn.edu.buaa.sei.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.sei.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LObject;
@@ -20,7 +21,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	List<LObject> array;
 	Set<LObject> set;
 	
-	
+	/*Check the bound and generate values set dynamically*/
 	LMultipleObjectImpl(LClassifier type,int lower,int upper,Boolean ordered,Boolean unique) {
 		super(type);
 		if(lower<0){
@@ -74,6 +75,18 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	@Override
 	public Boolean isUnique() {return this.unique;}
 
+	/*
+	 *	1. getAllObjects(): return all the values. [automatically select]
+	 *	2. addObject(val):
+	 *		- cannot add null into multiple object list.
+	 *		- the val.type should match the parameter type
+	 *		- unique: repeatedly adding element would cause exception.
+	 *	3. removeObject(val):
+	 *		- cannot remove null (no such value)
+	 *		- type match as above
+	 *		- cannot remove value that is not contained in LMultipleObject
+	 * 	4. containObject(val): no exceptions
+	 */
 	@Override
 	public Collection<LObject> getAllObjects() {
 		if(set!=null)return set;
@@ -101,13 +114,28 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 		}
 		
 		if(val.type()!=this.type){
-			try {
-				throw this.getException("addObject(val)", "val.type", "Classifier is incompatible with parameter type");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(this.type instanceof LClass&&val.type() instanceof LClass){
+				LClass ptype = (LClass) this.type;
+				LClass vtype = (LClass) val.type();
+				if(!ptype.isSuperOf(vtype)){
+					try {
+						throw this.getException("addObject(val)", "val.type", vtype.getName()+" is incompatible with parameter type: "+this.type.getName());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
+				}
 			}
-			return;
+			else{
+				try {
+					throw this.getException("addObject(val)", "val.type", val.type().getName()+" is incompatible with parameter type: "+this.type.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			}
 		}
 		
 		if(this.unique){
@@ -164,13 +192,28 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 		}
 		
 		if(val.type()!=this.type){
-			try {
-				throw this.getException("removeObject(val)", "val", "Undefined as classifier incompatibility");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(this.type instanceof LClass&&val.type() instanceof LClass){
+				LClass ptype = (LClass) this.type;
+				LClass vtype = (LClass) val.type();
+				if(!ptype.isSuperOf(vtype)){
+					try {
+						throw this.getException("removeObject(val)", "val.type", vtype.getName()+" is incompatible with parameter type: "+this.type.getName());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
+				}
 			}
-			return;
+			else{
+				try {
+					throw this.getException("removeObject(val)", "val.type", val.type().getName()+" is incompatible with parameter type: "+this.type.getName());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			}
 		}
 		
 		if(!this.ordered&&this.unique){
@@ -203,13 +246,14 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	@Override
 	public Boolean containObject(LObject val) {
 		if(val==null)return false;
-		if(val.type()!=this.type)return false;
+		//if(val.type()!=this.type)return false;
 		
 		if(this.unique&&!this.ordered)
 			return this.set.contains(val);
 		else return this.array.contains(val);
 	}
 
+	// Only applied to ordered multiple object
 	@Override
 	public LObject getByOrder(int i) {
 		if(!this.ordered){
@@ -234,6 +278,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 		
 		return this.array.get(i);
 	}
+	// Only applied to in-ordered multiple list.
 	@Override
 	public Iterator<LObject> getByUnordered() {
 		if(this.ordered){
@@ -252,6 +297,8 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 			return this.array.iterator();
 	}
 
+	// Check the current length of list to comply with restriction of bound [lower---upper].
+	// When validation failed, program crashed in exceptions.
 	@Override
 	public Boolean validateBound() {
 		int n = -1;

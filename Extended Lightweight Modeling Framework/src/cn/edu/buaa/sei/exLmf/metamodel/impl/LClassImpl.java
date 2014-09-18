@@ -7,6 +7,8 @@ import java.util.Map;
 
 import cn.edu.buaa.sei.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
+import cn.edu.buaa.sei.exLmf.metamodel.LClassObject;
+import cn.edu.buaa.sei.exLmf.metamodel.LObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
 import cn.edu.buaa.sei.exLmf.metamodel.LReference;
 import cn.edu.buaa.sei.exLmf.metamodel.LStructuralFeature;
@@ -18,11 +20,9 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	List<LReference> references = new ArrayList<LReference>();
 	List<LStructuralFeature> features = new ArrayList<LStructuralFeature>();
 	
+	// Record the names and identifications used in local variable space.
 	Map<String,LStructuralFeature> name_feature = new HashMap<String,LStructuralFeature>();
 	Map<Integer,LStructuralFeature> id_feature = new HashMap<Integer,LStructuralFeature>();
-	
-	//List<LAttribute> all_attrs = new ArrayList<LAttribute>();
-	//List<LReference> all_refs = new ArrayList<LReference>();
 	
 	LAttribute id_attr=null;
 
@@ -41,7 +41,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			}
 			return;
 		}
-		if(this.supers.contains(type))return;
+		if(type.isSuperOf(this))return;
 		if(this.isSuperOf(type)){
 			try {
 				throw this.getException("addSuperType(type)", "type", 
@@ -71,7 +71,6 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			try {
 				throw this.getException("removeSuperType(type)", "type", "Undefined");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return;
@@ -99,12 +98,24 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 
 	@Override
 	public LAttribute getIDAttribute() {return this.id_attr;}
+	// Only after the attribute has been successfully added into attribute list then it could be set as id_attribute
 	@Override
 	public void setIDAttribute(LAttribute attribute) {
-		this.id_attr=attribute;
+		if(attribute==null){
+			try {
+				throw this.getException("setIDAttribute(attribute)", "attribute", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		this.addAttribute(attribute);
+		this.id_attr=attribute;
 	}
 
+	/*The getAllXXXs would generate new list for each call and waste time and space, it is good idea not to call this function too much times.*/
 	@Override
 	public List<LAttribute> getAttributes() {return this.attributes;}
 	@Override
@@ -145,6 +156,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		return alls;
 	}
 
+	/*Searching by name would not cause exception. If no name is found in local features, it would trace to the super class to search.*/
 	@Override
 	public LStructuralFeature getFeatureByName(String name) {
 		if(name==null)return null;
@@ -161,13 +173,14 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	public LStructuralFeature getFeatureByID(int id) {
 		if(this.id_feature.containsKey(id))return this.id_feature.get(id);
 		else{
-			/*for(int i=0;i<this.supers.size();i++){
+			for(int i=0;i<this.supers.size();i++){
 				LStructuralFeature f = this.supers.get(i).getFeatureByID(id);
 				if(f!=null)return f;
-			}*/
+			}
 			return null;
 		}
 	}
+	// Only return the local feature identification space.
 	@Override
 	public int[] getFeatureIDSet() {
 		int n = this.id_feature.size();
@@ -179,7 +192,11 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	}
 	
 	/*
-	 *	Only add features in local space 
+	 *	void addXXX(feature)
+	 *	1) If the class or its super classes contain the feature, do nothing.
+	 *	2) If the local name/id of feature space conflict with the feature, exception
+	 *	3) Null and exception
+	 *	4) If feature is from another existing class, then remove the links with former container
 	 */
 	void _addFeature(LStructuralFeature feature){
 		if(feature==null){
@@ -198,6 +215,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		int fid = feature.getFeatureID();
 		String name = feature.getName();
 		
+		/*The name and id of feature should not conflict with local name/id space of features*/
 		if(this.name_feature.containsKey(name)){
 			try {
 				throw this.getException("_addFeature(feature)", "feature.name", 
@@ -216,6 +234,11 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			}
 			return;
 		}
+		if(feature.getContainer()!=this&&feature.getContainer()!=null){
+			LClass ftype = (LClass) feature.getContainer();
+			if(ftype.containFeature(feature))
+				ftype.removeFeature(feature);
+		}
 		
 		this.features.add(feature);
 		feature.setContainer(this);
@@ -225,14 +248,14 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	@Override
 	public void addAttribute(LAttribute attribute) {
 		this._addFeature(attribute);
-		if(!this.attributes.contains(attribute)){
+		if(!this.containAttribute(attribute)){
 			this.attributes.add(attribute);
 		}
 	}
 	@Override
 	public void addReference(LReference reference) {
 		this._addFeature(reference);
-		if(!this.references.contains(reference))
+		if(!this.containReference(reference))
 			this.references.add(reference);
 		
 	}
@@ -252,6 +275,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		}
 	}
 
+	/*containXXX would check whether the class or its super class contains this XXX*/
 	@Override
 	public Boolean containAttribute(LAttribute attribute) {
 		if(this.attributes.contains(attribute))return true;
@@ -283,12 +307,12 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		}
 	}
 
-	/*	Adding or Removing only limited in the local attributes not including super classes*/
+	/*	removeXXX(): can only remove the local features, has no way to remove features in super class. */
 	@Override
 	public void removeAttribute(LAttribute attribute) {
 		if(attribute==null||!this.attributes.contains(attribute)){
 			try {
-				throw this.getException("removeAttribute(attribute)", "attribute", "Undefined");
+				throw this.getException("removeAttribute(attribute)", "attribute \""+attribute.getName()+"\"", "Undefined");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -309,7 +333,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	public void removeReference(LReference reference) {
 		if(reference==null||!this.references.contains(reference)){
 			try {
-				throw this.getException("removeReference(reference)","reference", "Undefined");
+				throw this.getException("removeReference(reference)","reference \""+reference.getName()+"\"", "Undefined");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -398,4 +422,29 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	@Override
 	public void setFinal(Boolean isFinal) {this.isFinal=isFinal;}
 
+	/*Modify the super functions*/
+	@Override
+	public LObject setDefaultValue(LObject val) {
+		if(val!=null){
+			if(!(val instanceof LClassObject)){
+				try {
+					throw this.getException("setDefaultValue(val)", "val", "val should be class object: currently ["+val.getClass().getName()+"]");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+			if(this!=val.type()||!this.isSuperOf((LClass) val.type())){
+				try {
+					throw this.getException("setDefaultValue(val)", "val", "val.type do not match this classifier");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+		}
+		return this.default_val=val;
+	}
 }

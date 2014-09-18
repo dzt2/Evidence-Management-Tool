@@ -32,6 +32,25 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		this.factory=new LFactoryImpl(this,isLight);
 	}
 
+	/*
+	 *	1. containSubPackage(p): return true if it is the direct child package or it is sub packages of one of the direct child.
+	 *	2. addSubPackage():
+	 *		- containSubPackage(p): return
+	 *		- p.container!=this: release the link with original container package.
+	 *	3. removeSubPackage(p): only remove the local sub packages (not trace to the leaf)
+	 * 	4. getSubPackageByName(name): only return sub packages with the specified name
+	 */
+	@Override
+	public boolean containSubPackage(LPackage p){
+		if(p==null)return false;
+		if(this.supPackages.contains(p))return true;
+		
+		for(int i=0;i<this.supPackages.size();i++)
+			if(this.supPackages.get(i).containSubPackage(p))
+				return true;
+		
+		return false;
+	}
 	@Override
 	public List<LPackage> getSubPackages() {return this.supPackages;}
 	@Override
@@ -46,7 +65,7 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 			return;
 		}
 		
-		if(this.supPackages.contains(pack))return;
+		if(this.containSubPackage(pack))return;
 		
 		if(this.package_index.containsKey(pack.getName())){
 			try {
@@ -58,11 +77,7 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		this.supPackages.add(pack);
 		this.package_index.put(pack.getName(), pack);
 		
-		LPackage ct = pack.getContainer();
-		if(ct!=null&&ct!=this){
-			ct.removeSubPackage(pack);
-		}
-		pack.setContainer(null);
+		pack.setContainer(this);
 	}
 	@Override
 	public void removeSubPackage(LPackage pack) {
@@ -104,6 +119,13 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public void setNsPrefix(String prefix){this.prefix=prefix;}
 
+	/*
+	 *	1. getTypes(): return all local types (LClass|LEnum)
+	 *	2. getClassifierByName/ID(): return local type by specified name/id
+	 *		-ex: name|id is not defined in sub types.
+	 *	3. containType(type): check whether local sub types contain the type
+	 * 
+	 */
 	@Override
 	public List<LClassifier> getTypes() {return this.types;}
 	@Override
@@ -208,5 +230,10 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public LPackage getContainer() {return this.container;}
 	@Override
-	public void setContainer(LPackage container) {this.container=container;}
+	public void setContainer(LPackage container) {
+		if(this.container==container)return;
+		if(this.container!=null)
+			this.container.removeSubPackage(this);
+		this.container=container;
+	}
 }
