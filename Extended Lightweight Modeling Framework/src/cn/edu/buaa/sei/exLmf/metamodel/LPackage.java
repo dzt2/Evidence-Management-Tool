@@ -2,6 +2,23 @@ package cn.edu.buaa.sei.exLmf.metamodel;
 
 import java.util.List;
 
+/*
+ *	LPackage: model element that can package other elements.
+ *	LPackage {
+ *		************ LModelElement *************
+ *		- annotations
+ *		************ LNamedElement *************
+ *		- name
+ *		************ LPackage *************
+ *		- nsUri
+ *		- nsPrefix
+ *		- <name> subPackages
+ *		- <id & name> types
+ *		- container
+ *		- factory (not null)
+ *	} 	
+ * 
+ */
 public interface LPackage extends LNamedElement{
 	public List<LPackage> getSubPackages();
 	public void addSubPackage(LPackage pack);

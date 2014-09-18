@@ -2,6 +2,26 @@ package cn.edu.buaa.sei.exLmf.metamodel;
 
 import java.util.List;
 
+/*
+ *	LClass: present class in LMF
+ *	LClass {
+ *		******** LModelElement *********
+ *		-annotations
+ *		******** LNamedElement *********
+ *		-name: String
+ *		******** LClassifier *********
+ *		- classifier id: int	[identification in package space]
+ *		- instance name: string [class name for generating code]		
+ *		- default value: LObject[used in constructing default value in each related reference]
+ *		- container: LPackage	[package space for managing it]
+ *		******** LClass *********
+ *		- isAbstract/isFinal
+ *		- id_attribute
+ *		- <> attributes 		[local/all]
+ *		- <> references 		[local/all]
+ *		- <id+name> features 	[local/all] 
+ *	} 
+ */
 public interface LClass extends LClassifier{
 	public List<LClass> getSuperTypes();
 	public void addSuperType(LClass type);

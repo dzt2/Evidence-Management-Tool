@@ -1,5 +1,11 @@
 package cn.edu.buaa.sei.exLmf.metamodel;
 
+/*
+ *	LDataObject{
+ *		- type (LDataType)
+ *		- value (Object) ==> Bool, Int, Long, String, Float, Double, Enum Literal
+ *	} 
+ */
 public interface LDataObject extends LObject{
 	public LDataType getType();
 	

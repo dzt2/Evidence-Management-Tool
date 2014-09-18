@@ -1,6 +1,15 @@
 package cn.edu.buaa.sei.exLmf.metamodel;
 
-
+/*
+ *	LClassObject {
+ *		- *****
+ *		- type (LClass)
+ *		- map <LStructrualFeature, value>: feature from type, value == null or value's type == feature.valueType
+ *		- set/get --> feature (0..1)
+ *		- add/remove --> feature (0..n)
+ *		- isSet/unSet: initialization (isSet==false), set/add/remove (isSet=true), unSet (isSet==false)
+ *	} 
+ */
 public interface LClassObject extends LObject{
 	public LClass getType();
 	
