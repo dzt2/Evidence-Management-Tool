@@ -23,7 +23,7 @@ import org.xml.sax.SAXParseException;
 public class SchemaVerifiers {
 
 	public static void main(String[] args) {
-		verify(new File("obj.xml"),new File("schema.xsd"));
+		verify(new File("testobj.xml"),new File("schema.xsd"));
 	}
 	
 	public static void verify(File xml,File xsd){

@@ -18,7 +18,7 @@ public class ModelImporterRunner {
 	public static void main(String[] args) {
 		try {
 			IModelImporter im = new EcoreModelImporter("Ecore_Reader");
-			im.setResource(new File("test.ecore"));
+			im.setResource(new File("R.ecore"));
 			LPackage p = im.translate();
 			
 			System.out.println(printPackage(p));
@@ -33,8 +33,8 @@ public class ModelImporterRunner {
 		StringBuilder code = new StringBuilder();
 		
 		code.append(type.getName()).append("[").append(type.getClassifierID()).append("]:");
-		if(type.isAbstract())code.append("<abstract>");
-		if(type.isFinal())code.append("<final>");
+		if(type.isAbstract())code.append("<abstract> ");
+		if(type.isFinal())code.append("<final> ");
 		for(int i=0;i<type.getFeatures().size();i++){
 			LStructuralFeature feature = type.getFeatures().get(i);
 			code.append("\n\t-").append(feature.getName()).append("[").append(feature.getFeatureID()).

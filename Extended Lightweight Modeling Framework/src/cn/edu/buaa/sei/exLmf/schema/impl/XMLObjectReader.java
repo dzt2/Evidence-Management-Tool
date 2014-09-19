@@ -197,6 +197,7 @@ public class XMLObjectReader implements IObjectReader{
 						obj.set(f, val);
 					}
 				}
+				else if(f==null)throw this.getException("decodeObject(elm)", "feature["+cname+"]", "Unknown Feature by Name: "+cname);
 				else throw this.getException("decodeObject(elm)", "feature["+f.getName()+"]", "Unknown Feature Type: "+f.getClass().getName());
 			}
 	}

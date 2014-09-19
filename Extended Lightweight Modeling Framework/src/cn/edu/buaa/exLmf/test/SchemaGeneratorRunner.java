@@ -13,7 +13,7 @@ public class SchemaGeneratorRunner {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			generateSchema(new File("test.ecore"),new File("schema.xsd"));
+			generateSchema(new File("R.ecore"),new File("schema.xsd"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
