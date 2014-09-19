@@ -1,3 +1,4 @@
-E = true
-F = true
-G = true
+HLR = {hl1;hlr2;hlr3;hlr4;hlr5}
+LLR = {llr1;llr2;lr3;llr4;llr5}
+HtraceL = _relation{HtraceL[hlr1,llr1];HtraceL[hlr1,llr2];HtraceL[hlr2,llr1];HtraceL[hlr3,llr3];HtraceL[hlr4,llr4];HtraceL[hlr5,llr5]}
+LtraceH = _relation{LtraceH[llr1,hlr1];LtraceH[llr2,hlr2];LtraceH[llr1,hlr2];LtraceH[llr3,hlr3];LtraceH[llr4,hlr4];LtraceH[llr5,hlr5]}
