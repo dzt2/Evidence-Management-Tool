@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/java/RUCM/LMF_ext.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dzt/git/Evidence-Management-Tool/Predicate Inferencer/jars/LMF_ext.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
