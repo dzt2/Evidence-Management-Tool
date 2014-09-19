@@ -50,7 +50,7 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 			}
 			return;
 		}
-		if(literal.getContainer()!=null){
+		if(literal.getContainer()!=null&&literal.getContainer()!=this){
 			LEnum ltype = (LEnum) literal.getContainer();
 			ltype.removeLiteral(literal);
 		}

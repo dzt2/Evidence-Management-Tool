@@ -300,13 +300,13 @@ public class ModelCreatorImpl implements IModelCreator{
 			throw this.getException("createLiteral(container,name,value)", "container|name", "Null");
 		
 		LEnumLiteral l = new LEnumLiteralImpl(this.generateID(),name.trim(),container);
-		l.setChangable(false);
+		//l.setChangable(false);
 		l.setContainer(container);
-		l.setDefaultValue(null);
+		//l.setDefaultValue(null);
 		l.setLiteral(name.trim());
 		//l.setType(null);
-		l.setUnique(true);l.setOrdered(false);
-		l.setLowerBound(1);l.setUpperBound(1);
+		//l.setUnique(true);l.setOrdered(false);
+		//l.setLowerBound(1);l.setUpperBound(1);
 		l.setValue(value);
 		container.addLiteral(l);
 		

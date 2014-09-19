@@ -1,7 +1,7 @@
 HLR: domain
 LLR: domain
-HtraceL: predicate(HLR.iter,LLR.iter)
-LtraceH: predicate(LLR.iter,HLR.iter)
-L: and(HtraceL,LtraceH)
+HtoL: predicate(HLR.iter,LLR.iter)
+LtoH: predicate(LLR.iter,HLR.iter)
+L: and(HtoL,LtoH)
 Q: any(LLR,L)
 P: all(HLR,Q)

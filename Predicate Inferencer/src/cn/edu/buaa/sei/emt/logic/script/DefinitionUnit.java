@@ -73,7 +73,7 @@ public class DefinitionUnit {
 			throw this.getArgException("var", "setVar(var)", 
 					"empty string cannot be used in variable definition name.");
 		}
-		if(var.matches("([a-z]|[A-Z])+"))
+		if(var.matches("([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*"))
 			this.var=var;
 		else{
 			throw this.getArgException("var", "setVar(var)", 
