@@ -32,7 +32,7 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		this.factory=new LFactoryImpl(this,isLight);
 	}
 
-	/*
+	/**
 	 *	1. containSubPackage(p): return true if it is the direct child package or it is sub packages of one of the direct child.
 	 *	2. addSubPackage():
 	 *		- containSubPackage(p): return
@@ -119,7 +119,7 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public void setNsPrefix(String prefix){this.prefix=prefix;}
 
-	/*
+	/**
 	 *	1. getTypes(): return all local types (LClass|LEnum)
 	 *	2. getClassifierByName/ID(): return local type by specified name/id
 	 *		-ex: name|id is not defined in sub types.
@@ -156,14 +156,14 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 				e.printStackTrace();
 			}
 		}
-		
-		this.types.add(type);
-		this.id_type.put(type.getClassifierID(), type);
-		this.type_index.put(type.getName(), type);
 		LPackage ct = type.getContainer();
 		if(ct!=null&&ct!=this){
 			ct.removeType(type);
 		}
+		
+		this.types.add(type);
+		this.id_type.put(type.getClassifierID(), type);
+		this.type_index.put(type.getName(), type);
 		type.setContainer(this);
 	}
 	@Override

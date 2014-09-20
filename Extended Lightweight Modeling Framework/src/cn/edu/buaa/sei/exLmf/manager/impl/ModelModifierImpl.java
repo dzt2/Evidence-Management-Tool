@@ -21,7 +21,7 @@ public class ModelModifierImpl implements IModelModifier{
 		this.space=space;
 	}
 
-	/*Tool Functions*/
+	/**Tool Functions*/
 	Boolean containSubPackage(LPackage parant,LPackage child){
 		if(parant==null||child==null)return false;
 		if(parant.getSubPackages().contains(child)&&child.getContainer()==parant)
@@ -34,7 +34,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return false;
 	}
 	
-	/*Core Functions*/
+	/**Core Functions*/
 	@Override
 	public Boolean generalize(LClass parant, LClass child) {
 		if(parant==null||child==null)return false;
@@ -98,6 +98,8 @@ public class ModelModifierImpl implements IModelModifier{
 	public Boolean appendLiteral(LEnum type, LEnumLiteral literal) {
 		if(type==null||literal==null)return false;
 		if(type==literal.getContainer())return true;
+		if(literal.getContainer()!=null)
+			this.removeLiteral((LEnum) literal.getContainer(), literal);
 		
 		literal.setContainer(type);
 		type.addLiteral(literal);
@@ -117,6 +119,8 @@ public class ModelModifierImpl implements IModelModifier{
 	public Boolean appendClass(LPackage p, LClass type) {
 		if(p==null||type==null)return false;
 		if(p==type.getContainer())return true;
+		if(type.getContainer()!=null)
+			this.removeClass(type.getContainer(), type);
 		p.addType(type);
 		return true;
 	}

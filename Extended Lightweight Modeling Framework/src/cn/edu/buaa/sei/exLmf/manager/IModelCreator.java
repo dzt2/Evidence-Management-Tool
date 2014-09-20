@@ -75,8 +75,14 @@ public interface IModelCreator {
 	 * 			-b. Empty Name/Literal
 	 * 			-c. Conflict Name/Literal/Value
 	 * 		- specify:
-	 * 			-a. 
-	 * 		
+	 * 			-a. container.addLiteral(this)
+	 * 	8. Getter Functions
+	 * 		- getIDs(): return all the id of model elements in creator space.
+	 * 		- getElement(id): return the model element with id. failed when id is not contained in id space [getIDs()] <return null>
+	 * 		- getIDof(element): return the id of element in creator space. return null and exception when element is not contained in creator space.
+	 * 		- containElement(element): return whether the element is in creator space. never exceptions.
+	 * 		- removeElement(element): remove the model element from the creator space. failed when element is not in creator sapce. the function will release
+	 * 		id in original id space.
 	 * 
 	 */
 	public static final int UNIQUE_ORDER = 0;
