@@ -35,7 +35,12 @@ public class ObjectSpace implements IObjectSpace{
 	}
 
 	@Override
-	public void register(LPackage p) {this.container=p;}
+	public void register(LPackage p) {
+		this.container=p;
+		this.objMap.clear();
+		this.typeMap.clear();
+	}
+	
 	@Override
 	public Boolean isInstancable(LClassifier type) {
 		if(type==null)return false;
@@ -45,7 +50,6 @@ public class ObjectSpace implements IObjectSpace{
 		}
 		return true;
 	}
-
 	@Override
 	public LClassObject createClassObject(LClass type) {
 		if(!this.isInstancable(type))return null;
