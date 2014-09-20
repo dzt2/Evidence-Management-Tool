@@ -13,6 +13,72 @@ import cn.edu.buaa.sei.exLmf.metamodel.LReference;
 
 public interface IModelCreator {
 	
+	/**
+	 * 	1. UNIQUE_ORDER|UNIQUE_INORDER|INUNIQUE_ORDER|INUNIQUE_INORDER
+	 *		The argument UNIQUE|ORDER are used in createMultipleXXXX(..., multipleType) 
+	 * 	2. getRoot()
+	 * 		return the root package of the model creator. For each creator's space, there is exactly one root.
+	 * 		The default name/uri/prefix of the root package is _ROOT, nsURI, and prefix.
+	 * 	3. createXXX() throws Exception
+	 * 		-Exception: when generation failed based on consistency or other reasons of the input
+	 * 	3. createPackage()
+	 * 		- container: parent package. should not be null.
+	 * 		- name: package name. should not conflict with other names of packages in the same container.
+	 * 		- nsURI: the URI of the generated package. default = ::nsURI
+	 * 		- prefix: the prefix of the generated package. default = ::prefix
+	 * 	4. createClass()/createAbstractClass()/createFinalClass()
+	 * 		- container: the package that contain the generated class. should not be null.
+	 * 		- name: the class name. should not conflict with other classes in the same container.
+	 * 		- ins: the instance name of class used in code generation. default = name
+	 * 		- exceptions:
+	 * 			-a. Null Input Argument.
+	 * 			-b. Empty Name/Ins Name.
+	 * 			-c. Name Conflict with Other Classes in the same Package container.
+	 * 		- specify:
+	 * 			-a. createClass(): type.isAbstract()=false; type.isFinal()=false;
+	 * 			-b. createAbstractClass(): type.isAbstract()=true; type.isFinal()=false;
+	 * 			-c. createFinalClass(): type.isAbstract()=false; type.isFinal()=true;
+	 * 			-d. type.setDefaultValue(null); type.setClassifierID(new ID);
+	 * 	5. createEnum()
+	 * 		- container: the package that contains the enumeration
+	 * 		- name: the name of the enumeration
+	 * 		- ins: the instance name of the enumeration used in code generation. default = name.
+	 * 		- exceptions:
+	 * 			-a. Null Input Arguments
+	 * 			-b. Empty Name/Ins Name
+	 * 			-c. Name Conflict with Other Classifiers in the same container.
+	 * 		- specify:
+	 * 			-a. etype.setDefaultValue(null)
+	 * 			-b. etype.setClassifier(new ID)
+	 * 	6. createAttribute()/createConstantAttribute()/createMultipleAttribute()
+	 * 		- container: the LClass in which the attribute is contained. should not be null.
+	 * 		- name: the name of the attribute, should not conflict with other name of features in the same container.
+	 * 		- type: the value type of the attribute, should be LDataType and not null.
+	 * 		- lower/upper: the bound of the features, upper==LMultipleObject.UNBOUNDED || upper>=lower; lower>=0; default: lower=0, upper=1;
+	 * 		- multipleType: as in the 1 arguments. default = UNIQUE_ORDER;
+	 * 		- exceptions:
+	 * 			-a. Null Input Arguments
+	 * 			-b. Empty Name
+	 * 			-c. Bound Errors: lower<0 || lower>0&&upper!=LMultipleObject.UNBOUNDED&&lower>upper
+	 * 			-d. MultipleType: not in {UNIQUE_ORDER...}
+	 * 		- specify:
+	 * 			-a. createAttribute(): attr.setChangable(true); attr.setDefaultValue(attr.dtype.getDefaultValue()); container.addAttribute(attr);
+	 * 			-b. createConstantAttribute(): attr = this.createAttribute(); attr.setChangable(false);
+	 * 			-c. createMultipleAttribute(): attr = this.createConstantAttribute(); attr.setLower(lower)/setUpper(upper); attr.setUnique()/setOrder();
+	 * 	7. createEnumLiteral()
+	 * 		- container: the enumeration that contain the literal
+	 * 		- name: the name of the literal as a features (managed in container classifiers)
+	 * 		- literal: the name of the literal as a ICON. default = name.
+	 * 		- value: the value of the literal for code generation
+	 * 		- exceptions:
+	 * 			-a. Null Input Arguments
+	 * 			-b. Empty Name/Literal
+	 * 			-c. Conflict Name/Literal/Value
+	 * 		- specify:
+	 * 			-a. 
+	 * 		
+	 * 
+	 */
 	public static final int UNIQUE_ORDER = 0;
 	public static final int UNIQUE_INORDER = 1;
 	public static final int INUNIQUE_ORDER = 2;
