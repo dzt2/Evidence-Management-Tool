@@ -46,8 +46,6 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
 import cn.edu.buaa.sei.exLmf.schema.IObjectReader;
 import cn.edu.buaa.sei.exLmf.schema.impl.XMLObjectReader;
-import cn.edu.buaa.sei.exLmf.translater.IObjectImporter;
-import cn.edu.buaa.sei.exLmf.translater.XMLObjectImporter;
 
 public class Test {
 	public static void main(String[] args) {
@@ -202,7 +200,7 @@ public class Test {
 		}
 	}
 	public static void test2(){
-		IObjectImporter im = new XMLObjectImporter("TEST_II");
+		/*IObjectImporter im = new XMLObjectImporter("TEST_II");
 		im.setModel(createPackage1());
 		im.setResource(new File("obj.xml"));
 		try {
@@ -216,7 +214,7 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		test1();
+		test1();*/
 	}
 	
 	public static IObjectSpace createSpace1(){
