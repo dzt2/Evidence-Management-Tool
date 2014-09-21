@@ -8,11 +8,11 @@ public interface ILModelSearcher {
 	public static final String DOT = ".";
 	public static final String ROOT= "";
 	
-	/*	Package Member  */
+	/**	Package Member  */
 	public static final String CLASS = "class";
 	public static final String ENUM = "enum";
 	public static final String PACKAGE = "package";
-	/*	Class Member   */
+	/**	Class Member   */
 	public static final String ATTRIBUTE = "attribute";
 	public static final String REFERENCE = "reference";
 	public static final String SUPER = "super";
@@ -20,23 +20,23 @@ public interface ILModelSearcher {
 	public static final String LITERAL = "literal";
 	public static final String CONTAINER = "container";
 	public static final String IDATTR = "id_attribute";
-	/*	LStructuredFeature  */
+	/**	LStructuredFeature  */
 	public static final String DEFAULT = "default";
 	public static final String TYPE = "type";
-	/*Attribute*/
+	/**Attribute*/
 	public static final String DATATYPE = "dtype";
-	/*Reference*/
+	/**Reference*/
 	public static final String CLASSTYPE = "ctype";
 	public static final String OPPOSITE = "opposite";
-	/*LEnumLiteral*/
-	/*LObject*/
+	/**LEnumLiteral*/
+	/**LObject*/
 	//public static final String TYPE = "type";
-	/*LDataObject*/
+	/**LDataObject*/
 	//public static final String DATATYPE = "dtype";
 	public static final String VALUE = "value";
-	/*LClassObject*/
+	/**LClassObject*/
 	//public static final String CLASSTYPE = "ctype";
-	/*LMultipleObject*/
+	/**LMultipleObject*/
 	public static final String PARAMETER_TYPE = "parameter_type";
 	public static final String UNIQUE_INORDER = "u_io";
 	public static final String UNIQUE_ORDER = "u_o";

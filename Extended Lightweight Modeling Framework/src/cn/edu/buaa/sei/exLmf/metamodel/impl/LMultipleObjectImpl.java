@@ -75,7 +75,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	@Override
 	public Boolean isUnique() {return this.unique;}
 
-	/*
+	/**
 	 *	1. getAllObjects(): return all the values. [automatically select]
 	 *	2. addObject(val):
 	 *		- cannot add null into multiple object list.

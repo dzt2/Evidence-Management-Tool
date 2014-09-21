@@ -41,7 +41,15 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 		}
 	}
 	
-	/*Tool*/
+	/**
+	 * 
+	 *	int getIndex(LStructuralFeature)
+	 *		- description: return the index of feature of type of this object.
+	 *		- failure condition:
+	 *			-a. !this.type.containFeature(feature): static feature lost
+	 *			-b. !type_feature_map.containKey(type): un-registered type in static map
+	 *			-c. !type_feature_map.get(type).contain(feature): dynamic feature lost.
+	 */
 	int getIndex(LStructuralFeature feature){
 		LClass type = (LClass) this.type;
 		if(!type.containFeature(feature)){
@@ -86,9 +94,17 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 	public LClass getType() {return (LClass) this.type;}
 
 	@Override
-	public LObject get(LStructuralFeature feature) {return this.values[this.getIndex(feature)];}
+	public LObject get(LStructuralFeature feature) {
+		int i = this.getIndex(feature);
+		if(i<0)return null;
+		else return this.values[i];
+	}
 	@Override
 	public void set(LStructuralFeature feature, LObject value) {
+		/**
+		 *	set(feature,value)
+		 *		- can only set single feature (0..1) not a multiple feature (m...n)|(n...*) 
+		 */
 		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){
 			try {
 				throw this.getException("set(feature,value)", "feature", "Multiple Object cannot be set [change to add/remove].");
@@ -99,25 +115,56 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 			return;
 		}
 		if(value!=null&&feature.getType()!=value.type()){
-			try {
-				throw this.getException("set(feature,value)", "feature", "Wrong Type Match: \""+this.type.getName()+"\" --- \""+value.type().getName()+"\"");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(feature.getType() instanceof LClass&&value.type() instanceof LClass){
+				LClass ftype = (LClass) feature.getType();
+				LClass vtype = (LClass) value.type();
+				if(!ftype.isSuperOf(vtype)){
+					try {
+						throw this.getException("set(feature,value)", "feature", "Wrong Type Match: \""+this.type.getName()+"\" --- \""+value.type().getName()+"\"");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
+				}
 			}
-			return;
+			else{
+				try {
+					throw this.getException("set(feature,value)", "feature", "Wrong Type Match: \""+this.type.getName()+"\" --- \""+value.type().getName()+"\"");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			}
 		}
 		int i = this.getIndex(feature);
 		this.values[i]=value;
 		this.flags[i]=true;
 	}
 	@Override
-	public Boolean isSet(LStructuralFeature feature) {return this.flags[this.getIndex(feature)];}
+	public Boolean isSet(LStructuralFeature feature) {
+		int i = this.getIndex(feature);
+		if(i<0)return null;
+		else return this.flags[i];
+	}
 	@Override
-	public void unSet(LStructuralFeature feature) {this.flags[this.getIndex(feature)]=false;}
+	public void unSet(LStructuralFeature feature) {
+		int i = this.getIndex(feature);
+		if(i>=0)this.flags[this.getIndex(feature)]=false;
+	}
 
 	@Override
 	public void add(LStructuralFeature feature, LObject val) {
+		if(feature==null){
+			try {
+				throw this.getException("add(feature,value)", "feature", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
 		if(feature.getUpperBound()<=1&&feature.getUpperBound()!=LMultipleObject.UNBOUNDED){
 			try {
 				throw this.getException("add(feature,value)", "feature", "Multiple Object cannot be set [change to add/remove].");
@@ -136,7 +183,7 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
-		if(feature.getType()!=val.type()){
+		/*if(feature.getType()!=val.type()){
 			try {
 				throw this.getException("add(feature,value)", "value", "Wrong Type Match: \""+this.type.getName()+"\" --- \""+val.type().getName()+"\"");
 			} catch (Exception e) {
@@ -144,7 +191,7 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 				e.printStackTrace();
 			}
 			return;
-		}
+		}*/
 		
 		int i = this.getIndex(feature);
 		LMultipleObject list = (LMultipleObject) this.values[i];
@@ -153,6 +200,15 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 	}
 	@Override
 	public void remove(LStructuralFeature feature, LObject val) {
+		if(feature==null){
+			try {
+				throw this.getException("remove(feature,value)", "feature", "Null");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
 		if(feature.getUpperBound()<=1&&feature.getUpperBound()!=LMultipleObject.UNBOUNDED){
 			try {
 				throw this.getException("remove(feature,value)", "feature", "Multiple Object cannot be set [change to add/remove].");
@@ -171,7 +227,7 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 			}
 			return;
 		}
-		if(feature.getType()!=val.type()){
+		/*if(feature.getType()!=val.type()){
 			try {
 				throw this.getException("remove(feature,value)", "value", "Wrong Type Match: \""+this.type.getName()+"\" --- \""+val.type().getName()+"\"");
 			} catch (Exception e) {
@@ -179,7 +235,7 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 				e.printStackTrace();
 			}
 			return;
-		}
+		}*/
 		
 		int i = this.getIndex(feature);
 		LMultipleObject list = (LMultipleObject) this.values[i];

@@ -10,6 +10,7 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 	Boolean changable=true;
 	int fid;
 	LObject default_val;
+	Boolean required=false;
 	
 	LStructuralFeatureImpl(int fid,String name,LClassifier container){super(name);this.container=container;this.fid=fid;}
 
@@ -39,5 +40,10 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 	}
 	@Override
 	public void setDefaultValue(LObject value) {this.default_val=value;}
+
+	@Override
+	public Boolean isRequired() {return this.required;}
+	@Override
+	public void setRequired(Boolean required) {this.required=required;}
 	
 }

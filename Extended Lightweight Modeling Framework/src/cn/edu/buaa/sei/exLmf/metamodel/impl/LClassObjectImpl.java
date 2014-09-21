@@ -17,7 +17,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 	LClassObjectImpl(LClass type) {
 		super(type);
 		
-		/*
+		/**
 		 * Initialization
 		 * 	1) set all single attribute/reference as the feature.getDefaultValue() [perhaps automatically located to the default value of the value type]
 		 * 	2) set all multiple attribute/reference the empty LMultipleObject, set its parameter type and bound numbers.
@@ -95,14 +95,30 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		}
 		// Type Match
 		if(value!=null&&value.type()!=feature.getType()){
-			try {
-				throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
-						+"> does not match <"+feature.getType().getName()+">");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(value.type() instanceof LClass&&feature.getType() instanceof LClass){
+				LClass ftype = (LClass) feature.getType();
+				LClass vtype = (LClass) value.type();
+				if(!ftype.isSuperOf(vtype)){
+					try {
+						throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
+								+"> does not match <"+feature.getType().getName()+">");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
+				}
 			}
-			return;
+			else{
+				try {
+					throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
+							+"> does not match <"+feature.getType().getName()+">");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			}
 		}
 		// Constant Check 
 		if(!feature.isChangable()&&

@@ -142,4 +142,24 @@ public class LEnumLiteralImpl extends LStructuralFeatureImpl implements LEnumLit
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public Boolean isRequired() {
+		try {
+			throw this.getException("isRequired()", "", "cannot be accessed");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public void setRequired(Boolean required) {
+		try {
+			throw this.getException("setRequired(required)", "", "cannot be accessed");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
