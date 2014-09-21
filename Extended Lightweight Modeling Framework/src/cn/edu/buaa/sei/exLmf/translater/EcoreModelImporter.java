@@ -46,7 +46,7 @@ public class EcoreModelImporter implements IModelImporter{
 	
 	public EcoreModelImporter(String name){this.name=name;}
 	
-	/*Tool Functions*/
+	/**Tool Functions*/
 	Exception getException(String func,String arg,String reason){
 		return LMFException.create("Ecore Importer "+this.name, "LMFCreator", func, arg, reason);
 	}
@@ -62,7 +62,7 @@ public class EcoreModelImporter implements IModelImporter{
 		return p;
 	}
 
-	/*Core Functions*/
+	/**Core Functions*/
 	@Override
 	public void setResource(File file) {this.file=file;}
 	@Override
@@ -91,6 +91,18 @@ public class EcoreModelImporter implements IModelImporter{
 		return np;
 	}
 	
+	/**
+	 * 	Core Assistance Functions
+	 * 	1. generateElement: EModelElement ==> LModelElement (schedule)
+	 * 	2. generatePackage: EPackage ==> LPackage
+	 * 	3. generateClass:	EClass ==> LClass
+	 * 	4. generateEnum:	EEnum ==> LEnum
+	 * 	5. generateAttribute: 	EAttribute ==> LAttribute
+	 * 	6. generateReference: 	EReference ==> LReference
+	 * 	7. generateLiteral:		EEnumLiteral ==> LEnumLiteral
+	 * 	8. generateDataType:	EDataType ==> LDataType
+	 * 
+	 * */
 	LModelElement generateElement(EModelElement elm) throws Exception{
 		if(elm==null){
 			return null;
@@ -174,16 +186,21 @@ public class EcoreModelImporter implements IModelImporter{
 	LAttribute generateAttribute(EAttribute attribute) throws Exception{
 		LAttribute attr = null;
 		
-		if(attribute.getUpperBound()>1||attribute.getUpperBound()==-1)
+		if(attribute.getUpperBound()>1)
 			attr = this.creator.createMultipleAttribute((LClass)this.generateElement(attribute.getEContainingClass()), 
 				attribute.getName(), (LDataType)this.generateElement(attribute.getEAttributeType()),
 				attribute.getLowerBound(),attribute.getUpperBound(),IModelCreator.UNIQUE_ORDER);
+		else if(attribute.getUpperBound()==-1)
+			attr = this.creator.createMultipleAttribute((LClass)this.generateElement(attribute.getEContainingClass()), 
+					attribute.getName(), (LDataType)this.generateElement(attribute.getEAttributeType()),
+					attribute.getLowerBound(),LMultipleObject.UNBOUNDED,IModelCreator.UNIQUE_ORDER);
 		else
 			attr = this.creator.createAttribute((LClass)this.generateElement(attribute.getEContainingClass()), 
 					attribute.getName(), (LDataType)this.generateElement(attribute.getEAttributeType()));
 		
 		this.map.put(attribute, attr);
 		
+		attr.setRequired(attribute.isRequired());
 		attr.setChangable(attribute.isChangeable());
 		attr.setLowerBound(attribute.getLowerBound());
 		attr.setOrdered(attribute.isOrdered());
@@ -195,15 +212,20 @@ public class EcoreModelImporter implements IModelImporter{
 	LReference generateReference(EReference ref) throws Exception{
 		LReference r = null;
 		
-		if(ref.getUpperBound()>1||ref.getUpperBound()==-1)
+		if(ref.getUpperBound()>1)
 			r = this.creator.createMultipleReference((LClass)this.generateElement(ref.getEContainingClass()), 
 					ref.getName(), (LClass)this.generateElement(ref.getEReferenceType()),
 					ref.getLowerBound(),ref.getUpperBound(),IModelCreator.UNIQUE_ORDER);
+		else if(ref.getUpperBound()==-1)
+			r = this.creator.createMultipleReference((LClass)this.generateElement(ref.getEContainingClass()), 
+					ref.getName(), (LClass)this.generateElement(ref.getEReferenceType()),
+					ref.getLowerBound(),LMultipleObject.UNBOUNDED,IModelCreator.UNIQUE_ORDER);
 		else
 			r = this.creator.createReference((LClass)this.generateElement(ref.getEContainingClass()), 
 					ref.getName(), (LClass)this.generateElement(ref.getEReferenceType()));
 		this.map.put(ref, r);
 		
+		r.setRequired(ref.isRequired());
 		r.setChangable(ref.isChangeable());
 		r.setContainment(ref.isContainment());
 		r.setLowerBound(ref.getLowerBound());
