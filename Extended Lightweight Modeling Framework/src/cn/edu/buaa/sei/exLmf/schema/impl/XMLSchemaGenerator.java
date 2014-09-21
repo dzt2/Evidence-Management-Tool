@@ -148,6 +148,7 @@ public class XMLSchemaGenerator implements ISchemaGenerator{
 		id.setNamespace(ns);
 		id.setAttribute("name", XMLFormatDefinition.ID_ATTR);
 		id.setAttribute("type", XMLFormatDefinition.SCHEMA_ID_TYPE);
+		id.setAttribute("use", "required");
 		elm.getChildren().add(id);
 		
 		List<LStructuralFeature> features = type.getAllFeatures();
@@ -208,6 +209,9 @@ public class XMLSchemaGenerator implements ISchemaGenerator{
 		
 		elm.setAttribute("minOccurs", "0");
 		elm.setAttribute("maxOccurs", "1");
+		
+		if(attribute.isRequired())elm.setAttribute("use", "required");
+		
 		return elm;
 	}
 	Element generateAttributes(LAttribute attribute) throws Exception{
@@ -244,6 +248,9 @@ public class XMLSchemaGenerator implements ISchemaGenerator{
 		
 		elm.setAttribute("minOccurs", "0");
 		elm.setAttribute("maxOccurs", "1");
+
+		if(attribute.isRequired())elm.setAttribute("use", "required");
+		
 		return elm;
 	}
 	Element generateReference(LReference reference){
@@ -255,6 +262,9 @@ public class XMLSchemaGenerator implements ISchemaGenerator{
 		
 		elm.setAttribute("minOccurs", "0");
 		elm.setAttribute("maxOccurs", "1");
+
+		if(reference.isRequired())elm.setAttribute("use", "required");
+		
 		return elm;
 	}
 	Element generateReferences(LReference reference){
@@ -288,6 +298,9 @@ public class XMLSchemaGenerator implements ISchemaGenerator{
 		
 		elm.setAttribute("minOccurs", "0");
 		elm.setAttribute("maxOccurs", "1");
+
+		if(reference.isRequired())elm.setAttribute("use", "required");
+		
 		return elm;
 	}
 	
