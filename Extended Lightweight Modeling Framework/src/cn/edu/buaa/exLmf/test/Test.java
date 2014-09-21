@@ -44,8 +44,10 @@ import cn.edu.buaa.sei.exLmf.metamodel.impl.LPackageImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LReferenceImpl;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LTypedElementImpl;
-import cn.edu.buaa.sei.exLmf.schema.IObjectReader;
-import cn.edu.buaa.sei.exLmf.schema.impl.XMLObjectReader;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelReader;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelWriter;
+import cn.edu.buaa.sei.exLmf.translater.IModelReader;
+import cn.edu.buaa.sei.exLmf.translater.IModelWriter;
 
 public class Test {
 	public static void main(String[] args) {
@@ -105,7 +107,7 @@ public class Test {
 			e.printStackTrace();
 		}*/
 		
-		try {
+		/*try {
 			LPackage p = createPackage1();
 			IObjectReader oi = new XMLObjectReader("READER I");
 			oi.setInputStream(new FileInputStream("obj.xml"));
@@ -118,7 +120,30 @@ public class Test {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}*/
+		System.out.println("Creating Model Reader...");
+		IModelReader reader = new EcoreModelReader("TEST-1");
+		System.out.println("Config the input ecore file: R.ecore");
+		reader.setInputStream(new File("R.ecore"));
+		try {
+			LPackage p = reader.read();
+			System.out.println("Reading LPackage Successed");
+			
+			System.out.println("Creating Model Writer...");
+			IModelWriter writer = new EcoreModelWriter("TEST-1");
+			System.out.println("Config the output ecore file: out.ecore");
+			writer.setOutputStream(new File("out.ecore"));
+			System.out.println("Config the Model");
+			writer.setModel(p);
+			
+			writer.write();
+			System.out.println("Writting Finished!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 		
 	}
 	

@@ -48,7 +48,7 @@ public class EcoreModelReader implements IModelReader{
 	
 	/**Tool Functions*/
 	Exception getException(String func,String arg,String reason){
-		return LMFException.create("Ecore Importer "+this.name, "LMFCreator", func, arg, reason);
+		return LMFException.create("Ecore Reader "+this.name, "LMFCreator", func, arg, reason);
 	}
 	EPackage readStream(){
 		URI uri = URI.createFileURI(file.getAbsolutePath());
@@ -56,6 +56,7 @@ public class EcoreModelReader implements IModelReader{
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 		Resource resource = resourceSet.getResource(uri,true);
+		System.out.println("Reading from "+uri.path()+"...");
 		
 		EPackage p =(EPackage) resource.getContents().get(0);
 		
