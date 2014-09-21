@@ -35,7 +35,7 @@ import cn.edu.buaa.sei.exLmf.metamodel.LReference;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LMFException;
 import cn.edu.buaa.sei.exLmf.metamodel.impl.LPrimitiveTypeImpl;
 
-public class EcoreModelImporter implements IModelImporter{
+public class EcoreModelReader implements IModelReader{
 	
 	String name;
 	File file;
@@ -44,13 +44,13 @@ public class EcoreModelImporter implements IModelImporter{
 	
 	Map<EModelElement,LModelElement> map = new HashMap<EModelElement,LModelElement>();
 	
-	public EcoreModelImporter(String name){this.name=name;}
+	public EcoreModelReader(String name){this.name=name;}
 	
 	/**Tool Functions*/
 	Exception getException(String func,String arg,String reason){
 		return LMFException.create("Ecore Importer "+this.name, "LMFCreator", func, arg, reason);
 	}
-	EPackage read(){
+	EPackage readStream(){
 		URI uri = URI.createFileURI(file.getAbsolutePath());
 		
 		ResourceSet resourceSet = new ResourceSetImpl();
@@ -62,23 +62,31 @@ public class EcoreModelImporter implements IModelImporter{
 		return p;
 	}
 
-	/**Core Functions*/
+	/**
+	 * 
+	 * 	Core Functions
+	 * @throws Exception 
+	 * */
 	@Override
-	public void setResource(File file) {this.file=file;}
-	@Override
-	public boolean validate() throws Exception {
+	public Boolean validate() throws Exception {
 		if(this.file==null){
 			throw this.getException("validate()", "file", "Null");
 		}
-		this.p=this.read();
+		this.p=this.readStream();
 		if(p==null){
 			throw this.getException("validate()", "file", "Reading \""+this.file.getAbsolutePath()+"\" failed.");
 		}
 		return true;
 	}
-
 	@Override
-	public LPackage translate() throws Exception {
+	public void setInputStream(File file) {this.file=file;}
+
+	/**
+	 * 	Read file and get model of root package
+	 * @throws Exception 
+	 * */
+	@Override
+	public LPackage read() throws Exception {
 		if(!this.validate()){
 			throw this.getException("translate()", "file", "Interpretation failed");
 		}
@@ -259,5 +267,7 @@ public class EcoreModelImporter implements IModelImporter{
 		
 		throw this.getException("generateDataType", "type", "Unknown Basic Type \""+type.getClass().getName()+"\"");
 	}
+
+	
 	
 }

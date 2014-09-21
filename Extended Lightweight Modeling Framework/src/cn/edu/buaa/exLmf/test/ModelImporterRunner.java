@@ -10,16 +10,16 @@ import cn.edu.buaa.sei.exLmf.metamodel.LEnumLiteral;
 import cn.edu.buaa.sei.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
 import cn.edu.buaa.sei.exLmf.metamodel.LStructuralFeature;
-import cn.edu.buaa.sei.exLmf.translater.EcoreModelImporter;
-import cn.edu.buaa.sei.exLmf.translater.IModelImporter;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelReader;
+import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 
 public class ModelImporterRunner {
 
 	public static void main(String[] args) {
 		try {
-			IModelImporter im = new EcoreModelImporter("Ecore_Reader");
-			im.setResource(new File("R.ecore"));
-			LPackage p = im.translate();
+			IModelReader im = new EcoreModelReader("Ecore_Reader");
+			im.setInputStream(new File("R.ecore"));
+			LPackage p = im.read();
 			
 			System.out.println(printPackage(p));
 		} catch (Exception e) {

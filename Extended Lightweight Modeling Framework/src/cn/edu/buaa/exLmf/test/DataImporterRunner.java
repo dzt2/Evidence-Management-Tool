@@ -17,8 +17,8 @@ import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
 import cn.edu.buaa.sei.exLmf.metamodel.LStructuralFeature;
 import cn.edu.buaa.sei.exLmf.schema.IObjectReader;
 import cn.edu.buaa.sei.exLmf.schema.impl.XMLObjectReader;
-import cn.edu.buaa.sei.exLmf.translater.EcoreModelImporter;
-import cn.edu.buaa.sei.exLmf.translater.IModelImporter;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelReader;
+import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 
 public class DataImporterRunner {
 
@@ -87,9 +87,9 @@ public class DataImporterRunner {
 	}
 	
 	public static IObjectSpace input(File model,File data) throws Exception{
-		IModelImporter im = new EcoreModelImporter("Ecore_Reader");
-		im.setResource(model);
-		LPackage p = im.translate();
+		IModelReader im = new EcoreModelReader("Ecore_Reader");
+		im.setInputStream(model);;
+		LPackage p = im.read();
 		
 		IObjectReader reader = new XMLObjectReader("Object_Reader");
 		reader.setInputStream(new FileInputStream(data));

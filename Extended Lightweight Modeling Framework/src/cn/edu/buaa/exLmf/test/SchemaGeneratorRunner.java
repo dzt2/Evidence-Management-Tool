@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 
 import cn.edu.buaa.sei.exLmf.schema.ISchemaGenerator;
 import cn.edu.buaa.sei.exLmf.schema.impl.XMLSchemaGenerator;
-import cn.edu.buaa.sei.exLmf.translater.EcoreModelImporter;
-import cn.edu.buaa.sei.exLmf.translater.IModelImporter;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelReader;
+import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 
 public class SchemaGeneratorRunner {
 
@@ -21,12 +21,12 @@ public class SchemaGeneratorRunner {
 	}
 	
 	public static void generateSchema(File model,File schema) throws Exception{
-		IModelImporter importer = new EcoreModelImporter("Model_Reader");
+		IModelReader importer = new EcoreModelReader("Model_Reader");
 		ISchemaGenerator generator = new XMLSchemaGenerator("SCDGenerator");
 		
 		System.out.println("%%Loading the Model File from#: "+model.getAbsolutePath());
-		importer.setResource(model);
-		generator.setModel(importer.translate());
+		importer.setInputStream(model);;
+		generator.setModel(importer.read());
 		System.out.println("%%Creating Pipes for output schema file#: "+schema.getAbsolutePath());
 		generator.setOPipe(new FileOutputStream(schema));
 		
