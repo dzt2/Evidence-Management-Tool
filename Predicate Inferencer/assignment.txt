@@ -1,3 +1,5 @@
-HLR = {h1;h2;h3;h4}
-LLR = {l1;l2;l3;l4;l5}
-trace = _relation{trace[h1,l2];trace[h1,l3];trace[h3,l1];trace[h3,l5];trace[h4,l5]}
+HLR = {HRA01;HRA02;HRA03;HRB01;HRB02}
+accurate = _relation{accurate[HRA01];accurate[HRA02];accurate[HRA03];accurate[HRB01];accurate[HRB02]}
+unambiguous = _relation{unambiguous[HRA01];unambiguous[HRA02];unambiguous[HRA03];unambiguous[HRB01]}
+detailed = _relation{detailed[HRA02];detailed[HRA03];detailed[HRB01]}
+
