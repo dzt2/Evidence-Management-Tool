@@ -156,7 +156,7 @@ public class EcoreModelWriter implements IModelWriter{
 			etype.getESuperTypes().add(setype);
 		}
 		
-		List<LStructuralFeature> features = type.getAllFeatures();
+		List<LStructuralFeature> features = type.getFeatures();
 		for(int i=0;i<features.size();i++){
 			LStructuralFeature feature = features.get(i);
 			EStructuralFeature efeature = (EStructuralFeature) this.generateModelElement(feature);
