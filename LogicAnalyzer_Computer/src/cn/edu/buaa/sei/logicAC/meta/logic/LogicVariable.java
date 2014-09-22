@@ -1,8 +1,8 @@
 package cn.edu.buaa.sei.logicAC.meta.logic;
 
-import cn.edu.buaa.sei.logicAC.meta.common.Variable;
+import cn.edu.buaa.sei.logicAC.meta.common.TypedVariable;
 
-public interface LogicVariable extends LogicFormulation,Variable{
-	public void setBool(Boolean value);
-	public Boolean getBool();
+public interface LogicVariable extends LogicFormulation,TypedVariable{
+	public void assign(Boolean value);
+	public Boolean read();
 }
