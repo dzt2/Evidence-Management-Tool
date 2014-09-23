@@ -22,22 +22,30 @@ public interface ProtoFunction {
 	public List<Parameter> getAllParameters();
 	/**
 	 * Add new Parameter
+	 * @throws Exception 
 	 * */
-	public void addParameter(Parameter parameter);
+	public void addParameter(Parameter parameter) throws Exception;
 	/**
 	 * Check whether the parameter is in the function's parameter list
 	 * */
 	public boolean containParameter(Parameter parameter);
 	/**
 	 * Remove the parameter in function's parameter list
+	 * @throws Exception 
 	 * */
-	public void removeParameter(Parameter parameter);
+	public void removeParameter(Parameter parameter) throws Exception;
 	/**
 	 * Get parameter by name
+	 * @throws Exception 
 	 * */
-	public Parameter getParameter(String name);
+	public Parameter getParameter(String name) throws Exception;
 	/**
 	 * Get parameter by index
+	 * @throws Exception 
 	 * */
-	public Parameter getParameter(int i);
+	public Parameter getParameter(int i) throws Exception;
+	/**
+	 * Return the length of the paramter list in function
+	 * */
+	public int size();
 }
