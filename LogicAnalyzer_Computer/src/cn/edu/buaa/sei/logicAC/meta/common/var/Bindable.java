@@ -1,6 +1,6 @@
 package cn.edu.buaa.sei.logicAC.meta.common.var;
 
-import cn.edu.buaa.sei.logicAC.meta.common.ContextFreeComputable;
+import cn.edu.buaa.sei.logicAC.meta.common.core.ContextFreeComputable;
 
 public interface Bindable extends ContextFreeComputable{
 	public Object read() throws Exception;
