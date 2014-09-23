@@ -30,9 +30,4 @@ public class ExpressionImpl implements Expression{
 	@Override
 	public Operator getOperator() {return this.op;}
 
-	@Override
-	public boolean isComputable() {
-		return this.op.isComputable();
-	}
-
 }

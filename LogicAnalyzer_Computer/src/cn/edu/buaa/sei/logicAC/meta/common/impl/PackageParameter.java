@@ -48,14 +48,6 @@ public class PackageParameter implements Parameter{
 	public void assign(Object val) throws Exception {this.variable.assign(val);}
 
 	/**
-	 * Return whether the parameter could be computable. As we know, any bindable could be computed since 
-	 * the result is the value referred by the bindable.
-	 * @return this.variable.isComputable()
-	 * */
-	@Override
-	public boolean isComputable() {return this.variable.isComputable();}
-
-	/**
 	 * Interpret the parameter with context, it is the same to interpret the variable packaged in this parameter
 	 * @return this.variable.interpret(context)
 	 * */

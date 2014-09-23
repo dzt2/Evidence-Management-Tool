@@ -10,12 +10,6 @@ public abstract class BindableImpl implements Bindable{
 	Object val;
 
 	/**
-	 * This is computable, while can be always computed when it refers to some value (object)
-	 * @return true;
-	 * */
-	@Override
-	public boolean isComputable() {return true;}
-	/**
 	 * Bindable does not need to be interpreted since they refer to value and interpreted as the value.
 	 * @return true
 	 * */
