@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.logicAC.meta.common;
 
 public interface Computable {
-	public boolean interpret(ComputedContext context);
+	public Object getResult();
+	public void setResult(Object result);
 }
