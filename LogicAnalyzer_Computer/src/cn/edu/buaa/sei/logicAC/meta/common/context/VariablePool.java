@@ -1,7 +1,8 @@
-package cn.edu.buaa.sei.logicAC.meta.common.core;
+package cn.edu.buaa.sei.logicAC.meta.common.context;
 
 import java.util.Set;
 
+import cn.edu.buaa.sei.logicAC.meta.common.core.Context;
 import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
 
 public interface VariablePool extends Context{
