@@ -1,8 +1,8 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.fo;
 
-import cn.edu.buaa.sei.logicAC.meta.common.function.ContextFreeFunction;
+import cn.edu.buaa.sei.logicAC.meta.common.expr.Expression;
+import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFormulation;
 
-public interface Quantifier extends ContextFreeFunction{
-	public void setTemplate(QuantifierTemplate templtate) throws Exception;
-	public QuantifierTemplate getTemplate();
+public interface Quantifier extends Expression,LogicFormulation{
+	public QuantifierOperator getOperator();
 }
