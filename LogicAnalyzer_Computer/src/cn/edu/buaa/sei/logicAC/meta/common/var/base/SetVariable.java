@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.logicAC.meta.var.base;
+package cn.edu.buaa.sei.logicAC.meta.common.var.base;
 
 import java.util.Set;
 
