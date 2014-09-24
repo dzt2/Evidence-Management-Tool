@@ -5,5 +5,5 @@ import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFormulation;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
 
 public interface Implication extends LogicOperator,BinaryOperator{
-	public void setChildren(LogicFormulation precondition,LogicFormulation conclusion) throws Exception;
+	public void setOperands(LogicFormulation precondition,LogicFormulation conclusion) throws Exception;
 }
