@@ -1,8 +1,7 @@
 package cn.edu.buaa.sei.logicAC.meta.common.function;
 
-import cn.edu.buaa.sei.logicAC.meta.common.core.Computable;
+import cn.edu.buaa.sei.logicAC.meta.common.core.StructuralComputable;
 
-public interface Function extends Computable{
+public interface Function extends StructuralComputable{
 	public FunctionTemplate getTemplate();
-	public void setTemplate(FunctionTemplate template);
 }
