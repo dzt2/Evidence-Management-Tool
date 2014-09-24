@@ -1,14 +1,13 @@
 package cn.edu.buaa.sei.logicAC.meta.common.context;
 
-import java.util.Set;
-
+import java.util.Iterator;
 import cn.edu.buaa.sei.logicAC.meta.common.core.Context;
 import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
 
 public interface VariablePool extends Context{
-	public boolean containVariable(String name);
+	public boolean containVariable(Variable variable);
 	public void appendVariable(Variable variable);
 	public void removeVariable(Variable variable);
-	public Variable getVariable(String name) throws Exception;
-	public Set<String> getVariableNames();
+	
+	Iterator<Variable> iterator();
 }
