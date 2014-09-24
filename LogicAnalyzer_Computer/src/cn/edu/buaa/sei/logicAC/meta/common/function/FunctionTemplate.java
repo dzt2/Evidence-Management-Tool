@@ -6,5 +6,5 @@ public interface FunctionTemplate {
 	public String getName();
 	
 	public ParameterList getParameters();
-	public void setParameters(ParameterList plist);
+	public void setParameters(ParameterList plist) throws Exception;
 }
