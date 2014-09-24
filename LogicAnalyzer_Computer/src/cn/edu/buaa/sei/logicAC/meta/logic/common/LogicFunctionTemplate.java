@@ -11,8 +11,9 @@ import cn.edu.buaa.sei.logicAC.meta.common.function.FunctionTemplate;
  * */
 public interface LogicFunctionTemplate extends FunctionTemplate{
 	/**
-	 * Set the parameter list of function.
+	 * Set the parameter list of function. {must be normative}
 	 * @exception Exception plist==null
+	 * @exception Exception plist not instance of NormativeParameterList
 	 * */
 	public void setParameters(NormativeParameterList plist) throws Exception;
 }
