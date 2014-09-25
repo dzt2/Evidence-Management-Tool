@@ -8,6 +8,10 @@ import cn.edu.buaa.sei.logicAC.meta.common.core.Computable;
  * */
 public interface FlexibleOperator extends Operator{
 	/**
+	 * The maximum size of operands that can be set in a flexible operator.
+	 * */
+	public static final int MAX_OPERANDS = 128;
+	/**
 	 * Return the current length of operands
 	 * */
 	public int getCurrentSize();
