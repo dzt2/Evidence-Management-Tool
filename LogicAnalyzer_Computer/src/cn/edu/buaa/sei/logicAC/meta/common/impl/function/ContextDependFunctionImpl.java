@@ -5,7 +5,7 @@ import cn.edu.buaa.sei.logicAC.meta.common.core.Context;
 import cn.edu.buaa.sei.logicAC.meta.common.function.ContextDependFunction;
 import cn.edu.buaa.sei.logicAC.meta.common.function.FunctionTemplate;
 
-public class ContextDependFunctionImpl extends FunctionImpl implements ContextDependFunction{
+public abstract class ContextDependFunctionImpl extends FunctionImpl implements ContextDependFunction{
 	
 	RunnerEnvironment context=null;
 	

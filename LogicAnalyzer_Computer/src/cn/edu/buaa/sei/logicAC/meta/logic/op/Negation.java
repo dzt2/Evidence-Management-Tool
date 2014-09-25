@@ -12,6 +12,7 @@ import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
 public interface Negation extends LogicOperator,UnaryOperator{
 	/**
 	 * Set the only one operand in Negation.
+	 * @throws Exception 
 	 * */
-	public void setOperand(LogicFormulation operand);
+	public void setOperand(LogicFormulation operand) throws Exception;
 }
