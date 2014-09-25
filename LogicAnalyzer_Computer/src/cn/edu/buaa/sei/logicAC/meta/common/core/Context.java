@@ -1,5 +1,7 @@
 package cn.edu.buaa.sei.logicAC.meta.common.core;
 
+import java.util.Iterator;
+
 /**
  * Context provide environment information for executing the computation of target computable.
  * */
@@ -27,5 +29,5 @@ public interface Context {
 	/**
 	 * Return all the computable in the context.
 	 * */
-	public Computable[] getComputableUnits();
+	public Iterator<ContextDependComputable> getComputableUnits();
 }

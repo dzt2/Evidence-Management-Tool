@@ -8,8 +8,10 @@ import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
  * <b>[o1] func_name (x1,x2,...)</b><br>
  * */
 public interface NormativeParameterList extends Context{
+	public static final int MAX_ARGUMENTS = 128;
 	/**
-	 * Set the return variable.
+	 * Set the return variable.<br>
+	 * The output parameter could be null if nothing is going to be returned.
 	 * */
 	public void setOutputParameter(Variable parameter);
 	/**
