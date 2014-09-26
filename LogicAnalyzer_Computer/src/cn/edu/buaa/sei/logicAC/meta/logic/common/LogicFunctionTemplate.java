@@ -1,6 +1,4 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.common;
-
-import cn.edu.buaa.sei.logicAC.meta.common.context.NormativeParameterList;
 import cn.edu.buaa.sei.logicAC.meta.common.function.FunctionTemplate;
 
 /**
@@ -13,8 +11,8 @@ public interface LogicFunctionTemplate extends FunctionTemplate{
 	/**
 	 * Set the parameter list of function. {must be normative}
 	 * @exception Exception plist==null
-	 * @exception Exception plist not instance of NormativeParameterList
+	 * @exception Exception plist not instance of LogicParameterList
 	 * @exception Exception plist.out is not BooleanVariable
 	 * */
-	public void setParameters(NormativeParameterList plist) throws Exception;
+	public void setParameters(LogicParameterList plist) throws Exception;
 }
