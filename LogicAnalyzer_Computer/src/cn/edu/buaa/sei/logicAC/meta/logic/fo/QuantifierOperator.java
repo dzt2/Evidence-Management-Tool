@@ -14,4 +14,13 @@ public interface QuantifierOperator extends BinaryOperator{
 	 * @exception Exception scope ==null
 	 * */
 	public void setOperands(DiscourseDomain domain,LogicFormulation scope) throws Exception;
+	
+	/**
+	 * Return the domain of the quantifier
+	 * */
+	public DiscourseDomain getDomain();
+	/**
+	 * Return the scope of the quantifier
+	 * */
+	public LogicFormulation getScope();
 }
