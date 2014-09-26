@@ -14,4 +14,12 @@ public interface BinaryOperator extends FixedOperator{
 	 * @exception Exception left==null || right==null
 	 * */
 	public void setOperands(Computable left,Computable right) throws Exception;
+	/**
+	 * Return the left operand in the operator
+	 * */
+	public Computable getLeft();
+	/**
+	 * Return the right operand in the operator
+	 * */
+	public Computable getRight();
 }

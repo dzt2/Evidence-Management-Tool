@@ -1,8 +1,6 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.op;
 
-import cn.edu.buaa.sei.logicAC.meta.common.expr.BinaryOperator;
-import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFormulation;
-import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
+import cn.edu.buaa.sei.logicAC.meta.logic.common.BinaryLogicOperator;
 
 /**
  * <b>X <--> Y</b><br>
@@ -10,9 +8,5 @@ import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
  * Equivalence is BinaryOperator with two operands: left & right
  * 
  * */
-public interface Equivalence extends LogicOperator,BinaryOperator{
-	/**
-	 * Set the both operands in Equivalence.
-	 * */
-	public void setOperands(LogicFormulation left,LogicFormulation right) throws Exception;
+public interface Equivalence extends BinaryLogicOperator{
 }

@@ -1,17 +1,20 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.op;
 
-import cn.edu.buaa.sei.logicAC.meta.common.expr.BinaryOperator;
+import cn.edu.buaa.sei.logicAC.meta.logic.common.BinaryLogicOperator;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFormulation;
-import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
 
 /**
  * <b>X --> Y</b><br>
  * Implication is a BinaryOpeartor with both operands: precondition & conclusion<br>
  * Implication is a LogicOperator used in LogicExpression
  * */
-public interface Implication extends LogicOperator,BinaryOperator{
+public interface Implication extends BinaryLogicOperator{
 	/**
-	 * Set the both operands in Implication.
+	 * Return the precondition of the implication operator
 	 * */
-	public void setOperands(LogicFormulation precondition,LogicFormulation conclusion) throws Exception;
+	public LogicFormulation getPrecondition();
+	/**
+	 * Return the conclusion of the implication operator
+	 * */
+	public LogicFormulation getConclusion();
 }

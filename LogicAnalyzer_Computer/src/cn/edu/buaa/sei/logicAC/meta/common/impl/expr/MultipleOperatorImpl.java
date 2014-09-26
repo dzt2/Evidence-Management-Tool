@@ -3,7 +3,7 @@ package cn.edu.buaa.sei.logicAC.meta.common.impl.expr;
 import cn.edu.buaa.sei.logicAC.meta.common.core.Computable;
 import cn.edu.buaa.sei.logicAC.meta.common.expr.MultipleOperator;
 
-public class MultipleOperatorImpl extends FixedOperatorImpl implements MultipleOperator{
+public abstract class MultipleOperatorImpl extends FixedOperatorImpl implements MultipleOperator{
 
 	MultipleOperatorImpl(int dimension) throws Exception {super(dimension);}
 

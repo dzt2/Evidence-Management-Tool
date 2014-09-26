@@ -12,4 +12,8 @@ public interface UnaryOperator extends FixedOperator{
 	 * @exception Exception operand==null
 	 * */
 	public void setOperand(Computable operand) throws Exception;
+	/**
+	 * Return the only one operand in Unary Operator
+	 * */
+	public Computable getOperand();
 }
