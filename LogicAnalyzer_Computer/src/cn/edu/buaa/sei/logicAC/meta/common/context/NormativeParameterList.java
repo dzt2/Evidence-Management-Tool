@@ -1,13 +1,11 @@
 package cn.edu.buaa.sei.logicAC.meta.common.context;
-
-import cn.edu.buaa.sei.logicAC.meta.common.core.Context;
 import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
 
 /**
  * NormativeParameterList is normative parameter list, which contains exactly one output parameter (return).<br>
  * <b>[o1] func_name (x1,x2,...)</b><br>
  * */
-public interface NormativeParameterList extends Context{
+public interface NormativeParameterList extends ParameterList{
 	public static final int MAX_ARGUMENTS = 128;
 	/**
 	 * Set the return variable.<br>

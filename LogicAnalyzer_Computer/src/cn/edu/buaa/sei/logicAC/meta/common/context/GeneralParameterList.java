@@ -8,7 +8,7 @@ import cn.edu.buaa.sei.logicAC.meta.common.var.Parameter;
  * GeneralParameterList presents a general structure of parameter list as follow:<br>
  * <b>[o1,o2,...] func_name (x1,x2,...)</b>
  * */
-public interface GeneralParameterList {
+public interface GeneralParameterList extends ParameterList{
 	/**
 	 * Return the current length of Parameters in the list.
 	 * */

@@ -1,21 +1,15 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.fo;
-
-import cn.edu.buaa.sei.logicAC.meta.common.function.ContextDependFunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunction;
-import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunctionTemplate;
 
-public interface PredicateFunction extends LogicFunction,ContextDependFunction{
+public interface PredicateFunction extends LogicFunction{
 	/**
-	 * The template of LogicFunction must be LogicFunctionTemplate {as FunctionTemplate}
+	 * Return the context of the function is running
 	 * */
-	public LogicFunctionTemplate getTemplate();
+	public PredicateFunctionEnvironment getEnvironment();
 	/**
-	 * Set the context of the function [PredicateFunctionEnvironment]
-	 * @exception Exception context==null
+	 * Set another environment of the function to be executed.<br>
+	 * Environment defines the required values for function to exectute.
+	 * @exception Exception env == null
 	 * */
-	public void setContext(PredicateFunctionEnvironment context) throws Exception;
-	/**
-	 * Return the cotnext of function [PredicateFunctionEnvironment]
-	 * */
-	public PredicateFunctionEnvironment getContext();
+	public void setEnvironment(PredicateFunctionEnvironment env) throws Exception;
 }

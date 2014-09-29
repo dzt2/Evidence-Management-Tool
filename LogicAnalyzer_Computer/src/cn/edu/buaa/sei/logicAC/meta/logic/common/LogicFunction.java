@@ -1,5 +1,4 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.common;
-
 import cn.edu.buaa.sei.logicAC.meta.common.function.Function;
 
 /**
@@ -7,7 +6,8 @@ import cn.edu.buaa.sei.logicAC.meta.common.function.Function;
  * */
 public interface LogicFunction extends Function,LogicFormulation{
 	/**
-	 * The template of LogicFunction must be LogicFunctionTemplate {as FunctionTemplate}
+	 * Return the template of function as its declaration.<br>
+	 * FunctionTemplate defines the structure of function.
 	 * */
 	public LogicFunctionTemplate getTemplate();
 }

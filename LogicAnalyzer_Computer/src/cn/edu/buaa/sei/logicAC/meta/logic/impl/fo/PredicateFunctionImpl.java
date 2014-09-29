@@ -1,55 +1,36 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.impl.fo;
 
 import cn.edu.buaa.sei.logicAC.meta.common.context.RunnerEnvironment;
-import cn.edu.buaa.sei.logicAC.meta.common.core.Context;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunctionTemplate;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.PredicateFunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.PredicateFunctionEnvironment;
-import cn.edu.buaa.sei.logicAC.meta.logic.impl.common.LogicFormulationImpl;
+import cn.edu.buaa.sei.logicAC.meta.logic.impl.common.LogicFunctionImpl;
 
-public class PredicateFunctionImpl extends LogicFormulationImpl implements PredicateFunction{
-	LogicFunctionTemplate template;
-	PredicateFunctionEnvironment env;
-	
-	PredicateFunctionImpl(LogicFunctionTemplate template,PredicateFunctionEnvironment env) throws Exception{
-		super();
-		if(template==null)
-			throw new Exception("Null template is invalid");
-		this.template=template;
-		this.setContext(env);
+public class PredicateFunctionImpl extends LogicFunctionImpl implements PredicateFunction{
+
+	protected PredicateFunctionImpl(LogicFunctionTemplate template,
+			PredicateFunctionEnvironment env) throws Exception {
+		super(template, env);
+	}
+
+	@Override
+	public void setEnvironment(PredicateFunctionEnvironment env)
+			throws Exception {
+		if(env==null)
+			throw new Exception("Null environment is null invalid");
+		this.env=env;
 	}
 	
 	@Override
-	public LogicFunctionTemplate getTemplate() {return this.template;}
-
-	@Override
-	public void setContext(RunnerEnvironment context) throws Exception {
-		if(context==null)
-			throw new Exception("Null context is invalid");
-		if(!(context instanceof PredicateFunctionEnvironment))
-			throw new ClassCastException("Invalid class cast from "
-		+context.getClass().getName()+" to PredicateFunctionEnvironment");
-		this.env=(PredicateFunctionEnvironment) context;
+	public void setEnvironment(RunnerEnvironment env)
+			throws Exception {
+		if(env==null)
+			throw new Exception("Null environment is null invalid");
+		if(!(env instanceof PredicateFunctionEnvironment))
+			throw new ClassCastException("Invalid environment type: "+env.getClass().getName());
+		this.env=env;
 	}
-
-	@Override
-	public void setContext(Context context) throws Exception {
-		if(context==null)
-			throw new Exception("Null context is invalid");
-		if(!(context instanceof PredicateFunctionEnvironment))
-			throw new ClassCastException("Invalid class cast from "
-		+context.getClass().getName()+" to PredicateFunctionEnvironment");
-		this.env=(PredicateFunctionEnvironment) context;
-	}
-
-	@Override
-	public void setContext(PredicateFunctionEnvironment context) throws Exception {
-		if(context==null)
-			throw new Exception("Null context is invalid");
-		this.env=context;
-	}
-
-	@Override
-	public PredicateFunctionEnvironment getContext() {return this.env;}
+	
+	public PredicateFunctionEnvironment getEnvironment(){return (PredicateFunctionEnvironment) this.env;}
 
 }

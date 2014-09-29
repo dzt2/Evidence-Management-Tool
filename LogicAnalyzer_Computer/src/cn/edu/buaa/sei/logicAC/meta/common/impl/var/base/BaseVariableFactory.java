@@ -17,7 +17,7 @@ public class BaseVariableFactory {
 	public static final int DATE = 10;
 	public static final int DYNAMIC = 11;
 	
-	public Variable createVariable(String name,int type) throws Exception{
+	public static Variable createVariable(String name,int type) throws Exception{
 		if(name==null)
 			throw new NullPointerException("Null name cannot be used for constructing variable");
 		switch(type){

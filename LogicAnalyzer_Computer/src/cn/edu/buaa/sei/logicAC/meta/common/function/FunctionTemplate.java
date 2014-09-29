@@ -1,7 +1,7 @@
 package cn.edu.buaa.sei.logicAC.meta.common.function;
 
-import cn.edu.buaa.sei.logicAC.meta.common.context.ParameterList;
 import cn.edu.buaa.sei.logicAC.meta.common.core.Template;
+import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
 
 /**
  * FunctionTemplate define the structure of declaration of function as:<br>
@@ -14,12 +14,17 @@ public interface FunctionTemplate extends Template{
 	 * Return the function name*/
 	public String getName();
 	/**
-	 * Return the parameter list of the function, including output parameter.
+	 * Return the output Variable
 	 * */
-	public ParameterList getParameters();
+	public Variable getOutputVariable();
 	/**
-	 * Set the parameter list of function.
-	 * @exception Exception plist==null
+	 * Return the arguments of input
 	 * */
-	public void setParameters(ParameterList plist) throws Exception;
+	public Variable[] getArguments();
+	/**
+	 * Set the input Arguments. Null arguments present no arguments
+	 * @author dzt2
+	 * @exception Exception arguments[i] == null
+	 * */
+	public void setArguments(Variable[] arguments) throws Exception;
 }
