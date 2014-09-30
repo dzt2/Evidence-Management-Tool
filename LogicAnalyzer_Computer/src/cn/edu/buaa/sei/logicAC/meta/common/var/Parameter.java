@@ -25,6 +25,8 @@ public interface Parameter extends Variable{
 	 * */
 	public ParameterType getParameterType();
 	/**
-	 * Set the parameter type of the parameter*/
-	public void setParameterType(ParameterType type);
+	 * Set the parameter type of the parameter.
+	 * 
+	 * @throws Exception type==null */
+	public void setParameterType(ParameterType type) throws Exception;
 }

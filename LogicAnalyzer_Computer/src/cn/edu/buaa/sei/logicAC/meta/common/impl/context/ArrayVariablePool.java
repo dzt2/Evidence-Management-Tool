@@ -81,14 +81,14 @@ public class ArrayVariablePool extends PackagedContext implements VariablePool{
 	@Override
 	public Iterator<Variable> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new _VIter();
 	}
 	
 	class _VIter implements Iterator<Variable>{
 		int cur=0;
 
 		@Override
-		public boolean hasNext() {return this.cur>=len;}
+		public boolean hasNext() {return this.cur<len;}
 
 		@Override
 		public Variable next() {

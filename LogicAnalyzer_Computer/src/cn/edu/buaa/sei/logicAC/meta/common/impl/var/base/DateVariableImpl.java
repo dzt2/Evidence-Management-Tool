@@ -1,6 +1,6 @@
 package cn.edu.buaa.sei.logicAC.meta.common.impl.var.base;
 
-import java.sql.Date;
+import java.util.Date;
 
 import cn.edu.buaa.sei.logicAC.meta.common.impl.var.TypedVariableImpl;
 import cn.edu.buaa.sei.logicAC.meta.common.var.base.DateVariable;
