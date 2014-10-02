@@ -20,28 +20,21 @@ public class LogicFunctionTemplateImpl implements LogicFunctionTemplate{
 	
 	@Override
 	public String getName() {return this.name;}
-
 	@Override
-	public BooleanVariable getReturnVariable() {return this.return_var;}
-	@Override
-	public Variable getOutputVariable() {return this.return_var;}
+	public BooleanVariable getOutputVariable() {return this.return_var;}
 	
 	@Override
 	public Variable[] getArguments() {return this.arguments;}
 
 	@Override
 	public void setArguments(Variable[] arguments) throws Exception {
-		if(arguments==null){
-			this.arguments=arguments;
-		}
-		else{
+		if(arguments!=null){
 			for(int i=0;i<arguments.length;i++){
-				if(arguments[i]!=null)
-					this.arguments[i]=arguments[i];
-				else throw new Exception("arguments["+i+"] is null invalid");
+				if(arguments[i]==null)
+					throw new Exception("arguments["+i+"] is null invalid");
 			}
 		}
-		
+		this.arguments=arguments;
 	}
 
 

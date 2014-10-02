@@ -6,5 +6,5 @@ public interface LogicFunctionTemplate extends FunctionTemplate{
 	/**
 	 * Return the Boolean Return Variable
 	 * */
-	public BooleanVariable getReturnVariable();
+	public BooleanVariable getOutputVariable();
 }
