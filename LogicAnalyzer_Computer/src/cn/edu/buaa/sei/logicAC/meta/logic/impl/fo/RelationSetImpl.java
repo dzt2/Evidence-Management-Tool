@@ -9,44 +9,59 @@ public class RelationSetImpl implements RelationSet{
 	
 	Map<String,Relation> map = new HashMap<String,Relation>();
 	
-	private String getKey(Object src,Object trg){
-		if(src==null||trg==null)return null;
-		return src.hashCode()+"_"+trg.hashCode();
+	static class Relation {
+		Object[] elements;
+		public Relation(Object[] elements) throws Exception{
+			if(elements==null)throw new Exception("Null elements is invalid");
+			this.elements=elements;
+		}
+		public Object[] getElements(){return this.elements;}
+		public int getDimension(){return this.elements.length;}
+	}
+
+	private String getID(Object[] elements){
+		if(elements==null)return null;
+		StringBuilder code = new StringBuilder();
+		for(int i=0;i<elements.length;i++){
+			code.append(elements[i].hashCode());
+			if(i!=elements.length-1)
+				code.append("-");
+		}
+		return code.toString();
 	}
 	
 	@Override
-	public boolean containRelation(Object src, Object trg) {return this.map.containsKey(this.getKey(src,trg));}
-
-	@Override
-	public void addRelation(Object src, Object trg) throws Exception {
-		if(src==null||trg==null)
-			throw new NullPointerException("Null nodes are invalid");
-		String id = this.getKey(src, trg);
-		if(this.map.containsKey(id))
-			throw new Exception("Relation "+id+" is invalid to be put");
-		this.map.put(id, new Relation(src,trg));
+	public boolean containRelation(Object[] elements) {
+		String id = this.getID(elements);
+		if(id==null||!this.map.containsKey(id))
+			return false;
+		else return true;
 	}
-
 	@Override
-	public void removeRelation(Object src, Object trg) throws Exception {
-		if(src==null||trg==null)
-			throw new NullPointerException("Null nodes are invalid");
-		String id = this.getKey(src, trg);
+	public void addRelation(Object[] elements) throws Exception {
+		String id = this.getID(elements);
+		
+		if(id==null)
+			throw new Exception("Null Elements are invalid");
+		if(this.map.containsKey(id))
+			throw new Exception("Relation has been added");
+		
+		this.map.put(id, new Relation(elements));
+	}
+	@Override
+	public void removeRelation(Object[] elements) throws Exception {
+		String id = this.getID(elements);
+		
+		if(id==null)
+			throw new Exception("Null Elements are invalid");
 		if(!this.map.containsKey(id))
-			throw new Exception("Undefined relation: "+id);
+			throw new Exception("Relation has not been added");
+		
 		this.map.remove(id);
 	}
-	
-	static class Relation {
-		Object src,trg;
-		Relation(Object src,Object trg) throws Exception {
-			if(src==null||trg==null)
-				throw new NullPointerException("Null nodes are invalid");
-			this.src=src; this.trg=trg;
-		}
-		Object getSource(){return this.src;}
-		Object getTarget(){return this.trg;}
-	}
+
+	@Override
+	public void clearRelations() {this.map.clear();}
 	
 	
 }
