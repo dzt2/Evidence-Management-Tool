@@ -21,6 +21,8 @@ import cn.edu.buaa.sei.logicAC.meta.logic.fo.PredicateFunctionEnvironment;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.Quantifier;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.QuantifierOperator;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.RangeQuantifier;
+import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSet;
+import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSetVariable;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.Universal;
 import cn.edu.buaa.sei.logicAC.meta.logic.op.Conjunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.op.Disjunction;
@@ -31,12 +33,49 @@ import cn.edu.buaa.sei.logicAC.meta.logic.op.Negation;
 public class LogicComputerUnit_R implements LogicComputerUnit{
 	Set<LogicFormulation> records = new HashSet<LogicFormulation>();
 	
-	public LogicComputerUnit_R(){records.clear();}
+	LogicComputerUnit_R(){records.clear();}
 
 	@Override
 	public Compute_State compute(LogicFormulation x) {
 		this.records.clear();
+		this.clearLogicFormulation(x);
+		this.records.clear();
 		return this.computeLogicFormulation(x);
+	}
+	
+	void clearLogicFormulation(LogicFormulation x){
+		if(x==null||this.records.contains(x))return;
+		
+		this.records.add(x);
+		
+		if(x instanceof AtomicLogicFormulation){return;}
+		else if(x instanceof LogicExpression){
+			x.setResult(null);
+			LogicOperator op = ((LogicExpression) x).getOperator();
+			
+			if(op==null);
+			if(op instanceof Conjunction||op instanceof Disjunction){
+				LogicFormulation[] operands = op.getOperands();
+				for(int i=0;i<operands.length;i++)
+					this.clearLogicFormulation(operands[i]);
+			}
+			else if(op instanceof Negation)this.clearLogicFormulation(((Negation) op).getOperand());
+			else if(op instanceof Implication){
+				this.clearLogicFormulation(((Implication) op).getPrecondition());
+				this.clearLogicFormulation(((Implication) op).getConclusion());
+			}
+			else if(op instanceof Equivalence){
+				this.clearLogicFormulation(((Equivalence) op).getLeft());
+				this.clearLogicFormulation(((Equivalence) op).getRight());
+			}
+			else if(op instanceof QuantifierOperator){
+				this.clearLogicFormulation(((QuantifierOperator) op).getScope());
+			}
+		}
+		else if(x instanceof LogicFunction){
+			x.setResult(null);
+		}
+		
 	}
 	
 	Compute_State computeLogicFormulation(LogicFormulation x){
@@ -58,17 +97,20 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 			else if(op instanceof Negation)return this.computeNegation((LogicExpression) x);
 			else if(op instanceof Implication)return this.computeImplication((LogicExpression) x);
 			else if(op instanceof Equivalence)return this.computeEquivalence((LogicExpression) x);
-			else if(op instanceof QuantifierOperator){
-				if(op instanceof Universal){return this.computeUniversal((Quantifier) x);}
-				else if(op instanceof Existential){return this.computeExistential((Quantifier) x);}
-				else if(op instanceof AtLeastQuantifier){return this.computeAtLeast((Quantifier) x);}
-				else if(op instanceof AtMostQuantifier){return this.computeAtMost((Quantifier) x);}
-				else if(op instanceof RangeQuantifier){return this.computeRange((Quantifier) x);}
-				else return Compute_State.UNKNOWN;
-			}
+			else return Compute_State.UNKNOWN;
+		}
+		else if(x instanceof Quantifier){
+			QuantifierOperator op = ((Quantifier) x).getOperator();
+			if(op instanceof Universal){return this.computeUniversal((Quantifier) x);}
+			else if(op instanceof Existential){return this.computeExistential((Quantifier) x);}
+			else if(op instanceof AtLeastQuantifier){return this.computeAtLeast((Quantifier) x);}
+			else if(op instanceof AtMostQuantifier){return this.computeAtMost((Quantifier) x);}
+			else if(op instanceof RangeQuantifier){return this.computeRange((Quantifier) x);}
+			else return Compute_State.UNKNOWN;
 		}
 		else if(x instanceof LogicFunction){
-			
+			if(x instanceof PredicateFunction){return this.computePredicate((PredicateFunction) x);}
+			else return Compute_State.UNKNOWN;
 		}
 		return Compute_State.UNKNOWN;
 	}
@@ -84,9 +126,10 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 		LogicFormulation child = op.getOperand();
 		if(child==null)return Compute_State.UNKNOWN;
 		
-		if(child.getResult()==null)this.computeLogicFormulation(child);
+		Compute_State state=Compute_State.NOT_READY;
+		if(child.getResult()==null)state=this.computeLogicFormulation(child);
 		
-		if(child.getResult()==null)return Compute_State.NOT_READY;
+		if(child.getResult()==null)return state;
 		else{
 			x.setResult(!child.getResult());
 			return Compute_State.COMPUTABLE;
@@ -101,15 +144,17 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 		
 		if(precondition==null||conclusion==null)return Compute_State.UNKNOWN;
 		
-		if(precondition.getResult()==null)this.computeLogicFormulation(precondition);
-		if(precondition.getResult()==null)return Compute_State.NOT_READY;
+		Compute_State state = Compute_State.NOT_READY;
+		if(precondition.getResult()==null)state=this.computeLogicFormulation(precondition);
+		if(precondition.getResult()==null)return state;
 		else if(precondition.getResult()==false){
 			x.setResult(true);
 			return Compute_State.COMPUTABLE;
 		}
 		else{
-			if(conclusion.getResult()==null)this.computeLogicFormulation(conclusion);
-			if(conclusion.getResult()==null)return Compute_State.NOT_READY;
+			state = Compute_State.NOT_READY;
+			if(conclusion.getResult()==null)state=this.computeLogicFormulation(conclusion);
+			if(conclusion.getResult()==null)return state;
 			else{
 				x.setResult(conclusion.getResult());
 				return Compute_State.COMPUTABLE;
@@ -125,9 +170,13 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 		
 		if(f1==null||f2==null)return Compute_State.UNKNOWN;
 		
-		if(f1.getResult()==null)this.computeLogicFormulation(f1);
-		if(f2.getResult()==null)this.computeLogicFormulation(f2);
-		if(f1.getResult()==null||f2.getResult()==null)return Compute_State.NOT_READY;
+		Compute_State state = Compute_State.NOT_READY;
+		if(f1.getResult()==null)state=this.computeLogicFormulation(f1);
+		if(f1.getResult()==null)return state;
+		
+		state = Compute_State.NOT_READY;
+		if(f2.getResult()==null)state=this.computeLogicFormulation(f2);
+		if(f1.getResult()==null||f2.getResult()==null)return state;
 		else{
 			x.setResult(f1.getResult()==f2.getResult());
 			return Compute_State.COMPUTABLE;
@@ -142,10 +191,11 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 		if(children==null)return Compute_State.UNKNOWN;
 		else{
 			boolean containNull = false;
-			for(int i=0;i<children.length;i++){
+			for(int i=0;i<op.getCurrentSize();i++){
 				LogicFormulation child = children[i];
 				
 				if(child==null)return Compute_State.UNKNOWN;
+				
 				if(child.getResult()==null)this.computeLogicFormulation(child);
 				if(child.getResult()==null){
 					containNull=true;continue;
@@ -164,7 +214,7 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 		}
 	}
 	Compute_State computeDisjunction(LogicExpression x){
-if(x==null)return Compute_State.UNKNOWN;
+		if(x==null)return Compute_State.UNKNOWN;
 		
 		Disjunction op = (Disjunction) x.getOperator();
 		LogicFormulation[] children = op.getOperands();
@@ -172,21 +222,22 @@ if(x==null)return Compute_State.UNKNOWN;
 		if(children==null)return Compute_State.UNKNOWN;
 		else{
 			boolean containNull = false;
-			for(int i=0;i<children.length;i++){
+			for(int i=0;i<op.getCurrentSize();i++){
 				LogicFormulation child = children[i];
 				if(child==null)return Compute_State.UNKNOWN;
-				else if(child.getResult()==null){
+				
+				if(child.getResult()==null)this.computeLogicFormulation(child);
+				if(child.getResult()==null){
 					containNull=true;
-					continue;
 				}
-				else if(child.getResult()==false){
-					x.setResult(false);
+				else if(child.getResult()==true){
+					x.setResult(true);
 					return Compute_State.COMPUTABLE;
 				}
 			}
 			
 			if(!containNull){
-				x.setResult(true);
+				x.setResult(false);
 				return Compute_State.COMPUTABLE;
 			}
 			else return Compute_State.NOT_READY;
@@ -204,7 +255,7 @@ if(x==null)return Compute_State.UNKNOWN;
 		if(domain==null||scope==null)return Compute_State.UNKNOWN;
 		
 		try {
-			Set<?> values = domain.read();
+			Set<Object> values = domain.read();
 			boolean containNull = false;
 			for(Object val:values){
 				domain.getIterator().assign(val);
@@ -219,6 +270,7 @@ if(x==null)return Compute_State.UNKNOWN;
 			}
 			
 			if(!containNull){
+				//System.out.println("INININ");
 				q.setResult(true);
 				return Compute_State.COMPUTABLE;
 			}
@@ -229,6 +281,7 @@ if(x==null)return Compute_State.UNKNOWN;
 		
 	}
 	Compute_State computeExistential(Quantifier q){
+		
 		if(q==null)return Compute_State.UNKNOWN;
 		
 		Existential op = (Existential) q.getOperator();
@@ -239,7 +292,7 @@ if(x==null)return Compute_State.UNKNOWN;
 		if(domain==null||scope==null)return Compute_State.UNKNOWN;
 		
 		try {
-			Set<?> values = domain.read();
+			Set<Object> values = domain.read();
 			boolean containNull = false;
 			for(Object val:values){
 				domain.getIterator().assign(val);
@@ -369,6 +422,7 @@ if(x==null)return Compute_State.UNKNOWN;
 				
 				records.remove(scope);
 				this.computeLogicFormulation(scope);
+				
 				if(scope.getResult()==null)null_count++;
 				else if(scope.getResult()==true){
 					count++;
@@ -403,6 +457,29 @@ if(x==null)return Compute_State.UNKNOWN;
 		if(env==null||template==null)return Compute_State.UNKNOWN;
 		
 		Variable[] arguments = template.getArguments();
+		if(arguments==null||arguments.length<=0)return Compute_State.UNKNOWN;
+		RelationSetVariable var = env.getRelationSetVariable();
+		if(var==null)return Compute_State.UNKNOWN;
 		
+		RelationSet set = null;
+		try {
+			set = var.read();
+		} catch (Exception e1) {
+			return Compute_State.NOT_READY;
+		}
+		
+		if(set==null)return Compute_State.NOT_READY;
+		
+		Object[] values = new Object[arguments.length];
+		for(int i=0;i<arguments.length;i++){
+			try {
+				values[i]=arguments[i].read();
+			} catch (Exception e) {
+				return Compute_State.NOT_READY;
+			}
+		}
+		
+		x.setResult(set.containRelation(values));
+		return Compute_State.COMPUTABLE;
 	}
 }

@@ -1,5 +1,8 @@
 package cn.edu.buaa.sei.logicAC.meta.test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicExpression;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFormulation;
@@ -7,6 +10,7 @@ import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunctionTemplate;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicVariable;
+import cn.edu.buaa.sei.logicAC.meta.logic.computer.SequenceLogicComputer;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.AtLeastQuantifier;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.AtMostQuantifier;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.DiscourseDomain;
@@ -16,8 +20,11 @@ import cn.edu.buaa.sei.logicAC.meta.logic.fo.PredicateFunctionEnvironment;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.Quantifier;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.QuantifierOperator;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.RangeQuantifier;
+import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSet;
+import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSetVariable;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.Universal;
 import cn.edu.buaa.sei.logicAC.meta.logic.impl.common.CommonLogicFactory;
+import cn.edu.buaa.sei.logicAC.meta.logic.impl.computer.LogicComputerFactory;
 import cn.edu.buaa.sei.logicAC.meta.logic.impl.fo.FirstOrderFactory;
 import cn.edu.buaa.sei.logicAC.meta.logic.op.Conjunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.op.Disjunction;
@@ -32,6 +39,13 @@ public class TestFo {
 		try {
 			LogicFormulation x = create2();
 			System.out.println(printLogicFormulation(x));
+			
+			SequenceLogicComputer computer = LogicComputerFactory.createSequenceLogicComputer();
+			computer.setTasks(new LogicFormulation[]{x});
+			LogicFormulation y = computer.executeOne();
+			
+			System.out.println("Answer["+y.hashCode()+"]: "+y.getResult());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,6 +73,11 @@ public class TestFo {
 		and_op.addOperand(b);
 		and_op.addOperand(or_c_d);
 		
+		a.assign(true);
+		b.assign(true);
+		d.assign(true);
+		c.assign(false);
+		
 		return and_a_b;
 		
 	}
@@ -74,6 +93,23 @@ public class TestFo {
 		Quantifier L = FirstOrderFactory.createExistential(LLR, trace);
 		Quantifier P = FirstOrderFactory.createUniversal(HLR, L);
 		
+		Set<Object> hlrs = new HashSet<Object>();HLR.assign(hlrs);
+		Set<Object> llrs = new HashSet<Object>();LLR.assign(llrs);
+		
+		hlrs.add("h1");hlrs.add("h2");hlrs.add("h3");hlrs.add("h4");
+		llrs.add("l1");llrs.add("l2");llrs.add("l3");llrs.add("l4");llrs.add("l5");
+		
+		RelationSetVariable var = trace.getEnvironment().getRelationSetVariable();
+		RelationSet rset = FirstOrderFactory.createRelationSet();
+		
+		rset.addRelation(new Object[]{"h1","l1"});
+		rset.addRelation(new Object[]{"h1","l2"});
+		rset.addRelation(new Object[]{"h2","l3"});
+		//rset.addRelation(new Object[]{"h3","l4"});
+		rset.addRelation(new Object[]{"h3","l5"});
+		rset.addRelation(new Object[]{"h4","l5"});
+		
+		var.assign(rset);
 		return P;
 	}
 	

@@ -10,6 +10,7 @@ public class SetVariableImpl extends TypedVariableImpl implements SetVariable{
 	protected SetVariableImpl(String name) throws Exception {super(name, Set.class);}
 
 	@Override
-	public void assign(Set<?> val) throws Exception {super.assign(val);}
-	public Set<?> read() throws Exception{return (Set<?>) super.read();}
+	public void assign(Set<Object> val) throws Exception {super.assign(val);}
+	@SuppressWarnings("unchecked")
+	public Set<Object> read() throws Exception{return (Set<Object>) super.read();}
 }

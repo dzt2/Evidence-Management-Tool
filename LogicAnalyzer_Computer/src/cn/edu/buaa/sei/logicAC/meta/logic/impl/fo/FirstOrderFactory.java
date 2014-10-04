@@ -51,5 +51,7 @@ public class FirstOrderFactory extends CommonLogicFactory{
 		if(value!=null)var.assign(value);
 		return env;
 	}
+	public static RelationSet createRelationSet(){return new RelationSetImpl();}
+	
 	
 }
