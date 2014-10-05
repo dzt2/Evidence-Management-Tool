@@ -10,7 +10,6 @@ import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicFunctionTemplate;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicOperator;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicVariable;
-import cn.edu.buaa.sei.logicAC.meta.logic.computer.SequenceLogicComputer;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.AtLeastQuantifier;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.AtMostQuantifier;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.DiscourseDomain;
@@ -24,7 +23,6 @@ import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSet;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSetVariable;
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.Universal;
 import cn.edu.buaa.sei.logicAC.meta.logic.impl.common.CommonLogicFactory;
-import cn.edu.buaa.sei.logicAC.meta.logic.impl.computer.LogicComputerFactory;
 import cn.edu.buaa.sei.logicAC.meta.logic.impl.fo.FirstOrderFactory;
 import cn.edu.buaa.sei.logicAC.meta.logic.op.Conjunction;
 import cn.edu.buaa.sei.logicAC.meta.logic.op.Disjunction;
@@ -36,18 +34,46 @@ public class TestFo {
 
 	public static void main(String[] args) {
 		try {
-			LogicFormulation x = create2();
+			LogicFormulation x = create3();
+			
 			System.out.println(printLogicFormulation(x));
 			
-			SequenceLogicComputer computer = LogicComputerFactory.createSequenceLogicComputer();
+			/*SequenceLogicComputer computer = LogicComputerFactory.createSequenceLogicComputer();
 			computer.setTasks(new LogicFormulation[]{x});
-			LogicFormulation y = computer.executeOne();
 			
-			System.out.println("Answer["+y.hashCode()+"]: "+y.getResult());
+			while(computer.hasNext()){
+				LogicFormulation y = computer.executeOne();
+				System.out.println("Ans["+y.hashCode()+"]: "+y.getResult());
+			}*/
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static LogicFormulation create3() throws Exception{
+		DiscourseDomain HLR = FirstOrderFactory.createDiscourseDomain("HLR");
+		
+		LogicFunctionTemplate accurateTemp = FirstOrderFactory.createLogicFunctionTemplate("accurate", new Variable[]{HLR.getIterator()});
+		LogicFunctionTemplate detailedTemp = FirstOrderFactory.createLogicFunctionTemplate("detailed", new Variable[]{HLR.getIterator()});
+		LogicFunctionTemplate unambiguousTemp = FirstOrderFactory.createLogicFunctionTemplate("unambiguous", new Variable[]{HLR.getIterator()});
+		
+		PredicateFunctionEnvironment env = FirstOrderFactory.createPredicateEnvironment(null);
+		
+		PredicateFunction accurate = FirstOrderFactory.createPredicate(accurateTemp, env);
+		PredicateFunction detailed = FirstOrderFactory.createPredicate(detailedTemp, env);
+		PredicateFunction unambiguous = FirstOrderFactory.createPredicate(unambiguousTemp, env);
+		
+		LogicExpression Lexpr = FirstOrderFactory.createConjunction();
+		Conjunction op = (Conjunction) Lexpr.getOperator();
+		op.addOperand(accurate);op.addOperand(detailed);op.addOperand(unambiguous);
+		
+		Quantifier x = FirstOrderFactory.createUniversal(HLR, Lexpr);
+		
+		
+		
+		return x;
+
 	}
 	
 	public static LogicFormulation create1() throws Exception{

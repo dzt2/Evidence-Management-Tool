@@ -2,7 +2,6 @@ package cn.edu.buaa.sei.logicAC.meta.logic.impl.computer;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import cn.edu.buaa.sei.logicAC.meta.common.var.Variable;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.AtomicLogicFormulation;
 import cn.edu.buaa.sei.logicAC.meta.logic.common.LogicExpression;
@@ -299,6 +298,7 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 				
 				records.remove(scope);
 				this.computeLogicFormulation(scope);
+				
 				if(scope.getResult()==null)containNull=true;
 				else if(scope.getResult()==true){
 					q.setResult(true);
@@ -435,14 +435,14 @@ public class LogicComputerUnit_R implements LogicComputerUnit{
 				return Compute_State.COMPUTABLE;
 			}
 			else{
-				if(count>op.getUpperBound()||count+null_count<op.getLowerBound())
-					return Compute_State.NOT_READY;
-				else{
+				if(count>op.getUpperBound()||count+null_count<op.getLowerBound()){
 					x.setResult(false);
 					return Compute_State.COMPUTABLE;
 				}
+				else{
+					return Compute_State.NOT_READY;
+				}
 			}
-			
 		} catch (Exception e) {
 			return Compute_State.NOT_READY;
 		}
