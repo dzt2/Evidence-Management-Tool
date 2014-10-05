@@ -37,5 +37,19 @@ public class LogicFunctionTemplateImpl implements LogicFunctionTemplate{
 		this.arguments=arguments;
 	}
 
+	public String toString(){
+		StringBuilder code = new StringBuilder();
+		
+		code.append("Boolean ").append(this.name).append("(");
+		if(this.arguments!=null){
+			for(int i=0;i<this.arguments.length;i++){
+				code.append(this.arguments[i].getName());
+				if(i!=this.arguments.length-1)code.append(",");
+			}
+		}
+		code.append(")");
+		
+		return code.toString();
+	}
 
 }

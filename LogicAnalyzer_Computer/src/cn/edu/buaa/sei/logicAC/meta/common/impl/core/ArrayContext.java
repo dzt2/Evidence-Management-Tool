@@ -26,6 +26,12 @@ public class ArrayContext implements Context{
 		return false;
 	}
 
+	/**
+	 * Add computable that depends on context into the context so that would creating a bi-direction association<br>
+	 * and remove the original context from the computable.
+	 * @exception NullPointerException unit==null
+	 * @exception Exception out of size [be set during constructor]
+	 * */
 	@Override
 	public void addComputableUnit(ContextDependComputable unit)
 			throws Exception {

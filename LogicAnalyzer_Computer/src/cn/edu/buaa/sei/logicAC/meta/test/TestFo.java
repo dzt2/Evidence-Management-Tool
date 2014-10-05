@@ -35,7 +35,6 @@ import cn.edu.buaa.sei.logicAC.meta.logic.op.Negation;
 public class TestFo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			LogicFormulation x = create2();
 			System.out.println(printLogicFormulation(x));
@@ -47,7 +46,6 @@ public class TestFo {
 			System.out.println("Answer["+y.hashCode()+"]: "+y.getResult());
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -105,9 +103,10 @@ public class TestFo {
 		rset.addRelation(new Object[]{"h1","l1"});
 		rset.addRelation(new Object[]{"h1","l2"});
 		rset.addRelation(new Object[]{"h2","l3"});
-		//rset.addRelation(new Object[]{"h3","l4"});
-		rset.addRelation(new Object[]{"h3","l5"});
+		rset.addRelation(new Object[]{"h3","l4"});
+		//rset.addRelation(new Object[]{"h3","l5"});
 		rset.addRelation(new Object[]{"h4","l5"});
+		rset.addRelation(new Object[]{1,"st"});
 		
 		var.assign(rset);
 		return P;
@@ -135,7 +134,6 @@ public class TestFo {
 			if(i!=arguments.length-1)
 				code.append(", ");
 		}
-		
 		code.append(")");
 		
 		return code.toString();

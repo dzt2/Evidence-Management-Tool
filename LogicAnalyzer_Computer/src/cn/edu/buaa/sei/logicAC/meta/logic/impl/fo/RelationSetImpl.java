@@ -1,15 +1,14 @@
 package cn.edu.buaa.sei.logicAC.meta.logic.impl.fo;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import cn.edu.buaa.sei.logicAC.meta.logic.fo.RelationSet;
 
 public class RelationSetImpl implements RelationSet{
 	
-	Map<String,Relation> map = new HashMap<String,Relation>();
-	
-	static class Relation {
+	//Map<String,Relation> map = new HashMap<String,Relation>();
+	Set<String> records = new HashSet<String>();
+	/*static class Relation {
 		Object[] elements;
 		public Relation(Object[] elements) throws Exception{
 			if(elements==null)throw new Exception("Null elements is invalid");
@@ -17,7 +16,7 @@ public class RelationSetImpl implements RelationSet{
 		}
 		public Object[] getElements(){return this.elements;}
 		public int getDimension(){return this.elements.length;}
-	}
+	}*/
 
 	private String getID(Object[] elements){
 		if(elements==null)return null;
@@ -33,7 +32,7 @@ public class RelationSetImpl implements RelationSet{
 	@Override
 	public boolean containRelation(Object[] elements) {
 		String id = this.getID(elements);
-		if(id==null||!this.map.containsKey(id))
+		if(id==null||!this.records.contains(id))
 			return false;
 		else return true;
 	}
@@ -43,10 +42,10 @@ public class RelationSetImpl implements RelationSet{
 		
 		if(id==null)
 			throw new Exception("Null Elements are invalid");
-		if(this.map.containsKey(id))
+		if(this.records.contains(id))
 			throw new Exception("Relation has been added");
 		
-		this.map.put(id, new Relation(elements));
+		this.records.add(id);
 	}
 	@Override
 	public void removeRelation(Object[] elements) throws Exception {
@@ -54,11 +53,11 @@ public class RelationSetImpl implements RelationSet{
 		
 		if(id==null)
 			throw new Exception("Null Elements are invalid");
-		if(!this.map.containsKey(id))
+		if(!this.records.contains(id))
 			throw new Exception("Relation has not been added");
 		
-		this.map.remove(id);
+		this.records.remove(id);
 	}
 	@Override
-	public void clearRelations() {this.map.clear();}
+	public void clearRelations() {this.records.clear();}
 }
