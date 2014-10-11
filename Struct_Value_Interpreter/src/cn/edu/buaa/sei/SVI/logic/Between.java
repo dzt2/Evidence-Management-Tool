@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.SVI.exLogic;
+package cn.edu.buaa.sei.SVI.logic;
 
 public interface Between extends QuantifierOperator{
 	/**

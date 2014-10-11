@@ -27,7 +27,6 @@ public interface FunctionTemplate extends CompositeStruct{
 	 * 1. If arguments[i] is Referencer, then it should be assigned with a Variable so to refer to it.<br>
 	 * 2. If values[i] is Struct, then it should be interpreted at first and assigned the result to the arguments[i].<br>
 	 * 3. The values[i] or its interpretation result should be compatible with arguments[i] if it is a TypedVariable.<br>
-	 * @exception Exception values==null
 	 * @exception Exception values.length!=arguments.length
 	 * @exception Exception !arguments[i].compatible(values[i])
 	 * */

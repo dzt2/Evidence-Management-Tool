@@ -1,4 +1,4 @@
-package cn.edu.buaa.sei.SVI.exLogic;
+package cn.edu.buaa.sei.SVI.logic;
 
 import cn.edu.buaa.sei.SVI.core.expression.Expression;
 import cn.edu.buaa.sei.SVI.core.expression.Operator;

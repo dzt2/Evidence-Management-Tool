@@ -1,13 +1,13 @@
-package cn.edu.buaa.sei.SVI.exLogic;
+package cn.edu.buaa.sei.SVI.logic;
 
 import cn.edu.buaa.sei.SVI.core.expression.BinaryOperator;
 import cn.edu.buaa.sei.SVI.core.extend.LogicStruct;
 
 /**
- * Implication is both <i>LogicOperator</i> and <i>BinaryOperator</i>.<br>
- * Implication only receives LogicStruct as its operands and children.
+ * Equivalence is both <i>LogicOperator</i> and <i>BinaryOperator</i>.<br>
+ * Equivalence only receives LogicStruct as its operands and children.
  * */
-public interface Implication extends LogicOperator,BinaryOperator{
+public interface Equivalence extends LogicOperator,BinaryOperator{
 	/**
 	 * Return the left operand.
 	 * */

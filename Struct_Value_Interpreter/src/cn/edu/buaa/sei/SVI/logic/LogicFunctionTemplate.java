@@ -1,17 +1,16 @@
-package cn.edu.buaa.sei.SVI.exLogic;
+package cn.edu.buaa.sei.SVI.logic;
 
 import cn.edu.buaa.sei.SVI.core.function.FunctionTemplate;
-import cn.edu.buaa.sei.SVI.core.variable.baseType.BooleanVariable;
 
 /**
  * LogicFunctionTemplate is the template of LogicFunction. Its owner could only be LogicFunction.<br>
- * LogicFunction return Boolean Variable as its output.
+ * LogicFunction return Logic Variable {Boolean} as its output.
  * */
 public interface LogicFunctionTemplate extends CompositeLogicStruct,FunctionTemplate{
 	/**
 	 * Return the output boolean Argument of the Function {with name "out"}
 	 * */
-	public BooleanVariable getOutput();
+	public LogicVariable getOutput();
 	/**
 	 * Return the Function it is owned.
 	 * */

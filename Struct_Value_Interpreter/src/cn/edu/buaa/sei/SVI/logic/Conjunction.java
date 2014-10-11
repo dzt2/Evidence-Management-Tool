@@ -1,9 +1,13 @@
-package cn.edu.buaa.sei.SVI.exLogic;
+package cn.edu.buaa.sei.SVI.logic;
 
 import cn.edu.buaa.sei.SVI.core.expression.FlexibleOperator;
 import cn.edu.buaa.sei.SVI.core.extend.LogicStruct;
 
-public interface Disjunction extends LogicOperator,FlexibleOperator{
+/**
+ * Conjunction is <i>LogicOperator</i> and FlexibleOperator which could receive any number of operands (LogicStruct)<br>
+ * Conjunction only receives LogicStruct as its operand {not all the Struct, such as NumericStruct}.
+ * */
+public interface Conjunction extends LogicOperator,FlexibleOperator{
 	/**
 	 * Return all the operands in operator. Each operand is a Struct so to be interpreted further.
 	 * */
