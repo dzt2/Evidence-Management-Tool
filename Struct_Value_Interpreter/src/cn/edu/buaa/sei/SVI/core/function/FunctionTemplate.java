@@ -29,7 +29,6 @@ public interface FunctionTemplate extends CompositeStruct{
 	 * 3. The values[i] or its interpretation result should be compatible with arguments[i] if it is a TypedVariable.<br>
 	 * @exception Exception values==null
 	 * @exception Exception values.length!=arguments.length
-	 * @exception Exception values.contains(null)
 	 * @exception Exception !arguments[i].compatible(values[i])
 	 * */
 	public void assign(Object[] values) throws Exception;
