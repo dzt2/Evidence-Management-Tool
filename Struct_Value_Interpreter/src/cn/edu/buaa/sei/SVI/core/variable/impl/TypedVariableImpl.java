@@ -20,7 +20,7 @@ public abstract class TypedVariableImpl extends VariableImpl implements TypedVar
 
 	@Override
 	public boolean compatible(Object val) {
-		if(val==null)return false;
+		if(val==null)return true;
 		else return this.type.isInstance(val);}
 
 	@SuppressWarnings("rawtypes")
