@@ -49,11 +49,11 @@ public class Test {
 		
 		a.removeChildStruct(children[0]);
 		a.removeChildStruct(children[0]);
-		a.removeChildStruct(children[0]);
+		a.removeChildStruct(children[1]);
 		
 		for(int i=0;i<a.getChildrenStructSize();i++)
 			System.out.println(children[i].hashCode());
-		System.out.println();
+		System.out.println(children.length+"\n");
 	}
 	
 }
