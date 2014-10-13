@@ -11,6 +11,9 @@ public class NegationImpl extends LogicOperatorImpl implements Negation{
 	
 	protected NegationImpl(LogicStruct operand,CompositeStruct container) throws Exception {
 		super(container);
+		if(operand==null)
+			throw new Exception("Null Operand is invalid");
+		this.operand=operand;
 	}
 
 	@Override

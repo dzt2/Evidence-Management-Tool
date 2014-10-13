@@ -6,10 +6,7 @@ import cn.edu.buaa.sei.SVI.core.StructArray;
 import cn.edu.buaa.sei.SVI.core.function.Function;
 import cn.edu.buaa.sei.SVI.core.function.FunctionBodyAPI;
 
-/**
- * <i>FunctionBodyAPIImpl</i> is designed for programmer to define the implementation they like.
- * */
-public abstract class FunctioBodyAPIImpl implements FunctionBodyAPI{	
+public abstract class FunctionBodyAPIImpl implements FunctionBodyAPI{
 	CompositeStruct container = new StructArray();
 	Function function;
 
@@ -33,5 +30,4 @@ public abstract class FunctioBodyAPIImpl implements FunctionBodyAPI{
 
 	@Override
 	public int getChildrenStructSize() {return this.container.getChildrenStructSize();}
-
 }

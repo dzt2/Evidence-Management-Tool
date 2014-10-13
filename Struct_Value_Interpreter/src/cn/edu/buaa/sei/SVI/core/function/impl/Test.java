@@ -1,9 +1,6 @@
 package cn.edu.buaa.sei.SVI.core.function.impl;
 
 import cn.edu.buaa.sei.SVI.core.function.Context;
-import cn.edu.buaa.sei.SVI.core.function.FunctionBodyAPI;
-import cn.edu.buaa.sei.SVI.core.function.FunctionTemplate;
-import cn.edu.buaa.sei.SVI.core.variable.Bindable;
 import cn.edu.buaa.sei.SVI.core.variable.ReferenceVariable;
 import cn.edu.buaa.sei.SVI.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.core.variable.impl.VariableFactory;
@@ -60,19 +57,7 @@ public class Test {
 	}
 
 	public static void testAPI() throws Exception{
-		FunctionBodyAPI api = new FunctioBodyAPIImpl(){
-			@Override
-			public void execute() throws Exception {
-				FunctionTemplate template = this.getFunction().getTemplate();
-				
-				Bindable out = template.getOutput();
-				Variable[] arguments = template.getArguments();
-				
-				System.out.println("Calling: "+out+" "+template.getName()+"("+arguments+")");
-			}
-		};
 		
-		api.setFunction(null);
 	}
 	
 }

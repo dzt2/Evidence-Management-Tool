@@ -82,4 +82,10 @@ public class LogicFunctionImpl implements LogicFunction{
 	@Override
 	public String toString(){return this.template.toString();}
 
+	@Override
+	public void setContext(Context context) {this.context=context;}
+
+	@Override
+	public void setBody(FunctionBody body) {this.body=body;}
+
 }

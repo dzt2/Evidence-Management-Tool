@@ -12,4 +12,6 @@ public interface Function extends CompositeStruct{
 	public FunctionTemplate getTemplate();
 	public Context getContext();
 	public FunctionBody getBody();
+	public void setContext(Context context);
+	public void setBody(FunctionBody body);
 }
