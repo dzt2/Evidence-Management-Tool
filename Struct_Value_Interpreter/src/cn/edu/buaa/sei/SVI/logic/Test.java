@@ -7,6 +7,7 @@ import cn.edu.buaa.sei.SVI.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.logic.impl.LogicFactory;
 
 public class Test {
+	
 	public static void main(String[] args){
 		LogicStruct p;
 		try {
@@ -46,9 +47,11 @@ public class Test {
 				Variable[] arguments = template.getArguments();
 				Object hlr = arguments[0].read();
 				Object llr = arguments[1].read();
+				System.out.println(hlr+"-->"+llr);
 			}});
 		
 		LogicExpression L = LogicFactory.createExistential(LLR, traceable);
 		return LogicFactory.createUniversal(HLR, L);
 	}
+
 }
