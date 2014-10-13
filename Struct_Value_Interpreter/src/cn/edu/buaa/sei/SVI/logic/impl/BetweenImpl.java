@@ -36,5 +36,11 @@ public class BetweenImpl extends QuantifierOperatorImpl implements Between{
 		
 		this.lower=lower;this.upper=upper;
 	}
+	
+	@Override
+	public String toString(){
+		return "Between(["+this.lower+"~"+this.upper+"],"
+				+domain.toString()+","+scope.toString()+")";
+	}
 
 }

@@ -11,5 +11,9 @@ public class ExistentialImpl extends QuantifierOperatorImpl implements Existenti
 			CompositeStruct container) throws Exception {
 		super(domain, scope, container);
 	}
-
+	
+	@Override
+	public String toString(){
+		return "exist("+domain.toString()+","+scope.toString()+")";
+	}
 }

@@ -26,5 +26,10 @@ public class AtMostImpl extends QuantifierOperatorImpl implements AtMost{
 			throw new Exception("Invalid Upper Bound: "+upper);
 		this.upper=upper;
 	}
+	
+	@Override
+	public String toString(){
+		return "AtMost("+this.upper+","+domain.toString()+","+scope.toString()+")";
+	}
 
 }

@@ -60,5 +60,7 @@ public class DiscourseDomainImpl extends TypedVariableImpl implements DiscourseD
 		if(this.val==null)return null;
 		else return (Set) this.val;
 	}
-
+	
+	@Override
+	public String toString(){return this.name;}
 }

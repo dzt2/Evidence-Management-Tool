@@ -39,4 +39,8 @@ public class NegationImpl extends LogicOperatorImpl implements Negation{
 		this.container.addChildStruct(operand);
 	}
 
+	@Override
+	public String toString(){
+		return "!"+this.operand.toString();
+	}
 }

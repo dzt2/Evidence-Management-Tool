@@ -57,5 +57,18 @@ public class ConjunctionImpl extends LogicOperatorImpl implements Conjunction{
 		for(int i=0;i<this.operands.length;i++)
 			this.container.addChildStruct(this.operands[i]);
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder code = new StringBuilder();
+		
+		for(int i=0;i<this.operands.length;i++){
+			code.append(this.operands[i].toString());
+			if(i!=this.operands.length-1)
+				code.append("&&");
+		}
+		
+		return code.toString();
+	}
 
 }

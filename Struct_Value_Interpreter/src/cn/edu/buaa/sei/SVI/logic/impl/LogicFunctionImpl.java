@@ -78,5 +78,8 @@ public class LogicFunctionImpl implements LogicFunction{
 	public LogicFunctionTemplate getTemplate() {
 		return this.template;
 	}
+	
+	@Override
+	public String toString(){return this.template.toString();}
 
 }

@@ -105,4 +105,19 @@ public class LogicFunctionTemplateImpl implements LogicFunctionTemplate{
 	@Override
 	public void setFunction(LogicFunction function) {this.function=function;}
 	
+	@Override
+	public String toString(){
+		StringBuilder code = new StringBuilder();
+		
+		code.append("boolean ").append(this.name).append("(");
+		for(int i=0;i<this.arguments.length;i++){
+			code.append(this.arguments[i].toString());
+			if(i!=this.arguments.length-1)
+				code.append(",");
+		}
+		code.append(")");
+		
+		return code.toString();
+	}
+	
 }

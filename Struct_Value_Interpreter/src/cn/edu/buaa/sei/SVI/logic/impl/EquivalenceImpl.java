@@ -60,4 +60,9 @@ public class EquivalenceImpl extends LogicOperatorImpl implements Equivalence{
 		
 	}
 	
+	@Override
+	public String toString(){
+		return this.left.toString()+"<-->"+this.right.toString();
+	}
+	
 }

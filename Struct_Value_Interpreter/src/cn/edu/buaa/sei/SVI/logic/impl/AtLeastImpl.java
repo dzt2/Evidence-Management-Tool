@@ -25,5 +25,9 @@ public class AtLeastImpl extends QuantifierOperatorImpl implements AtLeast{
 			throw new Exception("Invalid Lower Bound: "+lower);
 		this.lower=lower;
 	}
-
+	
+	@Override
+	public String toString(){
+		return "AtLeast("+this.lower+","+domain.toString()+","+scope.toString()+")";
+	}
 }

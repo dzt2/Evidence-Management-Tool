@@ -52,5 +52,9 @@ public class LogicExpressionImpl implements LogicExpression{
 	public LogicOperator getOperator() {
 		return this.op;
 	}
-
+	
+	@Override
+	public String toString(){
+		return "("+this.op.toString()+")";
+	}
 }

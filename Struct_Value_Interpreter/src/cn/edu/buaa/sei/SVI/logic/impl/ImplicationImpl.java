@@ -57,4 +57,8 @@ public class ImplicationImpl extends LogicOperatorImpl implements Implication{
 		this.container.addChildStruct(right);
 	}
 
+	@Override
+	public String toString(){
+		return this.left.toString()+"-->"+this.right.toString();
+	}
 }

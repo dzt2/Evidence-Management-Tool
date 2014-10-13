@@ -12,4 +12,8 @@ public class UniversalImpl extends QuantifierOperatorImpl implements Universal{
 		super(domain, scope, container);
 	}
 
+	@Override
+	public String toString(){
+		return "all("+this.domain.toString()+","+this.scope.toString()+")";
+	}
 }
