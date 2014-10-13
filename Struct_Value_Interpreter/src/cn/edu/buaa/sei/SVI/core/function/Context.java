@@ -32,8 +32,8 @@ public interface Context extends CompositeStruct{
 	public void addStruct(String name,Struct element) throws Exception;
 	/**
 	 * Remove an existing Struct in the Context. The element must be in the Local Context.
-	 * @exception Exception element == null
-	 * @exception Exception !localMap.conatinValue(element)
+	 * @exception Exception name == null
+	 * @exception Exception !localMap.conatinKey(name)
 	 * */
-	public void removeStruct(Struct element) throws Exception;
+	public void removeStruct(String name) throws Exception;
 }

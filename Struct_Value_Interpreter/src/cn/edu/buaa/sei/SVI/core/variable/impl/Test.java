@@ -1,5 +1,9 @@
 package cn.edu.buaa.sei.SVI.core.variable.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 import cn.edu.buaa.sei.SVI.core.variable.ReferenceVariable;
 import cn.edu.buaa.sei.SVI.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.core.variable.baseType.BooleanVariable;
@@ -8,13 +12,14 @@ import cn.edu.buaa.sei.SVI.core.variable.baseType.DoubleVariable;
 import cn.edu.buaa.sei.SVI.core.variable.baseType.FloatVariable;
 import cn.edu.buaa.sei.SVI.core.variable.baseType.IntegerVariable;
 import cn.edu.buaa.sei.SVI.core.variable.baseType.LongVariable;
+import cn.edu.buaa.sei.SVI.core.variable.baseType.SetVariable;
 import cn.edu.buaa.sei.SVI.core.variable.baseType.StringVariable;
 
 public class Test {
 
 	public static void main(String[] args) {
 		try {
-			test2();
+			testSet();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -174,6 +179,20 @@ public class Test {
 		System.out.println(printVariable(x));
 		System.out.println(printVariable(y));
 		System.out.println();
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void testSet() throws Exception{
+		SetVariable x = VariableFactory.createSet("x");
+		x.assign(new HashSet<Integer>());
+		Set<Integer> qx = x.read();
+		qx.add(15);
+		qx.add(25);
+		
+		System.out.println(printVariable(x));
+		
+		x.assign(new TreeSet());
+		System.out.println(printVariable(x));
 	}
 	
 	static String printVariable(Variable x) throws Exception{
