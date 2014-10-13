@@ -52,7 +52,9 @@ public class ContextImpl implements Context{
 
 	@Override
 	public boolean containStruct(String name) {
-		return this.map.containsKey(name);
+		if(this.map.containsKey(name))return true;
+		else if(this.parent==null)return false;
+		else return this.parent.containStruct(name);
 	}
 
 	@Override

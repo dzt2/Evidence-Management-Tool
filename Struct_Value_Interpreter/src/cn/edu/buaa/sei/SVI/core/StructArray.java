@@ -45,8 +45,10 @@ public class StructArray implements CompositeStruct{
 		if(i>=this.length)
 			throw new Exception("Struct child is not in the array.");
 		
-		while(i<this.length-1)
+		while(i<this.length-1){
 			this.children[i]=this.children[i+1];
+			i++;
+		}
 		this.length--;
 	}
 
