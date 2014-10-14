@@ -59,6 +59,7 @@ public class GroupEqualImpl extends LogicOperatorImpl implements GroupEqual{
 	@Override
 	public GroupStruct getRightOperand() {return this.right;}
 
-	
+	@Override
+	public String toString(){return this.left.toString()+" == "+this.right.toString();}
 
 }

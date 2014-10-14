@@ -100,5 +100,10 @@ public class FilterTemplateImpl implements FilterTemplate{
 		arguments[0].assign(group);
 		arguments[1].assign(function);
 	}
+	
+	@Override
+	public String toString(){
+		return "filter(A,condition(x))";
+	}
 
 }

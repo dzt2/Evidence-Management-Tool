@@ -42,4 +42,7 @@ public class ComplementImpl extends GroupOperatorImpl implements Complement{
 	public int getDimension() {return 1;}
 	@Override
 	public GroupStruct getOperand() {return this.operand;}
+	
+	@Override
+	public String toString(){return "~"+this.operand.toString();}
 }

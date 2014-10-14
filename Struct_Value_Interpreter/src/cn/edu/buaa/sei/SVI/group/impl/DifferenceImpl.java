@@ -54,7 +54,8 @@ public class DifferenceImpl extends GroupOperatorImpl implements Difference{
 	@Override
 	public GroupStruct getRightOperand() {return this.right;}
 
-	
+	@Override
+	public String toString(){return this.left.toString()+" - "+this.right.toString();}
 	
 
 }

@@ -45,10 +45,12 @@ public class CardinalityImpl extends NumericOperatorImpl implements Cardinality{
 
 	@Override
 	public GroupStruct getOperand() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.operand;
 	}
 
-	
+	@Override
+	public String toString(){
+		return "|"+this.operand.toString()+"|";
+	}
 
 }

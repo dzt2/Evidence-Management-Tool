@@ -36,4 +36,6 @@ public class GroupExpressionImpl implements GroupExpression{
 	@Override
 	public GroupOperator getOperator() {return this.op;}
 
+	@Override
+	public String toString(){return "("+this.op.toString()+")";}
 }

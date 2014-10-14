@@ -54,6 +54,7 @@ public class IncludeImpl extends LogicOperatorImpl implements Include{
 	@Override
 	public GroupStruct getRightOperand() {return this.right;}
 
-	
+	@Override
+	public String toString(){return this.left.toString()+" IN "+this.right.toString();}
 
 }

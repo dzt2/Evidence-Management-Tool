@@ -97,4 +97,8 @@ public class MapTemplateImpl implements MapTemplate{
 		arguments[1].assign(function);
 	}
 
+	@Override
+	public String toString(){
+		return "mapper(A,F(x))";
+	}
 }

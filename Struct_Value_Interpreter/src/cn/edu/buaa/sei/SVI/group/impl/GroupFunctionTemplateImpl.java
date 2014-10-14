@@ -40,5 +40,5 @@ public class GroupFunctionTemplateImpl extends FunctionTemplateImpl implements G
 	
 	@Override
 	public String toString(){return "Group "+super.toString();}
-
+	
 }

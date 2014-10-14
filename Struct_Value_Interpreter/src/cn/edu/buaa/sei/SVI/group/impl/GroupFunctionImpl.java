@@ -116,4 +116,6 @@ public class GroupFunctionImpl implements GroupFunction{
 	@Override
 	public GroupFunctionTemplate getTemplate() {return this.template;}
 
+	@Override
+	public String toString(){return "{"+this.template.toString()+"}";}
 }

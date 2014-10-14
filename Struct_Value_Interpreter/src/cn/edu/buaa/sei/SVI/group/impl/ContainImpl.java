@@ -58,6 +58,7 @@ public class ContainImpl extends LogicOperatorImpl implements Contain{
 	@Override
 	public GroupStruct getRightOperand() {return this.right;}
 
-	
+	@Override
+	public String toString(){return this.left.toString()+" Belong "+this.right.toString();}
 
 }

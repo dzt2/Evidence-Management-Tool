@@ -63,4 +63,17 @@ public class CartesianProductImpl extends GroupOperatorImpl implements Cartesian
 		for(int i=0;i<this.operands.length;i++)
 			this.container.addChildStruct(this.operands[i]);
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder code = new StringBuilder();
+		
+		for(int i=0;i<this.operands.length;i++){
+			code.append(operands[i].toString());
+			if(i!=this.operands.length-1)
+				code.append(" ** ");
+		}
+		
+		return code.toString();
+	}
 }

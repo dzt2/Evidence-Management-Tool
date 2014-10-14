@@ -97,4 +97,8 @@ public class TableMapTemplateImpl implements TableMapTemplate{
 		arguments[1].assign(function);
 	}
 
+	@Override
+	public String toString(){
+		return "tableMapper(A,F(x))";
+	}
 }
