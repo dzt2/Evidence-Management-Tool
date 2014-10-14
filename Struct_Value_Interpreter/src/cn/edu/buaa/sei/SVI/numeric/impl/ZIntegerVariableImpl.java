@@ -10,6 +10,11 @@ public class ZIntegerVariableImpl extends TypedVariableImpl implements ZIntegerV
 	@Override
 	public void assign(Number val) throws Exception {
 		if(val==null)this.val=null;
+		else if(val instanceof Integer){
+			int x = (Integer) val;
+			long y = x;
+			this.assign(y);
+		}
 		else if(!(val instanceof Long))
 			throw new Exception("Long value required");
 		else{

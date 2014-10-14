@@ -3,14 +3,16 @@ package cn.edu.buaa.sei.SVI.numeric;
 import cn.edu.buaa.sei.SVI.core.Struct;
 import cn.edu.buaa.sei.SVI.core.extend.NumericStruct;
 import cn.edu.buaa.sei.SVI.core.variable.Variable;
+import cn.edu.buaa.sei.SVI.numeric.RationalVariable.Rational;
 import cn.edu.buaa.sei.SVI.numeric.impl.NumericFactory;
 
 public class Test {
 
 	public static void main(String[] args) {
 		try {
-			Struct x = create3();
-			System.out.println(x.toString());
+			testVariable();
+//			Struct x = create3();
+//			System.out.println(x.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,7 +63,44 @@ public class Test {
 		return NumericFactory.createEqual(x, y);
 	}
 	
+	public static void testVariable() throws Exception{
+		RealVariable x = NumericFactory.createRealVariable("x");
+		System.out.println(printVariable(x));
+		
+		x.assign(25.64);
+		System.out.println(printVariable(x));
+		
+		x.assign(151.458f);
+		System.out.println(printVariable(x));
+		
+		x.assign(54);
+		System.out.println(printVariable(x));
+		
+		x.assign(540L);
+		System.out.println(printVariable(x));
+		
+		Rational r = new Rational(15,-6);
+		System.out.println(r);
+		System.out.println(r.floatValue());
+		
+		RationalVariable y = NumericFactory.createRationalVariable("y");
+		y.assign(r);
+		System.out.println(printVariable(y));
+		
+		y.assign(null);
+		System.out.println(printVariable(y));
+		
+		y.assign(new Rational(18,9));
+		System.out.println(printVariable(y));
+		
+		y.assign(new Rational(12,0));
+		System.out.println(printVariable(y));
+	}
 	
+	static String printVariable(Variable x) throws Exception{
+		if(x==null)return null;
+		else return x.getName()+": "+x.read();
+	}
 	
 	
 	

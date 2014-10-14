@@ -10,8 +10,23 @@ public class RealVariableImpl extends TypedVariableImpl implements RealVariable{
 	@Override
 	public void assign(Number val) throws Exception {
 		if(val==null)this.val=null;
-		else if(!(val instanceof Double))throw new Exception("Double value required");
-		else this.val=val;
+		else if(val instanceof Float){
+			float x = (Float) val;
+			Double y = (double) x;
+			this.assign(y);
+		}
+		else if(val instanceof Integer){
+			int x = (Integer) val;
+			Double y = (double) x;
+			this.assign(y);
+		}
+		else if(val instanceof Long){
+			long x = (Long) val;
+			Double y = (double) x;
+			this.assign(y);
+		}
+		else if(val instanceof Double)this.val=val;
+		else throw new Exception("Double value required");
 	}
 
 	@Override
