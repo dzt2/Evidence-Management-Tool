@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.numeric;
 
+import cn.edu.buaa.sei.SVI.core.Struct;
 import cn.edu.buaa.sei.SVI.core.extend.NumericStruct;
 import cn.edu.buaa.sei.SVI.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.numeric.impl.NumericFactory;
@@ -9,7 +10,7 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			NumericStruct x = create2();
+			Struct x = create3();
 			System.out.println(x.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -48,6 +49,19 @@ public class Test {
 		return NumericFactory.createAddition(g, f);
 	}
 	
+	public static Struct create3() throws Exception{
+		NaturalVariable a = NumericFactory.createNaturalVariable("a");
+		NaturalVariable b = NumericFactory.createNaturalVariable("b");
+		NaturalVariable c = NumericFactory.createNaturalVariable("c");
+		NaturalVariable d = NumericFactory.createNaturalVariable("d");
+		
+		NumericExpression x = NumericFactory.createAddition(a, b);
+		
+		NumericExpression y1 = NumericFactory.createMultiplication(a, c);
+		NumericExpression y = NumericFactory.createSubstract(y1, d);
+		
+		return NumericFactory.createEqual(x, y);
+	}
 	
 	
 	

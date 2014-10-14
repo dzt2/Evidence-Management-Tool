@@ -5,6 +5,8 @@ import cn.edu.buaa.sei.SVI.core.extend.NumericStruct;
 import cn.edu.buaa.sei.SVI.core.function.Context;
 import cn.edu.buaa.sei.SVI.core.function.FunctionBody;
 import cn.edu.buaa.sei.SVI.core.variable.Variable;
+import cn.edu.buaa.sei.SVI.logic.LogicExpression;
+import cn.edu.buaa.sei.SVI.logic.impl.LogicFactory;
 import cn.edu.buaa.sei.SVI.numeric.Addition;
 import cn.edu.buaa.sei.SVI.numeric.Division;
 import cn.edu.buaa.sei.SVI.numeric.Mod;
@@ -17,6 +19,11 @@ import cn.edu.buaa.sei.SVI.numeric.RationalVariable;
 import cn.edu.buaa.sei.SVI.numeric.RealVariable;
 import cn.edu.buaa.sei.SVI.numeric.Substraction;
 import cn.edu.buaa.sei.SVI.numeric.ZIntegerVariable;
+import cn.edu.buaa.sei.SVI.numeric.logic.Bigger;
+import cn.edu.buaa.sei.SVI.numeric.logic.EBigger;
+import cn.edu.buaa.sei.SVI.numeric.logic.ESmaller;
+import cn.edu.buaa.sei.SVI.numeric.logic.Equal;
+import cn.edu.buaa.sei.SVI.numeric.logic.Smaller;
 
 public class NumericFactory {
 	public static NaturalVariable createNaturalVariable(String name) throws Exception{
@@ -90,4 +97,26 @@ public class NumericFactory {
 		function.setBody(body);
 		return function;
 	}
+
+	public static LogicExpression createBigger(NumericStruct left,NumericStruct right) throws Exception{
+		Bigger op = new BiggerImpl(left,right,new StructArray());
+		return LogicFactory.createLogicExpression(op);
+	}
+	public static LogicExpression createSmaller(NumericStruct left,NumericStruct right) throws Exception{
+		Smaller op = new SmallerImpl(left,right,new StructArray());
+		return LogicFactory.createLogicExpression(op);
+	}
+	public static LogicExpression createEqual(NumericStruct left,NumericStruct right) throws Exception{
+		Equal op = new EqualImpl(left,right,new StructArray());
+		return LogicFactory.createLogicExpression(op);
+	}
+	public static LogicExpression createESmaller(NumericStruct left,NumericStruct right) throws Exception{
+		ESmaller op = new ESmallerImpl(left,right,new StructArray());
+		return LogicFactory.createLogicExpression(op);
+	}
+	public static LogicExpression createEBigger(NumericStruct left,NumericStruct right) throws Exception{
+		EBigger op = new EBiggerImpl(left,right,new StructArray());
+		return LogicFactory.createLogicExpression(op);
+	}
+	
 }

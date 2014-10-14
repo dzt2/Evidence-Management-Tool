@@ -16,6 +16,7 @@ import cn.edu.buaa.sei.SVI.logic.Implication;
 import cn.edu.buaa.sei.SVI.logic.LogicExpression;
 import cn.edu.buaa.sei.SVI.logic.LogicFunction;
 import cn.edu.buaa.sei.SVI.logic.LogicFunctionTemplate;
+import cn.edu.buaa.sei.SVI.logic.LogicOperator;
 import cn.edu.buaa.sei.SVI.logic.LogicVariable;
 import cn.edu.buaa.sei.SVI.logic.Negation;
 import cn.edu.buaa.sei.SVI.logic.Universal;
@@ -74,6 +75,9 @@ public class LogicFactory {
 			LogicStruct scope,int upper,int lower) throws Exception{
 		Between op = new BetweenImpl(domain,scope,new StructArray());
 		op.setBound(lower, upper);
+		return new LogicExpressionImpl(op,new StructArray());
+	}
+	public static LogicExpression createLogicExpression(LogicOperator op) throws Exception{
 		return new LogicExpressionImpl(op,new StructArray());
 	}
 	
