@@ -1,7 +1,7 @@
 package cn.edu.buaa.sei.SVI.group.extend;
 
-import cn.edu.buaa.sei.SVI.core.extend.GroupStruct;
 import cn.edu.buaa.sei.SVI.core.function.Function;
+import cn.edu.buaa.sei.SVI.group.Group;
 import cn.edu.buaa.sei.SVI.group.GroupFunctionTemplate;
 
 /**
@@ -18,5 +18,5 @@ public interface TableMapTemplate extends GroupFunctionTemplate{
 	 * @exception Exception group==null||function==null
 	 * @exception Exception function is not template of: P(x) in which x receives elements in group.
 	 * */
-	public void assign(GroupStruct group,Function function) throws Exception;
+	public void assign(Group group,Function function) throws Exception;
 }
