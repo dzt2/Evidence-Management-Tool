@@ -12,9 +12,9 @@ package cn.edu.buaa.sei.SVI.core;
  * */
 public interface Interpreter {
 	/**
-	 * Register the struct element so to interpret it.<br>
+	 * Set the struct element to be interpreted by the interpreter.<br>
 	 * @exception Exception element==null
 	 * @exception Exception this.element.getClass() is wrong.
 	 * */
-	public void register(Struct element) throws Exception;
+	public void set(Struct element) throws Exception;
 }
