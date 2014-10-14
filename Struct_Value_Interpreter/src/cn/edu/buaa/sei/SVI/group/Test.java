@@ -2,13 +2,18 @@ package cn.edu.buaa.sei.SVI.group;
 
 import cn.edu.buaa.sei.SVI.core.Struct;
 import cn.edu.buaa.sei.SVI.core.extend.GroupStruct;
+import cn.edu.buaa.sei.SVI.core.extend.LogicStruct;
+import cn.edu.buaa.sei.SVI.core.variable.Variable;
+import cn.edu.buaa.sei.SVI.core.variable.impl.VariableFactory;
 import cn.edu.buaa.sei.SVI.group.impl.GroupFactory;
+import cn.edu.buaa.sei.SVI.logic.LogicExpression;
+import cn.edu.buaa.sei.SVI.logic.impl.LogicFactory;
 
 public class Test {
 
 	public static void main(String[] args) {
 		try {
-			Struct p = create2();
+			Struct p = create3();
 			System.out.println(p.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -44,4 +49,17 @@ public class Test {
 		return GroupFactory.createCardinality(x);
 	}
 	
+	public static Struct create3() throws Exception{
+		Variable x = VariableFactory.createFreeVariable("x");
+		GroupVariable A = GroupFactory.createGroupVariable("A");
+		GroupVariable B = GroupFactory.createGroupVariable("B");
+		GroupVariable C = GroupFactory.createGroupVariable("C");
+		GroupVariable D = GroupFactory.createGroupVariable("D");
+		
+		LogicExpression t1 = GroupFactory.createInclude(x, A);
+		LogicExpression t2 = GroupFactory.createContain(B, C);
+		LogicExpression t3 = GroupFactory.createGroupEqual(C, D);
+		
+		return LogicFactory.createConjunction(new LogicStruct[]{t1,t2,t3});
+	}
 }
