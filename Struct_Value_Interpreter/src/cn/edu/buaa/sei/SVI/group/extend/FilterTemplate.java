@@ -14,11 +14,9 @@ import cn.edu.buaa.sei.SVI.logic.LogicFunction;
  * */
 public interface FilterTemplate extends GroupFunctionTemplate{
 	/**
-	 * Return the filter condition
+	 * To assign the value to the 2 arguments in filter(group,function)
+	 * @exception Exception group==null||function==null
+	 * @exception Exception function is not template of: P(x) in which x receives elements in group.
 	 * */
-	public LogicFunction getFilterCondition();
-	/**
-	 * Return the filtered group.
-	 * */
-	public GroupStruct getGroup();
+	public void assign(GroupStruct group,LogicFunction function) throws Exception;
 }

@@ -7,8 +7,8 @@ import cn.edu.buaa.sei.SVI.logic.LogicExpression;
 import cn.edu.buaa.sei.SVI.logic.LogicOperator;
 
 public abstract class LogicOperatorImpl implements LogicOperator{
-	LogicExpression expr;
-	CompositeStruct container;
+	protected LogicExpression expr;
+	protected CompositeStruct container;
 	
 	protected LogicOperatorImpl(CompositeStruct container) throws Exception{
 		if(container==null)throw new Exception("Null Container is invalid to constructing LogicOperator");

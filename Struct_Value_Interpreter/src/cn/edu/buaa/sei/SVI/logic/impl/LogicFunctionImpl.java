@@ -84,8 +84,19 @@ public class LogicFunctionImpl implements LogicFunction{
 
 	@Override
 	public void setContext(Context context) {
+		if(this.body!=null){
+			try {
+				this.container.removeChildStruct(this.body);
+				this.body.setFunction(null);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		if(this.context!=null)
 			try {
+				
 				this.container.removeChildStruct(this.context);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -99,6 +110,16 @@ public class LogicFunctionImpl implements LogicFunction{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
+		if(this.body!=null){
+			try {
+				this.container.addChildStruct(this.body);
+				this.body.setFunction(this);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -106,6 +127,7 @@ public class LogicFunctionImpl implements LogicFunction{
 		if(this.body!=null)
 			try {
 				this.container.removeChildStruct(this.body);
+				this.body.setFunction(null);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -114,6 +136,7 @@ public class LogicFunctionImpl implements LogicFunction{
 		if(this.body!=null)
 			try {
 				this.container.addChildStruct(this.body);
+				this.body.setFunction(this);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

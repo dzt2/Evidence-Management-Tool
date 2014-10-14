@@ -14,7 +14,7 @@ public class NumericExpressionImpl implements NumericExpression{
 		if(op==null||container==null)
 			throw new Exception("Null Operator|Container is invalid");
 		
-		this.op=op;
+		this.op=op;this.op.setExpression(this);
 		this.container=container;
 		
 		this.container.addChildStruct(op);

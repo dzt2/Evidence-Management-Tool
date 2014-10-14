@@ -1,73 +1,58 @@
-package cn.edu.buaa.sei.SVI.numeric.impl;
+package cn.edu.buaa.sei.SVI.group.impl;
 
 import cn.edu.buaa.sei.SVI.core.CompositeStruct;
 import cn.edu.buaa.sei.SVI.core.Struct;
 import cn.edu.buaa.sei.SVI.core.function.Context;
 import cn.edu.buaa.sei.SVI.core.function.FunctionBody;
-import cn.edu.buaa.sei.SVI.numeric.NumericFunction;
-import cn.edu.buaa.sei.SVI.numeric.NumericFunctionTemplate;
+import cn.edu.buaa.sei.SVI.group.GroupFunction;
+import cn.edu.buaa.sei.SVI.group.GroupFunctionTemplate;
 
-public class NumericFunctionImpl implements NumericFunction{
+public class GroupFunctionImpl implements GroupFunction{
 	
-	NumericFunctionTemplate template;
 	CompositeStruct container;
-	
+	GroupFunctionTemplate template;
 	Context context;
 	FunctionBody body;
 	
 	/**
-	 * Children: [template,{context},{body}]
+	 * Children: [template,context,container]
 	 * */
-	NumericFunctionImpl(NumericFunctionTemplate template,CompositeStruct container) throws Exception{
+	public GroupFunctionImpl(GroupFunctionTemplate template,
+			Context context,FunctionBody body,CompositeStruct container) throws Exception{
 		if(template==null||container==null)
-			throw new Exception("Null Template|Container is invalid");
+			throw new Exception("Template|Container should not be null");
 		
 		this.template=template;
 		this.container=container;
+		this.context=context;
+		this.body=body;
 		
-		this.container.addChildStruct(template);
+		this.container.addChildStruct(this.template);
+		if(this.context!=null)this.container.addChildStruct(this.context);
+		if(this.body!=null)this.container.addChildStruct(this.body);
 		
 		this.template.setFunction(this);
+		if(this.body!=null)this.body.setFunction(this);
 	}
 
 	@Override
-	public Struct[] getChildrenStructs() {
-		return this.container.getChildrenStructs();
-	}
+	public Struct[] getChildrenStructs() {return this.container.getChildrenStructs();}
+	@Override
+	public void addChildStruct(Struct child) throws Exception {this.container.addChildStruct(child);}
+	@Override
+	public void removeChildStruct(Struct child) throws Exception {this.container.removeChildStruct(child);}
+	@Override
+	public boolean containChildStruct(Struct child) {return this.container.containChildStruct(child);}
+	@Override
+	public int getChildrenStructSize() {return this.container.getChildrenStructSize();}
 
 	@Override
-	public void addChildStruct(Struct child) throws Exception {
-		this.container.addChildStruct(child);
-	}
-
+	public Context getContext() {return this.context;}
 	@Override
-	public void removeChildStruct(Struct child) throws Exception {
-		this.container.removeChildStruct(child);
-	}
-
-	@Override
-	public boolean containChildStruct(Struct child) {
-		return this.container.containChildStruct(child);
-	}
-
-	@Override
-	public int getChildrenStructSize() {
-		return this.container.getChildrenStructSize();
-	}
-
-	@Override
-	public Context getContext() {
-		return this.context;
-	}
-
-	@Override
-	public FunctionBody getBody() {
-		return this.body;
-	}
+	public FunctionBody getBody() {return this.body;}
 
 	@Override
 	public void setContext(Context context) {
-		
 		if(this.body!=null){
 			try {
 				this.container.removeChildStruct(this.body);
@@ -104,6 +89,7 @@ public class NumericFunctionImpl implements NumericFunction{
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	@Override
@@ -128,13 +114,6 @@ public class NumericFunctionImpl implements NumericFunction{
 	}
 
 	@Override
-	public NumericFunctionTemplate getTemplate() {
-		return this.template;
-	}
-	
-	@Override
-	public String toString(){
-		return "{"+this.getTemplate().toString()+"}";
-	}
+	public GroupFunctionTemplate getTemplate() {return this.template;}
 
 }

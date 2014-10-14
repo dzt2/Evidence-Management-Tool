@@ -8,10 +8,10 @@ import cn.edu.buaa.sei.SVI.numeric.NumericOperator;
 
 public abstract class NumericOperatorImpl implements NumericOperator{
 	
-	NumericExpression expr;
-	CompositeStruct container;
+	protected NumericExpression expr;
+	protected CompositeStruct container;
 	
-	NumericOperatorImpl(CompositeStruct container) throws Exception {
+	protected NumericOperatorImpl(CompositeStruct container) throws Exception {
 		if(container==null)throw new Exception("Null Container is invalid");
 		this.container=container;
 	}

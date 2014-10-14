@@ -7,6 +7,7 @@ import cn.edu.buaa.sei.SVI.core.function.FunctionTemplate;
  * GroupFunctionTemplate is a <i>FunctionTemplate</i> which used in GroupFunction.
  * */
 public interface GroupFunctionTemplate extends CompositeGroupStruct,FunctionTemplate{
+	public static final String OUT_NAME = "out";
 	/**
 	 * Return the output Argument of the Function {with name "Out"}
 	 * */
