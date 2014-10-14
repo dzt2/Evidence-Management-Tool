@@ -109,5 +109,10 @@ public class NumericFunctionImpl implements NumericFunction{
 	public NumericFunctionTemplate getTemplate() {
 		return this.template;
 	}
+	
+	@Override
+	public String toString(){
+		return "{"+this.getTemplate().toString()+"}";
+	}
 
 }

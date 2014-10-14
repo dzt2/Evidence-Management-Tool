@@ -11,4 +11,8 @@ public class ModImpl extends BinaryNumericOperatorImpl implements Mod{
 		super(left, right, container);
 	}
 
+	@Override
+	public String toString(){
+		return this.left.toString()+" +% "+this.right.toString();
+	}
 }

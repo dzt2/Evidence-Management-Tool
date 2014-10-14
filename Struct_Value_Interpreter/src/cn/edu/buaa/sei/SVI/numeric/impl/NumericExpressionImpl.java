@@ -46,4 +46,9 @@ public class NumericExpressionImpl implements NumericExpression{
 		return this.op;
 	}
 
+	@Override
+	public String toString(){
+		return "("+this.op.toString()+")";
+	}
+	
 }

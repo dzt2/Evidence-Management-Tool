@@ -13,6 +13,13 @@ public abstract class BinaryNumericOperatorImpl extends NumericOperatorImpl impl
 	 * */
 	BinaryNumericOperatorImpl(NumericStruct left,NumericStruct right,CompositeStruct container) throws Exception {
 		super(container);
+		if(left==null||right==null)
+			throw new Exception("Null Operands are invalid");
+		
+		this.left=left;
+		this.right=right;
+		this.container.addChildStruct(left);
+		this.container.addChildStruct(right);
 	}
 	
 	@Override

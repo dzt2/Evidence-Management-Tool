@@ -11,4 +11,8 @@ public class SubstractionImpl extends BinaryNumericOperatorImpl implements Subst
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString(){
+		return this.left.toString()+" - "+this.right.toString();
+	}
 }

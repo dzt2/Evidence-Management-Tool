@@ -12,4 +12,8 @@ public class MultiplicationImpl extends BinaryNumericOperatorImpl implements Mul
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString(){
+		return this.left.toString()+" * "+this.right.toString();
+	}
 }

@@ -10,5 +10,9 @@ public class AdditionImpl extends BinaryNumericOperatorImpl implements Addition{
 			CompositeStruct container) throws Exception {
 		super(left, right, container);
 	}
-
+	
+	@Override
+	public String toString(){
+		return this.left.toString()+" + "+this.right.toString();
+	}
 }
