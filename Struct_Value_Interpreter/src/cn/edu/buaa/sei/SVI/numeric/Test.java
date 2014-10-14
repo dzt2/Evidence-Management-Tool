@@ -8,12 +8,10 @@ import cn.edu.buaa.sei.SVI.numeric.impl.NumericFactory;
 public class Test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			Struct x = create3();
 			System.out.println(x.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
