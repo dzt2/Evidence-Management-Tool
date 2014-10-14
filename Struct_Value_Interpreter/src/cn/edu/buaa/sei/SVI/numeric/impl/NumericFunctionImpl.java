@@ -1,42 +1,31 @@
-package cn.edu.buaa.sei.SVI.logic.impl;
+package cn.edu.buaa.sei.SVI.numeric.impl;
 
 import cn.edu.buaa.sei.SVI.core.CompositeStruct;
 import cn.edu.buaa.sei.SVI.core.Struct;
 import cn.edu.buaa.sei.SVI.core.function.Context;
 import cn.edu.buaa.sei.SVI.core.function.FunctionBody;
-import cn.edu.buaa.sei.SVI.logic.LogicFunction;
-import cn.edu.buaa.sei.SVI.logic.LogicFunctionTemplate;
+import cn.edu.buaa.sei.SVI.numeric.NumericFunction;
+import cn.edu.buaa.sei.SVI.numeric.NumericFunctionTemplate;
 
-public class LogicFunctionImpl implements LogicFunction{
+public class NumericFunctionImpl implements NumericFunction{
+	
+	NumericFunctionTemplate template;
 	CompositeStruct container;
-	LogicFunctionTemplate template;
-	FunctionBody body;
+	
 	Context context;
+	FunctionBody body;
 	
 	/**
-	 * For any function, its template and container must not be null.<br>
-	 * However, a function could have null <b>FunctionBody</b> if it is a Native Method.<br>
-	 * Except for that, context should not be null, at least the global context, <b>even though we accept such situation</b>.<br>
 	 * Children: [template,{context},{body}]
 	 * */
-	public LogicFunctionImpl(LogicFunctionTemplate template,FunctionBody body,
-			Context context,CompositeStruct container) throws Exception{
-		if(template==null)
-			throw new Exception("Null Template is invalid for function integrity");
-		if(container==null)
-			throw new Exception("Container should not be Null");
+	NumericFunctionImpl(NumericFunctionTemplate template,CompositeStruct container) throws Exception{
+		if(template==null||container==null)
+			throw new Exception("Null Template|Container is invalid");
 		
 		this.template=template;
-		this.body=body;
-		this.context=context;
 		this.container=container;
 		
 		this.container.addChildStruct(template);
-		if(this.context!=null)this.container.addChildStruct(context);
-		if(this.body!=null)this.container.addChildStruct(body);
-		
-		this.template.setFunction(this);
-		if(this.body!=null)this.body.setFunction(this);
 	}
 
 	@Override
@@ -75,17 +64,11 @@ public class LogicFunctionImpl implements LogicFunction{
 	}
 
 	@Override
-	public LogicFunctionTemplate getTemplate() {
-		return this.template;
-	}
-	
-	@Override
-	public String toString(){return this.template.toString();}
-
-	@Override
 	public void setContext(Context context) {
 		if(this.context!=null)
 			try {
+				if(this.body!=null)
+					this.container.removeChildStruct(this.body);
 				this.container.removeChildStruct(this.context);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -95,6 +78,8 @@ public class LogicFunctionImpl implements LogicFunction{
 		if(this.context!=null)
 			try {
 				this.container.addChildStruct(this.context);
+				if(this.body!=null)
+					this.container.addChildStruct(this.body);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -118,6 +103,11 @@ public class LogicFunctionImpl implements LogicFunction{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	}
+
+	@Override
+	public NumericFunctionTemplate getTemplate() {
+		return this.template;
 	}
 
 }

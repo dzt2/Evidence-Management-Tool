@@ -37,6 +37,7 @@ public interface FunctionTemplate extends CompositeStruct{
 	public Function getFunction();
 	/**
 	 * Set the Function it is owned.
+	 * @throws Exception Function Type Error
 	 * */
-	public void setFunction(Function function);
+	public void setFunction(Function function) throws Exception;
 }
