@@ -6,7 +6,7 @@ import cn.edu.buaa.sei.SVI.group.GroupVariable;
 
 public class GroupVariableImpl extends TypedVariableImpl implements GroupVariable{
 
-	protected GroupVariableImpl(String name) throws Exception {
+	GroupVariableImpl(String name) throws Exception {
 		super(name, Group.class);
 	}
 

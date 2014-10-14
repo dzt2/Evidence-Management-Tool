@@ -9,7 +9,7 @@ public class UnionImpl extends GroupOperatorImpl implements Union{
 
 	GroupStruct[] operands;
 	
-	protected UnionImpl(GroupStruct[] operands,CompositeStruct container) throws Exception {
+	UnionImpl(GroupStruct[] operands,CompositeStruct container) throws Exception {
 		super(container);
 		
 		this.setOperands(operands);

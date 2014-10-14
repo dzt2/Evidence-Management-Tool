@@ -15,6 +15,7 @@ import cn.edu.buaa.sei.SVI.numeric.NaturalVariable;
 import cn.edu.buaa.sei.SVI.numeric.NumericExpression;
 import cn.edu.buaa.sei.SVI.numeric.NumericFunction;
 import cn.edu.buaa.sei.SVI.numeric.NumericFunctionTemplate;
+import cn.edu.buaa.sei.SVI.numeric.NumericOperator;
 import cn.edu.buaa.sei.SVI.numeric.RationalVariable;
 import cn.edu.buaa.sei.SVI.numeric.RealVariable;
 import cn.edu.buaa.sei.SVI.numeric.Substraction;
@@ -117,6 +118,10 @@ public class NumericFactory {
 	public static LogicExpression createEBigger(NumericStruct left,NumericStruct right) throws Exception{
 		EBigger op = new EBiggerImpl(left,right,new StructArray());
 		return LogicFactory.createLogicExpression(op);
+	}
+	
+	public static NumericExpression createNumericExpression(NumericOperator op)throws Exception{
+		return new NumericExpressionImpl(op,new StructArray());
 	}
 	
 }

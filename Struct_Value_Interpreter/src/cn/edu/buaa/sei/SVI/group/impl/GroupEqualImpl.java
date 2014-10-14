@@ -13,7 +13,7 @@ public class GroupEqualImpl extends LogicOperatorImpl implements GroupEqual{
 	/**
 	 * Children: [left,right]
 	 * */
-	protected GroupEqualImpl(GroupStruct left,GroupStruct right,CompositeStruct container) throws Exception {
+	GroupEqualImpl(GroupStruct left,GroupStruct right,CompositeStruct container) throws Exception {
 		super(container);
 		
 		if(left==null||right==null)

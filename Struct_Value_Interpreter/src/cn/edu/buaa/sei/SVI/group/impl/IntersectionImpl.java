@@ -9,7 +9,7 @@ public class IntersectionImpl extends GroupOperatorImpl implements Intersection{
 	
 	GroupStruct[] operands;
 
-	protected IntersectionImpl(GroupStruct[] operands,CompositeStruct container) throws Exception {
+	IntersectionImpl(GroupStruct[] operands,CompositeStruct container) throws Exception {
 		super(container);
 		this.setOperands(operands);
 	}

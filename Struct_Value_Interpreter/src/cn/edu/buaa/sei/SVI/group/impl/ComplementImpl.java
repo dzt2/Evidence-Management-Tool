@@ -9,7 +9,7 @@ public class ComplementImpl extends GroupOperatorImpl implements Complement{
 	
 	GroupStruct operand;
 
-	protected ComplementImpl(GroupStruct operand,CompositeStruct container) throws Exception {
+	ComplementImpl(GroupStruct operand,CompositeStruct container) throws Exception {
 		super(container);
 		
 		if(operand==null)

@@ -9,7 +9,7 @@ public class CartesianProductImpl extends GroupOperatorImpl implements Cartesian
 
 	GroupStruct[] operands;
 	
-	protected CartesianProductImpl(GroupStruct[] operands,CompositeStruct container) throws Exception {
+	CartesianProductImpl(GroupStruct[] operands,CompositeStruct container) throws Exception {
 		super(container);
 		this.setOperands(operands);
 	}

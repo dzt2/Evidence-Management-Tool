@@ -9,7 +9,7 @@ public class DifferenceImpl extends GroupOperatorImpl implements Difference{
 	
 	GroupStruct left,right;
 
-	protected DifferenceImpl(GroupStruct left,GroupStruct right,CompositeStruct container) throws Exception {
+	DifferenceImpl(GroupStruct left,GroupStruct right,CompositeStruct container) throws Exception {
 		super(container);
 		if(left==null||right==null)
 			throw new Exception("Null Operands are invalid.");

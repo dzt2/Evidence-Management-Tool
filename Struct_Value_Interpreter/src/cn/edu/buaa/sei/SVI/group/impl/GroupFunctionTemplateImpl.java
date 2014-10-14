@@ -10,7 +10,7 @@ import cn.edu.buaa.sei.SVI.group.GroupVariable;
 
 public class GroupFunctionTemplateImpl extends FunctionTemplateImpl implements GroupFunctionTemplate{
 
-	protected GroupFunctionTemplateImpl(String name, Variable[] arguments,
+	GroupFunctionTemplateImpl(String name, Variable[] arguments,
 			CompositeStruct container) throws Exception {
 		super(name, arguments, new GroupVariableImpl(OUT_NAME), container);
 	}

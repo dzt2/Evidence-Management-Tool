@@ -10,7 +10,7 @@ public class ContainImpl extends LogicOperatorImpl implements Contain{
 
 	GroupStruct left,right;
 	
-	protected ContainImpl(GroupStruct left,GroupStruct right,CompositeStruct container) throws Exception {
+	ContainImpl(GroupStruct left,GroupStruct right,CompositeStruct container) throws Exception {
 		super(container);
 		
 		if(left==null||right==null)

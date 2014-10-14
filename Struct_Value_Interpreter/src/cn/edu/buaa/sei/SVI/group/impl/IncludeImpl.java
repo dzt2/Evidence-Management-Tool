@@ -11,7 +11,7 @@ public class IncludeImpl extends LogicOperatorImpl implements Include{
 	Struct left;
 	GroupStruct right;
 	
-	protected IncludeImpl(Struct left,GroupStruct right,CompositeStruct container) throws Exception {
+	IncludeImpl(Struct left,GroupStruct right,CompositeStruct container) throws Exception {
 		super(container);
 		if(left==null||right==null)
 			throw new Exception("Null Operands are invalid");
