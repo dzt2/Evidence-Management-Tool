@@ -41,6 +41,13 @@ public class RegisterMachineImpl implements RegisterMachine{
 		
 		Class type = element.getClass();
 		while(type!=null&&!this.map.containsKey(type)){
+			Class[] interfaces = type.getInterfaces();
+			if(interfaces!=null){
+				for(int i=0;i<interfaces.length;i++){
+					if(this.map.containsKey(interfaces[i]))
+						return this.map.get(interfaces[i]).newInstance();
+				}
+			}
 			type = type.getSuperclass();
 		}
 		
