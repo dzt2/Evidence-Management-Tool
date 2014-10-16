@@ -16,8 +16,9 @@ public class SInterpreterRegister extends InterpreterRegister{
 	
 	static SInterpreterRegister register=new SInterpreterRegister();
 	
-	Map<Class<Struct>,Interpreter> map = 
-			new HashMap<Class<Struct>,Interpreter>();
+	@SuppressWarnings("rawtypes")
+	Map<Class,Interpreter> map = 
+			new HashMap<Class,Interpreter>();
 
 	protected SInterpreterRegister() {
 		super();
@@ -31,13 +32,14 @@ public class SInterpreterRegister extends InterpreterRegister{
 	 * @exception Exception type==null||iType==null;
 	 * @exception Exception iType.isInstanceable == false;
 	 * */
+	@SuppressWarnings("rawtypes")
 	@Override
-	public synchronized void register(Class<Struct> type,Class<Interpreter> iType) throws Exception{
+	public synchronized void register(Class type,Class iType) throws Exception{
 		if(type==null||iType==null)
 			throw new Exception("Null Type cannot be binded with each other");
 		
 		try{
-			Interpreter interpreter = iType.newInstance();
+			Interpreter interpreter = (Interpreter) iType.newInstance();
 			this.map.put(type, interpreter);
 		}
 		catch(Exception ex){
@@ -84,8 +86,9 @@ public class SInterpreterRegister extends InterpreterRegister{
 	/**
 	 * Logoff a given Struct and its binded interpreter.
 	 * */
+	@SuppressWarnings("rawtypes")
 	@Override
-	public synchronized void logoff(Class<Struct> type){
+	public synchronized void logoff(Class type){
 		if(this.map.containsKey(type))
 			this.map.remove(type);
 	}

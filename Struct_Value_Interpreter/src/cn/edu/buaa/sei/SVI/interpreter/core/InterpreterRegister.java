@@ -9,8 +9,9 @@ public class InterpreterRegister {
 	
 	static InterpreterRegister register=new InterpreterRegister();
 	
-	Map<Class<Struct>,Class<Interpreter>> map = 
-			new HashMap<Class<Struct>,Class<Interpreter>>();
+	@SuppressWarnings("rawtypes")
+	Map<Class,Class> map = 
+			new HashMap<Class,Class>();
 
 	protected InterpreterRegister(){}
 	
@@ -21,7 +22,8 @@ public class InterpreterRegister {
 	 * @exception Exception type==null||iType==null;
 	 * @exception Exception iType.isInstanceable == false;
 	 * */
-	public synchronized void register(Class<Struct> type,Class<Interpreter> iType) throws Exception{
+	@SuppressWarnings("rawtypes")
+	public synchronized void register(Class type,Class iType) throws Exception{
 		if(type==null||iType==null)
 			throw new Exception("Null Type cannot be binded with each other");
 		
@@ -50,7 +52,7 @@ public class InterpreterRegister {
 			if(interfaces!=null){
 				for(int i=0;i<interfaces.length;i++){
 					if(this.map.containsKey(interfaces[i]))
-						return this.map.get(interfaces[i]).newInstance();
+						return (Interpreter) this.map.get(interfaces[i]).newInstance();
 				}
 			}
 			type = type.getSuperclass();
@@ -59,7 +61,7 @@ public class InterpreterRegister {
 		if(type==null)
 			throw new Exception(element.getClass().getName()+" has not been registered");
 		else{
-			return this.map.get(type).newInstance();
+			return (Interpreter) this.map.get(type).newInstance();
 		}
 	}
 	/**
@@ -72,7 +74,8 @@ public class InterpreterRegister {
 	/**
 	 * Logoff a given Struct and its binded interpreter.
 	 * */
-	public synchronized void logoff(Class<Struct> type){
+	@SuppressWarnings("rawtypes")
+	public synchronized void logoff(Class type){
 		if(this.map.containsKey(type))
 			this.map.remove(type);
 	}
