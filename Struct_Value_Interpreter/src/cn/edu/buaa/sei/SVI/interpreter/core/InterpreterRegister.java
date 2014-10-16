@@ -1,25 +1,27 @@
-package cn.edu.buaa.sei.SVI.interpreter.core.impl;
+package cn.edu.buaa.sei.SVI.interpreter.core;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
-import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
-public class RegisterMachineImpl implements RegisterMachine{
-	static RegisterMachine machine=new RegisterMachineImpl();
+public class InterpreterRegister {
+	
+	static InterpreterRegister register=new InterpreterRegister();
 	
 	Map<Class<Struct>,Class<Interpreter>> map = 
 			new HashMap<Class<Struct>,Class<Interpreter>>();
 
-	private RegisterMachineImpl(){}
+	protected InterpreterRegister(){}
 	
-	public static RegisterMachine create(){return machine;}
+	public static InterpreterRegister register(){return register;}
 	
-	@Override
-	public synchronized void register(Class<Struct> type, Class<Interpreter> iType)
-			throws Exception {
+	/**
+	 * Bind Struct with a type of Interpreter.
+	 * @exception Exception type==null||iType==null;
+	 * @exception Exception iType.isInstanceable == false;
+	 * */
+	public synchronized void register(Class<Struct> type,Class<Interpreter> iType) throws Exception{
 		if(type==null||iType==null)
 			throw new Exception("Null Type cannot be binded with each other");
 		
@@ -32,10 +34,13 @@ public class RegisterMachineImpl implements RegisterMachine{
 		
 		this.map.put(type, iType);
 	}
-
+	/**
+	 * Return an Interpreter for interpreting the given Struct.
+	 * @exception Exception struct has not been binded with any interpreter.
+	 * @exception Exception element==null
+	 * */
 	@SuppressWarnings("rawtypes")
-	@Override
-	public synchronized Interpreter get(Struct element) throws Exception {
+	public synchronized Interpreter get(Struct element) throws Exception{
 		if(element==null)
 			throw new Exception("Null element cannot be interpreted");
 		
@@ -57,15 +62,17 @@ public class RegisterMachineImpl implements RegisterMachine{
 			return this.map.get(type).newInstance();
 		}
 	}
-
-	@Override
-	public synchronized boolean isRegistered(Struct element) {
+	/**
+	 * Return whether a given element has been binded with Interpreter.
+	 * */
+	public synchronized boolean isRegistered(Struct element){
 		if(element==null)return false;
 		else return this.map.containsKey(element.getClass());
 	}
-
-	@Override
-	public synchronized void logoff(Class<Struct> type) {
+	/**
+	 * Logoff a given Struct and its binded interpreter.
+	 * */
+	public synchronized void logoff(Class<Struct> type){
 		if(this.map.containsKey(type))
 			this.map.remove(type);
 	}

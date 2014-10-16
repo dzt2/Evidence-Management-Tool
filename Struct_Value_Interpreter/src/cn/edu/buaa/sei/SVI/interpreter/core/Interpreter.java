@@ -6,6 +6,7 @@ import cn.edu.buaa.sei.SVI.struct.core.Struct;
  * <i>Interpreter</i> computes the result of a given Struct Element.
  * */
 public interface Interpreter {
+	static InterpreterRegister register = SInterpreterRegister.register();
 	/**
 	 * Interpret the Struct to produce its result.
 	 * @exception Exception input==null;
