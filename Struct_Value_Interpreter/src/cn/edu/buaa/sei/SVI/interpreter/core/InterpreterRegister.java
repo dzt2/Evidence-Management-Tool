@@ -1,12 +1,15 @@
 package cn.edu.buaa.sei.SVI.interpreter.core;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
 public class InterpreterRegister {
-	
+	@SuppressWarnings("rawtypes")
+	Queue<Class> types = new LinkedList<Class>();
 	static InterpreterRegister register=new InterpreterRegister();
 	
 	@SuppressWarnings("rawtypes")
@@ -47,16 +50,32 @@ public class InterpreterRegister {
 			throw new Exception("Null element cannot be interpreted");
 		
 		Class type = element.getClass();
-		while(type!=null&&!this.map.containsKey(type)){
+		this.types.clear();
+		this.types.add(type);
+		
+		while(!this.types.isEmpty()){
+			type = this.types.poll();
+			if(type==null)continue;
+			
+			if(this.map.containsKey(type))return (Interpreter) this.map.get(type).newInstance();
+			else{
+				this.types.add(type.getSuperclass());
+				Class[] interfaces = type.getInterfaces();
+				if(interfaces!=null)
+					for(int i=0;i<interfaces.length;i++)
+						this.types.add(interfaces[i]);
+			}
+		}
+		/*while(type!=null&&!this.map.containsKey(type)){
 			Class[] interfaces = type.getInterfaces();
 			if(interfaces!=null){
 				for(int i=0;i<interfaces.length;i++){
 					if(this.map.containsKey(interfaces[i]))
-						return (Interpreter) this.map.get(interfaces[i]).newInstance();
+						return this.map.get(interfaces[i]);
 				}
 			}
 			type = type.getSuperclass();
-		}
+		}*/
 		
 		if(type==null)
 			throw new Exception(element.getClass().getName()+" has not been registered");
