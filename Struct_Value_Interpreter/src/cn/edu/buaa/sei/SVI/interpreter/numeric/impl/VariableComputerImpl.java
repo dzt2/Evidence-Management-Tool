@@ -1,13 +1,12 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric.impl;
 
-import cn.edu.buaa.sei.SVI.interpreter.numeric.NumericVariableComputer;
+import cn.edu.buaa.sei.SVI.interpreter.numeric.VariableComputer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.NumericStruct;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Bindable;
 import cn.edu.buaa.sei.SVI.struct.numeric.NumericVariable;
 
-public class NumericVariableComputerImpl implements NumericVariableComputer{
-
+public class VariableComputerImpl implements VariableComputer{
 	@Override
 	public Object interpret(Bindable input) throws Exception {
 		if(input==null)throw new Exception("Null input is invalid");
@@ -40,5 +39,4 @@ public class NumericVariableComputerImpl implements NumericVariableComputer{
 		if(var==null)throw new Exception("Null variable is invalid");
 		return var.read();
 	}
-
 }

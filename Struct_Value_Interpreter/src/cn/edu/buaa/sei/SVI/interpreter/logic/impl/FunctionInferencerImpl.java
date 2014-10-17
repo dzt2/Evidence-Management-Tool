@@ -48,7 +48,8 @@ public class FunctionInferencerImpl implements FunctionInferencer{
 		}
 		
 		if(inferencer!=null){
-			return inferencer.interpret(template);
+			inferencer.interpret(template);
+			return this.getResult(template);
 		}
 		else{
 			FunctionBody body = function.getBody();
@@ -65,4 +66,9 @@ public class FunctionInferencerImpl implements FunctionInferencer{
 		}
 	}
 
+	protected Boolean getResult(LogicFunctionTemplate template) throws Exception{
+		if(template.getOutput()==null)return null;
+		else return template.getOutput().read();
+	}
+	
 }
