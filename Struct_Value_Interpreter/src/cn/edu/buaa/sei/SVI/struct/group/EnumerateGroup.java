@@ -6,6 +6,7 @@ public interface EnumerateGroup extends Group{
 	public void add(Object obj);
 	public void remove(Object obj);
 	public void addAll(EnumerateGroup grp);
+	public void removeAll(EnumerateGroup grp);
 	
 	Iterator<Object> iterator();
 }

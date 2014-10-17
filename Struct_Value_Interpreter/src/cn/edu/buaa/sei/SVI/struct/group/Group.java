@@ -12,7 +12,12 @@ public interface Group {
 	 * The number to present number of elements in infinite group
 	 * */
 	public static final int INFINITE = -1;
-	
+	/**
+	 * Return the cardinality of the set
+	 * */
 	public int size();
+	/**
+	 * Checking whether a given val is in the set.
+	 * */
 	public boolean contains(Object val);
 }
