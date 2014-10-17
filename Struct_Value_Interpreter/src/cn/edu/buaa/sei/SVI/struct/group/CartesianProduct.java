@@ -9,15 +9,6 @@ import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
 public interface CartesianProduct extends GroupOperator,FlexibleOperator{
 	
 	/**
-	 * _Tuple presents the tuple in Cartesian Product {as its element}.
-	 * */
-	public static class _Tuple {
-		Object[] tuple;
-		public void set(Object[] tuple){this.tuple=tuple;}
-		public Object[] get(){return this.tuple;}
-	}
-	
-	/**
 	 * Return all the operands in operator. Each operand is a Struct so to be interpreted further.
 	 * */
 	public GroupStruct[] getOperands();
