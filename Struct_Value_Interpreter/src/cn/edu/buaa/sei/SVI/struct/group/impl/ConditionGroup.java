@@ -43,58 +43,70 @@ public class ConditionGroup implements AbstractGroup{
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		if(this.cache==null)this.load();
+		return this.cache.size();
 	}
 	@Override
 	public Boolean contains(Object val) {
-		Boolean in = this.domain.contains(val);
-		if(in==null||in==true){
+		
+		if(this.cache!=null)return this.cache.contains(val);
+		else{
 			try{
 				this.variable.assign(val);
-				Boolean in2 = this.inferencer.interpret(function);
-				if(in2==null)return null;
-				else if(in2==true)return in;
-				else return false;
+			}catch(Exception ex){
+				// Type match failed...
+				System.err.println(ex.getMessage());
+				return false;
+			}
+			
+			Boolean in1=null;
+			try{
+				in1 = this.inferencer.interpret(function);
 			}catch(Exception ex){
 				System.err.println(ex.getMessage());
 				return null;
 			}
+			
+			if(in1!=null&&in1==false)return false;
+			
+			Boolean in2 = this.domain.contains(val);
+			
+			if(in2!=null&&in2==false)return false;
+			
+			return ((in1!=null)&&(in2!=null))?true:null;
 		}
-		else
-			return false;
 	}
 	
 	@Override
 	public void add(Object obj) {
-		// TODO Auto-generated method stub
-		
+		System.err.println("AbstractGroup cannot be modified");
 	}
 	@Override
 	public void remove(Object obj) {
-		// TODO Auto-generated method stub
-		
+		System.err.println("AbstractGroup cannot be modified");
 	}
 	@Override
 	public void addAll(Group grp) {
-		// TODO Auto-generated method stub
-		
+		System.err.println("AbstractGroup cannot be modified");
 	}
 	@Override
 	public void removeAll(Group grp) {
-		
+		System.err.println("AbstractGroup cannot be modified");
 	}
 
 	@Override
 	public Iterator<Object> iterator() {
-		try {
-			this.load();
-			if(this.cache!=null)
-				return this.cache.iterator();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
+		if(this.cache==null){
+			try {
+				this.load();
+				if(this.cache!=null)
+					return this.cache.iterator();
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+			return null;
 		}
-		return null;
+		else{return this.cache.iterator();}
 	}
 
 	@Override
@@ -104,7 +116,7 @@ public class ConditionGroup implements AbstractGroup{
 	@Override
 	public Group getDomain() {return this.domain;}
 
-	protected void load() throws Exception{
+	protected void load(){
 		LogicFunction[] conditions = new LogicFunction[LOAD_DEPTH];
 		int k=0;
 		conditions[k++]=this.getCondition();
@@ -112,7 +124,12 @@ public class ConditionGroup implements AbstractGroup{
 		
 		while(cur instanceof AbstractGroup){
 			if(k>=LOAD_DEPTH)
-				throw new Exception("Out of Limitation of Loading Depth: "+LOAD_DEPTH);
+				try {
+					throw new Exception("Out of Limitation of Loading Depth: "+LOAD_DEPTH);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			
 			conditions[k++]=((AbstractGroup)cur).getCondition();
 			cur = ((AbstractGroup)cur).getDomain();
@@ -120,27 +137,38 @@ public class ConditionGroup implements AbstractGroup{
 		
 		Iterator<Object> itor = cur.iterator();
 		if(itor==null)
-			throw new Exception("Interpretation for iterator of domain failed");
+			try {
+				throw new Exception("Interpretation for iterator of domain failed");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		LogicFunction[] cacheConditions = new LogicFunction[k];
 		for(int i=0;i<k;i++)
 			cacheConditions[i]=conditions[i];
 		
-		LogicExpression condition = LogicFactory.createConjunction(cacheConditions);
-		
-		Inferencer inferencer = (Inferencer) Interpreter.register.get(condition);
-		if(inferencer==null)
-			throw new Exception("Interpreter has not been registered: "+condition.getClass().getCanonicalName());
-		
-		this.cache = new HashSet<Object>();
-		while(itor.hasNext()){
-			Object val = itor.next();
+		LogicExpression condition;
+		try {
+			condition = LogicFactory.createConjunction(cacheConditions);
+			Inferencer inferencer = (Inferencer) Interpreter.register.get(condition);
+			if(inferencer==null)
+				throw new Exception("Interpreter has not been registered: "+condition.getClass().getCanonicalName());
 			
-			this.variable.assign(val);
-			Boolean in = inferencer.interpret(function);
-			if(in!=null&&in==true)
-				this.cache.add(val);
+			this.cache = new HashSet<Object>();
+			while(itor.hasNext()){
+				Object val = itor.next();
+				
+				this.variable.assign(val);
+				Boolean in = inferencer.interpret(function);
+				if(in!=null&&in==true)
+					this.cache.add(val);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	protected void warning(){System.err.println("AbstractGroup cannot be modified.");}
 	
 }
