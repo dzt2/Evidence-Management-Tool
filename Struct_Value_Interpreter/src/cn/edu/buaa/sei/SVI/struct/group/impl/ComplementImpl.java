@@ -7,15 +7,21 @@ import cn.edu.buaa.sei.SVI.struct.group.Complement;
 
 public class ComplementImpl extends GroupOperatorImpl implements Complement{
 	
-	GroupStruct operand;
+	GroupStruct operand,domain;
 
-	ComplementImpl(GroupStruct operand,CompositeStruct container) throws Exception {
+	/**
+	 * Children: [operand, domain]
+	 * */
+	ComplementImpl(GroupStruct operand,GroupStruct domain,CompositeStruct container) throws Exception {
 		super(container);
 		
-		if(operand==null)
-			throw new Exception("Null Operand is invalid");
+		if(operand==null||domain==null)
+			throw new Exception("Null Operand|Domain is invalid");
 		this.operand=operand;
+		this.domain = domain;
+		
 		this.container.addChildStruct(operand);
+		this.container.addChildStruct(domain);
 	}
 
 	@Override
@@ -45,4 +51,9 @@ public class ComplementImpl extends GroupOperatorImpl implements Complement{
 	
 	@Override
 	public String toString(){return "~"+this.operand.toString();}
+
+	@Override
+	public GroupStruct getDomain() {
+		return this.domain;
+	}
 }

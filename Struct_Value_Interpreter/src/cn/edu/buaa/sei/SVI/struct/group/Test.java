@@ -31,7 +31,7 @@ public class Test {
 		
 		GroupExpression t3 = GroupFactory.createDifference(C, D);
 		GroupExpression t41 = GroupFactory.createUnion(new GroupStruct[]{B,E});
-		GroupExpression t42 = GroupFactory.createComplement(A);
+		GroupExpression t42 = GroupFactory.createComplement(A,C);
 		GroupExpression t4 = GroupFactory.createDifference(t41, t42);
 		
 		GroupExpression x = GroupFactory.createIntersection(new GroupStruct[]{A,B,t3,t4});

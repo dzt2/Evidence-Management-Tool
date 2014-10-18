@@ -9,6 +9,10 @@ public interface Complement extends GroupOperator,UnaryOperator{
 	 * */
 	public GroupStruct getOperand();
 	/**
+	 * Return the universal domain of the complement.
+	 * */
+	public GroupStruct getDomain();
+	/**
 	 * Set the operand of the UnaryOperator.
 	 * @exception Exception operand==null
 	 * */

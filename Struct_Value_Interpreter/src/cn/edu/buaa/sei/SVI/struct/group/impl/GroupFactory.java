@@ -41,8 +41,8 @@ public class GroupFactory {
 		CartesianProduct op = new CartesianProductImpl(operands,new StructArray());
 		return new GroupExpressionImpl(op,new StructArray());
 	}
-	public static GroupExpression createComplement(GroupStruct operand) throws Exception{
-		Complement op = new ComplementImpl(operand,new StructArray());
+	public static GroupExpression createComplement(GroupStruct operand,GroupStruct domain) throws Exception{
+		Complement op = new ComplementImpl(operand,domain,new StructArray());
 		return new GroupExpressionImpl(op,new StructArray());
 	}
 	public static GroupExpression createDifference(GroupStruct left,GroupStruct right) throws Exception{

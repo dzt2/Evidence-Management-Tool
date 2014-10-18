@@ -20,8 +20,6 @@ import cn.edu.buaa.sei.SVI.struct.group.Group;
 import cn.edu.buaa.sei.SVI.struct.group.Intersection;
 import cn.edu.buaa.sei.SVI.struct.group.impl.ConditionGroup;
 import cn.edu.buaa.sei.SVI.struct.group.impl.SetGroup;
-import cn.edu.buaa.sei.SVI.struct.logic.Conjunction;
-import cn.edu.buaa.sei.SVI.struct.logic.LogicExpression;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicFunction;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicFunctionTemplate;
 import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
@@ -85,20 +83,27 @@ public class IntersectionInterpreterImpl implements IntersectionInterpreter{
 				operands[i]=alist.get(i).getCondition();
 			
 			function.setBody(new FunctionBodyAPIImpl(){
-				LogicExpression expr = LogicFactory.createConjunction(operands);
 				@Override
 				public void execute() throws Exception {
-					Object val = this.getFunction().getTemplate().getArguments()[0];
+					Object val = this.getFunction().getTemplate().getArguments()[0].read();
 					
-					Conjunction op = (Conjunction) expr.getOperator();
-					LogicStruct[] operands = op.getOperands();
+					boolean containNull = false;
+					Boolean result=null;
 					for(int i=0;i<operands.length;i++){
 						LogicFunction fi = (LogicFunction) operands[i];
+						Inferencer inferencer = (Inferencer) register.get(fi);
 						fi.getTemplate().getArguments()[0].assign(val);
+						
+						result = inferencer.interpret(fi);
+						if(result==null)containNull=true;
+						else if(result==false){
+							this.getFunction().getTemplate().getOutput().assign(false);
+							return;
+						}
 					}
 					
-					Inferencer inferencer = (Inferencer) register.get(expr);
-					Boolean result = inferencer.interpret(expr);
+					if(containNull)result=null;
+					else result=true;
 					
 					this.getFunction().getTemplate().getOutput().assign(result);
 				}});
