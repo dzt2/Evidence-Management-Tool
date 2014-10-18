@@ -7,7 +7,6 @@ import cn.edu.buaa.sei.SVI.interpreter.logic.GroupEqualInferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
-import cn.edu.buaa.sei.SVI.struct.group.EnumerateGroup;
 import cn.edu.buaa.sei.SVI.struct.group.Group;
 import cn.edu.buaa.sei.SVI.struct.group.GroupEqual;
 
@@ -53,29 +52,28 @@ public class GroupEqualInferencerImpl implements GroupEqualInferencer{
 		
 		if(xv==null||yv==null)return null;
 		
-		Boolean r1 = this.contain(xv, yv);
-		if(r1==null)return null;
-		else if(!r1)return false;
-		else{
-			Boolean r2 = this.contain(yv, xv);
-			return r2;
+		if(xv.size()!=yv.size())return false;
+		
+		Iterator<Object> xitor = xv.iterator();
+		Iterator<Object> yitor = yv.iterator();
+		
+		boolean containNull = false;
+		while(xitor.hasNext()){
+			Boolean in = yv.contains(xitor.next());
+			if(in==null)containNull=true;
+			else if(in==false)return false;
 		}
-	}
-	
-	/**
-	 * Return whether B contains A
-	 * */
-	Boolean contain(Group A,Group B){
-		if(A instanceof EnumerateGroup){
-			Iterator<Object> itor = ((EnumerateGroup) A).iterator();
-			while(itor.hasNext()){
-				if(!B.contains(itor.next()))
-					return false;
-			}
-			return true;
+		
+		if(containNull)return null;
+		
+		while(yitor.hasNext()){
+			Boolean in = xv.contains(yitor.next());
+			if(in==null)containNull=true;
+			else if(in==false)return false;
 		}
-		else{
-			return null;
-		}
+		
+		if(containNull)return null;
+		
+		return true;
 	}
 }

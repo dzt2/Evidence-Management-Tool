@@ -2,9 +2,9 @@ package cn.edu.buaa.sei.SVI.struct.group.impl;
 
 import java.util.Iterator;
 
-import cn.edu.buaa.sei.SVI.struct.group.EnumerateGroup;
+import cn.edu.buaa.sei.SVI.struct.group.Group;
 
-public class ListGroup implements EnumerateGroup{
+public class ListGroup implements Group{
 	static final int MAXSIZE = 4048*4;
 	int length=0;
 	Object[] list=new Object[MAXSIZE];
@@ -12,7 +12,7 @@ public class ListGroup implements EnumerateGroup{
 	@Override
 	public int size() {return this.length;}
 	@Override
-	public boolean contains(Object val) {
+	public Boolean contains(Object val) {
 		int t = this.search(val, 0);
 		return t>=0;
 	}
@@ -42,14 +42,14 @@ public class ListGroup implements EnumerateGroup{
 		this.length--;
 	}
 	@Override
-	public void addAll(EnumerateGroup grp) {
+	public void addAll(Group grp) {
 		if(grp==null)return;
 		Iterator<Object> itor = grp.iterator();
 		while(itor.hasNext())
 			this.add(itor.next());
 	}
 	@Override
-	public void removeAll(EnumerateGroup grp) {
+	public void removeAll(Group grp) {
 		if(grp==null)return;
 		Iterator<Object> itor = grp.iterator();
 		while(itor.hasNext())

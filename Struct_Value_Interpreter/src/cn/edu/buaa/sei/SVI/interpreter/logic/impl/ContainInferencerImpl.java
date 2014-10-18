@@ -8,7 +8,6 @@ import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
 import cn.edu.buaa.sei.SVI.struct.group.Contain;
-import cn.edu.buaa.sei.SVI.struct.group.EnumerateGroup;
 import cn.edu.buaa.sei.SVI.struct.group.Group;
 
 public class ContainInferencerImpl implements ContainInferencer{
@@ -59,18 +58,13 @@ public class ContainInferencerImpl implements ContainInferencer{
 		
 		if(xv==null||yv==null)return null;
 		
-		// special
-		if(xv instanceof EnumerateGroup){
-			Iterator<Object> itor = ((EnumerateGroup) xv).iterator();
-			while(itor.hasNext()){
-				if(!yv.contains(itor.next()))return false;
-			}
-			return true;
+		// check whether x is in y
+		Iterator<Object> itor = xv.iterator();
+		while(itor.hasNext()){
+			Boolean in = yv.contains(itor.next());
+			if(in==null)return null;
+			else if(in==false)return false;
 		}
-		else{
-			// does not know how now
-			return null;
-		}
-		
+		return true;
 	}
 }
