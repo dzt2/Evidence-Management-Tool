@@ -2,6 +2,8 @@ package cn.edu.buaa.sei.SVI.interpreter.logic;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
+import cn.edu.buaa.sei.SVI.interpreter.logic.impl.AtMostInferencerImpl;
+import cn.edu.buaa.sei.SVI.interpreter.logic.impl.BetweenInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.ConjunctionInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.DisjunctionInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.EquivalenceInferencerImpl;
@@ -14,6 +16,9 @@ import cn.edu.buaa.sei.SVI.interpreter.logic.impl.UniversalInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.VariableInferencerImpl;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Bindable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
+import cn.edu.buaa.sei.SVI.struct.logic.AtLeast;
+import cn.edu.buaa.sei.SVI.struct.logic.AtMost;
+import cn.edu.buaa.sei.SVI.struct.logic.Between;
 import cn.edu.buaa.sei.SVI.struct.logic.Conjunction;
 import cn.edu.buaa.sei.SVI.struct.logic.Disjunction;
 import cn.edu.buaa.sei.SVI.struct.logic.Equivalence;
@@ -31,8 +36,6 @@ public class Test {
 	static InterpreterRegister register;
 	
 	public static void main(String[] args) {
-		
-		
 		try {
 			register();
 			test2();
@@ -54,6 +57,9 @@ public class Test {
 		register.register((Class)Equivalence.class, (Class)EquivalenceInferencerImpl.class);
 		register.register((Class)Universal.class, (Class)UniversalInferencerImpl.class);
 		register.register((Class)Existential.class, (Class)ExistentialInferencerImpl.class);
+		register.register(AtLeast.class, AtMostInferencerImpl.class);
+		register.register(AtMost.class, AtMostInferencerImpl.class);
+		register.register(Between.class, BetweenInferencerImpl.class);
 		register.register((Class)LogicFunction.class, (Class)FunctionInferencerImpl.class);
 		return register;
 	}
