@@ -50,11 +50,11 @@
 	</Pair>
 	<Pair>
 		<Struct>cn.edu.buaa.sei.SVI.struct.logic.DiscourseDomain</Struct>
-		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.logic.impl.UniversalInferencerImpl</Interpreter>
+		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.core.impl.MemoryReaderImpl</Interpreter>
 	</Pair>
 	<Pair>
 		<Struct>cn.edu.buaa.sei.SVI.struct.logic.Universal</Struct>
-		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.core.impl.MemoryReaderImpl</Interpreter>
+		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.logic.impl.UniversalInferencerImpl</Interpreter>
 	</Pair>
 	
 	<Pair>
