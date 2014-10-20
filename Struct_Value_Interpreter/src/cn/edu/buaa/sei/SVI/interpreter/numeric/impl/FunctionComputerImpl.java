@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.Computer;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.FunctionComputer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -43,7 +44,7 @@ public class FunctionComputerImpl implements FunctionComputer{
 			throw new Exception("Structure Error: null template");
 		
 		Computer computer=null;
-		try{computer=(Computer) register.get(template);}
+		try{computer=(Computer) RegisterMachine.getRegister().get(template);}
 		catch(Exception ex){computer=null;}
 		
 		if(computer==null){

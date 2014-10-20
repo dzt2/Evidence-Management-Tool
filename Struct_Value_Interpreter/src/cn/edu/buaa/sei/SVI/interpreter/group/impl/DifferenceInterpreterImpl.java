@@ -2,8 +2,7 @@ package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 
 
 import java.util.Iterator;
-
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.DifferenceInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -39,9 +38,9 @@ public class DifferenceInterpreterImpl implements DifferenceInterpreter{
 		if(left==null||right==null)
 			throw new Exception("Structure Error: null operands");
 		
-		GroupInterpreter li = (GroupInterpreter) Interpreter.register.get(left);
+		GroupInterpreter li = (GroupInterpreter) RegisterMachine.getRegister().get(left);
 		if(li==null)throw new Exception("Left: "+left.getClass().getCanonicalName()+" has not been registered");
-		GroupInterpreter ri = (GroupInterpreter) Interpreter.register.get(right);
+		GroupInterpreter ri = (GroupInterpreter) RegisterMachine.getRegister().get(right);
 		if(ri==null)throw new Exception("Right: "+right.getClass().getCanonicalName()+" has not been registered");
 		
 		Group a = li.interpret(left);

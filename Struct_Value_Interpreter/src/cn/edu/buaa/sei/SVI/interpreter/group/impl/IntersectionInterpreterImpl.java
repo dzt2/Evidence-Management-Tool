@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.IntersectionInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
@@ -61,7 +62,7 @@ public class IntersectionInterpreterImpl implements IntersectionInterpreter{
 		alist.clear(); blist.clear();
 		
 		for(int i=0;i<grps.length;i++){
-			GroupInterpreter interpreter = (GroupInterpreter) register.get(grps[i]);
+			GroupInterpreter interpreter = (GroupInterpreter) RegisterMachine.getRegister().get(grps[i]);
 			Group group = interpreter.interpret(grps[i]);
 			if(group==null)throw new Exception("operands["+i+"] interpretation failed: "+grps[i].hashCode());
 			
@@ -91,7 +92,7 @@ public class IntersectionInterpreterImpl implements IntersectionInterpreter{
 					Boolean result=null;
 					for(int i=0;i<operands.length;i++){
 						LogicFunction fi = (LogicFunction) operands[i];
-						Inferencer inferencer = (Inferencer) register.get(fi);
+						Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(fi);
 						fi.getTemplate().getArguments()[0].assign(val);
 						
 						result = inferencer.interpret(fi);

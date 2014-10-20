@@ -2,6 +2,7 @@ package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
 import java.util.Iterator;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.ContainInferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -45,8 +46,8 @@ public class ContainInferencerImpl implements ContainInferencer{
 		if(x==null||y==null)
 			throw new Exception("Structure Error: null operands");
 		
-		GroupInterpreter xi = (GroupInterpreter) register.get(x);
-		GroupInterpreter yi = (GroupInterpreter) register.get(y);
+		GroupInterpreter xi = (GroupInterpreter) RegisterMachine.getRegister().get(x);
+		GroupInterpreter yi = (GroupInterpreter) RegisterMachine.getRegister().get(y);
 		
 		if(xi==null)
 			throw new Exception("Left operand: "+x.getClass().getCanonicalName()+" has not been registered");

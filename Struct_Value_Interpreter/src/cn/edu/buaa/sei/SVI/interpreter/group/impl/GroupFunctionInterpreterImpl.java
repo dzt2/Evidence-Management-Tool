@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupFunctionInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -37,7 +38,7 @@ public class GroupFunctionInterpreterImpl implements GroupFunctionInterpreter{
 		
 		GroupInterpreter interpreter = null;
 		try{
-			interpreter = (GroupInterpreter) register.get(template);
+			interpreter = (GroupInterpreter) RegisterMachine.getRegister().get(template);
 		}
 		catch(Exception ex){
 			interpreter = null;

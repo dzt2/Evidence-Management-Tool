@@ -1,7 +1,7 @@
 package cn.edu.buaa.sei.SVI.struct.logic.test;
 
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.AtMostInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.BetweenInferencerImpl;
@@ -33,7 +33,7 @@ import cn.edu.buaa.sei.SVI.struct.logic.Universal;
 public class Test2 {
 
 	static Constructor constructor;
-	static InterpreterRegister register=Interpreter.register;
+	static InterpreterRegister register=RegisterMachine.register;
 	
 	public static void main(String[] args) {
 		try {

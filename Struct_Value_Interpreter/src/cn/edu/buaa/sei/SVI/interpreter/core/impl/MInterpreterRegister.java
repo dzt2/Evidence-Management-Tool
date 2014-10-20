@@ -1,9 +1,11 @@
 package cn.edu.buaa.sei.SVI.interpreter.core.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
@@ -18,7 +20,7 @@ public class MInterpreterRegister implements InterpreterRegister{
 			new HashMap<Class,Class>();
 
 	public static InterpreterRegister register = new MInterpreterRegister();
-	public static InterpreterRegister create(){return register;}
+	public synchronized static InterpreterRegister create(){return register;}
 	
 	private MInterpreterRegister(){}
 	
@@ -99,5 +101,27 @@ public class MInterpreterRegister implements InterpreterRegister{
 	public synchronized void logoff(Class type){
 		if(this.map.containsKey(type))
 			this.map.remove(type);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public synchronized Set<Class> getRegisteredClasses() {
+		return this.map.keySet();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public synchronized Collection<Class> getInterpreterClasses() {
+		return this.map.values();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public synchronized Interpreter get(Class stype) throws Exception {
+		if(stype==null)throw new Exception("Null Struct Class is invalid");
+		if(this.map.containsKey(stype))throw new Exception("Not Registered: "+stype.getCanonicalName());
+		
+		Class itype = this.map.get(stype);
+		return (Interpreter) itype.newInstance();
 	}
 }

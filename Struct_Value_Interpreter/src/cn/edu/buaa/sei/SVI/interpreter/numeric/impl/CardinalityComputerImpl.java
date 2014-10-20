@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.CardinalityComputer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -36,7 +37,7 @@ public class CardinalityComputerImpl implements CardinalityComputer{
 		if(operand==null)
 			throw new Exception("Structure Error: null operand");
 		
-		GroupInterpreter interpreter = (GroupInterpreter) register.get(operand);
+		GroupInterpreter interpreter = (GroupInterpreter) RegisterMachine.getRegister().get(operand);
 		if(interpreter==null)
 			throw new Exception("Operand: "+operand.getClass().getCanonicalName()+" has not been registered");
 		

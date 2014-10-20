@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.ImplicationInferencer;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -41,8 +42,8 @@ public class ImplicationInferencerImpl implements ImplicationInferencer{
 		if(left==null||right==null)
 			throw new Exception("Structure Errors: null operands");
 		
-		Inferencer li = (Inferencer) register.get(left);
-		Inferencer ri = (Inferencer) register.get(right);
+		Inferencer li = (Inferencer) RegisterMachine.getRegister().get(left);
+		Inferencer ri = (Inferencer) RegisterMachine.getRegister().get(right);
 		
 		if(li==null)
 			throw new Exception("Left operand: "+left.getClass().getCanonicalName()+" has not been registered");

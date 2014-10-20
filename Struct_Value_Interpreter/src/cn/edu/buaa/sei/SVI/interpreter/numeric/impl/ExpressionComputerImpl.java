@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.Computer;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.ExpressionComputer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -34,7 +35,7 @@ public class ExpressionComputerImpl implements ExpressionComputer{
 		NumericOperator op = expr.getOperator();
 		if(op==null)throw new Exception("Structure Error: null operator");
 		
-		Computer c = (Computer) register.get(op);
+		Computer c = (Computer)RegisterMachine.getRegister().get(op);
 		if(c==null)
 			throw new Exception("Operator: "+op.getClass().getCanonicalName()+" has not been registered");
 		

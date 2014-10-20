@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.ExpressionInferencer;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -34,7 +35,7 @@ public class ExpressionInferencerImpl implements ExpressionInferencer{
 		LogicOperator op = expr.getOperator();
 		if(op==null)throw new Exception("Structure Error: null operator");
 		
-		Inferencer inferencer = (Inferencer) register.get(op);
+		Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(op);
 		return inferencer.interpret(op);
 	}
 	

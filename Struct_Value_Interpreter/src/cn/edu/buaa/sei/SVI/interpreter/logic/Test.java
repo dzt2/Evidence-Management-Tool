@@ -2,34 +2,11 @@ package cn.edu.buaa.sei.SVI.interpreter.logic;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.AtLeastInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.AtMostInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.BetweenInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.ConjunctionInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.DisjunctionInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.EquivalenceInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.ExistentialInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.ExpressionInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.FunctionInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.ImplicationInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.NegationInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.UniversalInferencerImpl;
-import cn.edu.buaa.sei.SVI.interpreter.logic.impl.VariableInferencerImpl;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Bindable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
-import cn.edu.buaa.sei.SVI.struct.logic.AtLeast;
-import cn.edu.buaa.sei.SVI.struct.logic.AtMost;
-import cn.edu.buaa.sei.SVI.struct.logic.Between;
-import cn.edu.buaa.sei.SVI.struct.logic.Conjunction;
-import cn.edu.buaa.sei.SVI.struct.logic.Disjunction;
-import cn.edu.buaa.sei.SVI.struct.logic.Equivalence;
-import cn.edu.buaa.sei.SVI.struct.logic.Existential;
-import cn.edu.buaa.sei.SVI.struct.logic.Implication;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicExpression;
-import cn.edu.buaa.sei.SVI.struct.logic.LogicFunction;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicVariable;
-import cn.edu.buaa.sei.SVI.struct.logic.Negation;
-import cn.edu.buaa.sei.SVI.struct.logic.Universal;
 import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
 
 public class Test {
@@ -46,22 +23,8 @@ public class Test {
 		}
 	}
 	
-	@SuppressWarnings({ "rawtypes" })
 	public static InterpreterRegister register() throws Exception{
-		register = Interpreter.register;
-		register.register((Class)LogicVariable.class, (Class)VariableInferencerImpl.class);
-		register.register((Class)LogicExpression.class, (Class)ExpressionInferencerImpl.class);
-		register.register((Class)Conjunction.class, (Class)ConjunctionInferencerImpl.class);
-		register.register((Class)Disjunction.class, (Class)DisjunctionInferencerImpl.class);
-		register.register((Class)Negation.class, (Class)NegationInferencerImpl.class);
-		register.register((Class)Implication.class, (Class)ImplicationInferencerImpl.class);
-		register.register((Class)Equivalence.class, (Class)EquivalenceInferencerImpl.class);
-		register.register((Class)Universal.class, (Class)UniversalInferencerImpl.class);
-		register.register((Class)Existential.class, (Class)ExistentialInferencerImpl.class);
-		register.register(AtLeast.class, AtLeastInferencerImpl.class);
-		register.register(AtMost.class, AtMostInferencerImpl.class);
-		register.register(Between.class, BetweenInferencerImpl.class);
-		register.register((Class)LogicFunction.class, (Class)FunctionInferencerImpl.class);
+		register = RegisterMachine.getRegister();
 		return register;
 	}
 

@@ -1,8 +1,7 @@
 package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 
 import java.util.Iterator;
-
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.ComplementInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
@@ -54,9 +53,9 @@ public class ComplementInterpreterImpl implements ComplementInterpreter{
 		if(domain==null||operand==null)
 			throw new Exception("Structure Error: null domain|operand");
 		
-		GroupInterpreter di = (GroupInterpreter) Interpreter.register.get(domain);
+		GroupInterpreter di = (GroupInterpreter) RegisterMachine.register.get(domain);
 		if(di==null)throw new Exception("Domain: "+domain.getClass().getCanonicalName()+" has not been registered");
-		GroupInterpreter oi = (GroupInterpreter) Interpreter.register.get(operand);
+		GroupInterpreter oi = (GroupInterpreter) RegisterMachine.register.get(operand);
 		if(oi==null)throw new Exception("Operand: "+operand.getClass().getCanonicalName()+" has not been registered");
 		
 		Group dg = di.interpret(domain);
@@ -75,7 +74,7 @@ public class ComplementInterpreterImpl implements ComplementInterpreter{
 				public void execute() throws Exception {
 					Object val = this.getFunction().getTemplate().getArguments()[0].read();
 					
-					Inferencer inferencer = (Inferencer) Interpreter.register.get(condition);
+					Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(condition);
 					condition.getTemplate().getArguments()[0].assign(val);
 					Boolean result = inferencer.interpret(condition);
 					

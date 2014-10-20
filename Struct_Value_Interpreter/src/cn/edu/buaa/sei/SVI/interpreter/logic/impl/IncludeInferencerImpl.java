@@ -1,6 +1,7 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.IncludeInferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -44,8 +45,8 @@ public class IncludeInferencerImpl implements IncludeInferencer{
 		if(x==null||y==null)
 			throw new Exception("Structure Error: null operands");
 		
-		Interpreter xi = (Interpreter) register.get(x);
-		GroupInterpreter yi = (GroupInterpreter) register.get(y);
+		Interpreter xi = (Interpreter) RegisterMachine.getRegister().get(x);
+		GroupInterpreter yi = (GroupInterpreter) RegisterMachine.getRegister().get(y);
 		
 		if(xi==null)
 			throw new Exception("Left operand: "+x.getClass().getCanonicalName()+" has not been registered");

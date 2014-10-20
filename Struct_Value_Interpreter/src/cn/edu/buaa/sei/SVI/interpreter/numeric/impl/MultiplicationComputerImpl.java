@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.Computer;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.MultiplicationComputer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -32,8 +33,8 @@ public class MultiplicationComputerImpl implements MultiplicationComputer{
 		NumericStruct left = op.getLeftOperand();
 		NumericStruct right = op.getRightOperand();
 		
-		Computer li = (Computer) register.get(left);
-		Computer ri = (Computer) register.get(right);
+		Computer li = (Computer) RegisterMachine.getRegister().get(left);
+		Computer ri = (Computer) RegisterMachine.getRegister().get(right);
 		
 		if(li==null)
 			throw new Exception("Left operand: "+left.getClass().getCanonicalName()+" has not been registered");

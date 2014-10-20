@@ -3,8 +3,7 @@ package cn.edu.buaa.sei.SVI.struct.group.impl;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.group.AbstractGroup;
@@ -151,7 +150,7 @@ public class ConditionGroup implements AbstractGroup{
 		LogicExpression condition;
 		try {
 			condition = LogicFactory.createConjunction(cacheConditions);
-			Inferencer inferencer = (Inferencer) Interpreter.register.get(condition);
+			Inferencer inferencer = (Inferencer) RegisterMachine.register.get(condition);
 			if(inferencer==null)
 				throw new Exception("Interpreter has not been registered: "+condition.getClass().getCanonicalName());
 			

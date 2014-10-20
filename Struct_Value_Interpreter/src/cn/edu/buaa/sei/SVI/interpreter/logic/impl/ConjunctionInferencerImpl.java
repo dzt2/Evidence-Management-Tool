@@ -1,6 +1,7 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.ConjunctionInferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
@@ -41,7 +42,7 @@ public class ConjunctionInferencerImpl implements ConjunctionInferencer{
 		
 		boolean containNull = false;
 		for(int i=0;i<operands.length;i++){
-			Interpreter interpreter = register.get(operands[i]);
+			Interpreter interpreter = RegisterMachine.getRegister().get(operands[i]);
 			if(interpreter==null)
 				throw new Exception("operands["+i+"]: "+operands[i].getClass().getCanonicalName()+" has not been registered");
 			

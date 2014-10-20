@@ -1,5 +1,8 @@
 package cn.edu.buaa.sei.SVI.interpreter.core;
 
+import java.util.Collection;
+import java.util.Set;
+
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
 /**
@@ -20,6 +23,11 @@ public interface InterpreterRegister {
 	 * */
 	public Interpreter get(Struct element) throws Exception;
 	/**
+	 * Return an Interpreter for interpreting a kind of Structs {stype}
+	 * */
+	@SuppressWarnings("rawtypes")
+	public Interpreter get(Class stype) throws Exception;
+	/**
 	 * Return whether a given element has been binded with Interpreter.
 	 * */
 	public boolean isRegistered(Struct element);
@@ -28,4 +36,16 @@ public interface InterpreterRegister {
 	 * */
 	@SuppressWarnings("rawtypes")
 	public void logoff(Class type);
+	/**
+	 * Return all the registered classes of Struct
+	 * */
+	@SuppressWarnings("rawtypes")
+	public Set<Class> getRegisteredClasses();
+	/**
+	 * Return all the classes of the interpreters
+	 * */
+	@SuppressWarnings("rawtypes")
+	public Collection<Class> getInterpreterClasses();
+	
+	
 }

@@ -2,6 +2,7 @@ package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 
 import java.util.Iterator;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupFunctionTemplateInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -56,7 +57,7 @@ public class FilterTemplateInterpreter implements GroupFunctionTemplateInterpret
 		if(condition==null)
 			throw new Exception("Null assignment of argument: condition");
 		
-		Inferencer inferencer = (Inferencer) register.get(condition);
+		Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(condition);
 		
 		Iterator<Object> itor = group.iterator();
 		Group rg = new SetGroup();

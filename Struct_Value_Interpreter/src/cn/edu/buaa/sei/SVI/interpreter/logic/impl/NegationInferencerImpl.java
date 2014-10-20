@@ -1,6 +1,7 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.NegationInferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
@@ -37,7 +38,7 @@ public class NegationInferencerImpl implements NegationInferencer{
 		if(operand==null)
 			throw new Exception("Structure Error: null operand");
 		
-		Interpreter interpreter = register.get(operand);
+		Interpreter interpreter = RegisterMachine.getRegister().get(operand);
 		if(interpreter==null)
 			throw new Exception("operand: "+operand.getClass().getCanonicalName()+" has not been registered");
 		

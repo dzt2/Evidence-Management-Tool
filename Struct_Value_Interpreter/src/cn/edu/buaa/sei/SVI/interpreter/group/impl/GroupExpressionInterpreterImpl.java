@@ -1,6 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupExpressionInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -34,7 +34,7 @@ public class GroupExpressionInterpreterImpl implements GroupExpressionInterprete
 		GroupOperator op = expr.getOperator();
 		if(op==null)throw new Exception("Structure Error: null operator");
 		
-		GroupInterpreter interpreter = (GroupInterpreter) Interpreter.register.get(op);
+		GroupInterpreter interpreter = (GroupInterpreter)RegisterMachine.getRegister().get(op);
 		
 		return interpreter.interpret(op);
 	}

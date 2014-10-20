@@ -3,6 +3,7 @@ package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 import java.util.Iterator;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupFunctionTemplateInterpreter;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
@@ -53,7 +54,7 @@ public class MapTemplateInterpreter implements GroupFunctionTemplateInterpreter{
 		Function function = (Function) f.read();
 		if(function==null)throw new Exception("Null assignment: function");
 		
-		Interpreter interpreter = register.get(function);
+		Interpreter interpreter = RegisterMachine.getRegister().get(function);
 		if(interpreter==null)
 			throw new Exception("Interpretation failed: "+function.getClass().getCanonicalName()+" has not been registered");
 		

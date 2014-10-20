@@ -2,6 +2,7 @@ package cn.edu.buaa.sei.SVI.interpreter.core;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -57,10 +58,12 @@ public class RegisterMachine {
 			
 			Attr attr = root.getAttributeNode("type");
 			if(attr.getValue().equals(DYNAMIC)){
-				register = MInterpreterRegister.register;
+				InterpreterRegister newOne = MInterpreterRegister.register;
+				resetRegister(newOne);
 			}
 			else if(attr.getValue().equals(STATIC)){
-				register = SInterpreterRegister.register;
+				InterpreterRegister newOne = SInterpreterRegister.register;
+				resetRegister(newOne);
 			}
 			else{throw new Exception("Wrong Attribute Value: "+attr.getTextContent());}
 			
@@ -98,5 +101,27 @@ public class RegisterMachine {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	protected static void resetRegister(InterpreterRegister newOne) throws Exception{
+		if(newOne==null||register==newOne)return;
+		
+		if(register==null){
+			register=newOne;
+			return;
+		}
+		
+		Set<Class> keys = register.getRegisteredClasses();
+		for(Class stype:keys){
+			Interpreter interpreter = register.get(stype);
+			if(interpreter==null)
+				throw new Exception("Invalid Interpreter: Null Registered");
+			
+			Class itype = interpreter.getClass();
+			newOne.register(stype, itype);
+		}
+		
+		register=newOne;
 	}
 }

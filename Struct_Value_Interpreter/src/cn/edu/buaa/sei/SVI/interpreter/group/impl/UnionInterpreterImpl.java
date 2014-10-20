@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.UnionInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
@@ -55,7 +56,7 @@ public class UnionInterpreterImpl implements UnionInterpreter{
 		List<Group> blist = new ArrayList<Group>();
 		
 		for(int i=0;i<operands.length;i++){
-			GroupInterpreter interpreter = (GroupInterpreter) register.get(operands[i]);
+			GroupInterpreter interpreter = (GroupInterpreter) RegisterMachine.getRegister().get(operands[i]);
 			Group group = interpreter.interpret(operands[i]);
 			
 			if(group==null)
@@ -87,7 +88,7 @@ public class UnionInterpreterImpl implements UnionInterpreter{
 					Boolean result=null;
 					for(int i=0;i<ops.length;i++){
 						LogicFunction fi = (LogicFunction) ops[i];
-						Inferencer inferencer = (Inferencer) register.get(fi);
+						Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(fi);
 						fi.getTemplate().getArguments()[0].assign(val);
 						
 						result = inferencer.interpret(fi);

@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.ESmallerInferencer;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.Computer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -39,8 +40,8 @@ public class ESmallerInferencerImpl implements ESmallerInferencer{
 		if(left==null||right==null)
 			throw new Exception("Structure Error: null operands");
 		
-		Computer lc = (Computer) register.get(left);
-		Computer rc = (Computer) register.get(right);
+		Computer lc = (Computer) RegisterMachine.getRegister().get(left);
+		Computer rc = (Computer) RegisterMachine.getRegister().get(right);
 		
 		if(lc==null)
 			throw new Exception("Left operand: "+left.getClass().getCanonicalName()+" has not be registered");

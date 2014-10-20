@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic.impl;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.logic.FunctionInferencer;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -40,7 +41,7 @@ public class FunctionInferencerImpl implements FunctionInferencer{
 		
 		Inferencer inferencer = null;
 		try{
-			inferencer = (Inferencer) register.get(template);
+			inferencer = (Inferencer) RegisterMachine.getRegister().get(template);
 		}
 		catch(Exception ex){
 			inferencer = null;
