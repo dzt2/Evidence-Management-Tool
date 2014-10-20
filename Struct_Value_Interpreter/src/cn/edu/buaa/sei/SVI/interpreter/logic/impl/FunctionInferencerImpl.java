@@ -8,7 +8,6 @@ import cn.edu.buaa.sei.SVI.struct.core.function.FunctionBody;
 import cn.edu.buaa.sei.SVI.struct.core.function.FunctionBodyAPI;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicFunction;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicFunctionTemplate;
-import cn.edu.buaa.sei.SVI.struct.logic.LogicVariable;
 
 public class FunctionInferencerImpl implements FunctionInferencer{
 
@@ -59,10 +58,11 @@ public class FunctionInferencerImpl implements FunctionInferencer{
 			if(body instanceof FunctionBodyAPI){
 				((FunctionBodyAPI) body).execute();
 			}
-			else return null;
+			else{
+				throw new Exception("Unknown FunctionBody: "+body.getClass().getCanonicalName());
+			}
 			
-			LogicVariable out = template.getOutput();
-			return out.read();
+			return this.getResult(template);
 		}
 	}
 

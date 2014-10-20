@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.impl.MInterpreterRegister;
 import cn.edu.buaa.sei.SVI.interpreter.core.impl.SInterpreterRegister;
+import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
 
 public class RegisterMachine {
 	public static final String XMLROOT = "RegisterMap";
@@ -31,6 +32,17 @@ public class RegisterMachine {
 	static{
 		// Register System Interpreter into the System Struct {Logic/Numeric/Group}
 		register(new File("regist.xml"));
+	}
+	
+	public static void main(String[] args){
+		register(new File("regist.xml"));
+		
+		try {
+			System.out.println(register.get(LogicFactory.createLogicVariable("x")).getClass().getCanonicalName());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static InterpreterRegister getRegister(){return register;}

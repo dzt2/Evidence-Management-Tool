@@ -1,6 +1,5 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric.impl;
 
-import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.Computer;
 import cn.edu.buaa.sei.SVI.interpreter.numeric.FunctionComputer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -56,10 +55,7 @@ public class FunctionComputerImpl implements FunctionComputer{
 				((FunctionBodyAPI) body).execute();
 			}
 			else{
-				Interpreter interpreter = register.get(body);
-				if(interpreter==null)throw new Exception("Undefined Operation for body: "+body.getClass().getCanonicalName());
-				
-				interpreter.interpret(body);
+				throw new Exception("Unknown FunctionBody: "+body.getClass().getCanonicalName());
 			}
 		}
 		else{
