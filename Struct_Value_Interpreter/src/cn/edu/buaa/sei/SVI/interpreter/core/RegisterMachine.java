@@ -31,11 +31,11 @@ public class RegisterMachine {
 	
 	static{
 		// Register System Interpreter into the System Struct {Logic/Numeric/Group}
-		register(new File("regist.xml"));
+		register(new File("config/regist.xml"));
 	}
 	
 	public static void main(String[] args){
-		register(new File("regist.xml"));
+		register(new File("config/regist.xml"));
 		
 		try {
 			System.out.println(register.get(LogicFactory.createLogicVariable("x")).getClass().getCanonicalName());
