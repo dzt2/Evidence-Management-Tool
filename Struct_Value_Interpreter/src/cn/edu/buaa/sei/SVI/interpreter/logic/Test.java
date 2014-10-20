@@ -2,6 +2,7 @@ package cn.edu.buaa.sei.SVI.interpreter.logic;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
+import cn.edu.buaa.sei.SVI.interpreter.logic.impl.AtLeastInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.AtMostInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.BetweenInferencerImpl;
 import cn.edu.buaa.sei.SVI.interpreter.logic.impl.ConjunctionInferencerImpl;
@@ -57,7 +58,7 @@ public class Test {
 		register.register((Class)Equivalence.class, (Class)EquivalenceInferencerImpl.class);
 		register.register((Class)Universal.class, (Class)UniversalInferencerImpl.class);
 		register.register((Class)Existential.class, (Class)ExistentialInferencerImpl.class);
-		register.register(AtLeast.class, AtMostInferencerImpl.class);
+		register.register(AtLeast.class, AtLeastInferencerImpl.class);
 		register.register(AtMost.class, AtMostInferencerImpl.class);
 		register.register(Between.class, BetweenInferencerImpl.class);
 		register.register((Class)LogicFunction.class, (Class)FunctionInferencerImpl.class);
