@@ -19,4 +19,14 @@ public interface TableMapTemplate extends GroupFunctionTemplate{
 	 * @exception Exception function is not template of: P(x) in which x receives elements in group.
 	 * */
 	public void assign(Group group,Function function) throws Exception;
+	
+	public static class _Pair{
+		Object key,value;
+		public _Pair(Object key,Object value) throws Exception{
+			if(key==null)throw new Exception("Null key is invalid");
+			this.key=key;this.value=value;
+		}
+		public Object getKey(){return this.key;}
+		public Object getValue(){return this.value;}
+	}
 }
