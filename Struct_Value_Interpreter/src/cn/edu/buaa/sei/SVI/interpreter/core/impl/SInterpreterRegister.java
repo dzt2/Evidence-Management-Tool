@@ -1,10 +1,12 @@
-package cn.edu.buaa.sei.SVI.interpreter.core;
+package cn.edu.buaa.sei.SVI.interpreter.core.impl;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
+import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
 /**
@@ -12,23 +14,24 @@ import cn.edu.buaa.sei.SVI.struct.core.Struct;
  * each type of element referring to only one interpreter, very 
  * good for iteration/sequence program (un-thread)
  * */
-public class SInterpreterRegister extends InterpreterRegister{
+public class SInterpreterRegister implements InterpreterRegister{
 	
 	
 	@SuppressWarnings("rawtypes")
 	Queue<Class> types = new LinkedList<Class>();
-	static SInterpreterRegister register=new SInterpreterRegister();
 	
 	@SuppressWarnings("rawtypes")
 	Map<Class,Interpreter> map = 
 			new HashMap<Class,Interpreter>();
 
-	protected SInterpreterRegister() {
+	public static InterpreterRegister register = new SInterpreterRegister();
+	public static InterpreterRegister create(){return register;}
+	
+	private SInterpreterRegister() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static SInterpreterRegister register(){return register;}
 	
 	/**
 	 * Bind Struct with a type of Interpreter.

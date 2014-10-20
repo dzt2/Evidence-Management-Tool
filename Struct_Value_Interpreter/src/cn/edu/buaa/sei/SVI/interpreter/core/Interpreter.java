@@ -1,12 +1,13 @@
 package cn.edu.buaa.sei.SVI.interpreter.core;
 
+import cn.edu.buaa.sei.SVI.interpreter.core.impl.SInterpreterRegister;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
 /**
  * <i>Interpreter</i> computes the result of a given Struct Element.
  * */
 public interface Interpreter {
-	public static InterpreterRegister register = SInterpreterRegister.register();
+	public static InterpreterRegister register = SInterpreterRegister.register;
 	/**
 	 * Interpret the Struct to produce its result.
 	 * @exception Exception input==null;
