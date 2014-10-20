@@ -1,7 +1,7 @@
 package cn.edu.buaa.sei.SVI.interpreter.core;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,12 +31,10 @@ public class RegisterMachine {
 	
 	static{
 		// Register System Interpreter into the System Struct {Logic/Numeric/Group}
-		register(new File("config/regist.xml"));
+		register(RegisterMachine.class.getClassLoader().getResourceAsStream("config/regist.xml"));
 	}
 	
 	public static void main(String[] args){
-		register(new File("config/regist.xml"));
-		
 		try {
 			System.out.println(register.get(LogicFactory.createLogicVariable("x")).getClass().getCanonicalName());
 		} catch (Exception e) {
@@ -48,7 +46,7 @@ public class RegisterMachine {
 	public static InterpreterRegister getRegister(){return register;}
 	
 	@SuppressWarnings("rawtypes")
-	public static void register(File file){
+	public static void register(InputStream file){
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		try {
