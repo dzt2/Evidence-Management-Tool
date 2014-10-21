@@ -1,6 +1,5 @@
 package cn.edu.buaa.sei.SVI.manage.impl.xml_struct;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,26 +13,25 @@ import org.w3c.dom.NodeList;
 import cn.edu.buaa.sei.SVI.manage.IStructImporter;
 import cn.edu.buaa.sei.SVI.manage.SVIResource;
 import cn.edu.buaa.sei.SVI.manage.StructManager;
-import cn.edu.buaa.sei.SVI.manage.impl.SVIFile;
+import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
 import cn.edu.buaa.sei.SVI.manage.impl.StructManagerImpl;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
 public class XMLStructImporter implements IStructImporter{
 	
-	SVIFile in;
+	SVIStream in;
 	Element root;
 	XMLStructImporterContainer container;
 	
 	@Override
 	public void setInput(SVIResource in) throws Exception {
 		if(in==null)throw new Exception("Null input stream is invalid");
-		if(!(in instanceof SVIFile))throw new Exception("SVIFile required");
-		this.in=(SVIFile) in;
+		if(!(in instanceof SVIStream))throw new Exception("SVIFile required");
+		this.in=(SVIStream) in;
 		
-		File file = this.in.getFile();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document doc = builder.parse(file);
+		Document doc = builder.parse(this.in.getInputStream());
 		
 		root = (Element) doc.getChildNodes().item(0);
 		this.container = new XMLStructImporterContainer(this.root);
