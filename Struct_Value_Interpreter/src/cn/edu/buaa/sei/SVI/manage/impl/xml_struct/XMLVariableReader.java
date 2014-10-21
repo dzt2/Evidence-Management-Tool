@@ -1,5 +1,8 @@
 package cn.edu.buaa.sei.SVI.manage.impl.xml_struct;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -27,8 +30,8 @@ public class XMLVariableReader implements XMLInterpreter{
 		if(element.getTagName().equals(XMLStructTags.VARIABLE)){
 			if(this.container.containResult(oe))return this.container.getResult(oe);
 			
-			String id = oe.getAttribute(XMLStructTags.ID);
-			if(id==null||id.length()==0)throw new Exception("ID is required in <"+element.getTagName()+">");
+			/*String id = oe.getAttribute(XMLStructTags.ID);
+			if(id==null||id.length()==0)throw new Exception("ID is required in <"+element.getTagName()+">");*/
 			
 			String name = oe.getAttribute(XMLStructTags.NAME);
 			if(name==null||name.length()==0)throw new Exception("Null name is invalid");
@@ -62,7 +65,8 @@ public class XMLVariableReader implements XMLInterpreter{
 		else if(type.equals(XMLStructTags.LOGIC_TYPE))return LogicFactory.createLogicVariable(name);
 		else if(type.equals(XMLStructTags.DISCOURSE_DOMAIN)){
 			NodeList children = parent.getElementsByTagName(XMLStructTags.DISCOURSE_DOMAIN_ITER);
-			if(children==null||children.getLength()!=1)throw new Exception("Exactly 1 <iter> required in <"+parent.getTagName()+">");
+			
+			if(children==null||children.getLength()!=1)throw new Exception("Exactly 1 <iterator> required in <"+parent.getTagName()+">");
 			Element child = (Element) children.item(0);
 			
 			DiscourseDomain domain = LogicFactory.createDiscourseDomain(name);
@@ -77,4 +81,15 @@ public class XMLVariableReader implements XMLInterpreter{
 		
 		throw new Exception("Unknown type: "+type);
 	}
+	
+	protected List<Element> translate(NodeList list){
+		if(list==null)return null;
+		List<Element> elist = new ArrayList<Element>();
+		
+		for(int i=0;i<list.getLength();i++)
+			if(list.item(i) instanceof Element)
+				elist.add((Element) list.item(i));
+		
+		return elist;
+	} 
 }

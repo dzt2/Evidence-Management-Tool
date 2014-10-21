@@ -23,7 +23,6 @@ public class Test {
 				System.out.println(id+": "+val.toString());
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

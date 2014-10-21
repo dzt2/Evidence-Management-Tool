@@ -34,7 +34,7 @@ public class XMLStructTags {
 	
 	public static final String LOGIC_TYPE = "logic";
 	public static final String DISCOURSE_DOMAIN = "domain";
-	public static final String DISCOURSE_DOMAIN_ITER = "domain.iter";
+	public static final String DISCOURSE_DOMAIN_ITER = "iterator";
 	
 	public static final String NUM_NATURAL_TYPE = "Natural";
 	public static final String NUM_INTEGER_TYPE = "Integer";

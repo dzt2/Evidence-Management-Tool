@@ -36,10 +36,12 @@ public class XMLExpressionReader implements XMLInterpreter{
 			String type = element.getAttribute(XMLStructTags.TYPE);
 			if(type==null||type.length()==0)throw new Exception("Type Attribute Undefined: <"+element.getTagName()+">");
 			
-			NodeList list = element.getChildNodes();
-			if(list==null||list.getLength()!=1)
+			List<Element> list = this.translate(element.getChildNodes());
+			
+			
+			if(list==null||list.size()!=1)
 				throw new Exception("Invalid Structure in <expression>: only 1 child is needed");
-			Element op = (Element) list.item(0);
+			Element op = list.get(0);
 			
 			if(type.equals(XMLStructTags.LOGIC_EXPR_TYPE)){
 				LogicExpression expr = this.generateLogicExpression(op);
@@ -123,8 +125,11 @@ public class XMLExpressionReader implements XMLInterpreter{
 		}
 		else if(tag.equals(XMLStructTags.UNIVERSAL)){
 			if(child_elms.size()!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
-			if(!child_elms.get(0).getTagName().equals(XMLStructTags.DISCOURSE_DOMAIN))
-				throw new Exception("<DiscourseDomain> required at first child of <"+tag+">");
+			if(!child_elms.get(0).getTagName().equals(XMLStructTags.VARIABLE))
+				throw new Exception("<Variable> required at first child of <"+tag+">");
+			String vtype = child_elms.get(0).getAttribute(XMLStructTags.TYPE);
+			if(vtype==null||!vtype.equals(XMLStructTags.DISCOURSE_DOMAIN))
+				throw new Exception("<Variable> attribute type need to be <domain>");
 			
 			Struct[] rs = this.getChildren(child_elms);
 			if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
@@ -133,8 +138,11 @@ public class XMLExpressionReader implements XMLInterpreter{
 		}
 		else if(tag.equals(XMLStructTags.EXISTENTIAL)){
 			if(child_elms.size()!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
-			if(!child_elms.get(0).getTagName().equals(XMLStructTags.DISCOURSE_DOMAIN))
-				throw new Exception("<DiscourseDomain> required at first child of <"+tag+">");
+			if(!child_elms.get(0).getTagName().equals(XMLStructTags.VARIABLE))
+				throw new Exception("<Variable> required at first child of <"+tag+">");
+			String vtype = child_elms.get(0).getAttribute(XMLStructTags.TYPE);
+			if(vtype==null||!vtype.equals(XMLStructTags.DISCOURSE_DOMAIN))
+				throw new Exception("<Variable> attribute type need to be <domain>");
 			
 			Struct[] rs = this.getChildren(child_elms);
 			if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
@@ -143,8 +151,11 @@ public class XMLExpressionReader implements XMLInterpreter{
 		}
 		else if(tag.equals(XMLStructTags.ATMOST)){
 			if(child_elms.size()!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
-			if(!child_elms.get(0).getTagName().equals(XMLStructTags.DISCOURSE_DOMAIN))
-				throw new Exception("<DiscourseDomain> required at first child of <"+tag+">");
+			if(!child_elms.get(0).getTagName().equals(XMLStructTags.VARIABLE))
+				throw new Exception("<Variable> required at first child of <"+tag+">");
+			String vtype = child_elms.get(0).getAttribute(XMLStructTags.TYPE);
+			if(vtype==null||!vtype.equals(XMLStructTags.DISCOURSE_DOMAIN))
+				throw new Exception("<Variable> attribute type need to be <domain>");
 			
 			Struct[] rs = this.getChildren(child_elms);
 			if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
@@ -155,8 +166,11 @@ public class XMLExpressionReader implements XMLInterpreter{
 		}
 		else if(tag.equals(XMLStructTags.ATLEAST)){
 			if(child_elms.size()!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
-			if(!child_elms.get(0).getTagName().equals(XMLStructTags.DISCOURSE_DOMAIN))
-				throw new Exception("<DiscourseDomain> required at first child of <"+tag+">");
+			if(!child_elms.get(0).getTagName().equals(XMLStructTags.VARIABLE))
+				throw new Exception("<Variable> required at first child of <"+tag+">");
+			String vtype = child_elms.get(0).getAttribute(XMLStructTags.TYPE);
+			if(vtype==null||!vtype.equals(XMLStructTags.DISCOURSE_DOMAIN))
+				throw new Exception("<Variable> attribute type need to be <domain>");
 			
 			Struct[] rs = this.getChildren(child_elms);
 			if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
@@ -167,8 +181,11 @@ public class XMLExpressionReader implements XMLInterpreter{
 		}
 		else if(tag.equals(XMLStructTags.BETWEEN)){
 			if(child_elms.size()!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
-			if(!child_elms.get(0).getTagName().equals(XMLStructTags.DISCOURSE_DOMAIN))
-				throw new Exception("<DiscourseDomain> required at first child of <"+tag+">");
+			if(!child_elms.get(0).getTagName().equals(XMLStructTags.VARIABLE))
+				throw new Exception("<Variable> required at first child of <"+tag+">");
+			String vtype = child_elms.get(0).getAttribute(XMLStructTags.TYPE);
+			if(vtype==null||!vtype.equals(XMLStructTags.DISCOURSE_DOMAIN))
+				throw new Exception("<Variable> attribute type need to be <domain>");
 			
 			Struct[] rs = this.getChildren(child_elms);
 			if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
@@ -372,4 +389,15 @@ public class XMLExpressionReader implements XMLInterpreter{
 		
 		return rs;
 	}
+	
+	protected List<Element> translate(NodeList list){
+		if(list==null)return null;
+		List<Element> elist = new ArrayList<Element>();
+		
+		for(int i=0;i<list.getLength();i++)
+			if(list.item(i) instanceof Element)
+				elist.add((Element) list.item(i));
+		
+		return elist;
+	} 
 }
