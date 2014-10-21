@@ -1,7 +1,5 @@
 package cn.edu.buaa.sei.SVI.manage;
 
-import cn.edu.buaa.sei.SVI.struct.core.Struct;
-
 /**
  * IStructImporter is an importer for reading Struct from file/xml/database and reconstruct
  * them in the system.
@@ -16,5 +14,5 @@ public interface IStructImporter {
 	/**
 	 * Return all the Struct that has been stored and coded in the resource.
 	 * */
-	public Struct[] read() throws Exception;
+	public StructManager read() throws Exception;
 }

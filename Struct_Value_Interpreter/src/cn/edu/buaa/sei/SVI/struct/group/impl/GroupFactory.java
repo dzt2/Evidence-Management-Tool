@@ -78,4 +78,17 @@ public class GroupFactory {
 	public static GroupExpression createGroupExpression(GroupOperator op) throws Exception{
 		return new GroupExpressionImpl(op,new StructArray());
 	}
+	
+	public static GroupFunction createFilter() throws Exception{
+		GroupFunctionTemplate template = new FilterTemplateImpl(new StructArray());
+		return new GroupFunctionImpl(template,null,null,new StructArray());
+	}
+	public static GroupFunction createMap() throws Exception{
+		GroupFunctionTemplate template = new MapTemplateImpl(new StructArray());
+		return new GroupFunctionImpl(template,null,null,new StructArray());
+	}
+	public static GroupFunction createTableMap() throws Exception{
+		GroupFunctionTemplate template = new TableMapTemplateImpl(new StructArray());
+		return new GroupFunctionImpl(template,null,null,new StructArray());
+	}
 }
