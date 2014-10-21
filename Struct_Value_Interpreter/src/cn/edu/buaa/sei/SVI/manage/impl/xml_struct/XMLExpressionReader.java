@@ -10,10 +10,12 @@ import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.NumericStruct;
+import cn.edu.buaa.sei.SVI.struct.group.GroupExpression;
 import cn.edu.buaa.sei.SVI.struct.group.impl.GroupFactory;
 import cn.edu.buaa.sei.SVI.struct.logic.DiscourseDomain;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicExpression;
 import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
+import cn.edu.buaa.sei.SVI.struct.numeric.NumericExpression;
 import cn.edu.buaa.sei.SVI.struct.numeric.impl.NumericFactory;
 
 public class XMLExpressionReader implements XMLInterpreter{
@@ -44,13 +46,19 @@ public class XMLExpressionReader implements XMLInterpreter{
 				this.container.setResult(element, expr);
 				return expr;
 			}
-			else if(type.equals(XMLStructTags.NUMERIC_EXPR_TYPE)){}
-			else if(type.equals(XMLStructTags.GROUP_EXPR_TYPE)){}
+			else if(type.equals(XMLStructTags.NUMERIC_EXPR_TYPE)){
+				NumericExpression expr = this.generateNumericExpression(op);
+				this.container.setResult(element, expr);
+				return expr;
+			}
+			else if(type.equals(XMLStructTags.GROUP_EXPR_TYPE)){
+				GroupExpression expr = this.generateGroupExpression(op);
+				this.container.setResult(element, expr);
+				return expr;
+			}
 			else throw new Exception("Unknown Type in <Function>: "+type);
 		}
 		else throw new Exception("Invalid Element: <"+element.getTagName()+">");
-		
-		return null;
 	}
 	
 	protected LogicExpression generateLogicExpression(Element op) throws Exception{
@@ -251,6 +259,105 @@ public class XMLExpressionReader implements XMLInterpreter{
 			return GroupFactory.createGroupEqual((GroupStruct)rs[0], (GroupStruct)rs[1]);
 		}
 		else throw new Exception("Unknown Operator Tag: <"+tag+">");
+	}
+	
+	protected NumericExpression generateNumericExpression(Element op) throws Exception{
+		if(op==null)throw new Exception("Null element is invalid");
+		
+		String tag = op.getTagName();
+		
+		NodeList children = op.getChildNodes();
+		List<Element> child_elms = new ArrayList<Element>();
+		
+		for(int i=0;i<children.getLength();i++){
+			if(children.item(i) instanceof Element){
+				child_elms.add((Element) children.item(i));
+			}
+		}
+		
+		Struct[] rs = this.getChildren(child_elms);
+		if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
+		
+		if(tag.equals(XMLStructTags.ADD)){
+			if(rs.length!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
+			return NumericFactory.createAddition((NumericStruct)rs[0], (NumericStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.SUB)){
+			if(rs.length!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
+			return NumericFactory.createSubstract((NumericStruct)rs[0], (NumericStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.MUL)){
+			if(rs.length!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
+			return NumericFactory.createMultiplication((NumericStruct)rs[0], (NumericStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.MOD)){
+			if(rs.length!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
+			return NumericFactory.createMod((NumericStruct)rs[0], (NumericStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.DIV)){
+			if(rs.length!=2)throw new Exception("Exactly 2 operands required at: <"+tag+">");
+			return NumericFactory.createDivision((NumericStruct)rs[0], (NumericStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.CARDINALITY)){
+			if(rs.length!=1)throw new Exception("Exactly 1 operand required at: <"+tag+">");
+			return GroupFactory.createCardinality((GroupStruct)rs[0]);
+		}
+		else throw new Exception("Unknown Numeric Operator tag: <"+tag+">");
+	}
+	
+	protected GroupExpression generateGroupExpression(Element op) throws Exception{
+		if(op==null)throw new Exception("Null element is invalid");
+		
+		String tag = op.getTagName();
+		
+		NodeList children = op.getChildNodes();
+		List<Element> child_elms = new ArrayList<Element>();
+		
+		for(int i=0;i<children.getLength();i++){
+			if(children.item(i) instanceof Element){
+				child_elms.add((Element) children.item(i));
+			}
+		}
+		
+		Struct[] rs = this.getChildren(child_elms);
+		if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");
+		
+		if(tag.equals(XMLStructTags.INTERSECTION)){
+			if(rs.length<2)throw new Exception("At least 2 children required at <"+tag+">");
+			
+			GroupStruct[] operands = new GroupStruct[rs.length];
+			for(int i=0;i<operands.length;i++)
+				operands[i]=(GroupStruct) rs[i];
+			
+			return GroupFactory.createIntersection(operands);
+		}
+		else if(tag.equals(XMLStructTags.UNION)){
+			if(rs.length<2)throw new Exception("At least 2 children required at <"+tag+">");
+			
+			GroupStruct[] operands = new GroupStruct[rs.length];
+			for(int i=0;i<operands.length;i++)
+				operands[i]=(GroupStruct) rs[i];
+			
+			return GroupFactory.createUnion(operands);
+		}
+		else if(tag.equals(XMLStructTags.DIFFERENCE)){
+			if(rs.length!=2)throw new Exception("Exactly 2 children required at <"+tag+">");
+			return GroupFactory.createDifference((GroupStruct)rs[0], (GroupStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.COMPLEMENT)){
+			if(rs.length!=1)throw new Exception("Exactly 1 child required at <"+tag+">");
+			return GroupFactory.createComplement((GroupStruct)rs[0], (GroupStruct)rs[1]);
+		}
+		else if(tag.equals(XMLStructTags.CARTESIAN_PRODUCT)){
+			if(rs.length<2)throw new Exception("At least 2 children required at <"+tag+">");
+			
+			GroupStruct[] operands = new GroupStruct[rs.length];
+			for(int i=0;i<operands.length;i++)
+				operands[i]=(GroupStruct) rs[i];
+			
+			return GroupFactory.createCartesianProduct(operands);
+		}
+		else throw new Exception("Unknown GroupOperator tag: <"+tag+">");
 	}
 	
 	protected Struct[] getChildren(List<Element> children)throws Exception{
