@@ -7,6 +7,14 @@ import cn.edu.buaa.sei.SVI.struct.core.Struct;
  * them in the system.
  * */
 public interface IStructImporter {
+	/**
+	 * Set the input source, which could be file(.s)/xml/database.
+	 * @exception Exception in==null
+	 * @exception Exception in cannot be read
+	 * */
 	public void setInput(SVIResource in) throws Exception;
-	public Struct read() throws Exception;
+	/**
+	 * Return all the Struct that has been stored and coded in the resource.
+	 * */
+	public Struct[] read() throws Exception;
 }
