@@ -17,6 +17,7 @@ public class XMLStructTags {
 	 * Variable Tag Name
 	 * */
 	public static final String VARIABLE = "Variable";
+	public static final String NAME = "name";
 	
 	public static final String BOOLEAN_TYPE = "boolean";
 	public static final String INTEGER_TYPE = "int";
@@ -29,7 +30,11 @@ public class XMLStructTags {
 	public static final String SET_TYPE = "Set";
 	public static final String MAP_TYPE = "Map";
 	
+	public static final String FREE_TYPE = "free";
+	
 	public static final String LOGIC_TYPE = "logic";
+	public static final String DISCOURSE_DOMAIN = "domain";
+	public static final String DISCOURSE_DOMAIN_ITER = "domain.iter";
 	
 	public static final String NUM_NATURAL_TYPE = "Natural";
 	public static final String NUM_INTEGER_TYPE = "Integer";
@@ -42,6 +47,10 @@ public class XMLStructTags {
 	 * Expression Tag Name
 	 * */
 	public static final String EXPRESSION = "Expression";
+	
+	public static final String LOGIC_EXPR_TYPE = "logic";
+	public static final String NUMERIC_EXPR_TYPE = "numeric";
+	public static final String GROUP_EXPR_TYPE = "group";
 	
 	public static final String CONJUNCTION = "Conjunction";
 	public static final String DISJUNCTION = "Disjunction";
