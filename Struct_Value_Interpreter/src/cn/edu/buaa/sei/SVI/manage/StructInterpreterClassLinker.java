@@ -17,4 +17,9 @@ public interface StructInterpreterClassLinker {
 	 * */
 	@SuppressWarnings("rawtypes")
 	public void Flink(Class stype,Class itype) throws Exception;
+	/**
+	 * Return the interpreter type which has been linked by the stype in shortest distance.
+	 * */
+	@SuppressWarnings("rawtypes")
+	public Class getTarget(Class stype) throws Exception;
 }

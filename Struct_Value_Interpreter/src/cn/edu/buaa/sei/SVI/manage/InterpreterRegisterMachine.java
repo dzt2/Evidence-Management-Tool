@@ -9,9 +9,12 @@ public interface InterpreterRegisterMachine {
 	public StructInterpreterClassLinker getLinker();
 	
 	/**
-	 * Loading the register map from a given resource {.i file(xml)|database}
+	 * Loading the register map from a given resource {.i file(xml)|database}<br>
+	 * Note: you can load different .i files for many times. Argument <b>force</b>
+	 * is set true when you want to overwrite the original links between classes,
+	 * while false you want to keep original links.
 	 * */
-	public void loadRegisterMap(SVIResource resource) throws Exception;
+	public void loadRegisterMap(SVIResource resource,boolean force) throws Exception;
 	/**
 	 * Return Interpreter of a given Struct whose class has been linked {registered} with it.
 	 * */
