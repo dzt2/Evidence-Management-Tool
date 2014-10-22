@@ -14,10 +14,8 @@ public class Test {
 		IStructSearcher searcher = new StructSearcher1();
 		try {
 			Struct base = create1();
-			String path = ".op.scope.op.scope.template.arg[2]";
-			
+			String path = ".op.scope.op.scope.template.arg[1]";
 			base = searcher.get(base, path);
-			
 			System.out.println(base.toString());
 		} catch (Exception e) {
 			e.printStackTrace();

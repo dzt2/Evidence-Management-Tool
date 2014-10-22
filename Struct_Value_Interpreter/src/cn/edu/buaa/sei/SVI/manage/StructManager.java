@@ -5,7 +5,7 @@ import java.util.Set;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
 public interface StructManager {
-	public Struct get(String id) throws Exception;
+	/*public Struct get(String id) throws Exception;
 	public void put(String id,Struct element) throws Exception;
 	
 	public boolean contain(String id);
@@ -15,5 +15,11 @@ public interface StructManager {
 	public Set<String> getAllIDs();
 	public Set<Struct> getAllStructs();
 	
-	public void clearSpace();
+	public void clearSpace();*/
+	
+	public boolean contain(Struct struct);
+	public Set<Struct> getTopStructs();
+	public void putTopStruct(Struct struct) throws Exception;
+	public void removeTopStruct(Struct struct) throws Exception;
+	public void clear();
 }
