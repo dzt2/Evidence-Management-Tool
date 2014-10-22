@@ -30,7 +30,7 @@ public class XMLStructPrinterContainer {
 		this.fp = new XMLFunctionPrinter(this,doc);
 	}
 	
-	Long id;
+	Long id=0L;
 	public static final long TIMES = Long.MAX_VALUE;
 	protected String id() throws Exception{
 		int times = 0;
@@ -72,6 +72,19 @@ public class XMLStructPrinterContainer {
 			}
 		}
 		
+	}
+	
+	public void removeStruct(Struct struct) throws Exception{
+		if(struct==null)throw new Exception("Null struct is invalid");
+		
+		if(this.rv_map.containsKey(struct)){
+			String id = this.rv_map.get(struct);
+			this.input_map.remove(id);
+			this.rv_map.remove(struct);
+			if(this.results.containsKey(struct))
+				this.results.remove(struct);
+		}
+		else throw new Exception("Undefined struct");
 	}
 	
 	public boolean containResult(Struct struct){

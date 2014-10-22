@@ -63,7 +63,7 @@ public class XMLExpressionPrinter implements XMLPrinter{
 			return this.container.getResult(expr);
 		
 		if(!this.container.getRMap().containsKey(expr))
-			throw new Exception("Variable is not in the container {invalid struct}");
+			throw new Exception("Expression is not in the container {invalid struct}");
 		
 		String id = this.container.getRMap().get(expr);
 		if(id==null||id.length()==0)throw new Exception("Invalid ID: "+id);

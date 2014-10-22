@@ -66,6 +66,7 @@ public class XMLVariablePrinter implements XMLPrinter{
 			
 			Element ce = this.translate(itor);
 			if(ce==null)throw new Exception("Iterator in DiscourseDomain interpretation failed");
+			ce.setAttribute(XMLStructTags.TYPE, XMLStructTags.DISCOURSE_DOMAIN_ITER);
 			
 			element.appendChild(ce);
 		}
