@@ -27,9 +27,10 @@ public class XMLVariableReader implements XMLInterpreter{
 		if(element==null)throw new Exception("Null element is invalid");
 		
 		Element oe = this.container.getOriginalElement(element);
-		if(element.getTagName().equals(XMLStructTags.VARIABLE)){
-			if(this.container.containResult(oe))return this.container.getResult(oe);
-			
+		if(this.container.containResult(oe))
+			return this.container.getResult(oe);
+		
+		if(oe.getTagName().equals(XMLStructTags.VARIABLE)){
 			/*String id = oe.getAttribute(XMLStructTags.ID);
 			if(id==null||id.length()==0)throw new Exception("ID is required in <"+element.getTagName()+">");*/
 			
@@ -39,13 +40,24 @@ public class XMLVariableReader implements XMLInterpreter{
 			if(type==null||type.length()==0)throw new Exception("Null type is invalid");
 			
 			Variable var = this.generate(name, type,oe);
-			if(var==null)throw new Exception("Interpretation failed at: "+element.getTagName());
+			if(var==null)throw new Exception("Interpretation failed at: "+oe.getTagName());
 			
 			this.container.setResult(oe, var);
 			
 			return var;
 		}
-		else throw new Exception("Invalid Element: <"+element.getTagName()+">");
+		else if(oe.getTagName().equals(XMLStructTags.DISCOURSE_DOMAIN_ITER)){
+			Element pe = (Element) oe.getParentNode();
+			if(pe==null||!pe.getTagName().equals(XMLStructTags.VARIABLE)
+					||!pe.getAttribute(XMLStructTags.TYPE).equals(XMLStructTags.DISCOURSE_DOMAIN))
+				throw new Exception("<iterator> must be in a domain element as <Variable>");
+			
+			DiscourseDomain domain = (DiscourseDomain) this.read(pe);
+			if(domain==null)
+				throw new Exception("Parent Node interpretation failed.");
+			return domain.getIterator();
+		}
+		else throw new Exception("Invalid Element: <"+oe.getTagName()+">");
 	}
 	
 	protected Variable generate(String name,String type,Element parent) throws Exception{
@@ -78,7 +90,6 @@ public class XMLVariableReader implements XMLInterpreter{
 		else if(type.equals(XMLStructTags.NUM_RATIONAL_TYPE))return NumericFactory.createRationalVariable(name);
 		else if(type.equals(XMLStructTags.NUM_REAL_TYPE))return NumericFactory.createRealVariable(name);
 		else if(type.equals(XMLStructTags.GROUP_TYPE))return GroupFactory.createGroupVariable(name);
-		
 		throw new Exception("Unknown type: "+type);
 	}
 	

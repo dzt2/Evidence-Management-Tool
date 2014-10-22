@@ -64,9 +64,11 @@ public class XMLVariablePrinter implements XMLPrinter{
 			DiscourseDomain domain = (DiscourseDomain) variable;
 			Variable itor = domain.getIterator();
 			
-			Element ce = this.translate(itor);
-			if(ce==null)throw new Exception("Iterator in DiscourseDomain interpretation failed");
-			ce.setAttribute(XMLStructTags.TYPE, XMLStructTags.DISCOURSE_DOMAIN_ITER);
+			Element ce = doc.createElement(XMLStructTags.DISCOURSE_DOMAIN_ITER);
+			String sid = this.container.getRMap().get(itor);
+			if(sid==null||sid.length()==0)
+				throw new Exception("Null ID for iterator is invalid");
+			ce.setAttribute(XMLStructTags.ID, sid);
 			
 			element.appendChild(ce);
 		}
