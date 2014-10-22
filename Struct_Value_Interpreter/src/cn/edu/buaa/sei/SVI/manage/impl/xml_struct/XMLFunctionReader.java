@@ -32,7 +32,6 @@ public class XMLFunctionReader implements XMLInterpreter{
 		if(element==null)throw new Exception("Null element is invalid");
 		
 		element = this.container.getOriginalElement(element);
-		
 		if(this.container.containResult(element))return this.container.getResult(element);
 		
 		if(element.getTagName().equals(XMLStructTags.FUNCTION)){

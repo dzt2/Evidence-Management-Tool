@@ -13,7 +13,8 @@ public class NegationImpl extends LogicOperatorImpl implements Negation{
 		super(container);
 		if(operand==null)
 			throw new Exception("Null Operand is invalid");
-		this.operand=operand;
+
+		this.setOperand(operand);
 	}
 
 	@Override

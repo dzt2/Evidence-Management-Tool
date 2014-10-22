@@ -69,13 +69,7 @@ public class XMLExpressionReader implements XMLInterpreter{
 		String tag = op.getTagName();
 		
 		NodeList children = op.getChildNodes();
-		List<Element> child_elms = new ArrayList<Element>();
-		
-		for(int i=0;i<children.getLength();i++){
-			if(children.item(i) instanceof Element){
-				child_elms.add((Element) children.item(i));
-			}
-		}
+		List<Element> child_elms = this.translate(children);
 		
 		if(tag.equals(XMLStructTags.CONJUNCTION)){
 			if(child_elms.size()<2)throw new Exception("At least 2 operands required at: <"+tag+">");
@@ -142,7 +136,7 @@ public class XMLExpressionReader implements XMLInterpreter{
 				throw new Exception("<Variable> required at first child of <"+tag+">");
 			String vtype = child_elms.get(0).getAttribute(XMLStructTags.TYPE);
 			if(vtype==null||!vtype.equals(XMLStructTags.DISCOURSE_DOMAIN))
-				throw new Exception("<Variable> attribute type need to be <domain>");
+				throw new Exception("<Variable> attribute type need to be domain");
 			
 			Struct[] rs = this.getChildren(child_elms);
 			if(rs==null)throw new Exception("Interpretation failed at: <"+tag+">");

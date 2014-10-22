@@ -79,8 +79,6 @@ public class XMLStructImporterContainer {
 		this.cache.put(element, result);
 		
 		String id = element.getAttribute(XMLStructTags.ID);
-		if(id==null||id.length()==0)
-			id = element.getAttribute(XMLStructTags.REF);
 		if(id==null||id.length()==0)return;
 		
 		if(this.result_map.containsKey(id))throw new Exception("Duplicated ID Produced: "+id);
