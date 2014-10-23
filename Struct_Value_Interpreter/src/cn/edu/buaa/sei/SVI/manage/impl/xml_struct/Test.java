@@ -44,7 +44,7 @@ public class Test {
 	
 	public static void test2() throws Exception{
 		SVIStream resource = new SVIStream();
-		resource.setInputStream(new FileInputStream(new File("data/c.xml")));
+		resource.setInputStream(new FileInputStream(new File("data/a.xml")));
 		IStructImporter importer = new XMLStructImporter();
 		importer.setInput(resource);
 		

@@ -517,8 +517,12 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 			String id = top.getAttribute(XMLStructTags.ID);
 			String ref = top.getAttribute(XMLStructTags.REF);
 			
-			if(id!=null&&id.length()>0)
+			if(id!=null&&id.length()>0){
+				if(this.id_elements.containsKey(id))
+					throw new Exception("Duplicated Id: "+id+" at <"+top.getTagName()+">");
+				
 				this.id_elements.put(id, top);
+			}
 			if(ref!=null&&ref.length()>0)
 				refs.add(top);
 			
