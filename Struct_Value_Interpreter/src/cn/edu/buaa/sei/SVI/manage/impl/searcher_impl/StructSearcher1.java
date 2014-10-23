@@ -1,6 +1,13 @@
 package cn.edu.buaa.sei.SVI.manage.impl.searcher_impl;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
+
 import cn.edu.buaa.sei.SVI.manage.IStructSearcher;
+import cn.edu.buaa.sei.SVI.struct.core.CompositeStruct;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.expression.BinaryOperator;
 import cn.edu.buaa.sei.SVI.struct.core.expression.Expression;
@@ -16,6 +23,11 @@ import cn.edu.buaa.sei.SVI.struct.logic.DiscourseDomain;
 import cn.edu.buaa.sei.SVI.struct.logic.QuantifierOperator;
 
 public class StructSearcher1 implements IStructSearcher{
+	
+	Queue<Struct> queue = new LinkedList<Struct>();
+	Set<Struct> records = new HashSet<Struct>();
+	Stack<Struct> path = new Stack<Struct>();
+	
 	@Override
 	public Struct get(Struct base, String path) throws Exception {
 		if(base==null||path==null)throw new Exception("Null base|path is invalid");
@@ -171,4 +183,96 @@ public class StructSearcher1 implements IStructSearcher{
 		}
 		else throw new Exception("Unknown type: "+base.getClass().getCanonicalName());
 	}
+
+	
+	@Override
+	public Set<Variable> getVariablesUnderBase(Struct base) throws Exception {
+		if(base==null)throw new Exception("Null base struct is invalid");
+		this.queue.clear();
+		Set<Variable> variables = new HashSet<Variable>();
+		
+		this.queue.add(base);
+		while(!queue.isEmpty()){
+			base = queue.poll();
+			if(base instanceof Variable){variables.add((Variable) base);}
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		return variables;
+	}
+
+	@Override
+	public boolean contain(Struct base, Struct child) {
+		if(base==null||child==null)return false;
+		
+		this.records.clear();
+		this.queue.clear();
+		this.queue.add(base);
+		
+		while(!this.queue.isEmpty()){
+			base = this.queue.poll();
+			if(base==child)return true;
+			if(records.contains(base))continue;
+			records.add(base);
+			
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public Struct[] generatePath(Struct src, Struct trg) throws Exception {
+		if(src==null||trg==null)throw new Exception("Null node is invalid");
+		
+		Stack<Integer> path_id = new Stack<Integer>();
+		this.records.clear();
+		this.path.clear();
+		
+		this.path.push(src);path_id.push(0);
+		
+		while(!this.path.isEmpty()){
+			Struct cur = this.path.peek();
+			if(cur==trg){
+				Struct[] ps = new Struct[this.path.size()];
+				for(int i=0;i<this.path.size();i++)
+					ps[i]=this.path.get(i);
+				return ps;
+			}
+			
+			if(cur instanceof CompositeStruct){
+				int id = path_id.peek();
+				int n = ((CompositeStruct) cur).getChildrenStructSize();
+				if(id<n){
+					Struct next = ((CompositeStruct) cur).getChildrenStructs()[id];
+					path_id.pop();path_id.push(++id);
+					if(!this.records.contains(next)){
+						this.path.push(next);path_id.push(0);
+					}
+				}
+				else{
+					this.path.pop();path_id.pop();
+					this.records.add(cur);
+				}
+			}
+			else{
+				this.path.pop();path_id.pop();
+				this.records.add(cur);
+			}
+		}
+		
+		throw new Exception("No path from src to trg");
+	}
+
+	
 }
