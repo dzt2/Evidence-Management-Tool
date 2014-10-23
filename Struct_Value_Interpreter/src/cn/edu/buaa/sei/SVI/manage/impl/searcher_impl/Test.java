@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.manage.impl.searcher_impl;
 
+import java.util.Map;
 import java.util.Set;
 
 import cn.edu.buaa.sei.SVI.manage.IStructSearcher;
@@ -16,18 +17,10 @@ public class Test {
 		IStructSearcher searcher = new StructSearcher1();
 		try {
 			Struct base = create1();
-			Set<Variable> variables = searcher.getVariablesUnderBase(base);
-			for(Variable var:variables)
-				System.out.println(var.getName()+"\t{"+var.getClass().getCanonicalName()+"}");
-			/*Struct src = create1();
-			String path = ".op.scope.op.scope.template.arg[0]";
-			Struct trg = searcher.get(src, path);
-			
-			Struct[] ps = searcher.generatePath(src, trg);
-			if(ps!=null)
-				for(int i=0;i<ps.length;i++){
-					System.out.println(ps[i].toString()+";");
-				}*/
+			Map<String,Variable> map = searcher.getVariableMap(base);
+			Set<String> names = map.keySet();
+			for(String name:names)
+				System.out.println(name);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

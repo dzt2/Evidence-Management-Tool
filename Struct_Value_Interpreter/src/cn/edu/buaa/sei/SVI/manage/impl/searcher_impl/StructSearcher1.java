@@ -1,7 +1,11 @@
 package cn.edu.buaa.sei.SVI.manage.impl.searcher_impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -27,6 +31,7 @@ public class StructSearcher1 implements IStructSearcher{
 	Queue<Struct> queue = new LinkedList<Struct>();
 	Set<Struct> records = new HashSet<Struct>();
 	Stack<Struct> path = new Stack<Struct>();
+	List<Variable> vlist = new ArrayList<Variable>();
 	
 	@Override
 	public Struct get(Struct base, String path) throws Exception {
@@ -275,4 +280,164 @@ public class StructSearcher1 implements IStructSearcher{
 	}
 
 	
+	@Override
+	public boolean confirmPath(Struct base, String path) {
+		if(base==null||path==null)return false;
+		
+		if(path.trim().length()==0)return true;
+		
+		String[] paths = path.split("\\.");
+		int i=1;
+		
+		while(base!=null&&i<paths.length){
+			try {
+				base = this.nextOne(base, paths[i++].trim());
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				return false;
+			}
+		}
+		
+		if(i<paths.length){
+			StringBuilder left = new StringBuilder();
+			while(i<paths.length)
+				left.append(".").append(paths[i++]);
+			System.err.println("Out of range in path: "+left.toString());
+			return false;
+		}
+		
+		return true;
+	}
+
+	
+	@Override
+	public Set<Variable> getVariablesByName(Struct base, String name)
+			throws Exception {
+		if(base==null||name==null)throw new Exception("Null base struct is invalid");
+		this.queue.clear();
+		Set<Variable> variables = new HashSet<Variable>();
+		
+		this.queue.add(base);
+		while(!queue.isEmpty()){
+			base = queue.poll();
+			if(base instanceof Variable){
+				if(((Variable) base).getName().equals(name))
+					variables.add((Variable) base);
+			}
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		return variables;
+	}
+
+	@Override
+	public Variable getFirstVariableByName(Struct base, String name)
+			throws Exception {
+		if(base==null||name==null)throw new Exception("Null base struct is invalid");
+		this.queue.clear();
+		
+		this.queue.add(base);
+		while(!queue.isEmpty()){
+			base = queue.poll();
+			if(base instanceof Variable){
+				if(((Variable) base).getName().equals(name))
+					return (Variable) base;
+			}
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		return null;
+	}
+
+	
+	@Override
+	public Variable getVariableByName(Struct base, String name, int seq)
+			throws Exception {
+		if(base==null||name==null)throw new Exception("Null base struct is invalid");
+		this.queue.clear();
+		
+		this.queue.add(base);
+		while(!queue.isEmpty()){
+			base = queue.poll();
+			if(base instanceof Variable){
+				if(((Variable) base).getName().equals(name)){
+					if(seq--==0)
+						return (Variable) base;
+				}
+			}
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		return null;
+	}
+
+	public Variable[] getVariableListByName(Struct base,String name) throws Exception{
+		if(base==null||name==null)throw new Exception("Null base struct is invalid");
+		this.queue.clear();
+		this.vlist.clear();
+		
+		this.queue.add(base);
+		while(!queue.isEmpty()){
+			base = queue.poll();
+			if(base instanceof Variable){
+				if(((Variable) base).getName().equals(name)){
+					vlist.add((Variable) base);
+				}
+			}
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		Variable[] variables = null;
+		if(this.vlist.size()>0){
+			variables = new Variable[vlist.size()];
+			for(int i=0;i<vlist.size();i++)
+				variables[i]=this.vlist.get(i);
+		}
+		
+		return variables;
+	}
+
+	
+	@Override
+	public Map<String, Variable> getVariableMap(Struct base) throws Exception {
+		if(base==null)throw new Exception("Null base struct is invalid");
+		this.queue.clear();
+		Map<String,Variable> map = new HashMap<String,Variable>();
+		
+		this.queue.add(base);
+		while(!queue.isEmpty()){
+			base = queue.poll();
+			if(base instanceof Variable){
+				map.put(((Variable) base).getName(), (Variable) base);
+			}
+			if(base instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) base).getChildrenStructs();
+				int n = ((CompositeStruct) base).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					this.queue.add(children[i]);
+			}
+		}
+		
+		return map;
+	}
 }
