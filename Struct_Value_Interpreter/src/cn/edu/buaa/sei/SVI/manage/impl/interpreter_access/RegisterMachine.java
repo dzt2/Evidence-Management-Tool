@@ -23,6 +23,21 @@ public class RegisterMachine implements InterpreterRegisterMachine{
 	public static final String XMLSTRUCT = "Struct";
 	public static final String XMLINTERPRETER = "Interpreter";
 	
+	public static InterpreterRegisterMachine rm = new RegisterMachine();
+	public static InterpreterRegisterMachine getMachine(){return rm;}
+	
+	static{
+		SVIStream resource = new SVIStream();
+		resource.setInputStream(Test.class.getClassLoader().getResourceAsStream("config/regist.xml"));
+		try {
+			rm.loadRegisterMap(resource, false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Library loading complete...");
+	}
+	
 	StructClassLib slib = StructLib.getStructLibrary();
 	InterpreterClassLib ilib = SInterpreterLib.getLibrary();
 	StructInterpreterClassLinker linker = new ClassLinker();
@@ -146,5 +161,10 @@ public class RegisterMachine implements InterpreterRegisterMachine{
 		
 		return this.ilib.createInterpreter(itype);
 	}
+	@Override
+	public Interpreter get(Struct element) throws Exception {return this.getInterpreter(element);}
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Interpreter get(Class stype) throws Exception {return this.getInterpreter(stype);}
 
 }

@@ -119,11 +119,11 @@
 		<Struct>cn.edu.buaa.sei.SVI.struct.numeric.NumericFunction</Struct>
 		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.numeric.impl.FunctionComputerImpl</Interpreter>
 	</Pair>
-	
 	<Pair>
 		<Struct>cn.edu.buaa.sei.SVI.struct.numeric.NumericVariable</Struct>
 		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.numeric.impl.VariableComputerImpl</Interpreter>
 	</Pair>
+	
 	<Pair>
 		<Struct>cn.edu.buaa.sei.SVI.struct.group.Cardinality</Struct>
 		<Interpreter>cn.edu.buaa.sei.SVI.interpreter.numeric.impl.CardinalityComputerImpl</Interpreter>

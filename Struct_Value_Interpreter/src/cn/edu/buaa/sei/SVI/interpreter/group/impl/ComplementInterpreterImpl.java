@@ -53,9 +53,9 @@ public class ComplementInterpreterImpl implements ComplementInterpreter{
 		if(domain==null||operand==null)
 			throw new Exception("Structure Error: null domain|operand");
 		
-		GroupInterpreter di = (GroupInterpreter) RegisterMachine.register.get(domain);
+		GroupInterpreter di = (GroupInterpreter) RegisterMachine.getRegister().get(domain);
 		if(di==null)throw new Exception("Domain: "+domain.getClass().getCanonicalName()+" has not been registered");
-		GroupInterpreter oi = (GroupInterpreter) RegisterMachine.register.get(operand);
+		GroupInterpreter oi = (GroupInterpreter) RegisterMachine.getRegister().get(operand);
 		if(oi==null)throw new Exception("Operand: "+operand.getClass().getCanonicalName()+" has not been registered");
 		
 		Group dg = di.interpret(domain);

@@ -78,6 +78,7 @@ public class ClassLinker implements StructInterpreterClassLinker{
 		queue.add(stype);
 		while(!queue.isEmpty()){
 			stype = queue.poll();
+			if(stype==null)continue;
 			
 			if(this.linkMap.containsKey(stype))return this.linkMap.get(stype);
 			

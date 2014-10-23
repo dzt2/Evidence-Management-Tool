@@ -21,7 +21,7 @@ import cn.edu.buaa.sei.SVI.manage.XMLStructTranslator;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 
-public class XMLStructPrinterImpl implements IStructPrinter{
+public class XMLStructPrinter implements IStructPrinter{
 	SVIStream out;
 	XMLStructTranslator translator;
 	Document doc;
@@ -68,5 +68,4 @@ public class XMLStructPrinterImpl implements IStructPrinter{
 		StreamResult result = new StreamResult(this.out.getOutputStream());
 		transformer.transform(source, result);
 	}
-
 }

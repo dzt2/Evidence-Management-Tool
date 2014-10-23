@@ -1,8 +1,8 @@
 package cn.edu.buaa.sei.SVI.interpreter.numeric;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
-import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
 import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
+import cn.edu.buaa.sei.SVI.manage.InterpreterRegisterMachine;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.numeric.NumericExpression;
 import cn.edu.buaa.sei.SVI.struct.numeric.NumericVariable;
@@ -10,7 +10,7 @@ import cn.edu.buaa.sei.SVI.struct.numeric.impl.NumericFactory;
 
 public class Test {
 
-	static InterpreterRegister register;
+	static InterpreterRegisterMachine register;
 	
 	public static void main(String[] args) {
 		try {
@@ -26,7 +26,7 @@ public class Test {
 	}
 
 	public static void register() throws Exception{
-		register = RegisterMachine.register;
+		register = RegisterMachine.getRegister();
 	}
 	
 	public static Struct create1() throws Exception{

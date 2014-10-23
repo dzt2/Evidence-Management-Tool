@@ -1,6 +1,8 @@
 package cn.edu.buaa.sei.SVI.manage.impl.interpreter_access;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 
 import cn.edu.buaa.sei.SVI.manage.StructClassLib;
@@ -15,6 +17,8 @@ public class StructLib implements StructClassLib{
 	
 	@SuppressWarnings("rawtypes")
 	Set<Class> types = new HashSet<Class>();
+	@SuppressWarnings("rawtypes")
+	Queue<Class> queue = new LinkedList<Class>();
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -24,7 +28,23 @@ public class StructLib implements StructClassLib{
 	@Override
 	public synchronized boolean isLoaded(Class stype) {
 		if(stype==null)return false;
-		else return this.types.contains(stype);
+		
+		this.queue.clear();this.queue.add(stype);
+		
+		while(!this.queue.isEmpty()){
+			stype = this.queue.poll();
+			if(this.types.contains(stype))return true;
+			
+			if(stype.getSuperclass()!=null)
+				this.queue.add(stype.getSuperclass());
+			Class[] iss = stype.getInterfaces();
+			if(iss!=null)
+				for(int i=0;i<iss.length;i++)
+					if(iss[i]!=null)
+						this.queue.add(iss[i]);
+		}
+		
+		return false;
 	}
 
 	@SuppressWarnings("rawtypes")

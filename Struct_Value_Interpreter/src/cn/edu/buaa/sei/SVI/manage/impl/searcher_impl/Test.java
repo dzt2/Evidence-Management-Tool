@@ -14,7 +14,7 @@ import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
 
 public class Test {
 	public static void main(String[] args) {
-		IStructSearcher searcher = new StructSearcher1();
+		IStructSearcher searcher = StructSearcher1.create();
 		try {
 			Struct base = create1();
 			Map<String,Variable> map = searcher.getVariableMap(base);

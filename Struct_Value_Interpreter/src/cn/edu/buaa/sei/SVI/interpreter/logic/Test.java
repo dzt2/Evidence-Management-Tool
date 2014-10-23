@@ -1,8 +1,8 @@
 package cn.edu.buaa.sei.SVI.interpreter.logic;
 
 import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
-import cn.edu.buaa.sei.SVI.interpreter.core.InterpreterRegister;
 import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
+import cn.edu.buaa.sei.SVI.manage.InterpreterRegisterMachine;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Bindable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicExpression;
@@ -11,7 +11,7 @@ import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
 
 public class Test {
 
-	static InterpreterRegister register;
+	static InterpreterRegisterMachine register;
 	
 	public static void main(String[] args) {
 		try {
@@ -23,7 +23,7 @@ public class Test {
 		}
 	}
 	
-	public static InterpreterRegister register() throws Exception{
+	public static InterpreterRegisterMachine register() throws Exception{
 		register = RegisterMachine.getRegister();
 		return register;
 	}

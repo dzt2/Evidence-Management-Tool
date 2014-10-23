@@ -22,7 +22,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		try {
-			test2();
+			test1();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,7 +32,7 @@ public class Test {
 	public static void test1() throws Exception{
 		SVIStream resource = new SVIStream();
 		resource.setOutputStream(new FileOutputStream(new File("data/c.xml")));
-		IStructPrinter printer = new XMLStructPrinterImpl();
+		IStructPrinter printer = new XMLStructPrinter();
 		printer.setOutputStream(resource);
 		
 		StructManager manager = new StructManagerImpl();
@@ -44,7 +44,7 @@ public class Test {
 	
 	public static void test2() throws Exception{
 		SVIStream resource = new SVIStream();
-		resource.setInputStream(new FileInputStream(new File("data/a.xml")));
+		resource.setInputStream(new FileInputStream(new File("data/c.xml")));
 		IStructImporter importer = new XMLStructImporter();
 		importer.setInput(resource);
 		

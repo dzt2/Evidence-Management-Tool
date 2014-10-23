@@ -10,7 +10,19 @@ import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 public class StructAssigner implements IStructAssigner{
 	IStructSearcher searcher;
 	
-	public StructAssigner(IStructSearcher searcher) throws Exception{
+	static StructAssigner assigner ;
+	
+	static{
+		try {
+			assigner = new StructAssigner(StructSearcher1.create());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static IStructAssigner create(){return assigner;}
+	
+	private StructAssigner(IStructSearcher searcher) throws Exception{
 		if(searcher==null)throw new Exception("Null searcher is invalid");
 		this.searcher = searcher;
 	}

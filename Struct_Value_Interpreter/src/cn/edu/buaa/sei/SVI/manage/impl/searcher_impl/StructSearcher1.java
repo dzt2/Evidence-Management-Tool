@@ -33,6 +33,12 @@ public class StructSearcher1 implements IStructSearcher{
 	Stack<Struct> path = new Stack<Struct>();
 	List<Variable> vlist = new ArrayList<Variable>();
 	
+	public static IStructSearcher searcher = new StructSearcher1();
+	
+	public static IStructSearcher create(){return searcher;}
+	
+	private StructSearcher1(){}
+	
 	@Override
 	public Struct get(Struct base, String path) throws Exception {
 		if(base==null||path==null)throw new Exception("Null base|path is invalid");

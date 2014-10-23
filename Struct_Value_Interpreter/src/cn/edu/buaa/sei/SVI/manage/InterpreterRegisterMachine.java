@@ -24,4 +24,8 @@ public interface InterpreterRegisterMachine {
 	 * */
 	@SuppressWarnings("rawtypes")
 	public Interpreter getInterpreter(Class stype) throws Exception;
+	
+	public Interpreter get(Struct element) throws Exception;
+	@SuppressWarnings("rawtypes")
+	public Interpreter get(Class stype) throws Exception;
 }

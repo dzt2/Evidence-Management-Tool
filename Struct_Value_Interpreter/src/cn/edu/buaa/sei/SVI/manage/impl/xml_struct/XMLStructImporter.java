@@ -19,7 +19,6 @@ public class XMLStructImporter implements IStructImporter{
 	
 	SVIStream in;
 	Element root;
-	XMLStructImporterContainer container;
 	XMLStructTranslator translator;
 	
 	@Override
@@ -33,7 +32,6 @@ public class XMLStructImporter implements IStructImporter{
 		Document doc = builder.parse(this.in.getInputStream());
 		
 		root = (Element) doc.getChildNodes().item(0);
-		this.container = new XMLStructImporterContainer(this.root);
 		this.translator = new XMLStructTranslatorImpl(doc);
 	}
 

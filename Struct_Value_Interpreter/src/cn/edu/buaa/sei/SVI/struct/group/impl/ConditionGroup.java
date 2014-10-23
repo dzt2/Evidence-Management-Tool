@@ -150,7 +150,7 @@ public class ConditionGroup implements AbstractGroup{
 		LogicExpression condition;
 		try {
 			condition = LogicFactory.createConjunction(cacheConditions);
-			Inferencer inferencer = (Inferencer) RegisterMachine.register.get(condition);
+			Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(condition);
 			if(inferencer==null)
 				throw new Exception("Interpreter has not been registered: "+condition.getClass().getCanonicalName());
 			
