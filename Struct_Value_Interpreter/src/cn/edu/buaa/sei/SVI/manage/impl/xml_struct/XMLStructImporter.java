@@ -1,8 +1,5 @@
 package cn.edu.buaa.sei.SVI.manage.impl.xml_struct;
 
-import java.util.Map;
-import java.util.Set;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -13,6 +10,7 @@ import org.w3c.dom.NodeList;
 import cn.edu.buaa.sei.SVI.manage.IStructImporter;
 import cn.edu.buaa.sei.SVI.manage.SVIResource;
 import cn.edu.buaa.sei.SVI.manage.StructManager;
+import cn.edu.buaa.sei.SVI.manage.XMLStructTranslator;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
 import cn.edu.buaa.sei.SVI.manage.impl.StructManagerImpl;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
@@ -22,6 +20,7 @@ public class XMLStructImporter implements IStructImporter{
 	SVIStream in;
 	Element root;
 	XMLStructImporterContainer container;
+	XMLStructTranslator translator;
 	
 	@Override
 	public void setInput(SVIResource in) throws Exception {
@@ -35,6 +34,7 @@ public class XMLStructImporter implements IStructImporter{
 		
 		root = (Element) doc.getChildNodes().item(0);
 		this.container = new XMLStructImporterContainer(this.root);
+		this.translator = new XMLStructTranslatorImpl(doc);
 	}
 
 	@Override
@@ -42,20 +42,17 @@ public class XMLStructImporter implements IStructImporter{
 		if(this.root==null)throw new Exception("File has not been read");
 		NodeList list = this.root.getChildNodes();
 		
+		StructManager manager = new StructManagerImpl();
 		for(int i=0;i<list.getLength();i++)
 			if(list.item(i) instanceof Element){
-				Element ei = (Element) list.item(i);
-				XMLInterpreter interpreter = this.container.getInterpreter(ei);
-				interpreter.read(ei);
+				Element top = (Element) list.item(i);
+				this.translator.restart();
+				Struct result = this.translator.retranslate(top);
+				if(result==null)throw new Exception("Translation failed: <"+top.getTagName()+">");
+				
+				manager.putTopStruct(result);
 			}
 		
-		Map<String,Struct> results = this.container.getResults();
-		Set<String> ids = results.keySet();
-		
-		StructManager manager = new StructManagerImpl();
-		for(String id:ids){
-			manager.put(id, results.get(id));
-		}
 		return manager;
 	}
 

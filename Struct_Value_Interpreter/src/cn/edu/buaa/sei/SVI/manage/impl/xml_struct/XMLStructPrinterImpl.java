@@ -17,17 +17,13 @@ import org.w3c.dom.Element;
 import cn.edu.buaa.sei.SVI.manage.IStructPrinter;
 import cn.edu.buaa.sei.SVI.manage.SVIResource;
 import cn.edu.buaa.sei.SVI.manage.StructManager;
+import cn.edu.buaa.sei.SVI.manage.XMLStructTranslator;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
-import cn.edu.buaa.sei.SVI.struct.core.expression.Expression;
-import cn.edu.buaa.sei.SVI.struct.core.function.Function;
-import cn.edu.buaa.sei.SVI.struct.core.function.FunctionTemplate;
-import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
-import cn.edu.buaa.sei.SVI.struct.logic.DiscourseDomain;
 
 public class XMLStructPrinterImpl implements IStructPrinter{
 	SVIStream out;
-	XMLStructPrinterContainer container;
+	XMLStructTranslator translator;
 	Document doc;
 	Element root;
 
@@ -41,52 +37,30 @@ public class XMLStructPrinterImpl implements IStructPrinter{
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		doc = builder.newDocument();
 		
-		this.container = new XMLStructPrinterContainer(doc);
 		this.root = doc.createElement(XMLStructTags.ROOT);
 		this.doc.appendChild(root);
+		this.translator = new XMLStructTranslatorImpl(this.doc);
 	}
 
 	@Override
 	public void write(StructManager manager) throws Exception {
 		if(manager==null)throw new Exception("Null manager is invalid");
 		
-		Set<Struct> structs = manager.getAllStructs();
-		for(Struct struct:structs){
-			this.container.addAllStruct(struct);
-		}
-		
-		Set<Struct> rms = new HashSet<Struct>();
-		Set<Struct> alls = this.container.getRMap().keySet();
-		structs = new HashSet<Struct>();
-		
-		for(Struct s:alls){
-			if(s instanceof DiscourseDomain)
-				rms.add(((DiscourseDomain) s).getIterator());
-			else if(s instanceof FunctionTemplate)
-				rms.add(((FunctionTemplate) s).getOutput());
-			
-			if(s instanceof Variable||s instanceof Function||s instanceof Expression)
-				structs.add(s);
-		}
-		
-		for(Struct rs:rms){
-			structs.remove(rs);
-		}
-		
+		Set<Struct> structs = manager.getTopStructs();
 		Set<Element> elements = new HashSet<Element>();
-		for(Struct s:structs){
-			XMLPrinter printer = this.container.getPrinter(s);
-			if(printer==null)throw new Exception("XMLPrinter Getting Failed");
-			Element ei = printer.translate(s);
-			if(ei==null)
-				throw new Exception("Interpretation failed at: "+s.getClass().getCanonicalName()+"@{"+s.hashCode()+"}");
-			elements.add(ei);
+		
+		for(Struct struct:structs){
+			this.translator.restart();
+			Element element = this.translator.translate(struct);
+			elements.add(element);
 		}
 		
 		for(Element ei:elements)
 			this.root.appendChild(ei);
 		
-		// write xml file
+		/**
+		 * Write the XML File
+		 * */
 		TransformerFactory tFactory = TransformerFactory.newInstance();
 		Transformer transformer = tFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");

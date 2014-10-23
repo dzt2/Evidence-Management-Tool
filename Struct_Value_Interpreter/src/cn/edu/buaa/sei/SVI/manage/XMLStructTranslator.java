@@ -10,6 +10,10 @@ public interface XMLStructTranslator {
 	 * */
 	public Element translate(Struct struct) throws Exception;
 	/**
+	 * Reset the state of the translator
+	 * */
+	public void restart();
+	/**
 	 * Translate an Element to Struct
 	 * */
 	public Struct retranslate(Element element) throws Exception;

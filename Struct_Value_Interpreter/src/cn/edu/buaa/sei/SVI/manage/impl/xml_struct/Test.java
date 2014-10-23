@@ -21,46 +21,38 @@ import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
 public class Test {
 
 	public static void main(String[] args) {
-		test1("data/a.xml");
-	}
-	
-	public static void test1(String file){
-		IStructImporter importer = new XMLStructImporter();
 		try {
-			SVIStream in = new SVIStream();
-			in.setInputStream(new FileInputStream(new File(file)));
-			importer.setInput(in);
-			StructManager manager = importer.read();
-			
-			Set<String> ids = manager.getAllIDs();
-			for(String id:ids){
-				System.out.println("==============================");
-				Struct val = manager.get(id);
-				System.out.println(id+": "+val.toString());
-			}
+			test2();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void test2(String file){
-		try {
-			Struct s = create1();
-			System.out.println(s.toString());
-			
-			SVIStream out = new SVIStream();
-			out.setOutputStream(new FileOutputStream(new File(file)));
-			
-			IStructPrinter printer = new XMLStructPrinterImpl();
-			printer.setOutputStream(out);
-			
-			StructManager manager = new StructManagerImpl();
-			manager.put("1", s);
-			printer.write(manager);
-			
-			System.out.println("Writting Successfully!");
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static void test1() throws Exception{
+		SVIStream resource = new SVIStream();
+		resource.setOutputStream(new FileOutputStream(new File("data/c.xml")));
+		IStructPrinter printer = new XMLStructPrinterImpl();
+		printer.setOutputStream(resource);
+		
+		StructManager manager = new StructManagerImpl();
+		manager.putTopStruct(create1());
+		printer.write(manager);
+		
+		System.out.println("Writting successfully");
+	}
+	
+	public static void test2() throws Exception{
+		SVIStream resource = new SVIStream();
+		resource.setInputStream(new FileInputStream(new File("data/c.xml")));
+		IStructImporter importer = new XMLStructImporter();
+		importer.setInput(resource);
+		
+		StructManager manager = importer.read();
+		Set<Struct> tops = manager.getTopStructs();
+		for(Struct top:tops){
+			System.out.println("===============================");
+			System.out.println(top.toString());
 		}
 	}
 	
