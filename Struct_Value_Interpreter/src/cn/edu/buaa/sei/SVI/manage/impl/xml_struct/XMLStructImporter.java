@@ -31,7 +31,7 @@ public class XMLStructImporter implements IStructImporter{
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(this.in.getInputStream());
 		
-		root = (Element) doc.getChildNodes().item(0);
+		root = (Element) doc.getElementsByTagName(XMLStructTags.ROOT).item(0);
 		this.translator = new XMLStructTranslatorImpl(doc);
 	}
 

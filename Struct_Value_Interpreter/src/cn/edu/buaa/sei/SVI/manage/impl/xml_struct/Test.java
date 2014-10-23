@@ -22,7 +22,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		try {
-			test1();
+			test2();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class Test {
 	
 	public static void test2() throws Exception{
 		SVIStream resource = new SVIStream();
-		resource.setInputStream(new FileInputStream(new File("data/c.xml")));
+		resource.setInputStream(new FileInputStream(new File("data/a.s")));
 		IStructImporter importer = new XMLStructImporter();
 		importer.setInput(resource);
 		
