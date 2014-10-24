@@ -21,7 +21,7 @@ public interface LClassifier extends LNamedElement{
 	public String getInstanceName();
 	public void setInstanceName(String ins);
 	public LObject getDefaultValue();
-	public LObject setDefaultValue(LObject val);
+	public LObject setDefaultValue(LObject val) throws Exception;
 	
 	public LPackage getContainer();
 	public void setContainer(LPackage container);

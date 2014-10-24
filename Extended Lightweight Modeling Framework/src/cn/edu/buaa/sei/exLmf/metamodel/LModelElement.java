@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface LModelElement {
 	public List<LAnnotation> getAnnotations();
-	public void addAnnotation(LAnnotation annotation);
-	public LAnnotation getAnnotation(int i);
-	public void removeAnnotation(LAnnotation annotation);
+	public void addAnnotation(LAnnotation annotation) throws Exception;
+	public LAnnotation getAnnotation(int i) throws Exception;
+	public void removeAnnotation(LAnnotation annotation) throws Exception;
 	public boolean containAnnotation(LAnnotation annotation);
 	
 }

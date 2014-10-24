@@ -8,23 +8,17 @@ public class LAttributeImpl extends LStructuralFeatureImpl implements LAttribute
 	
 	LDataType dtype;
 	
-	public LAttributeImpl(int fid,String name,LClassifier container){
+	public LAttributeImpl(int fid,String name,LClassifier container) throws Exception{
 		super(fid,name,container);
 	}
 	@Override
 	public LDataType getDataType() {return this.dtype;}
 	@Override
-	public void setDataType(LDataType type) {this.setType(type);}
+	public void setDataType(LDataType type) throws Exception {this.setType(type);}
 	
-	public void setType(LClassifier type){
+	public void setType(LClassifier type) throws Exception{
 		if((type==null)||!(type instanceof LDataType)){
-			try {
-				throw this.getException("setType(type)", "type", "Attribute's type must be LDataType");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("setType(type)", "type", "Attribute's type must be LDataType");
 		}
 		super.setType(type);
 		this.dtype=(LDataType) type;

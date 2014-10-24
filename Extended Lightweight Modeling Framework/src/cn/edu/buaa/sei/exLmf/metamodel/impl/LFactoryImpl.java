@@ -29,32 +29,15 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 	public LPackage getContainer() {return this.ePackage;}
 
 	@Override
-	public LClassObject create(LClass type) {
+	public LClassObject create(LClass type) throws Exception {
 		if(type==null){
-			try {
-				throw this.getException("create(type)", "type", "Null");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("create(type)", "type", "Null");
 		}
 		if(!this.ePackage.containType(type)){
-			try {
-				throw this.getException("create(type)", "type", "Undefined in Package");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("create(type)", "type", "Undefined in Package");
 		}
 		if(type.isAbstract()){
-			try {
-				throw this.getException("create(type)", "type", "Abstract type \""+type.getName()+"\" cannot be instantiated.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("create(type)", "type", "Abstract type \""+type.getName()+"\" cannot be instantiated.");
 		}
 		if(this.isLight)
 			return new SimpleLClassObject(type);
@@ -62,22 +45,12 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 			return new LClassObjectImpl(type);
 	}
 	@Override
-	public LDataObject create(LDataType type, String code) {
+	public LDataObject create(LDataType type, String code) throws Exception {
 		if(type==null){
-			try {
-				throw this.getException("create(type, code)", "type", "Null");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("create(type, code)", "type", "Null");
 		}
 		if(code==null){
-			try {
-				throw this.getException("create(type, code)", "code", "Null");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("create(type, code)", "code", "Null");
 		}
 		
 		if(type==LPrimitiveTypeImpl.BOOL){return this.createBool(code);}
@@ -97,7 +70,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		}
 	}
 	
-	LDataObject createBool(String code){
+	LDataObject createBool(String code) throws Exception{
 		if(code==null){
 			return null;
 		}
@@ -106,89 +79,39 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		else if(FALSE_CODE.equals(code.trim()))
 			return FALSE;
 		else{
-			try {
-				throw this.getException("createBool(type,code)", "code", "\""+code.trim()+"\" is invalid for Boolean");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("createBool(type,code)", "code", "\""+code.trim()+"\" is invalid for Boolean");
 		}
 	}
 	LDataObject createInteger(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.INT);
-		try{
-			Integer i = Integer.parseInt(code.trim());
-			val.val=i;
-		}
-		catch(Exception ex){
-			try {
-				throw this.getException("createInteger(code)", "code", "\""+code.trim()+"\" is invalid integer code");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
+		Integer i = Integer.parseInt(code.trim());
+		val.val=i;
 		return val;
 	}
 	LDataObject createLong(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.LONG);
-		try{
-			Long i = Long.parseLong(code.trim());
-			val.val=i;
-		}
-		catch(Exception ex){
-			try {
-				throw this.getException("createLong(code)", "code", "\""+code.trim()+"\" is invalid Long code");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
+		Long i = Long.parseLong(code.trim());
+		val.val=i;
 		return val;
 	}
 	LDataObject createFloat(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.FLOAT);
-		try{
-			Float i = Float.parseFloat(code.trim());
-			val.val=i;
-		}
-		catch(Exception ex){
-			try {
-				throw this.getException("createFloat(code)", "code", "\""+code.trim()+"\" is invalid Float code");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
+		Float i = Float.parseFloat(code.trim());
+		val.val=i;
 		return val;
 	}
 	LDataObject createDouble(String code){
 		if(code==null)return null;
 		
 		LDataObjectImpl val = new LDataObjectImpl(LPrimitiveTypeImpl.DOUBLE);
-		try{
-			Double i = Double.parseDouble(code.trim());
-			val.val=i;
-		}
-		catch(Exception ex){
-			try {
-				throw this.getException("createDouble(code)", "code", "\""+code.trim()+"\" is invalid Double code");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
+		Double i = Double.parseDouble(code.trim());
+		val.val=i;
 		return val;
 	}
 	LDataObject createString(String code){
@@ -198,7 +121,7 @@ public class LFactoryImpl extends LModelElementImpl implements LFactory{
 		val.val=code;
 		return val;
 	}
-	LDataObject createLiteral(LEnum type,String name){
+	LDataObject createLiteral(LEnum type,String name) throws Exception{
 		if(type==null||name==null)return null;
 		
 		LEnumLiteral literal = type.getLiteralByName(name);

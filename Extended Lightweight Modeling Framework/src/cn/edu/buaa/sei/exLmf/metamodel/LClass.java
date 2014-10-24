@@ -24,8 +24,8 @@ import java.util.List;
  */
 public interface LClass extends LClassifier{
 	public List<LClass> getSuperTypes();
-	public void addSuperType(LClass type);
-	public void removeSuperType(LClass type);
+	public void addSuperType(LClass type) throws Exception;
+	public void removeSuperType(LClass type) throws Exception;
 	public Boolean isSuperOf(LClass type);
 	public Boolean isSubOf(LClass type);
 	
@@ -35,7 +35,7 @@ public interface LClass extends LClassifier{
 	public void setFinal(Boolean isFinal);
 	
 	public LAttribute getIDAttribute();
-	public void setIDAttribute(LAttribute attribute);
+	public void setIDAttribute(LAttribute attribute) throws Exception;
 	
 	public List<LAttribute> getAttributes();
 	public List<LAttribute> getAllAttributes();
@@ -48,16 +48,16 @@ public interface LClass extends LClassifier{
 	public LStructuralFeature getFeatureByID(int id);
 	public int[] getFeatureIDSet();
 	
-	public void addAttribute(LAttribute attribute);
-	public void addReference(LReference reference);
-	public void addFeature(LStructuralFeature feature);
+	public void addAttribute(LAttribute attribute) throws Exception;
+	public void addReference(LReference reference) throws Exception;
+	public void addFeature(LStructuralFeature feature) throws Exception;
 	public Boolean containAttribute(LAttribute attribute);
 	public Boolean containReference(LReference reference);
 	public Boolean containFeature(LStructuralFeature feature);
-	public void removeAttribute(LAttribute attribute);
-	public void removeReference(LReference reference);
-	public void removeFeature(LStructuralFeature feature);
+	public void removeAttribute(LAttribute attribute) throws Exception;
+	public void removeReference(LReference reference) throws Exception;
+	public void removeFeature(LStructuralFeature feature) throws Exception;
 	
-	public LStructuralFeature removeFeatureByID(int id);
-	public LStructuralFeature removeFeatureByName(String name);
+	public LStructuralFeature removeFeatureByID(int id) throws Exception;
+	public LStructuralFeature removeFeatureByName(String name) throws Exception;
 }

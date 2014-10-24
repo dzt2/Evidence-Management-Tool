@@ -13,21 +13,15 @@ public abstract class LTypedElementImpl extends LNamedElementImpl implements LTy
 	
 	public static final int UNBOUNDED = -1;
 	
-	LTypedElementImpl(String name){super(name);}
+	LTypedElementImpl(String name) throws Exception{super(name);}
 
 	@Override
 	public LClassifier getType() {return this.type;}
 	// Would be rewritten in sub class
 	@Override
-	public void setType(LClassifier type) {
+	public void setType(LClassifier type) throws Exception {
 		if(type==null){
-			try {
-				throw this.getException("setType(type)", "type", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("setType(type)", "type", "Null");
 		}
 		this.type=type;
 	}
@@ -48,16 +42,10 @@ public abstract class LTypedElementImpl extends LNamedElementImpl implements LTy
 	public void setUnique(boolean unique) {this.unique=unique;}
 
 	@Override
-	public void setUpperBound(int upperBound) {
+	public void setUpperBound(int upperBound) throws Exception {
 		if(upperBound<0&&upperBound!=UNBOUNDED){
-			try {
-				throw this.getException("setUpperBound(upperBound)", "upperBound", 
+			throw this.getException("setUpperBound(upperBound)", "upperBound", 
 						"Invalid integer: "+upperBound);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		/*if(upperBound<this.lowerBound){
 			try {
@@ -72,16 +60,10 @@ public abstract class LTypedElementImpl extends LNamedElementImpl implements LTy
 		this.upperBound=upperBound;
 	}
 	@Override
-	public void setLowerBound(int lowerBound) {
+	public void setLowerBound(int lowerBound) throws Exception {
 		if(lowerBound<0){
-			try {
-				throw this.getException("setLowerBound(lowerBound)", "lowerBound", 
+			throw this.getException("setLowerBound(lowerBound)", "lowerBound", 
 						"Invalid integer: "+lowerBound);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		/*if(lowerBound>this.upperBound&&this.upperBound>=0){
 			

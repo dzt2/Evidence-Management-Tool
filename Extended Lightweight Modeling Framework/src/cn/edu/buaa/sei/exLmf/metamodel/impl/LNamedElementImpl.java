@@ -6,7 +6,7 @@ public abstract class LNamedElementImpl extends LModelElementImpl implements LNa
 	
 	String name;
 	
-	LNamedElementImpl(String name){
+	LNamedElementImpl(String name) throws Exception{
 		super();
 		this.setName(name);
 	}
@@ -14,15 +14,9 @@ public abstract class LNamedElementImpl extends LModelElementImpl implements LNa
 	@Override
 	public String getName() {return this.name;}
 	@Override
-	public void setName(String name) {
+	public void setName(String name) throws Exception {
 		if(name==null){
-			try {
-				throw this.getException("setName(name)","name", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("setName(name)","name", "Null");
 		}
 		this.name=name;
 	}

@@ -20,11 +20,11 @@ import java.util.List;
  */
 public interface LEnum extends LDataType{
 	public List<LEnumLiteral> getLiterals();
-	public void addLiteral(LEnumLiteral literal);
+	public void addLiteral(LEnumLiteral literal) throws Exception;
 	
-	public LEnumLiteral getLiteralByValue(int value);
-	public LEnumLiteral getLiteralByName(String literal);
+	public LEnumLiteral getLiteralByValue(int value) throws Exception;
+	public LEnumLiteral getLiteralByName(String literal) throws Exception;
 
-	public void removeLiteral(LEnumLiteral literal);
+	public void removeLiteral(LEnumLiteral literal) throws Exception;
 	public Boolean containLiteral(LEnumLiteral literal);
 }

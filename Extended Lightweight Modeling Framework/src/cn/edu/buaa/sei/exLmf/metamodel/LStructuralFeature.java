@@ -27,5 +27,5 @@ public interface LStructuralFeature extends LTypedElement{
 	public void setRequired(Boolean required);
 	public int getFeatureID();	/*Local Identification*/
 	public LObject getDefaultValue();
-	public void setDefaultValue(LObject value);
+	public void setDefaultValue(LObject value) throws Exception;
 }

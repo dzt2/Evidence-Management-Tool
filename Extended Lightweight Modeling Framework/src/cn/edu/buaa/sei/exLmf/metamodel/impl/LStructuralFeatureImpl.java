@@ -12,7 +12,7 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 	LObject default_val;
 	Boolean required=false;
 	
-	LStructuralFeatureImpl(int fid,String name,LClassifier container){super(name);this.container=container;this.fid=fid;}
+	LStructuralFeatureImpl(int fid,String name,LClassifier container) throws Exception{super(name);this.container=container;this.fid=fid;}
 
 	@Override
 	public LClassifier getContainer() {return this.container;}
@@ -39,7 +39,7 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 		else return this.default_val;
 	}
 	@Override
-	public void setDefaultValue(LObject value) {this.default_val=value;}
+	public void setDefaultValue(LObject value) throws Exception {this.default_val=value;}
 
 	@Override
 	public Boolean isRequired() {return this.required;}

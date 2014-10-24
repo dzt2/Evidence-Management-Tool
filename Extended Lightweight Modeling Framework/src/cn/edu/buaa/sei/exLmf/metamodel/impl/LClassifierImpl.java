@@ -12,7 +12,7 @@ public class LClassifierImpl extends LNamedElementImpl implements LClassifier{
 	public static final int DEFAULT_ID = -1;
 	LPackage container;
 	
-	LClassifierImpl(String name,LPackage container){super(name);this.container=container;}
+	LClassifierImpl(String name,LPackage container) throws Exception{super(name);this.container=container;}
 	/*
 	 *	Tool Functions for all model elements. 
 	 */
@@ -36,20 +36,14 @@ public class LClassifierImpl extends LNamedElementImpl implements LClassifier{
 	}
 	@Override
 	public void setInstanceName(String ins) {
-		// TODO Auto-generated method stub
 		this.ins_name=ins;
 	}
 	// Need to be modified in sub class
 	@Override
-	public LObject setDefaultValue(LObject val) {
+	public LObject setDefaultValue(LObject val) throws Exception {
 		if(val!=null){
 			if(this!=val.type())
-				try {
-					throw this.getException("setDefaultValue(val)", "val", "val.type do not match this classifier");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				throw this.getException("setDefaultValue(val)", "val", "val.type do not match this classifier");
 		}
 		return this.default_val=val;
 	}

@@ -2,7 +2,7 @@ package cn.edu.buaa.sei.exLmf.metamodel;
 
 import java.util.List;
 
-/*
+/**
  *	LPackage: model element that can package other elements.
  *	LPackage {
  *		************ LModelElement *************
@@ -21,9 +21,9 @@ import java.util.List;
  */
 public interface LPackage extends LNamedElement{
 	public List<LPackage> getSubPackages();
-	public void addSubPackage(LPackage pack);
-	public void removeSubPackage(LPackage pack);
-	public LPackage getSubPackageByName(String name);
+	public void addSubPackage(LPackage pack) throws Exception;
+	public void removeSubPackage(LPackage pack) throws Exception;
+	public LPackage getSubPackageByName(String name) throws Exception;
 	public boolean containSubPackage(LPackage p);
 	
 	public String getNsURI();
@@ -32,14 +32,14 @@ public interface LPackage extends LNamedElement{
 	public void setNsPrefix(String prefix);
 	
 	public List<LClassifier> getTypes();
-	public void addType(LClassifier type);
-	public void removeType(LClassifier type);
+	public void addType(LClassifier type) throws Exception;
+	public void removeType(LClassifier type) throws Exception;
 	public Boolean containType(LClassifier type);
-	public LClassifier getClassifierByID(int id);
-	public LClassifier getClassifierByName(String name);
+	public LClassifier getClassifierByID(int id) throws Exception;
+	public LClassifier getClassifierByName(String name) throws Exception;
 	
 	public LPackage getContainer();
-	public void setContainer(LPackage container);
+	public void setContainer(LPackage container) throws Exception;
 	
 	public LFactory getFactory();
 }

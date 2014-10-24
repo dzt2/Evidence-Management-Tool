@@ -25,7 +25,7 @@ package cn.edu.buaa.sei.exLmf.metamodel;
  */
 public interface LReference extends LStructuralFeature{
 	public LClass getLClass();
-	public void setLClass(LClass type);
+	public void setLClass(LClass type) throws Exception;
 	
 	/*
 	 *	setOpposite(op){

@@ -96,25 +96,26 @@ public interface IModelModifier {
 	 * 	- execution:
 	 * 		- addReference(type1,name+"_"+type2.getName(),type2);
 	 * 		- if bi-direct: addReference(type2,name+"_"+type1.getName(),type1); r1.setOpposite(r2);
+	 * @throws Exception 
 	 * 
 	 */
-	public Boolean generalize(LClass parant,LClass child);
-	public Boolean removeGeneralize(LClass parant,LClass child);
+	public Boolean generalize(LClass parant,LClass child) throws Exception;
+	public Boolean removeGeneralize(LClass parant,LClass child) throws Exception;
 	
-	public Boolean appendAttribute(LClass type,LAttribute attribute);
-	public Boolean appendReference(LClass type,LReference reference);
-	public Boolean removeAttribute(LClass type,LAttribute attribute);
-	public Boolean removeReference(LClass type,LReference reference);
-	public Boolean appendLiteral(LEnum type,LEnumLiteral literal);
-	public Boolean removeLiteral(LEnum type,LEnumLiteral literal);
+	public Boolean appendAttribute(LClass type,LAttribute attribute) throws Exception;
+	public Boolean appendReference(LClass type,LReference reference) throws Exception;
+	public Boolean removeAttribute(LClass type,LAttribute attribute) throws Exception;
+	public Boolean removeReference(LClass type,LReference reference) throws Exception;
+	public Boolean appendLiteral(LEnum type,LEnumLiteral literal) throws Exception;
+	public Boolean removeLiteral(LEnum type,LEnumLiteral literal) throws Exception;
 	
-	public Boolean appendClass(LPackage p,LClass type);
-	public Boolean removeClass(LPackage p,LClass type);
-	public Boolean appendEnum(LPackage p,LEnum type);
-	public Boolean removeEnum(LPackage p,LEnum type);
-	public Boolean appendPackage(LPackage parant,LPackage child);
-	public Boolean removePackage(LPackage parant,LPackage child);
+	public Boolean appendClass(LPackage p,LClass type) throws Exception;
+	public Boolean removeClass(LPackage p,LClass type) throws Exception;
+	public Boolean appendEnum(LPackage p,LEnum type) throws Exception;
+	public Boolean removeEnum(LPackage p,LEnum type) throws Exception;
+	public Boolean appendPackage(LPackage parant,LPackage child) throws Exception;
+	public Boolean removePackage(LPackage parant,LPackage child) throws Exception;
 	
 	public LReference addAssociation(String name,LClass type1,LClass type2,Boolean bi_direct);
-	public Boolean removeAssociation(LReference ref);
+	public Boolean removeAssociation(LReference ref) throws Exception;
 }

@@ -12,6 +12,6 @@ package cn.edu.buaa.sei.exLmf.metamodel;
  */
 public interface LFactory extends LModelElement{
 	public LPackage getContainer();
-	public LClassObject create(LClass type);
-	public LDataObject create(LDataType type,String code);
+	public LClassObject create(LClass type) throws Exception;
+	public LDataObject create(LDataType type,String code) throws Exception;
 }

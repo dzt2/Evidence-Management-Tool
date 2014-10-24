@@ -34,9 +34,10 @@ public class ModelModifierImpl implements IModelModifier{
 		return false;
 	}
 	
-	/**Core Functions*/
+	/**Core Functions
+	 * @throws Exception */
 	@Override
-	public Boolean generalize(LClass parant, LClass child) {
+	public Boolean generalize(LClass parant, LClass child) throws Exception {
 		if(parant==null||child==null)return false;
 		if(parant.isSubOf(child))return false;
 		if(parant.isSuperOf(child))return true;
@@ -44,7 +45,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean removeGeneralize(LClass parant, LClass child) {
+	public Boolean removeGeneralize(LClass parant, LClass child) throws Exception {
 		if(parant==null||child==null)return false;
 		if(child.getSuperTypes().contains(parant)){
 			child.removeSuperType(parant);
@@ -54,7 +55,7 @@ public class ModelModifierImpl implements IModelModifier{
 	}
 
 	@Override
-	public Boolean appendAttribute(LClass type, LAttribute attribute) {
+	public Boolean appendAttribute(LClass type, LAttribute attribute) throws Exception {
 		if(type==null||attribute==null)return false;
 		if(attribute.getContainer()==type)return true;
 		if(attribute.getContainer()!=null)
@@ -65,7 +66,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean appendReference(LClass type, LReference reference) {
+	public Boolean appendReference(LClass type, LReference reference) throws Exception {
 		if(type==null||reference==null)return false;
 		if(type==reference.getContainer())return true;
 		if(reference.getContainer()!=null)
@@ -76,7 +77,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;	
 	}
 	@Override
-	public Boolean removeAttribute(LClass type, LAttribute attribute) {
+	public Boolean removeAttribute(LClass type, LAttribute attribute) throws Exception {
 		if(type==null||attribute==null)return false;
 		if(type!=attribute.getContainer())return false;
 		
@@ -85,7 +86,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean removeReference(LClass type, LReference reference) {
+	public Boolean removeReference(LClass type, LReference reference) throws Exception {
 		if(type==null||reference==null)return false;
 		if(type!=reference.getContainer())return false;
 		
@@ -95,7 +96,7 @@ public class ModelModifierImpl implements IModelModifier{
 	}
 
 	@Override
-	public Boolean appendLiteral(LEnum type, LEnumLiteral literal) {
+	public Boolean appendLiteral(LEnum type, LEnumLiteral literal) throws Exception {
 		if(type==null||literal==null)return false;
 		if(type==literal.getContainer())return true;
 		if(literal.getContainer()!=null)
@@ -106,7 +107,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean removeLiteral(LEnum type, LEnumLiteral literal) {
+	public Boolean removeLiteral(LEnum type, LEnumLiteral literal) throws Exception {
 		if(type==null||literal==null)return false;
 		if(type!=literal.getContainer())return false;
 		
@@ -116,7 +117,7 @@ public class ModelModifierImpl implements IModelModifier{
 	}
 
 	@Override
-	public Boolean appendClass(LPackage p, LClass type) {
+	public Boolean appendClass(LPackage p, LClass type) throws Exception {
 		if(p==null||type==null)return false;
 		if(p==type.getContainer())return true;
 		if(type.getContainer()!=null)
@@ -125,7 +126,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean removeClass(LPackage p, LClass type) {
+	public Boolean removeClass(LPackage p, LClass type) throws Exception {
 		if(p==null||type==null)return false;
 		if(p!=type.getContainer())return false;
 		
@@ -134,7 +135,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean appendEnum(LPackage p, LEnum type) {
+	public Boolean appendEnum(LPackage p, LEnum type) throws Exception {
 		if(p==null||type==null)return false;
 		if(p==type.getContainer())return true;
 		
@@ -143,7 +144,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean removeEnum(LPackage p, LEnum type) {
+	public Boolean removeEnum(LPackage p, LEnum type) throws Exception {
 		if(p==null||type==null)return false;
 		if(p!=type.getContainer())return false;
 		
@@ -152,7 +153,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean appendPackage(LPackage parant, LPackage child) {
+	public Boolean appendPackage(LPackage parant, LPackage child) throws Exception {
 		if(parant==null||child==null)return null;
 		if(parant==child.getContainer())return true;
 		
@@ -162,7 +163,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return true;
 	}
 	@Override
-	public Boolean removePackage(LPackage parant, LPackage child) {
+	public Boolean removePackage(LPackage parant, LPackage child) throws Exception {
 		if(parant==null||child==null)return false;
 		if(child.getContainer()!=parant)return false;
 		
@@ -192,7 +193,7 @@ public class ModelModifierImpl implements IModelModifier{
 		return null;
 	}
 	@Override
-	public Boolean removeAssociation(LReference ref) {
+	public Boolean removeAssociation(LReference ref) throws Exception {
 		if(ref==null)return false;
 		if(ref.getContainer()==null)return true;
 		

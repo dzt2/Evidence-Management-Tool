@@ -242,7 +242,7 @@ public class Test {
 		test1();*/
 	}
 	
-	public static IObjectSpace createSpace1(){
+	public static IObjectSpace createSpace1() throws Exception{
 		LPackage p = createPackage1();
 		IObjectSpace os = new ObjectSpace("OSpace",p);
 		
@@ -272,7 +272,7 @@ public class Test {
 	}
 	
 	
-	public static void test1(){
+	public static void test1() throws Exception{
 		LPackage p = createPackage1();
 		
 		System.out.println(p.getName());
@@ -310,7 +310,7 @@ public class Test {
 		System.out.println(printLClassObject(c));
 	}
 	
-	public static LPackage createPackage1(){
+	public static LPackage createPackage1() throws Exception{
 		LPackage p = new LPackageImpl("test","www.example.com/Test","Test");
 		
 		LClass person = new LClassImpl("Person",p);person.setClassifierID(0);

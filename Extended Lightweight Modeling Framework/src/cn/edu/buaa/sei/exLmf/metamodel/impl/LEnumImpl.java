@@ -15,7 +15,7 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	Map<Integer,LEnumLiteral> id_literals = new HashMap<Integer,LEnumLiteral>();
 	Map<String,LEnumLiteral> name_literals = new HashMap<String,LEnumLiteral>();
 	
-	public LEnumImpl(String name,LPackage container){super(name,container);}
+	public LEnumImpl(String name,LPackage container) throws Exception{super(name,container);}
 	
 	@Override
 	public List<LEnumLiteral> getLiterals() {return this.literals;}
@@ -26,29 +26,17 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 	 *	3) literal.container!=null ==> remove literal from former container.
 	 */
 	@Override
-	public void addLiteral(LEnumLiteral literal) {
+	public void addLiteral(LEnumLiteral literal) throws Exception {
 		if(literal==null||this.literals.contains(literal))return;
 		
 		String name = literal.getLiteral();
 		int value = literal.getValue();
 		
 		if(this.name_literals.containsKey(name)){
-			try {
-				throw this.getException("addLiteral(literal)", "literal", name+" conflict");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("addLiteral(literal)", "literal", name+" conflict");
 		}
 		if(this.id_literals.containsKey(value)){
-			try {
-				throw this.getException("addLiteral(literal)", "literal", value+" conflict");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("addLiteral(literal)", "literal", value+" conflict");
 		}
 		if(literal.getContainer()!=null&&literal.getContainer()!=this){
 			LEnum ltype = (LEnum) literal.getContainer();
@@ -61,40 +49,24 @@ public class LEnumImpl extends LDataTypeImpl implements LEnum{
 		literal.setContainer(this);
 	}
 	@Override
-	public LEnumLiteral getLiteralByValue(int value) {
+	public LEnumLiteral getLiteralByValue(int value) throws Exception {
 		if(!this.id_literals.containsKey(value)){
-			try {
-				throw this.getException("getLiteralByValue(value)", "value", value+" Undefined");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("getLiteralByValue(value)", "value", value+" Undefined");
 		}
 		return this.id_literals.get(value);
 	}
 	@Override
-	public LEnumLiteral getLiteralByName(String literal) {
+	public LEnumLiteral getLiteralByName(String literal) throws Exception {
 		if(!this.name_literals.containsKey(literal))
 		{
-			try {
-				throw this.getException("getLiteralByName(literal)", "literal", literal+" Undefined");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("getLiteralByName(literal)", "literal", literal+" Undefined");
 		}
 		return this.name_literals.get(literal);
 	}
 	@Override
-	public void removeLiteral(LEnumLiteral literal) {
+	public void removeLiteral(LEnumLiteral literal) throws Exception {
 		if(literal==null||!this.literals.contains(literal)){
-			try {
-				throw this.getException("removeLiteral(literal)", "literal", "Undefined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("removeLiteral(literal)", "literal", "Undefined");
 		}
 		
 		this.literals.remove(literal);

@@ -38,12 +38,18 @@ public class LPrimitiveTypeImpl extends LDataTypeImpl implements LPrimitiveType{
 	public static LObject BOOL_DEFAULT = null;
 	
 	static{
-		INT = new LPrimitiveTypeImpl(INT_NAME);
-		LONG = new LPrimitiveTypeImpl(LONG_NAME);
-		FLOAT = new LPrimitiveTypeImpl(FLOAT_NAME);
-		DOUBLE = new LPrimitiveTypeImpl(DOUBLE_NAME);
-		STRING= new LPrimitiveTypeImpl(STRING_NAME);
-		BOOL = new LPrimitiveTypeImpl(BOOL_NAME);
+		try {
+			INT = new LPrimitiveTypeImpl(INT_NAME);
+			LONG = new LPrimitiveTypeImpl(LONG_NAME);
+			FLOAT = new LPrimitiveTypeImpl(FLOAT_NAME);
+			DOUBLE = new LPrimitiveTypeImpl(DOUBLE_NAME);
+			STRING= new LPrimitiveTypeImpl(STRING_NAME);
+			BOOL = new LPrimitiveTypeImpl(BOOL_NAME);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 		INT.setClassifierID(INT_ID);
 		LONG.setClassifierID(LONG_ID);
@@ -75,14 +81,20 @@ public class LPrimitiveTypeImpl extends LDataTypeImpl implements LPrimitiveType{
 		FLOAT_DEFAULT = new LDataObjectImpl(FLOAT);((LDataObjectImpl)FLOAT_DEFAULT).setFloat(0.0f);
 		DOUBLE_DEFAULT = new LDataObjectImpl(DOUBLE);((LDataObjectImpl)DOUBLE_DEFAULT).setDouble(0.0);
 		
-		BOOL.setDefaultValue(BOOL_DEFAULT);
-		INT.setDefaultValue(INT_DEFAULT);
-		LONG.setDefaultValue(LONG_DEFAULT);
-		FLOAT.setDefaultValue(FLOAT_DEFAULT);
-		DOUBLE.setDefaultValue(DOUBLE_DEFAULT);
-		STRING.setDefaultValue(STRING_DEFAULT);
+		try {
+			BOOL.setDefaultValue(BOOL_DEFAULT);
+			INT.setDefaultValue(INT_DEFAULT);
+			LONG.setDefaultValue(LONG_DEFAULT);
+			FLOAT.setDefaultValue(FLOAT_DEFAULT);
+			DOUBLE.setDefaultValue(DOUBLE_DEFAULT);
+			STRING.setDefaultValue(STRING_DEFAULT);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
-	LPrimitiveTypeImpl(String name){super(name,null);}
+	LPrimitiveTypeImpl(String name) throws Exception{super(name,null);}
 
 }

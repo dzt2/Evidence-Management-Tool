@@ -15,7 +15,7 @@ package cn.edu.buaa.sei.exLmf.metamodel;
  */
 public interface LTypedElement extends LNamedElement{
 	public LClassifier getType();
-	public void setType(LClassifier type);
+	public void setType(LClassifier type) throws Exception;
 	public Boolean isOrdered();
 	public Boolean isUnique();
 	public int getUpperBound();
@@ -23,6 +23,6 @@ public interface LTypedElement extends LNamedElement{
 	
 	public void setOrdered(boolean ordered);
 	public void setUnique(boolean unique);
-	public void setUpperBound(int upperBound);
-	public void setLowerBound(int lowerBound);
+	public void setUpperBound(int upperBound) throws Exception;
+	public void setLowerBound(int lowerBound) throws Exception;
 }

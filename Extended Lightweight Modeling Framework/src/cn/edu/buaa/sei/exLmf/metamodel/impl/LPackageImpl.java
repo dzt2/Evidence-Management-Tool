@@ -19,13 +19,13 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	Map<String,LClassifier> type_index = new HashMap<String,LClassifier>();
 	Map<Integer,LClassifier> id_type = new HashMap<Integer,LClassifier>();
 	
-	public LPackageImpl(String name,String nsURI,String prefix){
+	public LPackageImpl(String name,String nsURI,String prefix) throws Exception{
 		super(name);
 		this.nsURI=nsURI;
 		this.prefix=prefix;
 		this.factory=new LFactoryImpl(this,false);
 	}
-	public LPackageImpl(String name,String nsURI,String prefix,Boolean isLight){
+	public LPackageImpl(String name,String nsURI,String prefix,Boolean isLight) throws Exception{
 		super(name);
 		this.nsURI=nsURI;
 		this.prefix=prefix;
@@ -54,24 +54,15 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public List<LPackage> getSubPackages() {return this.supPackages;}
 	@Override
-	public void addSubPackage(LPackage pack) {
+	public void addSubPackage(LPackage pack) throws Exception {
 		if(pack==null){
-			try {
-				throw this.getException("addSubPackage(pack)", "pack", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("addSubPackage(pack)", "pack", "Null");
 		}
 		
 		if(this.containSubPackage(pack))return;
 		
 		if(this.package_index.containsKey(pack.getName())){
-			try {
-				throw this.getException("addSubPackage(pack)", "pack", pack.getName()+" has been defined");
-			} catch (Exception e) {System.err.println(e.getMessage());}
-			return;
+			throw this.getException("addSubPackage(pack)", "pack", pack.getName()+" has been defined");
 		}
 		
 		this.supPackages.add(pack);
@@ -80,32 +71,20 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		pack.setContainer(this);
 	}
 	@Override
-	public void removeSubPackage(LPackage pack) {
+	public void removeSubPackage(LPackage pack) throws Exception {
 		if(!this.supPackages.contains(pack)){
-			try {
-				throw this.getException("removeSubPackage(pack)", "pack", "Undefined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("removeSubPackage(pack)", "pack", "Undefined");
 		}
 		
 		this.supPackages.remove(pack);
 		this.package_index.remove(pack.getName());
 	}
 	@Override
-	public LPackage getSubPackageByName(String name) {
+	public LPackage getSubPackageByName(String name) throws Exception {
 		if(this.package_index.containsKey(name))
 			return this.package_index.get(name);
 		else{
-			try {
-				throw this.getException("getSubPackageByName(name)", "name", name);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("getSubPackageByName(name)", "name", name);
 		}
 	}
 
@@ -129,32 +108,16 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public List<LClassifier> getTypes() {return this.types;}
 	@Override
-	public void addType(LClassifier type) {
+	public void addType(LClassifier type) throws Exception {
 		if(type==null){
-			try {
-				throw this.getException("addType(type)", "type", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("addType(type)", "type", "Null");
 		}
 		if(this.types.contains(type))return;
 		if(this.type_index.containsKey(type.getName())){
-			try {
-				throw this.getException("addType(type)", "type", "Name \""+ type.getName()+ "\" has been defined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw this.getException("addType(type)", "type", "Name \""+ type.getName()+ "\" has been defined");
 		}
 		if(this.id_type.containsKey(type.getClassifierID())){
-			try {
-				throw this.getException("addType(type)", "type", "ID: \""+type.getClassifierID()+ "\" has been defined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw this.getException("addType(type)", "type", "ID: \""+type.getClassifierID()+ "\" has been defined");
 		}
 		LPackage ct = type.getContainer();
 		if(ct!=null&&ct!=this){
@@ -167,15 +130,9 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		type.setContainer(this);
 	}
 	@Override
-	public void removeType(LClassifier type) {
+	public void removeType(LClassifier type) throws Exception {
 		if(type==null||!this.types.contains(type)){
-			try {
-				throw this.getException("removeType(type)", "type", "Undefined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("removeType(type)", "type", "Undefined");
 		}
 		
 		this.types.remove(type);
@@ -187,40 +144,23 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public Boolean containType(LClassifier type) {return this.types.contains(type);}
 	@Override
-	public LClassifier getClassifierByID(int id) {
+	public LClassifier getClassifierByID(int id) throws Exception {
 		if(this.id_type.containsKey(id))
 			return this.id_type.get(id);
 		else{
-			try {
-				throw this.getException("getClassifierByID(id)", "id", id+" has not been defined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("getClassifierByID(id)", "id", id+" has not been defined");
 		}
 	}
 	@Override
-	public LClassifier getClassifierByName(String name) {
+	public LClassifier getClassifierByName(String name) throws Exception {
 		if(name==null){
-			try {
-				throw this.getException("getClassifierByName(name)", "name","Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw this.getException("getClassifierByName(name)", "name","Null");
 		}
 		else if(this.type_index.containsKey(name))
 			return this.type_index.get(name);
 		else{
-			try {
-				throw this.getException("getClassifierByName(name)", "name", name+" has not been defined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw this.getException("getClassifierByName(name)", "name", name+" has not been defined");
 		}
-		return null;
 	}
 
 	@Override
@@ -230,7 +170,7 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 	@Override
 	public LPackage getContainer() {return this.container;}
 	@Override
-	public void setContainer(LPackage container) {
+	public void setContainer(LPackage container) throws Exception {
 		if(this.container==container)return;
 		if(this.container!=null)
 			this.container.removeSubPackage(this);

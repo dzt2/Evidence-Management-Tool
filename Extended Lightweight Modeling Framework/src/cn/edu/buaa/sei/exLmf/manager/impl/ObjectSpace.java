@@ -51,7 +51,7 @@ public class ObjectSpace implements IObjectSpace{
 		return true;
 	}
 	@Override
-	public LClassObject createClassObject(LClass type) {
+	public LClassObject createClassObject(LClass type) throws Exception {
 		if(!this.isInstancable(type))return null;
 		
 		LFactory factory = this.container.getFactory();
@@ -67,7 +67,7 @@ public class ObjectSpace implements IObjectSpace{
 		return obj;
 	}
 	@Override
-	public LDataObject createDataObject(LDataType type, String code) {
+	public LDataObject createDataObject(LDataType type, String code) throws Exception {
 		if(!this.isInstancable(type))return null;
 		
 		LFactory factory = this.container.getFactory();

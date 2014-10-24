@@ -9,7 +9,7 @@ public class LEnumLiteralImpl extends LStructuralFeatureImpl implements LEnumLit
 	int value;
 	String literal;
 	
-	public LEnumLiteralImpl(int fid, String name, LClassifier container) {super(fid, name, container);}
+	public LEnumLiteralImpl(int fid, String name, LClassifier container) throws Exception {super(fid, name, container);}
 	
 	@Override
 	public int getValue() {return this.value;}
@@ -57,6 +57,7 @@ public class LEnumLiteralImpl extends LStructuralFeatureImpl implements LEnumLit
 			e.printStackTrace();
 		}
 	}
+	
 	@Override
 	public Boolean isOrdered() {
 		try {
@@ -113,13 +114,8 @@ public class LEnumLiteralImpl extends LStructuralFeatureImpl implements LEnumLit
 		return null;
 	}
 	@Override
-	public void setDefaultValue(LObject value) {
-		try {
-			throw this.getException("setDefaultValue(value)", "", "the function cannot be assessed in enum literal");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void setDefaultValue(LObject value) throws Exception {
+		throw this.getException("setDefaultValue(value)", "", "the function cannot be assessed in enum literal");
 	}
 
 	@Override

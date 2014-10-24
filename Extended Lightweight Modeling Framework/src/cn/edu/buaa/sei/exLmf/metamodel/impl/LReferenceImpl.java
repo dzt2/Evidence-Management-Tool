@@ -9,25 +9,19 @@ public class LReferenceImpl extends LStructuralFeatureImpl implements LReference
 	LReference opposite;
 	Boolean containment = false;
 	
-	public LReferenceImpl(int fid,String name,LClassifier container){
+	public LReferenceImpl(int fid,String name,LClassifier container) throws Exception{
 		super(fid,name,container);
 	}
 
 	@Override
 	public LClass getLClass() {return this.ctype;}
 	@Override
-	public void setLClass(LClass type) {
+	public void setLClass(LClass type) throws Exception {
 		this.setType(type);
 	}
-	public void setType(LClassifier type){
+	public void setType(LClassifier type) throws Exception{
 		if((type==null)||!(type instanceof LClass)){
-			try {
-				throw this.getException("setType(type)", "type", "Reference's type must be LClass");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("setType(type)", "type", "Reference's type must be LClass");
 		}
 		
 		super.setType(type);

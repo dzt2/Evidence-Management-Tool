@@ -76,11 +76,11 @@ public class ModelCreatorImpl implements IModelCreator{
 		}
 	}
 	
-	public ModelCreatorImpl(String name){
+	public ModelCreatorImpl(String name) throws Exception{
 		this.name=name;
 		this.root=new LPackageImpl(_ROOT,nsURI,prefix);
 	}
-	public ModelCreatorImpl(String name,String root_name,String root_uri,String root_prefix){
+	public ModelCreatorImpl(String name,String root_name,String root_uri,String root_prefix) throws Exception{
 		this.name=name;
 		this.root=new LPackageImpl(root_name,root_uri,root_prefix);
 	} 
@@ -534,29 +534,29 @@ public class ModelCreatorImpl implements IModelCreator{
 		else if(elm instanceof LEnumLiteral){this.releaseLiteral((LEnumLiteral) elm);}
 		else{throw this.getException("updateElement(elm)", "elm", "Unknown LModelElement: "+elm.getClass().getName());}
 	}
-	void releasePackage(LPackage p){
+	void releasePackage(LPackage p) throws Exception{
 		if(p==null||p==this.root)return;
 		p.getContainer().removeSubPackage(p);
 	}
-	void releaseClass(LClass type){
+	void releaseClass(LClass type) throws Exception{
 		if(type==null)return;
 		type.getContainer().removeType(type);
 	}
-	void releaseEnum(LEnum e){
+	void releaseEnum(LEnum e) throws Exception{
 		if(e==null)return;
 		e.getContainer().removeType(e);
 	}
-	void releaseAttribute(LAttribute a){
+	void releaseAttribute(LAttribute a) throws Exception{
 		if(a==null)return;
 		LClass type = (LClass) a.getContainer();
 		type.removeAttribute(a);
 	}
-	void releaseReference(LReference r){
+	void releaseReference(LReference r) throws Exception{
 		if(r==null)return;
 		LClass type = (LClass) r.getContainer();
 		type.removeReference(r);
 	}
-	void releaseLiteral(LEnumLiteral l){
+	void releaseLiteral(LEnumLiteral l) throws Exception{
 		if(l==null)return;
 		LEnum e = (LEnum) l.getContainer();
 		e.removeLiteral(l);

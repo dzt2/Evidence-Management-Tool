@@ -53,8 +53,8 @@ public interface IObjectSpace {
 	public void register(LPackage p);
 	
 	public Boolean isInstancable(LClassifier type);
-	public LClassObject createClassObject(LClass type);
-	public LDataObject createDataObject(LDataType type,String code);
+	public LClassObject createClassObject(LClass type) throws Exception;
+	public LDataObject createDataObject(LDataType type,String code) throws Exception;
 	public Boolean removeObject(LObject obj);
 	
 	public Boolean containObject(LObject obj);

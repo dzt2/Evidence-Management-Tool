@@ -40,11 +40,19 @@ public class EcoreModelReader implements IModelReader{
 	String name;
 	File file;
 	EPackage p;
-	IModelCreator creator = new ModelCreatorImpl("CREATOR");
+	IModelCreator creator ;
 	
 	Map<EModelElement,LModelElement> map = new HashMap<EModelElement,LModelElement>();
 	
-	public EcoreModelReader(String name){this.name=name;}
+	public EcoreModelReader(String name){
+		this.name=name;
+		try {
+			this.creator = new ModelCreatorImpl("CREATOR");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	/**Tool Functions*/
 	Exception getException(String func,String arg,String reason){

@@ -27,15 +27,9 @@ public abstract class LModelElementImpl implements LModelElement{
 	}
 
 	@Override
-	public void addAnnotation(LAnnotation annotation) {
+	public void addAnnotation(LAnnotation annotation) throws Exception {
 		if(annotation==null){
-			try {
-				throw this.getException("addAnnotation(annotation)", "annotation", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("addAnnotation(annotation)", "annotation", "Null");
 		}
 		if(annotation.getContainer()!=null)
 			annotation.getContainer().removeAnnotation(annotation);
@@ -44,28 +38,16 @@ public abstract class LModelElementImpl implements LModelElement{
 		this.annotations.add(annotation);
 	}
 	@Override
-	public LAnnotation getAnnotation(int i) {
+	public LAnnotation getAnnotation(int i) throws Exception {
 		if(i<0||i>=this.annotations.size()){
-			try {
-				throw this.getException("getAnnotation(i)", "i", i+" has been out of range");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("getAnnotation(i)", "i", i+" has been out of range");
 		}
 		return this.annotations.get(i);
 	}
 	@Override
-	public void removeAnnotation(LAnnotation annotation) {
+	public void removeAnnotation(LAnnotation annotation) throws Exception {
 		if(!this.annotations.contains(annotation)){
-			try {
-				throw this.getException("getAnnotation(annotation)", "annotation", "Undefined in model elements");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("getAnnotation(annotation)", "annotation", "Undefined in model elements");
 		}
 		this.annotations.remove(annotation);
 	}
