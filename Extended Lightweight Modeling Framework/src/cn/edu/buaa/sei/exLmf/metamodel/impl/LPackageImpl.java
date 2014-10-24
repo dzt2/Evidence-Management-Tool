@@ -142,7 +142,16 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		type.setContainer(null);
 	}
 	@Override
-	public Boolean containType(LClassifier type) {return this.types.contains(type);}
+	public Boolean containType(LClassifier type) {
+		if(type==null)return false;
+		if(this.types.contains(type))return true;
+		else{
+			for(int i=0;i<this.supPackages.size();i++)
+				if(this.supPackages.get(i).containType(type))
+					return true;
+			return false;
+		}
+	}
 	@Override
 	public LClassifier getClassifierByID(int id) throws Exception {
 		if(this.id_type.containsKey(id))
