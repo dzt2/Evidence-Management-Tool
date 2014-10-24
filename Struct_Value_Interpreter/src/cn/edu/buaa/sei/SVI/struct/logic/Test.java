@@ -2,7 +2,7 @@ package cn.edu.buaa.sei.SVI.struct.logic;
 
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
 import cn.edu.buaa.sei.SVI.struct.core.function.FunctionTemplate;
-import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionBodyAPIImpl;
+import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionExecutor;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.logic.impl.LogicFactory;
 
@@ -39,7 +39,7 @@ public class Test {
 		LogicFunctionTemplate trace_temp = LogicFactory.createLogicFunctionTemplate("traceable", new Variable[]{HLR.getIterator(),LLR.getIterator()});
 		LogicFunction traceable = LogicFactory.createLogicFunction(trace_temp);
 		
-		traceable.setBody(new FunctionBodyAPIImpl(){
+		traceable.setBody(new FunctionExecutor(){
 
 			@Override
 			public void execute() throws Exception {

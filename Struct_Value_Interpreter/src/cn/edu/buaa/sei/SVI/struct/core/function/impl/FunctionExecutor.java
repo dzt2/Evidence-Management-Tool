@@ -6,7 +6,8 @@ import cn.edu.buaa.sei.SVI.struct.core.StructArray;
 import cn.edu.buaa.sei.SVI.struct.core.function.Function;
 import cn.edu.buaa.sei.SVI.struct.core.function.FunctionBodyAPI;
 
-public abstract class FunctionBodyAPIImpl implements FunctionBodyAPI{
+public abstract class FunctionExecutor implements FunctionBodyAPI{
+
 	CompositeStruct container = new StructArray();
 	Function function;
 
@@ -30,4 +31,5 @@ public abstract class FunctionBodyAPIImpl implements FunctionBodyAPI{
 
 	@Override
 	public int getChildrenStructSize() {return this.container.getChildrenStructSize();}
+
 }

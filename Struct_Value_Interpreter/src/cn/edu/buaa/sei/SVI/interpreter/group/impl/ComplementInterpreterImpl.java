@@ -1,13 +1,14 @@
 package cn.edu.buaa.sei.SVI.interpreter.group.impl;
 
 import java.util.Iterator;
+
 import cn.edu.buaa.sei.SVI.interpreter.core.RegisterMachine;
 import cn.edu.buaa.sei.SVI.interpreter.group.ComplementInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.group.GroupInterpreter;
 import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
-import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionBodyAPIImpl;
+import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionExecutor;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.impl.VariableFactory;
 import cn.edu.buaa.sei.SVI.struct.group.AbstractGroup;
@@ -69,7 +70,7 @@ public class ComplementInterpreterImpl implements ComplementInterpreter{
 			LogicFunctionTemplate template = LogicFactory.createLogicFunctionTemplate("condition", 
 					new Variable[]{VariableFactory.createFreeVariable("x")});
 			LogicFunction function = LogicFactory.createLogicFunction(template);
-			function.setBody(new FunctionBodyAPIImpl(){
+			function.setBody(new FunctionExecutor(){
 				@Override
 				public void execute() throws Exception {
 					Object val = this.getFunction().getTemplate().getArguments()[0].read();

@@ -1,7 +1,7 @@
 package cn.edu.buaa.sei.SVI.struct.logic.test;
 
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
-import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionBodyAPIImpl;
+import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionExecutor;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.logic.DiscourseDomain;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicExpression;
@@ -19,7 +19,7 @@ public class TestConstructor1 implements Constructor{
 		LogicFunctionTemplate template = LogicFactory.createLogicFunctionTemplate(
 					"traceable", new Variable[]{HLR.getIterator(),LLR.getIterator()});
 		LogicFunction traceable = LogicFactory.createLogicFunction(template);
-		traceable.setBody(new FunctionBodyAPIImpl(){
+		traceable.setBody(new FunctionExecutor(){
 			@Override
 			public void execute() throws Exception {
 				this.getFunction().getTemplate().getOutput().assign(true);

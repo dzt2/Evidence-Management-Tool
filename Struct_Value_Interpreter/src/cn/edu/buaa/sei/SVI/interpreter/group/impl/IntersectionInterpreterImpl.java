@@ -13,7 +13,7 @@ import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.GroupStruct;
 import cn.edu.buaa.sei.SVI.struct.core.extend.LogicStruct;
-import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionBodyAPIImpl;
+import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionExecutor;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.impl.VariableFactory;
 import cn.edu.buaa.sei.SVI.struct.group.AbstractGroup;
@@ -83,7 +83,7 @@ public class IntersectionInterpreterImpl implements IntersectionInterpreter{
 			for(int i=0;i<alist.size();i++)
 				operands[i]=alist.get(i).getCondition();
 			
-			function.setBody(new FunctionBodyAPIImpl(){
+			function.setBody(new FunctionExecutor(){
 				@Override
 				public void execute() throws Exception {
 					Object val = this.getFunction().getTemplate().getArguments()[0].read();

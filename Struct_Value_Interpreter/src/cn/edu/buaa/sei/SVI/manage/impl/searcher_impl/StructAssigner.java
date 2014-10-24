@@ -5,6 +5,8 @@ import java.util.Set;
 import cn.edu.buaa.sei.SVI.manage.IStructAssigner;
 import cn.edu.buaa.sei.SVI.manage.IStructSearcher;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
+import cn.edu.buaa.sei.SVI.struct.core.function.Function;
+import cn.edu.buaa.sei.SVI.struct.core.function.FunctionBody;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 
 public class StructAssigner implements IStructAssigner{
@@ -27,6 +29,46 @@ public class StructAssigner implements IStructAssigner{
 		this.searcher = searcher;
 	}
 
+	@Override
+	public IStructSearcher getSearcher() {
+		return this.searcher;
+	}
+	@Override
+	public boolean confirmAssign(Variable variable, Object val) {
+		if(variable==null)return false;
+		
+		boolean flag = true;
+		Object ov = null;
+		try {
+			ov = variable.read();
+			variable.assign(val);
+			variable.assign(ov);
+		} catch (Exception e) {
+			flag = false;
+			
+		}
+		
+		try {
+			variable.assign(ov);
+		} catch (Exception e) {
+			return false;
+		}
+		return flag;
+	}
+
+	@Override
+	public Variable getVariable(Struct base, String path) throws Exception {
+		return (Variable) this.searcher.get(base, path);
+	}
+	@Override
+	public Variable getVariableByName(Struct base, String name, int seq) {
+		try {
+			return this.searcher.getVariableByName(base, name, seq);
+		} catch (Exception e) {
+			System.err.println("Search failed");
+			return null;
+		}
+	}
 	@Override
 	public boolean assign(Struct base, String path, Object val) {
 		if(base==null||path==null)return false;
@@ -51,7 +93,6 @@ public class StructAssigner implements IStructAssigner{
 		System.err.println("Invalid path --> not variable");
 		return false;
 	}
-
 	@Override
 	public boolean assignByName(Struct base, String name, Object val, int seq) {
 		if(base==null||name==null)return false;
@@ -92,10 +133,27 @@ public class StructAssigner implements IStructAssigner{
 		}
 	}
 
+	
 	@Override
-	public Variable getVariableByName(Struct base, String name, int seq) {
+	public boolean assignFunction(Function function, FunctionBody body) {
+		if(function==null||body==null)return false;
+		function.setBody(body);
+		return true;
+	}
+
+	@Override
+	public Function getFunction(Struct base, String path) throws Exception {
+		if(base==null||path==null)throw new Exception("Null base|path is invalid");
+		Struct result = this.searcher.get(base, path);
+		if(result==null)throw new Exception("Invalid path: "+path);
+		if(!(result instanceof Function))throw new Exception("Invalid result: "+result.getClass().getCanonicalName());
+		return (Function) result;
+	}
+
+	@Override
+	public Function getFunctionByName(Struct base, String name, int seq) {
 		try {
-			return this.searcher.getVariableByName(base, name, seq);
+			return this.searcher.getFunctionByName(base, name, seq);
 		} catch (Exception e) {
 			System.err.println("Search failed");
 			return null;
@@ -103,36 +161,20 @@ public class StructAssigner implements IStructAssigner{
 	}
 
 	@Override
-	public Variable getVariable(Struct base, String path) throws Exception {
-		return (Variable) this.searcher.get(base, path);
-	}
-
-	@Override
-	public boolean confirmAssign(Variable variable, Object val) {
-		if(variable==null)return false;
-		
-		boolean flag = true;
-		Object ov = null;
+	public boolean assignFunction(Struct base, String name, int seq,
+			FunctionBody body) {
 		try {
-			ov = variable.read();
-			variable.assign(val);
-			variable.assign(ov);
+			Function function = this.searcher.getFunctionByName(base, name, seq);
+			if(function==null){
+				System.err.println("Invalid name&seq: "+name+"{"+seq+"}");
+				return false;
+			}
+			function.setBody(body);
+			return true;
 		} catch (Exception e) {
-			flag = false;
-			
-		}
-		
-		try {
-			variable.assign(ov);
-		} catch (Exception e) {
+			System.err.println("Search failed");
 			return false;
 		}
-		return flag;
-	}
-
-	@Override
-	public IStructSearcher getSearcher() {
-		return this.searcher;
 	}
 	
 }

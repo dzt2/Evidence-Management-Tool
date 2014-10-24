@@ -46,7 +46,7 @@ public class DisjunctionInferencerImpl implements DisjunctionInferencer{
 			if(interpreter==null)
 				throw new Exception("operands["+i+"]: "+operands[i].getClass().getCanonicalName()+" has not been registered");
 			
-			Object result = interpreter.interpret(op);
+			Object result = interpreter.interpret(operands[i]);
 			if(result==null)containNull=true;
 			else if(!(result instanceof Boolean))
 				throw new Exception("Error Type: "+result.getClass().getCanonicalName());
