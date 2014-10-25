@@ -1,5 +1,0 @@
-HLR = {HRA01;HRA02;HRA03;HRB01;HRB02}
-accurate = _relation{accurate[HRA01];accurate[HRA02];accurate[HRA03];accurate[HRB01];accurate[HRB02]}
-unambiguous = _relation{unambiguous[HRA01];unambiguous[HRA02];unambiguous[HRA03];unambiguous[HRB01]}
-detailed = _relation{detailed[HRA02];detailed[HRA03];detailed[HRB01]}
-

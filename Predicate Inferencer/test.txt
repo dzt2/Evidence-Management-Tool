@@ -1,7 +1,0 @@
-HLR: domain
-LLR: domain
-HtoL: predicate(HLR.iter,LLR.iter)
-LtoH: predicate(LLR.iter,HLR.iter)
-L: and(HtoL,LtoH)
-Q: any(LLR,L)
-P: all(HLR,Q)

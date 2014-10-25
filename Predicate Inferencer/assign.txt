@@ -1,3 +1,0 @@
-HLR = {h1;h2;h3;h4}
-LLR = {l1;l2;l3;l4;l5}
-trace = _relation{trace[h1,l2];trace[h1,l3];trace[h2,l2];trace[h3,l1];trace[h3,l5];trace[h4,l5]}

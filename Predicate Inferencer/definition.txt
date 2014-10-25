@@ -1,5 +1,0 @@
-HLR: domain; LLR: domain;
-trace: predicate(HLR.iter, LLR.iter)
-L: any(LLR, trace)
-P: all(HLR, L)
-
