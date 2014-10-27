@@ -23,7 +23,7 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		super(name);
 		this.nsURI=nsURI;
 		this.prefix=prefix;
-		this.factory=new LFactoryImpl(this,false);
+		this.factory=new LFactoryImpl(this,true);
 	}
 	public LPackageImpl(String name,String nsURI,String prefix,Boolean isLight) throws Exception{
 		super(name);

@@ -116,7 +116,7 @@ public class SimpleLClassObject extends LObjectImpl implements LClassObject{
 	@Override
 	public void unSet(LStructuralFeature feature) throws Exception {
 		int i = this.getIndex(feature);
-		if(i>=0)this.flags[this.getIndex(feature)]=false;
+		if(i>=0)this.flags[i]=false;
 	}
 
 	@Override

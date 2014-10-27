@@ -100,7 +100,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 		if(this.unique){
 			if(this.ordered){
 				if(this.array.contains(val)){
-					throw this.getException("addObject(val)", "val", "Unique Array has contained the same elements");
+					//throw this.getException("addObject(val)", "val", "Unique Array has contained the same elements");
 				}
 				else{
 					this.array.add(val);
@@ -108,7 +108,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 			}
 			else{
 				if(this.set.contains(val)){
-					throw this.getException("addObject(val)", "val", "Unique Set has contained the same elements");
+					//throw this.getException("addObject(val)", "val", "Unique Set has contained the same elements");
 				}
 				else
 					this.set.add(val);
@@ -214,7 +214,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 		}
 		
 		if(n>this.upper&&this.upper!=UNBOUNDED){
-			throw this.getException("validateBound()", "size--lower", "Size "+n+" > Upper "+this.upper);
+			throw this.getException("validateBound()", "size--upper", "Size "+n+" > Upper "+this.upper);
 		}
 		return true;
 	}

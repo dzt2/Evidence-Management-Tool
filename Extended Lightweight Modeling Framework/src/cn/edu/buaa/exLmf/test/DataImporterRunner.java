@@ -40,7 +40,7 @@ public class DataImporterRunner {
 		LClass type = obj.getType();
 		StringBuilder code = new StringBuilder();
 		
-		code.append("{").append("\n\t<<").append(obj.hashCode()).append(">>");
+		code.append("{").append("\n\t<<").append(obj.getClass().getName()).append("@").append(obj.hashCode()).append(">>");
 		List<LStructuralFeature> features = type.getAllFeatures();
 		for(int i=0;i<features.size();i++){
 			LStructuralFeature feature = features.get(i);
