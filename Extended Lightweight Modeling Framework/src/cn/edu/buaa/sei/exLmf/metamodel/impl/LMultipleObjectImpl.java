@@ -22,37 +22,19 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	Set<LObject> set;
 	
 	/*Check the bound and generate values set dynamically*/
-	LMultipleObjectImpl(LClassifier type,int lower,int upper,Boolean ordered,Boolean unique) {
+	LMultipleObjectImpl(LClassifier type,int lower,int upper,Boolean ordered,Boolean unique) throws Exception {
 		super(type);
 		if(lower<0){
-			try {
-				throw this.getException("LMultipleObjectImpl(type,lower,upper,ordered,unique)", 
+			throw this.getException("LMultipleObjectImpl(type,lower,upper,ordered,unique)", 
 						"lower", "lower < 0");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		if(upper<0&&upper!=UNBOUNDED){
-			try {
-				throw this.getException("LMultipleObjectImpl(type,lower,upper,ordered,unique)", 
+			throw this.getException("LMultipleObjectImpl(type,lower,upper,ordered,unique)", 
 						"upper", upper+" is invalid");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		if(upper>0&&upper<lower){
-			try {
-				throw this.getException("LMultipleObjectImpl(type,lower,upper,ordered,unique)", 
+			throw this.getException("LMultipleObjectImpl(type,lower,upper,ordered,unique)", 
 						"upper", "The range is invalid: "+lower+"--"+upper);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		this.lower=lower; this.upper=upper;
 		this.ordered=ordered; this.unique=unique;
@@ -86,31 +68,20 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	 *		- type match as above
 	 *		- cannot remove value that is not contained in LMultipleObject
 	 * 	4. containObject(val): no exceptions
+	 * @throws Exception 
 	 */
 	@Override
-	public Collection<LObject> getAllObjects() {
+	public Collection<LObject> getAllObjects() throws Exception {
 		if(set!=null)return set;
 		else if(array!=null)return array;
 		else{
-			try {
-				throw this.getException("getAllObjects()", "contents", "Un-Initialization");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("getAllObjects()", "contents", "Un-Initialization");
 		}
 	}
 	@Override
-	public void addObject(LObject val) {
+	public void addObject(LObject val) throws Exception {
 		if(val==null){
-			try {
-				throw this.getException("addObject(val)", "val", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("addObject(val)", "val", "Null");
 		}
 		
 		if(val.type()!=this.type){
@@ -118,36 +89,18 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 				LClass ptype = (LClass) this.type;
 				LClass vtype = (LClass) val.type();
 				if(!ptype.isSuperOf(vtype)){
-					try {
-						throw this.getException("addObject(val)", "val.type", vtype.getName()+" is incompatible with parameter type: "+this.type.getName());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
+					throw this.getException("addObject(val)", "val.type", vtype.getName()+" is incompatible with parameter type: "+this.type.getName());
 				}
 			}
 			else{
-				try {
-					throw this.getException("addObject(val)", "val.type", val.type().getName()+" is incompatible with parameter type: "+this.type.getName());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return;
+				throw this.getException("addObject(val)", "val.type", val.type().getName()+" is incompatible with parameter type: "+this.type.getName());
 			}
 		}
 		
 		if(this.unique){
 			if(this.ordered){
 				if(this.array.contains(val)){
-					try {
-						throw this.getException("addObject(val)", "val", "Unique Array has contained the same elements");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
+					throw this.getException("addObject(val)", "val", "Unique Array has contained the same elements");
 				}
 				else{
 					this.array.add(val);
@@ -155,13 +108,7 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 			}
 			else{
 				if(this.set.contains(val)){
-					try {
-						throw this.getException("addObject(val)", "val", "Unique Set has contained the same elements");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
+					throw this.getException("addObject(val)", "val", "Unique Set has contained the same elements");
 				}
 				else
 					this.set.add(val);
@@ -180,15 +127,9 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 		}
 	}
 	@Override
-	public void removeObject(LObject val) {
+	public void removeObject(LObject val) throws Exception {
 		if(val==null){
-			try {
-				throw this.getException("removeObject(val)", "val", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("removeObject(val)", "val", "Null");
 		}
 		
 		if(val.type()!=this.type){
@@ -196,48 +137,24 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 				LClass ptype = (LClass) this.type;
 				LClass vtype = (LClass) val.type();
 				if(!ptype.isSuperOf(vtype)){
-					try {
-						throw this.getException("removeObject(val)", "val.type", vtype.getName()+" is incompatible with parameter type: "+this.type.getName());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
+					throw this.getException("removeObject(val)", "val.type", vtype.getName()+" is incompatible with parameter type: "+this.type.getName());
 				}
 			}
 			else{
-				try {
-					throw this.getException("removeObject(val)", "val.type", val.type().getName()+" is incompatible with parameter type: "+this.type.getName());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return;
+				throw this.getException("removeObject(val)", "val.type", val.type().getName()+" is incompatible with parameter type: "+this.type.getName());
 			}
 		}
 		
 		if(!this.ordered&&this.unique){
 			if(!this.set.contains(val)){
-				try {
-					throw this.getException("removeObject(val)", "val", "Undefined in set");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return;
+				throw this.getException("removeObject(val)", "val", "Undefined in set");
 			}
 			else
 				this.set.remove(val);
 		}
 		else{
 			if(!this.array.contains(val)){
-				try {
-					throw this.getException("removeObject(val)", "val", "Undefined in set");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return;
+				throw this.getException("removeObject(val)", "val", "Undefined in set");
 			}
 			else
 				this.array.remove(val);
@@ -255,41 +172,25 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 
 	// Only applied to ordered multiple object
 	@Override
-	public LObject getByOrder(int i) {
+	public LObject getByOrder(int i) throws Exception {
 		if(!this.ordered){
-			try {
-				throw this.getException("getByOrder(i)", "this.order", 
+			throw this.getException("getByOrder(i)", "this.order", 
 						"Inordered Set cannot be assess by index "+i);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
 		}
 		
 		if(i<0||i>=this.array.size()){
-			try {
-				throw this.getException("getByOrder(i)", "i", 
+			throw this.getException("getByOrder(i)", "i", 
 						i+" is out of range: size="+this.array.size());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
 		}
 		
 		return this.array.get(i);
 	}
 	// Only applied to in-ordered multiple list.
 	@Override
-	public Iterator<LObject> getByUnordered() {
+	public Iterator<LObject> getByUnordered() throws Exception {
 		if(this.ordered){
-			try {
-				throw this.getException("getByUnordered()", "this.order", 
+			throw this.getException("getByUnordered()", "this.order", 
 						"Orderred array cannot be assess through unordered functions");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 		if(this.unique)
 			return this.set.iterator();
@@ -300,38 +201,20 @@ public class LMultipleObjectImpl extends LObjectImpl implements LMultipleObject{
 	// Check the current length of list to comply with restriction of bound [lower---upper].
 	// When validation failed, program crashed in exceptions.
 	@Override
-	public Boolean validateBound() {
+	public Boolean validateBound() throws Exception {
 		int n = -1;
 		if(this.array!=null)n = this.array.size();
 		else if(this.set!=null)n = this.set.size();
 		else{
-			try {
-				throw this.getException("validateBound()", "content", "Un-Initialization");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
+			throw this.getException("validateBound()", "content", "Un-Initialization");
 		}
 		
 		if(n<this.lower){
-			try {
-				throw this.getException("validateBound()", "size--lower", "Size "+n+" < Lower "+this.lower);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
+			throw this.getException("validateBound()", "size--lower", "Size "+n+" < Lower "+this.lower);
 		}
 		
 		if(n>this.upper&&this.upper!=UNBOUNDED){
-			try {
-				throw this.getException("validateBound()", "size--lower", "Size "+n+" > Upper "+this.upper);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
+			throw this.getException("validateBound()", "size--lower", "Size "+n+" > Upper "+this.upper);
 		}
 		return true;
 	}

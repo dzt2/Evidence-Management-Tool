@@ -16,108 +16,66 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 	public LDataType getType() {return (LDataType) this.type;}
 	
 	@Override
-	public Boolean boolVal() {
+	public Boolean boolVal() throws Exception {
 		if(this.type==LPrimitiveTypeImpl.BOOL)
 			return (Boolean) this.val;
 		else{
-			try {
-				throw this.getException("boolVal()", "type",
+			throw this.getException("boolVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as Boolean");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 	@Override
-	public Integer integerVal() {
+	public Integer integerVal() throws Exception {
 		if(this.type==LPrimitiveTypeImpl.INT)
 			return (Integer) this.val;
 		else{
-			try {
-				throw this.getException("integerVal()", "type",
+			throw this.getException("integerVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as Integer");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 	@Override
-	public Long longVal() {
+	public Long longVal() throws Exception {
 		if(this.type==LPrimitiveTypeImpl.LONG)
 			return (Long) this.val;
 		else{
-			try {
-				throw this.getException("longVal()", "type",
+			throw this.getException("longVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as Long");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 	@Override
-	public Float floatVal() {
+	public Float floatVal() throws Exception {
 		if(this.type==LPrimitiveTypeImpl.FLOAT)
 			return (Float) this.val;
 		else{
-			try {
-				throw this.getException("floatVal()", "type",
+			throw this.getException("floatVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as Float");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 	@Override
-	public Double doubleVal() {
+	public Double doubleVal() throws Exception {
 		if(this.type==LPrimitiveTypeImpl.DOUBLE)
 			return (Double) this.val;
 		else{
-			try {
-				throw this.getException("doubleVal()", "type",
+			throw this.getException("doubleVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as Double");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 	@Override
-	public String stringVal() {
+	public String stringVal() throws Exception {
 		if(this.type==LPrimitiveTypeImpl.STRING)
 			return (String) this.val;
 		else{
-			try {
-				throw this.getException("stringVal()", "type",
+			throw this.getException("stringVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as String");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 	@Override
-	public LEnumLiteral literalVal() {
+	public LEnumLiteral literalVal() throws Exception {
 		if(this.type instanceof LEnum)
 			return (LEnumLiteral) this.val;
 		else{
-			try {
-				throw this.getException("literalVal()", "type",
+			throw this.getException("literalVal()", "type",
 						"Try to get instance type <"+this.type.getName()+"> as Enum");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 
@@ -132,7 +90,7 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 		return this.val;
 	}
 	@Override
-	public void setValue(Object val) {
+	public void setValue(Object val) throws Exception {
 		if(val==null){
 			this.val=null;
 			return;
@@ -153,94 +111,63 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 		else if(val instanceof LEnumLiteral)
 			this.setLiteral((LEnumLiteral) val);
 		else{
-			try {
-				throw this.getException("setValue(val)", "val", 
+			throw this.getException("setValue(val)", "val", 
 						val.getClass().getName()+" is not primitive input data type.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
 	// Setter has type checking.
 	@Override
-	public void setBool(Boolean val) {
+	public void setBool(Boolean val) throws Exception {
 		if(this.type==LPrimitiveTypeImpl.BOOL)
 			this.val=val;
 		else{
-			try {
-				throw this.getException("setBool(val)", "this.val", this.type.getName() + " does not match!");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw this.getException("setBool(val)", "this.val", this.type.getName() + " does not match!");
 		}
 	}
 	@Override
-	public void setInt(Integer val) {
+	public void setInt(Integer val) throws Exception {
 		if(this.type==LPrimitiveTypeImpl.INT)
 			this.val=val;
 		else{
-			try {
-				throw this.getException("setInt(val)", "this.val", this.type.getName() + " does not match!");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw this.getException("setInt(val)", "this.val", this.type.getName() + " does not match!");
 		}
 	}
 	@Override
-	public void setLong(Long val) {
+	public void setLong(Long val) throws Exception {
 		if(this.type==LPrimitiveTypeImpl.LONG)
 			this.val=val;
 		else{
-			try {
-				throw this.getException("setLong(val)", "this.val", this.type.getName() + " does not match!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw this.getException("setLong(val)", "this.val", this.type.getName() + " does not match!");
 		}
 	}
 	@Override
-	public void setFloat(Float val) {
+	public void setFloat(Float val) throws Exception {
 		if(this.type==LPrimitiveTypeImpl.FLOAT)
 			this.val=val;
 		else{
-			try {
-				throw this.getException("setFloat(val)", "this.val", this.type.getName() + " does not match!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw this.getException("setFloat(val)", "this.val", this.type.getName() + " does not match!");
 		}
 	}
 	@Override
-	public void setDouble(Double val) {
+	public void setDouble(Double val) throws Exception {
 		if(this.type==LPrimitiveTypeImpl.DOUBLE)
 			this.val=val;
 		else{
-			try {
-				throw this.getException("setDouble(val)", "this.val", this.type.getName() + " does not match!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw this.getException("setDouble(val)", "this.val", this.type.getName() + " does not match!");
 		}
 	}
 	@Override
-	public void setString(String val) {
+	public void setString(String val) throws Exception {
 		if(this.type==LPrimitiveTypeImpl.STRING)
 			this.val=val;
 		else{
-			try {
-				throw this.getException("setString(val)", "this.val", this.type.getName() + " does not match!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw this.getException("setString(val)", "this.val", this.type.getName() + " does not match!");
 		}
 	}
 	// LEnumLiteral must be one element in the enumeration type.
 	@Override
-	public void setLiteral(LEnumLiteral literal) {
+	public void setLiteral(LEnumLiteral literal) throws Exception {
 		if(literal==null){
 			this.val=null;
 			return;
@@ -250,20 +177,12 @@ public class LDataObjectImpl extends LObjectImpl implements LDataObject{
 			if(((LEnum) type).containLiteral(literal))
 				this.val=literal;
 			else{
-				try {
-					throw this.getException("setLiteral(val)", "this.val", 
+				throw this.getException("setLiteral(val)", "this.val", 
 							literal.getName()+" is not defined in Enumeration <"+type.getName()+">");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 			}
 		}
 		else{
-			try {
-				throw this.getException("setLiteral(val)", "this.val", this.type.getName() + " is not Enumeration!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw this.getException("setLiteral(val)", "this.val", this.type.getName() + " is not Enumeration!");
 		}
 	}
 }

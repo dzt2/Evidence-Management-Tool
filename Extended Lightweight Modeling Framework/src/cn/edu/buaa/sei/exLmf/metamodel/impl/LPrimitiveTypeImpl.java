@@ -74,12 +74,18 @@ public class LPrimitiveTypeImpl extends LDataTypeImpl implements LPrimitiveType{
 		 *	5) Double:	0.0
 		 *	6) String: 	""
 		 */
-		BOOL_DEFAULT= new LDataObjectImpl(BOOL); ((LDataObjectImpl)BOOL_DEFAULT).setBool(false);
-		INT_DEFAULT = new LDataObjectImpl(INT); ((LDataObjectImpl)INT_DEFAULT).setInt(0);
-		LONG_DEFAULT = new LDataObjectImpl(LONG);((LDataObjectImpl)LONG_DEFAULT).setLong(0L);
-		STRING_DEFAULT = new LDataObjectImpl(STRING);((LDataObjectImpl)STRING_DEFAULT).setString("");
-		FLOAT_DEFAULT = new LDataObjectImpl(FLOAT);((LDataObjectImpl)FLOAT_DEFAULT).setFloat(0.0f);
-		DOUBLE_DEFAULT = new LDataObjectImpl(DOUBLE);((LDataObjectImpl)DOUBLE_DEFAULT).setDouble(0.0);
+		try {
+			BOOL_DEFAULT= new LDataObjectImpl(BOOL);((LDataObjectImpl)BOOL_DEFAULT).setBool(false);
+			INT_DEFAULT = new LDataObjectImpl(INT); ((LDataObjectImpl)INT_DEFAULT).setInt(0);
+			LONG_DEFAULT = new LDataObjectImpl(LONG);((LDataObjectImpl)LONG_DEFAULT).setLong(0L);
+			STRING_DEFAULT = new LDataObjectImpl(STRING);((LDataObjectImpl)STRING_DEFAULT).setString("");
+			FLOAT_DEFAULT = new LDataObjectImpl(FLOAT);((LDataObjectImpl)FLOAT_DEFAULT).setFloat(0.0f);
+			DOUBLE_DEFAULT = new LDataObjectImpl(DOUBLE);((LDataObjectImpl)DOUBLE_DEFAULT).setDouble(0.0);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 		try {
 			BOOL.setDefaultValue(BOOL_DEFAULT);

@@ -35,7 +35,7 @@ public class DataImporterRunner {
 		
 	}
 	
-	public static String printLClassObject(LClassObject obj){
+	public static String printLClassObject(LClassObject obj) throws Exception{
 		if(obj==null)return null;
 		LClass type = obj.getType();
 		StringBuilder code = new StringBuilder();
@@ -57,14 +57,14 @@ public class DataImporterRunner {
 		code.append("\n}");
 		return code.toString();
 	}
-	public static String printDataObject(LDataObject obj){
+	public static String printDataObject(LDataObject obj) throws Exception{
 		if(obj==null)return null;
 		if(obj.type() instanceof LEnum)
 			return obj.literalVal().getLiteral();
 		else
 			return obj.getValue().toString();
 	}
-	public static String printMultipleObject(LMultipleObject obj){
+	public static String printMultipleObject(LMultipleObject obj) throws Exception{
 		if(obj==null)return null;
 		StringBuilder code = new StringBuilder();
 		

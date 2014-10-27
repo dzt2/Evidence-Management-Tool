@@ -14,7 +14,7 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 	Map<LStructuralFeature,LObject> feature_val = new HashMap<LStructuralFeature,LObject>();
 	Map<LStructuralFeature,Boolean> status_map = new HashMap<LStructuralFeature,Boolean>();
 	
-	LClassObjectImpl(LClass type) {
+	LClassObjectImpl(LClass type) throws Exception {
 		super(type);
 		
 		/**
@@ -44,54 +44,30 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 
 	// If no value is set, then return null.
 	@Override
-	public LObject get(LStructuralFeature feature) {
+	public LObject get(LStructuralFeature feature) throws Exception {
 		if(feature==null){
-			try {
-				throw this.getException("get(feature)", "feature", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("get(feature)", "feature", "Null");
 		}
 		
 		LClass ctype = (LClass) this.type;
 		if(!this.feature_val.containsKey(feature)){
-			try {
-				throw this.getException("get(feature)", "feature", "Class <"+ctype.getName()
+			throw this.getException("get(feature)", "feature", "Class <"+ctype.getName()
 						+"> does not define feature <"+feature.getName()+":"+feature.getFeatureID()+">");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 		return this.feature_val.get(feature);
 	}
 	// We can set null in any un-multiple object.
 	@Override
-	public void set(LStructuralFeature feature, LObject value) {
+	public void set(LStructuralFeature feature, LObject value) throws Exception {
 		// Null Check
 		if(feature==null){
-			try {
-				throw this.getException("set(feature,value)", "feature", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("set(feature,value)", "feature", "Null");
 		}
 		// Existence of Feature
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
-			try {
-				throw this.getException("set(feature,value)", "feature", "Class <"+ctype.getName()
+			throw this.getException("set(feature,value)", "feature", "Class <"+ctype.getName()
 						+"> does not define feature <"+feature.getName()+":"+feature.getFeatureID()+">");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		// Type Match
 		if(value!=null&&value.type()!=feature.getType()){
@@ -99,48 +75,25 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 				LClass ftype = (LClass) feature.getType();
 				LClass vtype = (LClass) value.type();
 				if(!ftype.isSuperOf(vtype)){
-					try {
-						throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
+					throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
 								+"> does not match <"+feature.getType().getName()+">");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
 				}
 			}
 			else{
-				try {
-					throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
+				throw this.getException("set(feature,value)", "feature-value", "Value Type <"+value.type().getName()
 							+"> does not match <"+feature.getType().getName()+">");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return;
 			}
 		}
 		// Constant Check 
 		if(!feature.isChangable()&&
 				this.status_map.get(feature)==true){
-			try {
-				throw this.getException("set(feature,value)", "feature", "try to update unchangable feature value");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("set(feature,value)", "feature", "try to update unchangable feature value");
 		}
 		// Multiple Check
 		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){
 			/*LMultipleObject val = (LMultipleObject) this.feature_val.get(feature);
 			val.addObject(value);*/
-			try {
-				throw this.getException("set(feature,value)", "feature-value", "Multiple Object Set cannot be set directly");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("set(feature,value)", "feature-value", "Multiple Object Set cannot be set directly");
 		}
 		else{
 			this.feature_val.put(feature, value);
@@ -148,77 +101,41 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		this.status_map.put(feature, true);
 	}
 	@Override
-	public Boolean isSet(LStructuralFeature feature) {
+	public Boolean isSet(LStructuralFeature feature) throws Exception {
 		if(feature==null){
-			try {
-				throw this.getException("isSet(feature)", "feature", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			throw this.getException("isSet(feature)", "feature", "Null");
 		}
 		
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
-			try {
-				throw this.getException("isSet(feature)", "feature", "Class <"+ctype.getName()
+			throw this.getException("isSet(feature)", "feature", "Class <"+ctype.getName()
 						+"> does not define feature <"+feature.getName()+":"+feature.getFeatureID()+">");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
 		return this.status_map.get(feature);
 	}
 	@Override
-	public void unSet(LStructuralFeature feature) {
+	public void unSet(LStructuralFeature feature) throws Exception {
 		if(feature==null){
-			try {
-				throw this.getException("unSet(feature)", "feature", "Null");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("unSet(feature)", "feature", "Null");
 		}
 		
 		LClass ctype = (LClass) this.type;
 		if(!this.status_map.containsKey(feature)){
-			try {
-				throw this.getException("unSet(feature)", "feature", "Class <"+ctype.getName()
+			throw this.getException("unSet(feature)", "feature", "Class <"+ctype.getName()
 						+"> does not define feature <"+feature.getName()+":"+feature.getFeatureID()+">");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
 		}
 		this.status_map.put(feature, false);
 	}
 
 	@Override
-	public void add(LStructuralFeature feature, LObject val) {
+	public void add(LStructuralFeature feature, LObject val) throws Exception {
 		if(feature==null||(feature.getUpperBound()<=1
 				&&feature.getUpperBound()!=LMultipleObject.UNBOUNDED)){
-			try {
-				throw this.getException("add(feature,val)","feature", "feature is not a multiple feature");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("add(feature,val)","feature", "feature is not a multiple feature");
 		}
 		
 		if(!this.feature_val.containsKey(feature)){
-			try {
-				throw this.getException("add(feature,val)","feature", feature.getName()+" is not defined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("add(feature,val)","feature", feature.getName()+" is not defined");
 		}
 		
 		LMultipleObject list = (LMultipleObject) this.feature_val.get(feature);
@@ -226,15 +143,9 @@ public class LClassObjectImpl extends LObjectImpl implements LClassObject{
 		this.status_map.put(feature, true);
 	}
 	@Override
-	public void remove(LStructuralFeature feature, LObject val) {
+	public void remove(LStructuralFeature feature, LObject val) throws Exception {
 		if(feature==null||!this.feature_val.containsKey(feature)){
-			try {
-				throw this.getException("remove(feature,val)", "feature", "Undefined");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+			throw this.getException("remove(feature,val)", "feature", "Undefined");
 		}
 		
 		if(feature.getUpperBound()>1||feature.getUpperBound()==LMultipleObject.UNBOUNDED){

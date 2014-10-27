@@ -91,7 +91,13 @@ public class LMultipleObjectSearcher extends LModelSearcher{
 		if(o==null)return null;
 		List ans = new ArrayList();
 		
-		Collection<LObject> list = o.getAllObjects();
+		Collection<LObject> list=null;
+		try {
+			list = o.getAllObjects();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Iterator<LObject> itor = list.iterator();
 		
 		while(itor.hasNext())

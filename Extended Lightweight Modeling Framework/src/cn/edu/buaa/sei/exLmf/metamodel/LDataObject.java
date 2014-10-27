@@ -10,21 +10,21 @@ public interface LDataObject extends LObject{
 	public LDataType getType();
 	
 	public Object getValue();
-	public void setValue(Object val);
+	public void setValue(Object val) throws Exception;
 	
-	public Boolean boolVal();
-	public Integer integerVal();
-	public Long longVal();
-	public Float floatVal();
-	public Double doubleVal();
-	public String stringVal();
-	public LEnumLiteral literalVal();
+	public Boolean boolVal() throws Exception;
+	public Integer integerVal() throws Exception;
+	public Long longVal() throws Exception;
+	public Float floatVal() throws Exception;
+	public Double doubleVal() throws Exception;
+	public String stringVal() throws Exception;
+	public LEnumLiteral literalVal() throws Exception;
 	
-	public void setBool(Boolean val);
-	public void setInt(Integer val);
-	public void setLong(Long val);
-	public void setFloat(Float val);
-	public void setDouble(Double val);
-	public void setString(String val);
-	public void setLiteral(LEnumLiteral literal);
+	public void setBool(Boolean val) throws Exception;
+	public void setInt(Integer val) throws Exception;
+	public void setLong(Long val) throws Exception;
+	public void setFloat(Float val) throws Exception;
+	public void setDouble(Double val) throws Exception;
+	public void setString(String val) throws Exception;
+	public void setLiteral(LEnumLiteral literal) throws Exception;
 }

@@ -22,9 +22,9 @@ public interface LMultipleObject extends LObject{
 	public Boolean isOrdered();
 	public Boolean isUnique();
 	
-	public Collection<LObject> getAllObjects();
-	public void addObject(LObject val);
-	public void removeObject(LObject val);
+	public Collection<LObject> getAllObjects() throws Exception;
+	public void addObject(LObject val) throws Exception;
+	public void removeObject(LObject val) throws Exception;
 	public Boolean containObject(LObject val);
 	
 	/*
@@ -32,7 +32,7 @@ public interface LMultipleObject extends LObject{
 	 *	isOrdered ==> call getByUnordered() ==> Exception
 	 *	validateBound() ==> check whether the current number of instances in set satisfy the constraints of upper/lower
 	 */
-	public LObject getByOrder(int i);
-	public Iterator<LObject> getByUnordered();
-	public Boolean validateBound();
+	public LObject getByOrder(int i) throws Exception;
+	public Iterator<LObject> getByUnordered() throws Exception;
+	public Boolean validateBound() throws Exception;
 }

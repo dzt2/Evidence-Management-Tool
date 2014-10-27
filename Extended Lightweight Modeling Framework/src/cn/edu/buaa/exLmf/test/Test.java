@@ -408,7 +408,7 @@ public class Test {
 		
 		return code.toString();
 	}
-	public static String printLClassObject(LClassObject obj){
+	public static String printLClassObject(LClassObject obj) throws Exception{
 		if(obj==null)return null;
 		LClass type = obj.getType();
 		StringBuilder code = new StringBuilder();
@@ -434,7 +434,7 @@ public class Test {
 		if(obj==null)return null;
 		return obj.getValue().toString();
 	}
-	public static String printMultipleObject(LMultipleObject obj){
+	public static String printMultipleObject(LMultipleObject obj) throws Exception{
 		if(obj==null)return null;
 		StringBuilder code = new StringBuilder();
 		
