@@ -5,7 +5,6 @@ import cn.edu.buaa.sei.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.sei.exLmf.metamodel.LReference;
 
 public class LReferenceImpl extends LStructuralFeatureImpl implements LReference{
-	LClass ctype;
 	LReference opposite;
 	Boolean containment = false;
 	
@@ -14,18 +13,20 @@ public class LReferenceImpl extends LStructuralFeatureImpl implements LReference
 	}
 
 	@Override
-	public LClass getLClass() {return this.ctype;}
+	public LClass getLClass() {
+		if(this.type==null)return null;
+		return (LClass) this.type;
+	}
 	@Override
 	public void setLClass(LClass type) throws Exception {
-		this.setType(type);
+		if(type==null)throw new Exception("Null class type is invalid");
+		this.type=type;
 	}
 	public void setType(LClassifier type) throws Exception{
 		if((type==null)||!(type instanceof LClass)){
 			throw this.getException("setType(type)", "type", "Reference's type must be LClass");
 		}
-		
-		super.setType(type);
-		this.ctype=(LClass) type;
+		this.type=(LClass) type;
 	}
 	
 	@Override
