@@ -16,7 +16,7 @@ public class LAttributeImpl extends LStructuralFeatureImpl implements LAttribute
 		if(type==null)throw new Exception("Null data type is invalid");
 		this.type=type;
 	}
-	
+	@Override
 	public void setType(LClassifier type) throws Exception{
 		if((type==null)||!(type instanceof LDataType)){
 			throw this.getException("setType(type)", "type", "Attribute's type must be LDataType");
