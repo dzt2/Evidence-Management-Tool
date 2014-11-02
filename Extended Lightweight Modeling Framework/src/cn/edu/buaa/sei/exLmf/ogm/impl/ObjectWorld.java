@@ -58,7 +58,7 @@ public class ObjectWorld implements IObjectWorld{
 	}
 	@Override
 	public LPackage getModelSpace() {return this.model;}
-	protected void clearModelSpace(){
+	public void clearModelSpace(){
 		Collection<IObjectGroup> groups = this.gmap.values();
 		for(IObjectGroup group:groups)
 			group.clearGroup();

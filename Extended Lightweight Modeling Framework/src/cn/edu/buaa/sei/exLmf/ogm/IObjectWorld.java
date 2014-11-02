@@ -9,6 +9,7 @@ public interface IObjectWorld {
 	
 	public void loadModelSpace(LPackage p) throws Exception;
 	public LPackage getModelSpace();
+	public void clearModelSpace();
 	
 	public LClass getModelClass(String path) throws Exception;
 	public IObjectGroup getObjectGroup(String path) throws Exception;
