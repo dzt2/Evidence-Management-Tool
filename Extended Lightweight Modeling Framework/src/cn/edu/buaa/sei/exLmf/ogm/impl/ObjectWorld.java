@@ -23,8 +23,12 @@ public class ObjectWorld implements IObjectWorld{
 
 	Queue<LPackage> queue = new LinkedList<LPackage>();
 	Set<LPackage> records = new HashSet<LPackage>();
-	@Override
-	public void loadModelSpace(LPackage p) throws Exception {
+	
+	public ObjectWorld(LPackage p) throws Exception{
+		this.loadModelSpace(p);
+	}
+	
+	protected void loadModelSpace(LPackage p) throws Exception {
 		if(p==null)throw new Exception("Null model is invalid");
 		if(this.model==p)return;
 		
@@ -56,9 +60,7 @@ public class ObjectWorld implements IObjectWorld{
 				queue.add(sub_ps.get(i));
 		}
 	}
-	@Override
-	public LPackage getModelSpace() {return this.model;}
-	public void clearModelSpace(){
+	protected void clearModelSpace(){
 		Collection<IObjectGroup> groups = this.gmap.values();
 		for(IObjectGroup group:groups)
 			group.clearGroup();
@@ -68,33 +70,54 @@ public class ObjectWorld implements IObjectWorld{
 	}
 
 	@Override
+	public LPackage getModelSpace() {return this.model;}
+	
+	@Override
 	public LClass getModelClass(String path) throws Exception {
 		LNamedElement res = ModelAccessor.access(this.model, path);
 		if(res==null||!(res instanceof LClass)){
 			throw new Exception("Undefined LClass of Path: "+path);
 		}
-		
 		return (LClass) res;
 	}
-
 	@Override
 	public IObjectGroup getObjectGroup(String path) throws Exception {
 		LClass type = this.getModelClass(path);
 		if(this.gmap.containsKey(type))return this.gmap.get(type);
 		else throw new Exception("Un-Registered type: "+type.getAbsolutePath());
 	}
-
 	@Override
 	public IObjectGroup getObjectGroup(LClass type) throws Exception {
 		if(type==null||!this.gmap.containsKey(type))
 			throw new Exception("Undefined type: "+type);
 		return this.gmap.get(type);
 	}
-
 	@Override
 	public boolean containModelClass(LClass type) {
 		if(type==null)return false;
 		return this.gmap.containsKey(type);
 	}
+	@Override
+	public boolean containModelClass(String path) {
+		if(path==null)return false;
+		try {
+			LNamedElement res = ModelAccessor.access(this.model, path);
+			if(res instanceof LClass)return this.gmap.containsKey(res);
+			else return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	@Override
+	public void clearObjectSpace() {
+		Collection<IObjectGroup> groups = this.gmap.values();
+		for(IObjectGroup group:groups)
+			group.clearGroup();
+	}
+
+	@Override
+	public Map<LClass, IObjectGroup> getGroups() {return this.gmap;}
+	
 
 }

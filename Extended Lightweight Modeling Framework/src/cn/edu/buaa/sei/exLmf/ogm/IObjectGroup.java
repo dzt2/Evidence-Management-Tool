@@ -1,5 +1,8 @@
 package cn.edu.buaa.sei.exLmf.ogm;
 
+import java.util.Map;
+import java.util.Set;
+
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
 import cn.edu.buaa.sei.exLmf.metamodel.LClassObject;
 
@@ -49,10 +52,18 @@ public interface IObjectGroup {
 	 * */
 	public boolean isTagged(LClassObject val);
 	/**
+	 * Return whether a specifier id is in the Name-Space
+	 * */
+	public boolean isRegistered(String id);
+	/**
 	 * Return the id of a specified object.
 	 * @exception Exception val==null||!this.isTagged(val)
 	 * */
 	public String getTag(LClassObject val) throws Exception;
+	/**
+	 * Return the object that is in current Name-Space with specified id.
+	 * */
+	public LClassObject get(String id) throws Exception;
 	/**
 	 * Remove a specified object from Name-Space, and return its id as result.
 	 * @exception Exception val==null||!this.isTagged(val)
@@ -62,4 +73,13 @@ public interface IObjectGroup {
 	 * Remove all the objects in Name-Space
 	 * */
 	public void clearNameSpace();
+	
+	/**
+	 * Return all objects {Name}
+	 * */
+	public Map<String,LClassObject> getNSpace();
+	/**
+	 * Return all objects {No-Name + Name}
+	 * */
+	public Set<LClassObject> getObjects();
 }

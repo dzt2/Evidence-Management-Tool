@@ -104,6 +104,7 @@ public class EcoreModelReader implements IModelReader{
 		//code...
 		LPackage np = (LPackage) this.generateElement(this.p);
 		this.map.clear();
+		np.setContainer(null);
 		
 		return np;
 	}

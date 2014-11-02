@@ -103,6 +103,24 @@ public class ObjectGroup implements IObjectGroup{
 	public void clearNameSpace() {
 		this.nspace.clear();
 		this._index.clear();
-		System.out.println("");
 	}
+
+	@Override
+	public boolean isRegistered(String id) {
+		if(id==null)return false;
+		else return this.nspace.containsKey(id);
+	}
+
+	@Override
+	public LClassObject get(String id) throws Exception {
+		if(id==null)throw new Exception("Null id is invalid");
+		if(this.nspace.containsKey(id))return this.nspace.get(id);
+		else throw new Exception("Undefined id: "+id);
+	}
+
+	@Override
+	public Map<String, LClassObject> getNSpace() {return this.nspace;}
+
+	@Override
+	public Set<LClassObject> getObjects() {return this.uset;}
 }
