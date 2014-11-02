@@ -46,9 +46,9 @@ public class ObjectWorld implements IObjectWorld{
 			List<LClassifier> types = p.getTypes();
 			for(int i=0;i<types.size();i++){
 				LClassifier type = types.get(i);
-				if(!(types instanceof LClass))continue;
+				if(!(type instanceof LClass))continue;
 				
-				if(this.gmap.containsKey(types.get(i)))
+				if(this.gmap.containsKey(type))
 					throw new Exception("Invalid Model Structure at: "+type.getAbsolutePath());
 				
 				IObjectGroup group = new ObjectGroup((LClass) type);
@@ -58,6 +58,8 @@ public class ObjectWorld implements IObjectWorld{
 			List<LPackage> sub_ps = p.getSubPackages();
 			for(int i=0;i<sub_ps.size();i++)
 				queue.add(sub_ps.get(i));
+			
+			System.out.println(this.gmap.size()+" types have been loaded...");
 		}
 	}
 	protected void clearModelSpace(){

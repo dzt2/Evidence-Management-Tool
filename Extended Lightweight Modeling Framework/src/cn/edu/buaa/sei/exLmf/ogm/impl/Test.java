@@ -25,22 +25,28 @@ import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 public class Test {
 
 	public static void main(String[] args) {
-		try {
+		/*try {
 			LPackage root = readModel(new File("test.ecore"));
+			IObjectWorld cache = getCache(root);
+			
 			System.out.println(root.getContainer());
 			LClass type = (LClass) root.getClassifierByName("Person");
 			System.out.println(type.getAbsolutePath());
+			System.out.println(ModelAccessor.access(root, "Person"));
+			System.out.println(cache.containModelClass("Person"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
+		readTest();
 	}
 	
 	public static void readTest(){
 		try {
 			LPackage template = readModel(new File("test.ecore"));
 			IObjectWorld cache = getCache(template);
-			readObject(new File("obj.xml"),cache);
+			readObject(new File("test.xml"),cache);
 			
 			Map<LClass,IObjectGroup> groups = cache.getGroups();
 			Set<LClass> types = groups.keySet();
