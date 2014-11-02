@@ -60,4 +60,6 @@ public interface LClass extends LClassifier{
 	
 	public LStructuralFeature removeFeatureByID(int id) throws Exception;
 	public LStructuralFeature removeFeatureByName(String name) throws Exception;
+	
+	public Boolean isInstance(LClassObject val);
 }

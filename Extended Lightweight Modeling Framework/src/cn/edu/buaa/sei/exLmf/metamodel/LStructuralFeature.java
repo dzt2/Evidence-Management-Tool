@@ -28,4 +28,5 @@ public interface LStructuralFeature extends LTypedElement{
 	public int getFeatureID();	/*Local Identification*/
 	public LObject getDefaultValue();
 	public void setDefaultValue(LObject value) throws Exception;
+	
 }

@@ -2,8 +2,10 @@ package cn.edu.buaa.sei.exLmf.metamodel.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import cn.edu.buaa.sei.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
@@ -349,5 +351,25 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			}
 		}
 		return this.default_val=val;
+	}
+
+	@Override
+	public Boolean isInstance(LClassObject val) {
+		if(val==null)return true;
+		
+		LClass type = val.getType();
+		if(type==null)return false;
+		
+		Queue<LClass> queue = new LinkedList<LClass>();
+		queue.add(this);
+		while(!queue.isEmpty()){
+			LClass qtype = queue.poll();
+			if(qtype==type)return true;
+			
+			List<LClass> supers = qtype.getSuperTypes();
+			for(int i=0;i<supers.size();i++)
+				queue.add(supers.get(i));
+		}
+		return false;
 	}
 }

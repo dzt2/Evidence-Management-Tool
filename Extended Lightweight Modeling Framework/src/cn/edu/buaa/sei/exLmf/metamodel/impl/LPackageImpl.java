@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import cn.edu.buaa.sei.exLmf.metamodel.LClassifier;
 import cn.edu.buaa.sei.exLmf.metamodel.LFactory;
 import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
@@ -184,5 +183,24 @@ public class LPackageImpl extends LNamedElementImpl implements LPackage{
 		if(this.container!=null)
 			this.container.removeSubPackage(this);
 		this.container=container;
+	}
+	@Override
+	public String getAbsolutePath() {
+		LPackage cur = this;
+		stack.clear();
+		
+		while(cur!=null){
+			stack.push(cur);
+			cur = cur.getContainer();
+		}
+		
+		StringBuilder code = new StringBuilder();
+		while(!stack.isEmpty()){
+			cur = stack.pop();
+			code.append(cur.getName());
+			if(!stack.isEmpty())
+				code.append(SPLIT);
+		}
+		return code.toString();
 	}
 }

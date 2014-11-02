@@ -46,4 +46,10 @@ public abstract class LStructuralFeatureImpl extends LTypedElementImpl implement
 	@Override
 	public void setRequired(Boolean required) {this.required=required;}
 	
+	@Override
+	public String getAbsolutePath(){
+		if(this.container==null)return this.name;
+		else return this.container.getAbsolutePath()+SPLIT+this.name;
+	}
+	
 }

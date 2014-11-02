@@ -52,5 +52,10 @@ public class LClassifierImpl extends LNamedElementImpl implements LClassifier{
 	public LPackage getContainer() {return this.container;}
 	@Override
 	public void setContainer(LPackage container) {this.container=container;}
+	@Override
+	public String getAbsolutePath() {
+		if(this.container==null)return this.name;
+		else return this.container.getAbsolutePath()+SPLIT+this.name;
+	}
 	
 }

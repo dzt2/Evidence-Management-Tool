@@ -1,6 +1,7 @@
 package cn.edu.buaa.sei.exLmf.metamodel;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  *	LPackage: model element that can package other elements.
@@ -20,6 +21,9 @@ import java.util.List;
  * 
  */
 public interface LPackage extends LNamedElement{
+	
+	Stack<LPackage> stack = new Stack<LPackage>();
+	
 	public List<LPackage> getSubPackages();
 	public void addSubPackage(LPackage pack) throws Exception;
 	public void removeSubPackage(LPackage pack) throws Exception;
