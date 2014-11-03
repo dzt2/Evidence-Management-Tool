@@ -1,6 +1,7 @@
 package cn.edu.buaa.sei.exLmf.ogm.impl;
 
 import java.io.File;
+
 import cn.edu.buaa.sei.exLmf.ogm.OG_File;
 
 public class OG_XMLFile implements OG_File{
@@ -18,5 +19,10 @@ public class OG_XMLFile implements OG_File{
 	}
 	@Override
 	public File getFile() {return file;}
+	@Override
+	public void reset(File file) throws Exception {
+		if(file==null)throw new Exception("Null file is invalid");
+		this.file = file;
+	}
 
 }

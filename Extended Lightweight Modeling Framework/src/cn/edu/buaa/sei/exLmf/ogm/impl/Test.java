@@ -19,6 +19,7 @@ import cn.edu.buaa.sei.exLmf.ogm.IObjectGroup;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectWorld;
 import cn.edu.buaa.sei.exLmf.ogm.OGResource;
 import cn.edu.buaa.sei.exLmf.ogm.OGResourceReader;
+import cn.edu.buaa.sei.exLmf.ogm.OGResourceWriter;
 import cn.edu.buaa.sei.exLmf.translater.EcoreModelReader;
 import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 
@@ -71,6 +72,11 @@ public class Test {
 					System.out.println(printLClassObject(obj));
 				}
 			}
+			
+			OGResourceWriter writer = new XMLFileWriter(cache);
+			writer.setResource(new OG_DirectoryImpl(new File("data")));
+			writer.write();
+			System.out.println("Writting Successfully!");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

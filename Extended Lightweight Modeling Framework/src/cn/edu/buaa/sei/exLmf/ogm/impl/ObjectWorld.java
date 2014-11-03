@@ -51,7 +51,7 @@ public class ObjectWorld implements IObjectWorld{
 				if(this.gmap.containsKey(type))
 					throw new Exception("Invalid Model Structure at: "+type.getAbsolutePath());
 				
-				IObjectGroup group = new ObjectGroup((LClass) type);
+				IObjectGroup group = new ObjectGroup((LClass) type,this);
 				this.gmap.put((LClass) type, group);
 			}
 			

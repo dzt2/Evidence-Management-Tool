@@ -82,4 +82,8 @@ public interface IObjectGroup {
 	 * Return all objects {No-Name + Name}
 	 * */
 	public Set<LClassObject> getObjects();
+	/**
+	 * Return the container of the group: IObjectWorld
+	 * */
+	public IObjectWorld getContainer();
 }

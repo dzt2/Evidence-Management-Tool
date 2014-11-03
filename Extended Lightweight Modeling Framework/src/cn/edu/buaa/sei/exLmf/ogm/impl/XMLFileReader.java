@@ -38,6 +38,8 @@ public class XMLFileReader implements OGResourceReader{
 		if(!(resource instanceof OG_XMLFile))throw new Exception("XML File required...");
 		this.resource = (OG_XMLFile) resource;
 	}
+	@Override
+	public OGResource getResource() {return this.resource;}
 
 	@Override
 	public void read() throws Exception{
@@ -274,6 +276,4 @@ public class XMLFileReader implements OGResourceReader{
 		return true;
 	}
 
-	
-	
 }

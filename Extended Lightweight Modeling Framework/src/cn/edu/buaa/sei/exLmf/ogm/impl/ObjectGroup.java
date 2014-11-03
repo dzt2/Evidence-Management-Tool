@@ -9,6 +9,7 @@ import cn.edu.buaa.sei.exLmf.metamodel.LClass;
 import cn.edu.buaa.sei.exLmf.metamodel.LClassObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LFactory;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectGroup;
+import cn.edu.buaa.sei.exLmf.ogm.IObjectWorld;
 
 public class ObjectGroup implements IObjectGroup{
 	
@@ -16,10 +17,12 @@ public class ObjectGroup implements IObjectGroup{
 	Set<LClassObject> uset = new HashSet<LClassObject>();
 	Map<String,LClassObject> nspace = new HashMap<String,LClassObject>();
 	Map<LClassObject,String> _index = new HashMap<LClassObject,String>();
+	IObjectWorld container;
 	
-	public ObjectGroup(LClass type) throws Exception{
-		if(type==null)throw new Exception("Null type is invalid");
+	public ObjectGroup(LClass type,IObjectWorld container) throws Exception{
+		if(type==null||container==null)throw new Exception("Null type|container is invalid");
 		this.type=type;
+		this.container = container;
 	}
 	
 	@Override
@@ -98,7 +101,6 @@ public class ObjectGroup implements IObjectGroup{
 		this._index.clear();
 		this.uset.clear();
 	}
-
 	@Override
 	public void clearNameSpace() {
 		this.nspace.clear();
@@ -110,17 +112,17 @@ public class ObjectGroup implements IObjectGroup{
 		if(id==null)return false;
 		else return this.nspace.containsKey(id);
 	}
-
 	@Override
 	public LClassObject get(String id) throws Exception {
 		if(id==null)throw new Exception("Null id is invalid");
 		if(this.nspace.containsKey(id))return this.nspace.get(id);
 		else throw new Exception("Undefined id: "+id);
 	}
-
 	@Override
 	public Map<String, LClassObject> getNSpace() {return this.nspace;}
-
 	@Override
 	public Set<LClassObject> getObjects() {return this.uset;}
+
+	@Override
+	public IObjectWorld getContainer() {return this.container;}
 }
