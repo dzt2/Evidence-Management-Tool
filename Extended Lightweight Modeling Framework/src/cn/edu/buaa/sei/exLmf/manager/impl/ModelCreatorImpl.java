@@ -189,11 +189,12 @@ public class ModelCreatorImpl implements IModelCreator{
 		e.setContainer(container);
 		e.setDefaultValue(null);
 		e.setInstanceName(name.trim());
-		container.addType(e);
 		
 		this.inputSpace(e);
 		Integer id = this.rmap.get(e);
 		e.setClassifierID(id);
+		
+		container.addType(e);
 		return e;
 	}
 	@Override
@@ -205,11 +206,12 @@ public class ModelCreatorImpl implements IModelCreator{
 		e.setContainer(container);
 		e.setDefaultValue(null);
 		e.setInstanceName(ins.trim());
-		container.addType(e);
 		
 		this.inputSpace(e);
 		Integer id = this.rmap.get(e);
 		e.setClassifierID(id);
+		
+		container.addType(e);
 		return e;
 	}
 	
