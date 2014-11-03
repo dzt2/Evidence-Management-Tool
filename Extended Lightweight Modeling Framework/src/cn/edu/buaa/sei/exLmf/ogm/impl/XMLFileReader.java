@@ -52,7 +52,18 @@ public class XMLFileReader implements OGResourceReader{
 		this.updateReference();
 		System.out.println("References linking have completed...");
 	}
+	@Override
+	public void link() throws Exception {
+		if(this.resource==null)throw new Exception("No resource is ready to be read...");
+		
+		this.readRoot();
+		System.out.println("JDOM generation complete...");
+		
+		this.updateReference();
+		System.out.println("References linking have completed...");
+	}
 	
+	int links = 0;int count = 0, newOne = 0;
 	protected void readRoot() throws Exception{
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
@@ -65,7 +76,6 @@ public class XMLFileReader implements OGResourceReader{
 		this.root = (Element) list.item(0);
 		System.out.println("XML Resource \""+this.resource.getFile().getAbsolutePath()+"\" has been imported into JDOM...");
 	}
-	int count = 0, newOne = 0;
 	protected boolean analysis(){
 		if(this.root==null)return false;
 		this.count = 0; this.newOne = 0;
@@ -98,7 +108,6 @@ public class XMLFileReader implements OGResourceReader{
 				" objects are created from file: "+this.resource.getFile().getAbsolutePath());
 		return res;
 	}
-	int links = 0;
 	protected boolean updateReference(){
 		if(this.root==null)return false;
 		this.links = 0;
@@ -264,5 +273,7 @@ public class XMLFileReader implements OGResourceReader{
 		
 		return true;
 	}
+
+	
 	
 }

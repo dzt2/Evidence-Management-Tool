@@ -46,7 +46,19 @@ public class Test {
 		try {
 			LPackage template = readModel(new File("test.ecore"));
 			IObjectWorld cache = getCache(template);
-			readObject(new File("test.xml"),cache);
+			OGResourceReader reader = new XMLFileReader(cache);
+			//readObject(new File("test.xml"),cache);
+			
+			OG_XMLFile[] files = {new OG_XMLFile(new File("test.xml")),new OG_XMLFile(new File("test2.xml"))};
+			
+			reader.setResource(files[0]);
+			reader.read();
+			
+			reader.setResource(files[1]);
+			reader.read();
+			
+			reader.setResource(files[0]);
+			reader.link();
 			
 			Map<LClass,IObjectGroup> groups = cache.getGroups();
 			Set<LClass> types = groups.keySet();

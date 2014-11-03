@@ -13,6 +13,10 @@
 		<sex>MAN</sex>
 		<age>55</age>
 		<tall>185.00</tall>
+		<friends>
+			<__item>3</__item>
+			<__item>4</__item>
+		</friends>
 	</Person>
 	<Person _id="3">
 		<name>Unknown**</name>
