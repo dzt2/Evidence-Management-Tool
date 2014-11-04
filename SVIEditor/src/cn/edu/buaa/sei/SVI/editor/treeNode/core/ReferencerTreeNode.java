@@ -6,7 +6,7 @@ import javax.swing.JPopupMenu;
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 
-public class ListVariableTreeNode extends SVITreeNode{
+public class ReferencerTreeNode extends SVITreeNode{
 	
 	final static JPopupMenu menu = new JPopupMenu();
 	
@@ -16,14 +16,13 @@ public class ListVariableTreeNode extends SVITreeNode{
 		JMenuItem item2 = new JMenuItem(); item2.setText("validate");
 		menu.add(item2);
 	}
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public ListVariableTreeNode(String name) {
-		super(name,IconSet.LIST_VAR_ICON);
+	public ReferencerTreeNode(String name) {
+		super(name,IconSet.REF_VAR_ICON);
 	}
 
 	@Override
@@ -34,6 +33,4 @@ public class ListVariableTreeNode extends SVITreeNode{
 	public JPopupMenu getPopupMenu() {return menu;}
 	@Override
 	public boolean isEditable() {return true;}
-	
-
 }

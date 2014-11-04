@@ -13,6 +13,8 @@ public class DoubleVariableTreeNode extends SVITreeNode{
 	static{
 		JMenuItem item1 = new JMenuItem(); item1.setText("remove");
 		menu.add(item1);
+		JMenuItem item2 = new JMenuItem(); item2.setText("validate");
+		menu.add(item2);
 	}
 	
 	/**
@@ -20,8 +22,8 @@ public class DoubleVariableTreeNode extends SVITreeNode{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public DoubleVariableTreeNode() {
-		super(IconSet.DOUBLE_VAR_ICON);
+	public DoubleVariableTreeNode(String name) {
+		super(name,IconSet.DOUBLE_VAR_ICON);
 	}
 
 	@Override

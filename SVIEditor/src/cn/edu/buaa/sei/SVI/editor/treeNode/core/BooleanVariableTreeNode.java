@@ -13,6 +13,8 @@ public class BooleanVariableTreeNode extends SVITreeNode{
 	static{
 		JMenuItem item1 = new JMenuItem(); item1.setText("remove");
 		menu.add(item1);
+		JMenuItem item2 = new JMenuItem(); item2.setText("validate");
+		menu.add(item2);
 	}
 	
 	/**
@@ -20,8 +22,8 @@ public class BooleanVariableTreeNode extends SVITreeNode{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public BooleanVariableTreeNode() {
-		super(IconSet.BOOL_VAR_ICON);
+	public BooleanVariableTreeNode(String name) {
+		super(name,IconSet.BOOL_VAR_ICON);
 	}
 
 	@Override

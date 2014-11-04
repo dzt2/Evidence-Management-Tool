@@ -12,7 +12,7 @@ public abstract class SVITreeNode extends DefaultMutableTreeNode{
 	
 	private ImageIcon icon;
 	
-	public SVITreeNode(ImageIcon icon){this.icon = icon;}
+	public SVITreeNode(String name,ImageIcon icon){super(name);this.icon = icon;}
 	
 	public ImageIcon getIcon() {
 		return icon;

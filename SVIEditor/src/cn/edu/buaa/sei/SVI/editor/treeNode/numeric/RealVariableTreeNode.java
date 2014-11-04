@@ -13,14 +13,16 @@ public class RealVariableTreeNode extends SVITreeNode{
 	static{
 		JMenuItem item1 = new JMenuItem(); item1.setText("remove");
 		menu.add(item1);
+		JMenuItem item2 = new JMenuItem(); item2.setText("validate");
+		menu.add(item2);
 	}
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public RealVariableTreeNode() {
-		super(IconSet.REAL_VAR_ICON);
+	public RealVariableTreeNode(String name) {
+		super(name,IconSet.REAL_VAR_ICON);
 	}
 
 	@Override

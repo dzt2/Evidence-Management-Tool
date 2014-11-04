@@ -3,6 +3,8 @@ package cn.edu.buaa.sei.SVI.editor.treeNode;
 import javax.swing.ImageIcon;
 
 public interface IconSet {
+	
+	
 	public static final ImageIcon STRUCT_GROUP_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/root.gif"));
 	public static final ImageIcon BOOL_VAR_ICON = new ImageIcon(
@@ -19,6 +21,8 @@ public interface IconSet {
 			IconSet.class.getClassLoader().getResource("icons/char.gif"));
 	public static final ImageIcon STRING_VAR_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/char.gif"));
+	public static final ImageIcon FREE_VAR_ICON = new ImageIcon(
+			IconSet.class.getClassLoader().getResource("icons/box.gif"));
 	public static final ImageIcon LIST_VAR_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/list.gif"));
 	public static final ImageIcon SET_VAR_ICON = new ImageIcon(
@@ -130,7 +134,7 @@ public interface IconSet {
 			IconSet.class.getClassLoader().getResource("icons/upper.gif"));
 	public static final ImageIcon OP_LOWER_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/lower.gif"));
-	public static final ImageIcon OP_DISCOURSE_ICON = new ImageIcon(
+	public static final ImageIcon DISCOURSE_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/domain.gif"));
 	
 	public static final ImageIcon FILTER_ICON = new ImageIcon(
