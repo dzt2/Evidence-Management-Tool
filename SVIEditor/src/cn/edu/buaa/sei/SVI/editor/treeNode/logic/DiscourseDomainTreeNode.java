@@ -1,22 +1,10 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.logic;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
-import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.FreeVariableTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.core.VariableTreeNode;
 
-public class DiscourseDomainTreeNode extends SVITreeNode{
-	
-	final static JPopupMenu menu = new JPopupMenu();
-	
-	static{
-		JMenuItem item1 = new JMenuItem(); item1.setText("remove");
-		menu.add(item1);
-		JMenuItem item2 = new JMenuItem(); item2.setText("validate");
-		menu.add(item2);
-	}
+public class DiscourseDomainTreeNode extends VariableTreeNode{
 	/**
 	 * 
 	 */
@@ -36,8 +24,4 @@ public class DiscourseDomainTreeNode extends SVITreeNode{
 	}
 	@Override
 	public int requiredChildrenCount() {return 0;}
-	@Override
-	public JPopupMenu getPopupMenu() {return menu;}
-	@Override
-	public boolean isEditable() {return true;}
 }

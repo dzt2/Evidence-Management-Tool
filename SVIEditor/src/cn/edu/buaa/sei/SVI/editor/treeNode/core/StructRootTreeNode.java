@@ -1,4 +1,7 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -8,15 +11,23 @@ import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 
 public class StructRootTreeNode extends SVITreeNode{
 
-	final static JPopupMenu menu = new JPopupMenu();
+	final JPopupMenu menu = new JPopupMenu();
 	
-	static{
+	void init(){
 		JMenu item0 = new JMenu(); item0.setText("create");
-		//JMenuItem item1 = new JMenuItem(); item1.setText("remove");
 		JMenuItem item2 = new JMenuItem(); item2.setText("validate");
 		menu.add(item0);
-		//menu.add(item1);
 		menu.add(item2);
+		
+		final SVITreeNode node = this;
+		item2.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!node.validate()){
+					node.setIcon(IconSet.ERROR_ICON);
+				}
+				else node.setIcon(node.getIcon());
+			}});
 		
 		JMenu i00 = new JMenu(); i00.setText("variable");
 		JMenu i01 = new JMenu(); i01.setText("expression");
@@ -64,6 +75,7 @@ public class StructRootTreeNode extends SVITreeNode{
 	private static final long serialVersionUID = 1L;
 	public StructRootTreeNode(String name) {
 		super(name, IconSet.STRUCT_GROUP_ICON);
+		this.init();
 	}
 
 	@Override

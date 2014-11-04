@@ -3,7 +3,8 @@ package cn.edu.buaa.sei.SVI.editor.treeNode;
 import javax.swing.ImageIcon;
 
 public interface IconSet {
-	
+	public static final ImageIcon ERROR_ICON = new ImageIcon(
+			IconSet.class.getClassLoader().getResource("icons/error_dir.gif"));
 	
 	public static final ImageIcon STRUCT_GROUP_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/root.gif"));
