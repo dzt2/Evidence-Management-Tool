@@ -1,4 +1,6 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
+import javax.swing.JTree;
+
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 
 public class BooleanVariableTreeNode extends VariableTreeNode{
@@ -8,8 +10,8 @@ public class BooleanVariableTreeNode extends VariableTreeNode{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public BooleanVariableTreeNode(String name) {
-		super(name,IconSet.BOOL_VAR_ICON);
+	public BooleanVariableTreeNode(JTree tree,String name) {
+		super(tree,name,IconSet.BOOL_VAR_ICON);
 	}
 
 	@Override

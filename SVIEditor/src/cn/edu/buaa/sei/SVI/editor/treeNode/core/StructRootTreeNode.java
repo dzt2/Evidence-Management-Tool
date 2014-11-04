@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JTree;
 
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
@@ -73,8 +74,8 @@ public class StructRootTreeNode extends SVITreeNode{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public StructRootTreeNode(String name) {
-		super(name, IconSet.STRUCT_GROUP_ICON);
+	public StructRootTreeNode(JTree tree,String name) {
+		super(tree,name, IconSet.STRUCT_GROUP_ICON);
 		this.init();
 	}
 

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 import javax.swing.JMenuItem;
+import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
@@ -20,8 +21,8 @@ public class ReferencerTreeNode extends VariableTreeNode{
 	
 	VariableTreeNode ref_node;
 	
-	public ReferencerTreeNode(String name) {
-		super(name,IconSet.REF_VAR_ICON);
+	public ReferencerTreeNode(JTree tree,String name) {
+		super(tree,name,IconSet.REF_VAR_ICON);
 		this.regist();
 	}
 	

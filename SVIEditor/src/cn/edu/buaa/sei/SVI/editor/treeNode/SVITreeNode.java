@@ -2,6 +2,7 @@ package cn.edu.buaa.sei.SVI.editor.treeNode;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public abstract class SVITreeNode extends DefaultMutableTreeNode{
@@ -11,8 +12,11 @@ public abstract class SVITreeNode extends DefaultMutableTreeNode{
 	private static final long serialVersionUID = 1L;
 	
 	private ImageIcon icon;
+	protected JTree tree;
 	
-	public SVITreeNode(String name,ImageIcon icon){super(name);this.icon = icon;}
+	public SVITreeNode(JTree tree,String name,ImageIcon icon){
+		super(name);this.icon = icon;this.tree = tree;
+	}
 	
 	public ImageIcon getIcon() {
 		return icon;

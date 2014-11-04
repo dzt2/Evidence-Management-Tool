@@ -1,5 +1,7 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
 
+import javax.swing.JTree;
+
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 
 public class ListVariableTreeNode extends VariableTreeNode{
@@ -9,8 +11,8 @@ public class ListVariableTreeNode extends VariableTreeNode{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public ListVariableTreeNode(String name) {
-		super(name,IconSet.LIST_VAR_ICON);
+	public ListVariableTreeNode(JTree tree,String name) {
+		super(tree,name,IconSet.LIST_VAR_ICON);
 	}
 
 	@Override
