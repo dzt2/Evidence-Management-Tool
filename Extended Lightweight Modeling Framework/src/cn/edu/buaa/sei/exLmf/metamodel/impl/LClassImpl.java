@@ -21,6 +21,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 	List<LAttribute> attributes = new ArrayList<LAttribute>();
 	List<LReference> references = new ArrayList<LReference>();
 	List<LStructuralFeature> features = new ArrayList<LStructuralFeature>();
+	List<LClass> subs = new ArrayList<LClass>();
 	
 	// Record the names and identifications used in local variable space.
 	Map<String,LStructuralFeature> name_feature = new HashMap<String,LStructuralFeature>();
@@ -48,6 +49,13 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		}
 		
 		this.supers.add(type);
+		
+		/**
+		 * Danger Code
+		 * */
+		if(type instanceof LClassImpl){
+			((LClassImpl) type).subs.add(this);
+		}
 	}
 	@Override
 	public void removeSuperType(LClass type) throws Exception {
@@ -55,6 +63,13 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 			throw this.getException("removeSuperType(type)", "type", "Undefined");
 		}
 		this.supers.remove(type);
+		
+		/**
+		 * Danger Code
+		 * */
+		if(type instanceof LClassImpl){
+			((LClassImpl) type).subs.remove(this);
+		}
 	}
 	@Override
 	public Boolean isSuperOf(LClass type) {
@@ -372,4 +387,7 @@ public class LClassImpl extends LClassifierImpl implements LClass{
 		}
 		return false;
 	}
+
+	@Override
+	public List<LClass> getSubClasses() {return this.subs;}
 }

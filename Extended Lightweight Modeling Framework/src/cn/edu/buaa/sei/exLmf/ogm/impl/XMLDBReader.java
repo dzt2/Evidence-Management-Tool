@@ -1,89 +1,132 @@
 package cn.edu.buaa.sei.exLmf.ogm.impl;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.io.File;
+import java.util.Map;
 import java.util.Set;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import cn.edu.buaa.sei.exLmf.metamodel.LAttribute;
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
-import cn.edu.buaa.sei.exLmf.metamodel.LClassObject;
-import cn.edu.buaa.sei.exLmf.metamodel.LDataObject;
-import cn.edu.buaa.sei.exLmf.metamodel.LMultipleObject;
-import cn.edu.buaa.sei.exLmf.metamodel.LReference;
-import cn.edu.buaa.sei.exLmf.metamodel.LStructuralFeature;
+import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectGroup;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectWorld;
 import cn.edu.buaa.sei.exLmf.ogm.OGResource;
 import cn.edu.buaa.sei.exLmf.ogm.OGResourceReader;
+import cn.edu.buaa.sei.exLmf.ogm.OG_Directory;
+import cn.edu.buaa.sei.exLmf.translater.EcoreModelReader;
+import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 
-public class XMLFileReader implements OGResourceReader{
+public class XMLDBReader implements OGResourceReader{
 	
-	OG_XMLFile resource;
-	IObjectWorld cache;
-	Element root;
+	OG_Directory resource;
+	IObjectWorld cache=null;
+	XMLFileReader reader;
 	
-	public XMLFileReader(IObjectWorld cache) throws Exception{
-		if(cache==null)throw new Exception("Null cache is invalid");
-		this.cache = cache;
+	public XMLDBReader(){
 	}
 	
 	@Override
 	public IObjectWorld getCache() {return this.cache;}
+
 	@Override
 	public void setResource(OGResource resource) throws Exception {
 		if(resource==null)throw new Exception("Null resource is invalid");
-		if(!(resource instanceof OG_XMLFile))throw new Exception("XML File required...");
-		this.resource = (OG_XMLFile) resource;
+		if(!(resource instanceof OG_Directory))throw new Exception("OG_Directory required");
+		this.resource = (OG_Directory) resource;
 	}
 	@Override
 	public OGResource getResource() {return this.resource;}
 
 	@Override
-	public void read() throws Exception{
-		if(this.resource==null)throw new Exception("No resource is ready to be read...");
+	public void read() throws Exception {
+		if(this.resource==null)throw new Exception("Null resource is invalid");
+		this.loadModel();
 		
-		this.readRoot();
-		System.out.println("JDOM generation complete...");
+		Map<LClass,IObjectGroup> groups = this.cache.getGroups();
+		Set<LClass> keys = groups.keySet();
+		for(LClass key:keys){
+			String file_name = this.getFileName(key);
+			File fi = new File(this.resource.getDirectory().getAbsoluteFile()+"\\"+file_name+".xml");
+			if(!fi.exists()){
+				System.err.println("!Error!: "+key.getAbsolutePath()+" has no database set referred...");
+				continue;
+			}
+			
+			reader.setResource(new OG_XMLFile(fi));
+			reader.readRoot();reader.analysis();reader.updateReference();
+			System.out.println(fi.getAbsolutePath()+" analysis complete...");
+		}
+		System.out.println("Initial Analysis Completed...");
 		
-		this.analysis();
-		System.out.println("JDOM Elements initial analysis complete...");
+		for(LClass key:keys){
+			String file_name = this.getFileName(key);
+			File fi = new File(this.resource.getDirectory().getAbsoluteFile()+"\\"+file_name+".xml");
+			if(!fi.exists()){
+				System.err.println("!Error!: "+key.getAbsolutePath()+" has no database set referred...");
+				continue;
+			}
+			
+			reader.setResource(new OG_XMLFile(fi));
+			reader.readRoot();reader.link();
+			System.out.println(fi.getAbsolutePath()+" analysis complete...");
+		}
+		System.out.println("Linking Files Completed...");
 		
-		this.updateReference();
-		System.out.println("References linking have completed...");
 	}
 	@Override
 	public void link() throws Exception {
-		if(this.resource==null)throw new Exception("No resource is ready to be read...");
+		if(this.resource==null)throw new Exception("Null resource is invalid");
+		if(this.cache==null)throw new Exception("Unready for linking...{Null Cache}");
 		
-		this.readRoot();
-		System.out.println("JDOM generation complete...");
+		Map<LClass,IObjectGroup> groups = this.cache.getGroups();
+		Set<LClass> keys = groups.keySet();
+		for(LClass key:keys){
+			String file_name = this.getFileName(key);
+			File fi = new File(this.resource.getDirectory().getAbsoluteFile()+"\\"+file_name+".xml");
+			if(!fi.exists()){
+				System.err.println("!Error!: "+key.getAbsolutePath()+" has no database set referred...");
+				continue;
+			}
+			
+			reader.setResource(new OG_XMLFile(fi));
+			reader.readRoot();reader.link();
+			System.out.println(fi.getAbsolutePath()+" analysis complete...");
+		}
+		System.out.println("Linking Files Completed...");
+	}
+
+	protected void loadModel() throws Exception{
+		File dir = this.resource.getDirectory();
+		File mfile = new File(dir.getAbsoluteFile()+"\\model.ecore");
 		
-		this.updateReference();
-		System.out.println("References linking have completed...");
+		if(!mfile.exists())throw new Exception("Model is undefined: %db%\\model.ecore is required");
+		IModelReader mreader = new EcoreModelReader("EcoreReader");
+		mreader.setInputStream(mfile);
+		LPackage root = mreader.read();
+		if(this.cache==null){
+			this.cache = new ObjectWorld(root);
+			this.reader = new XMLFileReader(this.cache);
+		}
+		else{this.cache.load(root);}
+		System.out.println("Model have been reloaded into the cache...");
 	}
 	
-	int links = 0;int count = 0, newOne = 0;
-	protected void readRoot() throws Exception{
+	
+	
+	/*int links = 0;int count = 0, newOne = 0;
+	protected void readRoot(File file) throws Exception{
+		if(file==null)throw new Exception("Null file is invalid");
+		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document document = db.parse(this.resource.getFile());
+		Document document = db.parse(file);
 		NodeList list = document.getElementsByTagName(OG_XMLFile.ROOT);
 		
 		if(list==null||list.getLength()!=1)
-			throw new Exception("Invalid Structure: exactly 1 <root> is required in XML file: "+this.resource.getFile().getAbsolutePath());
+			throw new Exception("Invalid Structure: exactly 1 <root> is required in XML file: "+file.getAbsolutePath());
 		
 		this.root = (Element) list.item(0);
-		System.out.println("XML Resource \""+this.resource.getFile().getAbsolutePath()+"\" has been imported into JDOM...");
+		System.out.println("XML Resource \""+file.getAbsolutePath()+"\" has been imported into JDOM...");
 	}
-	protected boolean analysis(){
+	protected boolean analysis(File file){
 		if(this.root==null)return false;
 		this.count = 0; this.newOne = 0;
 		
@@ -114,7 +157,7 @@ public class XMLFileReader implements OGResourceReader{
 			}
 		}
 		System.out.println(count+" elements are processed and "+this.newOne+
-				" objects are created from file: "+this.resource.getFile().getAbsolutePath());
+				" objects are created from file: "+file.getAbsolutePath());
 		return res;
 	}
 	protected boolean updateReference(){
@@ -284,7 +327,6 @@ public class XMLFileReader implements OGResourceReader{
 		
 		return true;
 	}
-	
 	protected LClassObject getCompatibleGroup(LClass type,String id,IObjectWorld context) throws Exception{
 		if(type==null||id==null||context==null)throw new Exception("Null type|id|cache is invalid");
 		
@@ -305,6 +347,19 @@ public class XMLFileReader implements OGResourceReader{
 			queue.addAll(type.getSubClasses());
 		}
 		return null;
+	}*/
+	
+	protected String getTypeName(LClass type){
+		String type_name = type.getAbsolutePath();
+		int k = type_name.indexOf(".");
+		if(k>=0)type_name = type_name.substring(k+1).trim();
+		else type_name = type_name.trim();
+		
+		return type_name;
 	}
-
+	protected String getFileName(LClass type){
+		String type_name = this.getTypeName(type);
+		if(type_name==null)return null;
+		return type_name.replaceAll("\\.", "_");
+	}
 }

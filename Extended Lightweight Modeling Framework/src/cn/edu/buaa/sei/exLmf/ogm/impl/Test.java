@@ -40,7 +40,33 @@ public class Test {
 			e.printStackTrace();
 		}*/
 		
-		readTest();
+		test2();
+	}
+	
+	public static void test2(){
+		XMLDBReader reader = new XMLDBReader();
+		try {
+			reader.setResource(new OG_DirectoryImpl(new File("data")));
+			reader.read();
+			System.out.println("Reading Complete!!!");
+			IObjectWorld cache = reader.getCache();
+			
+			
+			Map<LClass,IObjectGroup> groups = cache.getGroups();
+			Set<LClass> types = groups.keySet();
+			for(LClass type:types){
+				IObjectGroup group = cache.getObjectGroup(type);
+				System.out.println("****************** "+type.getAbsolutePath()+" *********************");
+				Set<LClassObject> objs = group.getObjects();
+				for(LClassObject obj:objs){
+					System.out.println("========================== "+obj.hashCode()+" =============================");
+					System.out.println(printLClassObject(obj));
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void readTest(){
@@ -73,7 +99,7 @@ public class Test {
 				}
 			}
 			
-			OGResourceWriter writer = new XMLFileWriter(cache);
+			OGResourceWriter writer = new XMLDBWriter(cache);
 			writer.setResource(new OG_DirectoryImpl(new File("data")));
 			writer.write();
 			System.out.println("Writting Successfully!");

@@ -73,6 +73,11 @@ public class ObjectWorld implements IObjectWorld{
 
 	@Override
 	public LPackage getModelSpace() {return this.model;}
+	public void load(LPackage model)throws Exception{
+		if(model==null)throw new Exception("Null model is invalid");
+		this.clearModelSpace();
+		this.loadModelSpace(model);
+	}
 	
 	@Override
 	public LClass getModelClass(String path) throws Exception {

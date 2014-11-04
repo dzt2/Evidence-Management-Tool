@@ -28,6 +28,7 @@ public interface LClass extends LClassifier{
 	public void removeSuperType(LClass type) throws Exception;
 	public Boolean isSuperOf(LClass type);
 	public Boolean isSubOf(LClass type);
+	public List<LClass> getSubClasses();
 	
 	public Boolean isAbstract();
 	public Boolean isFinal();

@@ -13,6 +13,7 @@ public interface IObjectWorld {
 	public LClass getModelClass(String path) throws Exception;
 	public boolean containModelClass(LClass type);
 	public boolean containModelClass(String path);
+	public void load(LPackage model) throws Exception;
 	
 	public IObjectGroup getObjectGroup(String path) throws Exception;
 	public IObjectGroup getObjectGroup(LClass type) throws Exception;
