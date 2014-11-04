@@ -44,15 +44,15 @@ public class Test {
 		final JMenuItem item3 = new JMenuItem(); item3.setText("substract");
 		final JMenu sub = new JMenu("Add");
 		sub.add(item1); sub.add(item3);
-		
+		final JPopupMenu menu = new JPopupMenu();
+		menu.add(sub); menu.add(item2);
 		
 		pan.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton()==MouseEvent.BUTTON3){
 					System.out.println("["+e.getX()+","+e.getY()+"]");
-					JPopupMenu menu = new JPopupMenu();
-					menu.add(sub); menu.add(item2);
+					
 					menu.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
