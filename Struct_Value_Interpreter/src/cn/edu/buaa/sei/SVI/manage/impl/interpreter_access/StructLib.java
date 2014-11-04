@@ -22,11 +22,11 @@ public class StructLib implements StructClassLib{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public synchronized Set<Class> getLoadedStructClasses() {return this.types;}
+	public Set<Class> getLoadedStructClasses() {return this.types;}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public synchronized boolean isLoaded(Class stype) {
+	public boolean isLoaded(Class stype) {
 		if(stype==null)return false;
 		
 		this.queue.clear();this.queue.add(stype);
@@ -49,7 +49,7 @@ public class StructLib implements StructClassLib{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public synchronized void load(Class stype) throws Exception {
+	public void load(Class stype) throws Exception {
 		if(stype==null)throw new Exception("Null type is invalid");
 		this.types.add(stype);
 	}

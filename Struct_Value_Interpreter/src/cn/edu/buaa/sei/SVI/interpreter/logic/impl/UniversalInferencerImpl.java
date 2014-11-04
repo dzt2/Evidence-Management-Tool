@@ -51,6 +51,7 @@ public class UniversalInferencerImpl implements UniversalInferencer{
 		Inferencer inferencer = (Inferencer) RegisterMachine.getRegister().get(scope);
 		
 		Set set = (Set) reader.interpret(domain);
+		//System.out.println("######DOMAIN: "+set.size());
 		if(set==null)return null;
 		
 		boolean containNull = false;

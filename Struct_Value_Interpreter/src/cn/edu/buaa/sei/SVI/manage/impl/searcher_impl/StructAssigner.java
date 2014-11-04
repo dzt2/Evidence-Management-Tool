@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.manage.impl.searcher_impl;
 
+import java.util.Map;
 import java.util.Set;
 
 import cn.edu.buaa.sei.SVI.manage.IStructAssigner;
@@ -44,6 +45,11 @@ public class StructAssigner implements IStructAssigner{
 			variable.assign(val);
 			variable.assign(ov);
 		} catch (Exception e) {
+			try {
+				variable.assign(ov);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			flag = false;
 			
 		}
@@ -175,6 +181,52 @@ public class StructAssigner implements IStructAssigner{
 			System.err.println("Search failed");
 			return false;
 		}
+	}
+
+	
+	@Override
+	public boolean assignMap(Struct base, Map<String, Object> vmap){
+		if(base==null||vmap==null){
+			System.err.println("Error happened: Null base|Map");
+			return false;
+		}
+		
+		Set<String> names = vmap.keySet();
+		boolean res = true;
+		for(String name:names){
+			Object val = vmap.get(name);
+			
+			try {
+				Variable var = this.searcher.getVariableByName(base, name, 0);
+				if(var!=null){
+					var.assign(val);
+				}
+				else if(val!=null&&(val instanceof FunctionBody)){
+					Function func = this.searcher.getFunctionByName(base, name, 0);
+					func.setBody((FunctionBody) val);
+				}
+				else{
+					System.err.println("No appliable variable|function for name: "+name);
+					res = false; continue;
+				}
+			} catch (Exception e) {
+				try {
+					if(val!=null&&(val instanceof FunctionBody)){
+						Function func = this.searcher.getFunctionByName(base, name, 0);
+						func.setBody((FunctionBody) val);
+					}
+					else{
+						System.err.println("No appliable variable|function for name: "+name);
+						res = false; continue;
+					}
+				} catch (Exception e1) {
+					System.err.println("Assignment failed for name: "+name);
+					res=false; continue;
+				}
+			}
+		}
+		
+		return res;
 	}
 	
 }

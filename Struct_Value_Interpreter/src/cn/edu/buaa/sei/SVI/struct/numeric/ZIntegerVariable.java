@@ -14,4 +14,8 @@ public interface ZIntegerVariable extends NumericVariable{
 	 * Write the value to the bindable space.
 	 * */
 	public void assign(Long val) throws Exception;
+	/**
+	 * Translate the number {int/double/float} to long by using longValue()
+	 * */
+	public void assign(Number val) throws Exception;
 }

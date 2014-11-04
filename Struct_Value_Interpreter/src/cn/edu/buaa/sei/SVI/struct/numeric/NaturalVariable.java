@@ -14,4 +14,8 @@ public interface NaturalVariable extends NumericVariable{
 	 * @exception Exception val<0
 	 * */
 	public void assign(Long val) throws Exception;
+	/**
+	 * Translate the number {int/double/float} to double by using longValue()
+	 * */
+	public void assign(Number val) throws Exception;
 }

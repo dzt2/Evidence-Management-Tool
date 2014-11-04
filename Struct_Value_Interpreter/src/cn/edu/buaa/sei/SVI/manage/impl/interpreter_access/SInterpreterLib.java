@@ -24,18 +24,18 @@ public class SInterpreterLib implements InterpreterClassLib{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Set<Class> getLoadedInterpreters() {return this.types;}
+	public synchronized Set<Class> getLoadedInterpreters() {return this.types;}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public boolean isLoaded(Class itype) {
+	public synchronized boolean isLoaded(Class itype) {
 		if(itype==null)return false;
 		else return this.types.contains(itype);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public void load(Class itype) throws Exception {
+	public synchronized void load(Class itype) throws Exception {
 		if(itype==null)throw new Exception("Null itype is invalid");
 		if(this.types.contains(itype))return;
 		
@@ -50,7 +50,7 @@ public class SInterpreterLib implements InterpreterClassLib{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Interpreter createInterpreter(Class itype) throws Exception {
+	public synchronized Interpreter createInterpreter(Class itype) throws Exception {
 		if(itype==null)throw new Exception("Null itype is invalid");
 		if(!this.types.contains(itype))
 			throw new Exception(itype.getCanonicalName()+" has not been loaded in the library");

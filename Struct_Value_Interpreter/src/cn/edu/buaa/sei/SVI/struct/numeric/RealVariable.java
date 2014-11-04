@@ -12,4 +12,8 @@ public interface RealVariable extends NumericVariable{
 	 * @exception Exception {TypedVariable} class cast failed.
 	 * */
 	public void assign(Double val) throws Exception;
+	/**
+	 * Translate the number {int/long/float} to double by using doubleValue()
+	 * */
+	public void assign(Number val) throws Exception;
 }

@@ -6,13 +6,18 @@ import cn.edu.buaa.sei.SVI.struct.numeric.NaturalVariable;
 public class NaturalVariableImpl extends TypedVariableImpl implements NaturalVariable{
 	
 	protected NaturalVariableImpl(String name) throws Exception {
-		super(name, Long.class);
+		super(name, Number.class);
 	}
 
 	@Override
 	public void assign(Number val) throws Exception {
 		if(val==null)this.val=null;
-		else if(val instanceof Integer){
+		else{
+			long t = val.longValue();
+			if(t<0)throw new Exception("Invalid Natural Number: "+val);
+			this.val = t;
+		}
+		/*else if(val instanceof Integer){
 			int x = (Integer) val;
 			long y = x;
 			this.assign(y);
@@ -22,7 +27,7 @@ public class NaturalVariableImpl extends TypedVariableImpl implements NaturalVar
 		else{
 			Long t = (Long) val;
 			this.assign(t);
-		}
+		}*/
 	}
 
 	@Override
@@ -34,7 +39,10 @@ public class NaturalVariableImpl extends TypedVariableImpl implements NaturalVar
 	@Override
 	public Long read() throws Exception{
 		if(this.val==null)return null;
-		else return (Long) this.val;
+		else{
+			Number val = (Number) this.val;
+			return val.longValue();
+		}
 	}
 
 }

@@ -32,7 +32,6 @@ public class RegisterMachine implements InterpreterRegisterMachine{
 		try {
 			rm.loadRegisterMap(resource, false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Library loading complete...");
@@ -61,7 +60,7 @@ public class RegisterMachine implements InterpreterRegisterMachine{
 			try{
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document doc = builder.parse(((SVIStream) resource).getInputStream());
-				root = (Element) doc.getChildNodes().item(0);
+				root = (Element) doc.getElementsByTagName(XMLROOT).item(0);
 			}
 			catch(Exception ex){
 				System.err.println(ex.getMessage());

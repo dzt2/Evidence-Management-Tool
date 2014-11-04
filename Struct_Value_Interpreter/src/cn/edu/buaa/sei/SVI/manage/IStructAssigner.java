@@ -1,5 +1,7 @@
 package cn.edu.buaa.sei.SVI.manage;
 
+import java.util.Map;
+
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.function.Function;
 import cn.edu.buaa.sei.SVI.struct.core.function.FunctionBody;
@@ -23,4 +25,5 @@ public interface IStructAssigner {
 	public Function getFunctionByName(Struct base,String name,int seq);
 	public boolean assignFunction(Struct base,String name,int seq,FunctionBody body);
 	
+	public boolean assignMap(Struct base,Map<String,Object> vmap);
 }

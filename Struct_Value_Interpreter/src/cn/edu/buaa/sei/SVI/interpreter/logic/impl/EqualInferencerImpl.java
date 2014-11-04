@@ -54,6 +54,7 @@ public class EqualInferencerImpl implements EqualInferencer{
 		
 		if(a==null||b==null)return null;
 		
+		//System.out.println("###Compare: ["+a+","+b+"]");
 		int r = NumberComparator.compare(a, b);
 		if(r==0)return true;
 		else return false;

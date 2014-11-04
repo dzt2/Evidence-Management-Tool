@@ -5,12 +5,16 @@ import cn.edu.buaa.sei.SVI.struct.numeric.RealVariable;
 
 public class RealVariableImpl extends TypedVariableImpl implements RealVariable{
 
-	protected RealVariableImpl(String name) throws Exception {super(name, Double.class);}
+	protected RealVariableImpl(String name) throws Exception {super(name, Number.class);}
 
 	@Override
 	public void assign(Number val) throws Exception {
 		if(val==null)this.val=null;
-		else if(val instanceof Float){
+		else{
+			double t = val.doubleValue();
+			this.val = t;
+		}
+		/*else if(val instanceof Float){
 			float x = (Float) val;
 			Double y = (double) x;
 			this.assign(y);
@@ -26,7 +30,7 @@ public class RealVariableImpl extends TypedVariableImpl implements RealVariable{
 			this.assign(y);
 		}
 		else if(val instanceof Double)this.val=val;
-		else throw new Exception("Double value required");
+		else throw new Exception("Double value required");*/
 	}
 
 	@Override
@@ -37,7 +41,10 @@ public class RealVariableImpl extends TypedVariableImpl implements RealVariable{
 	@Override
 	public Double read() throws Exception {
 		if(val==null)return null;
-		else return (Double) this.val;
+		else{
+			Number val = (Number) this.val;
+			return val.doubleValue();
+		}
 	}
 	
 }

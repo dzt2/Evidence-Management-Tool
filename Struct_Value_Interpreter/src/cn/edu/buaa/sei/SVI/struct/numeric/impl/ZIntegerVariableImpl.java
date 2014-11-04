@@ -5,12 +5,16 @@ import cn.edu.buaa.sei.SVI.struct.numeric.ZIntegerVariable;
 
 public class ZIntegerVariableImpl extends TypedVariableImpl implements ZIntegerVariable{
 
-	protected ZIntegerVariableImpl(String name) throws Exception {super(name, Long.class);}
+	protected ZIntegerVariableImpl(String name) throws Exception {super(name, Number.class);}
 
 	@Override
 	public void assign(Number val) throws Exception {
 		if(val==null)this.val=null;
-		else if(val instanceof Integer){
+		else{
+			long t = val.longValue();
+			this.val = t;
+		}
+		/*else if(val instanceof Integer){
 			int x = (Integer) val;
 			long y = x;
 			this.assign(y);
@@ -20,7 +24,7 @@ public class ZIntegerVariableImpl extends TypedVariableImpl implements ZIntegerV
 		else{
 			Long t = (Long) val;
 			this.assign(t);
-		}
+		}*/
 	}
 
 	@Override
@@ -31,7 +35,10 @@ public class ZIntegerVariableImpl extends TypedVariableImpl implements ZIntegerV
 	@Override
 	public Long read() throws Exception {
 		if(this.val==null)return null;
-		else return (Long) this.val;
+		else{
+			Number val = (Number) this.val;
+			return val.longValue();
+		}
 	}
 
 }
