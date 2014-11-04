@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeModel;
 
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
@@ -34,10 +35,11 @@ public abstract class VariableTreeNode extends SVITreeNode{
 				else node.setIcon(node.getIcon());
 			}});
 		
+		final DefaultTreeModel model = (DefaultTreeModel) this.tree.getModel();
 		item1.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				model.removeNodeFromParent(node);
 			}
 		});
 	}

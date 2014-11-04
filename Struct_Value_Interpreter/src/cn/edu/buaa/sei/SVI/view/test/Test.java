@@ -23,8 +23,22 @@ public class Test {
 	public static void main(String[] args) {
 		MH();
 		//testTreeAppend();
-		testJMenu();
+		//testJMenu();
 		//testTreeIcon();
+		//testJMenu2();
+	}
+	
+	public static void testJMenu2(){
+		JMenu item0 = new JMenu("create");
+		JMenuItem item1 = new JMenuItem("remove");
+		JMenuItem item2 = new JMenuItem("validate");
+		
+		JPopupMenu menu = new JPopupMenu();
+		menu.add(item0);menu.add(item1);menu.add(item2);
+		
+		System.out.println(menu.getComponent(0).hashCode()+": "+item0.hashCode());
+		System.out.println(menu.getComponent(1).hashCode()+": "+item1.hashCode());
+		System.out.println(menu.getComponent(2).hashCode()+": "+item2.hashCode());
 	}
 	
 	@SuppressWarnings("static-access")
@@ -85,8 +99,11 @@ public class Test {
 		node.add(top); top.add(op); op.add(domain); op.add(scope); 
 		domain.add(iter); scope.add(template); template.add(ref);
 		
+		
 		final JTree tree = new JTree(node);
 		final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+		
+		System.out.println(tree.getComponent(0).hashCode()+": "+node.hashCode());
 		
 		tree.addMouseListener(new MouseListener(){
 			@Override
@@ -131,6 +148,8 @@ public class Test {
 		
 		node.add(top); top.add(op); op.add(domain); op.add(scope); 
 		domain.add(iter); scope.add(template); template.add(ref);
+		
+		System.out.println(node.getUserObject()+": "+node.getChildAt(0).toString());
 		
 		final JTree tree = new JTree(node);
 		final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();

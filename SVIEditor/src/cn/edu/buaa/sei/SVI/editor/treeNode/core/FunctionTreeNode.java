@@ -19,7 +19,7 @@ public abstract class FunctionTreeNode extends SVITreeNode{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	final JPopupMenu menu = new JPopupMenu();
+	protected final JPopupMenu menu = new JPopupMenu();
 
 	public FunctionTreeNode(JTree tree,String name, ImageIcon icon) {
 		super(tree,name, icon);
