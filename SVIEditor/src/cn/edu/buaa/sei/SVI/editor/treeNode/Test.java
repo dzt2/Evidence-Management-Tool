@@ -4,16 +4,13 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
-
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.StructRootTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.AddTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NaturalVariableTreeNode;
@@ -23,6 +20,43 @@ import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.ZIntVariableTreeNode;
 public class Test {
 
 	public static void main(String[] args) {
+		
+		testWindow();
+		/*JPanel cp = new JPanel();
+		cp.add(new JButton("LOW1"));
+		cp.add(new JButton("LOW2"));
+		
+		JPanel sp = new JPanel();
+		sp.add(new JButton("UP1"));
+		sp.add(new JButton("UP2"));
+		sp.add(new JButton("UP3"));
+		sp.add(new JScrollBar());*/
+		
+		
+		/*JPanel pan = new JPanel();
+		pan.setLayout(new BorderLayout());
+		pan.add(BorderLayout.CENTER,sp);
+		pan.add(BorderLayout.SOUTH,cp);*/
+		
+		/*JFrame f = new JFrame();
+		f.setSize(300, 300);
+		f.setLayout(new BorderLayout());
+		f.add(BorderLayout.CENTER,sp);
+		f.add(BorderLayout.SOUTH,cp);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+	}
+	
+	@SuppressWarnings("static-access")
+	public static void MH(){
+		try {
+			BeautyEyeLNFHelper.launchBeautyEyeLNF();
+			BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.frameBorderStyle.translucencyAppleLike;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void testWindow(){
 		MH();
 		/***/
 		StructRootTreeNode root = new StructRootTreeNode(null,"root");
@@ -72,42 +106,6 @@ public class Test {
 		f.add(new JScrollPane(tree));
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		/***/
-		/*JPanel pan = new JPanel();
-		pan.setLayout(new BorderLayout());
-		JScrollPane up = new JScrollPane();
-		up.add(tree); 
-		pan.add(BorderLayout.CENTER,up);
-		
-		JButton ok = new JButton("Select");
-		JPanel down = new JPanel();
-		down.setLayout(new FlowLayout());
-		down.add(ok);down.add(new JButton("cancel"));
-		pan.add(BorderLayout.SOUTH,down);
-		
-		final JFrame f = new JFrame();
-		f.setSize(300, 300);
-		f.add(pan);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		pan.repaint();
-		ok.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				f.dispose();
-			}});*/
-	}
-	
-	@SuppressWarnings("static-access")
-	public static void MH(){
-		try {
-			BeautyEyeLNFHelper.launchBeautyEyeLNF();
-			BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.frameBorderStyle.translucencyAppleLike;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	static class MyCellRenderer extends DefaultTreeCellRenderer{

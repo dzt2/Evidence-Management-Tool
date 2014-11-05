@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.SVI.editor.action.core;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,8 +36,12 @@ public class SVIEditorReferAction extends SVIEditorAction{
 		
 		JPanel pan = new JPanel();
 		pan.setLayout(new GridLayout(2,1));
-		JScrollPane up = new JScrollPane();
-		up.add(tree); pan.add(up);
+		JPanel up = new JPanel();
+		up.setLayout(new BorderLayout());
+		up.add(BorderLayout.CENTER,tree); 
+		up.add(BorderLayout.EAST,new JScrollPane());
+		up.add(BorderLayout.SOUTH,new JScrollPane());
+		pan.add(up);
 		
 		JButton ok = new JButton("Select");
 		pan.add(ok);
@@ -45,7 +50,7 @@ public class SVIEditorReferAction extends SVIEditorAction{
 		frame.add(pan);
 		frame.setSize(300, 300);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		final ReferencerTreeNode rnode = (ReferencerTreeNode) node;
 		
@@ -64,6 +69,7 @@ public class SVIEditorReferAction extends SVIEditorAction{
 				
 				if(selected instanceof VariableTreeNode){
 					rnode.setRefer((VariableTreeNode) selected);
+					System.out.println("Refer to: "+selected.getUserObject().toString());
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Selected one is not variable: #"+node.getUserObject().toString(),
