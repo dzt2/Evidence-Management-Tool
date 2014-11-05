@@ -35,6 +35,7 @@ public class Test {
 		
 		JPopupMenu menu = new JPopupMenu();
 		menu.add(item0);menu.add(item1);menu.add(item2);
+		item0.add(item0);
 		
 		System.out.println(menu.getComponent(0).hashCode()+": "+item0.hashCode());
 		System.out.println(menu.getComponent(1).hashCode()+": "+item1.hashCode());
