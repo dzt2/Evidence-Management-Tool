@@ -5,10 +5,19 @@ import cn.edu.buaa.sei.SVI.editor.action.SVIEditorAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 
-public class SVIEditorValidateAction implements SVIEditorAction{
+public class SVIEditorValidateAction extends SVIEditorAction{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public SVIEditorValidateAction(SVITreeNode node) {
+		super(node);
+	}
 
 	@Override
-	public void run(SVITreeNode node) throws Exception {
+	public void act() throws Exception {
 		if(node==null)throw new Exception("Null node is invalid");
 		if(node.validate()){
 			SVITreeNode p = node;

@@ -5,22 +5,21 @@ import javax.swing.JTree;
 import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorCreateAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.DefaultNodeNames;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
-import cn.edu.buaa.sei.SVI.editor.treeNode.core.BooleanVariableTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.core.DoubleVariableTreeNode;
 
-public class CreateBooleanVariable extends SVIEditorCreateAction{
+public class CreateDoubleVariable extends SVIEditorCreateAction{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CreateBooleanVariable(SVITreeNode node) {
+	public CreateDoubleVariable(SVITreeNode node) {
 		super(node);
 	}
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new BooleanVariableTreeNode(tree,DefaultNodeNames.BOOL_VAR);
+		return new DoubleVariableTreeNode(tree,DefaultNodeNames.DOUBLE_VAR);
 	}
-
 }

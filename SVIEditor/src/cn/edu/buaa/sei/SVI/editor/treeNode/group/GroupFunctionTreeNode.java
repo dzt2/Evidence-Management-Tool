@@ -28,7 +28,7 @@ public class GroupFunctionTreeNode extends FunctionTreeNode{
 
 	@Override
 	public boolean validate() {
-		if(this.getChildCount()==1&&(this.getChildAt(0) instanceof GoupTemplateTreeNode)){
+		if(this.getChildCount()==1&&(this.getChildAt(0) instanceof GroupTemplateTreeNode)){
 			SVITreeNode node = (SVITreeNode) this.getChildAt(0);
 			return node.validate();
 		}
