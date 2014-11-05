@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
@@ -29,10 +30,30 @@ public abstract class VariableTreeNode extends SVITreeNode{
 		item2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!node.validate()){
-					node.setIcon(IconSet.ERROR_ICON);
+				if(node.validate()){
+					SVITreeNode p = node;
+					SVITreeNode root = (SVITreeNode) node.getRoot();
+					while(p!=null){
+						p.recover();
+						if(p==root)break;
+						p = (SVITreeNode) p.getParent();
+					}
+					JOptionPane.showMessageDialog(null, "Validation Passed at: #"+node.getUserObject().toString(),
+							"Validation", JOptionPane.INFORMATION_MESSAGE);
 				}
-				else node.setIcon(node.getIcon());
+				else{
+					SVITreeNode p = node;
+					SVITreeNode root = (SVITreeNode) node.getRoot();
+					while(p!=null){
+						p.back();
+						p.setIcon(IconSet.ERROR_ICON);
+						if(p==root)break;
+						p = (SVITreeNode) p.getParent();
+					}
+					JOptionPane.showMessageDialog(null, "Validation Failed at: #"+node.getUserObject().toString(),
+							"Validation", JOptionPane.ERROR_MESSAGE); 
+				}
+				node.getTree().repaint();
 			}});
 		
 		final DefaultTreeModel model = (DefaultTreeModel) this.tree.getModel();

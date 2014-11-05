@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 
@@ -24,10 +25,30 @@ public class StructRootTreeNode extends SVITreeNode{
 		item2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!node.validate()){
-					node.setIcon(IconSet.ERROR_ICON);
+				if(node.validate()){
+					SVITreeNode p = node;
+					SVITreeNode root = (SVITreeNode) node.getRoot();
+					while(p!=null){
+						p.recover();
+						if(p==root)break;
+						p = (SVITreeNode) p.getParent();
+					}
+					JOptionPane.showMessageDialog(null, "Validation Passed at: #"+node.getUserObject().toString(),
+							"Validation", JOptionPane.INFORMATION_MESSAGE);
 				}
-				else node.setIcon(node.getIcon());
+				else{
+					SVITreeNode p = node;
+					SVITreeNode root = (SVITreeNode) node.getRoot();
+					while(p!=null){
+						p.back();
+						p.setIcon(IconSet.ERROR_ICON);
+						if(p==root)break;
+						p = (SVITreeNode) p.getParent();
+					}
+					JOptionPane.showMessageDialog(null, "Validation Failed at: #"+node.getUserObject().toString(),
+							"Validation", JOptionPane.ERROR_MESSAGE); 
+				}
+				node.getTree().repaint();
 			}});
 		
 		JMenu i00 = new JMenu(); i00.setText("variable");
@@ -59,10 +80,12 @@ public class StructRootTreeNode extends SVITreeNode{
 		
 		i02.add(new JMenuItem("LogicFunction"));
 		i02.add(new JMenuItem("GroupFunction"));
-		i02.add(new JMenuItem("NaturalFunction"));
+		i02.add(new JMenuItem("NumericFunction"));
+		/*
 		i02.add(new JMenuItem("ZIntegerFunction"));
 		i02.add(new JMenuItem("RationalFunction"));
 		i02.add(new JMenuItem("RealFunction"));
+		*/
 		i02.add(new JMenuItem("Filter"));
 		i02.add(new JMenuItem("Mapper"));
 		i02.add(new JMenuItem("TableMapper"));

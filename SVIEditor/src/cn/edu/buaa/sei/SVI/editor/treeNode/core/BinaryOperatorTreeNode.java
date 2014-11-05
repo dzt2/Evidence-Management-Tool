@@ -24,10 +24,12 @@ public abstract class BinaryOperatorTreeNode extends OperatorTreeNode{
 	
 	@Override
 	public boolean validate() {
-		if(this.getChildCount()==this.getChildCount()){
-			SVITreeNode left = (SVITreeNode) this.getChildAt(0);
-			SVITreeNode right = (SVITreeNode) this.getChildAt(1);
-			return left.validate()&&right.validate();
+		if(this.getChildCount()==2){
+			for(int i=0;i<this.getChildCount();i++){
+				SVITreeNode node = (SVITreeNode) this.getChildAt(i);
+				if(!node.validate())return false;
+			}
+			return true;
 		}
 		return false;
 	}

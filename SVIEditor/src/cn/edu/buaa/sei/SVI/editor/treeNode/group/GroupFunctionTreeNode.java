@@ -4,6 +4,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JTree;
 
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
+import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.FunctionTreeNode;
 
 public class GroupFunctionTreeNode extends FunctionTreeNode{
@@ -27,7 +28,11 @@ public class GroupFunctionTreeNode extends FunctionTreeNode{
 
 	@Override
 	public boolean validate() {
-		return this.getChildCount()==1&&(this.getChildAt(0) instanceof GoupTemplateTreeNode);
+		if(this.getChildCount()==1&&(this.getChildAt(0) instanceof GoupTemplateTreeNode)){
+			SVITreeNode node = (SVITreeNode) this.getChildAt(0);
+			return node.validate();
+		}
+		return false;
 	}
 
 }

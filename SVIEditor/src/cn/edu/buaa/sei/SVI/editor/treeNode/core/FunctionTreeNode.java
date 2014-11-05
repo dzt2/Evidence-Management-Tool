@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
@@ -38,11 +39,29 @@ public abstract class FunctionTreeNode extends SVITreeNode{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(node.validate()){
-					node.setIcon(node.getIcon());
+					SVITreeNode p = node;
+					SVITreeNode root = (SVITreeNode) node.getRoot();
+					while(p!=null){
+						p.recover();
+						if(p==root)break;
+						p = (SVITreeNode) p.getParent();
+					}
+					JOptionPane.showMessageDialog(null, "Validation Passed at: #"+node.getUserObject().toString(),
+							"Validation", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else{
-					node.setIcon(IconSet.ERROR_ICON);
+					SVITreeNode p = node;
+					SVITreeNode root = (SVITreeNode) node.getRoot();
+					while(p!=null){
+						p.back();
+						p.setIcon(IconSet.ERROR_ICON);
+						if(p==root)break;
+						p = (SVITreeNode) p.getParent();
+					}
+					JOptionPane.showMessageDialog(null, "Validation Failed at: #"+node.getUserObject().toString(),
+							"Validation", JOptionPane.ERROR_MESSAGE); 
 				}
+				node.getTree().repaint();
 			}});
 		
 		
