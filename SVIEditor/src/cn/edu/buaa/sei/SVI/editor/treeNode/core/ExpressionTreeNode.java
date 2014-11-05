@@ -56,6 +56,10 @@ public abstract class ExpressionTreeNode extends SVITreeNode{
 	}
 
 	@Override
+	public boolean validate(){
+		return (this.getChildCount()==1)&&(this.getChildAt(0) instanceof OperatorTreeNode);
+	}
+	@Override
 	public int requiredChildrenCount() {return 1;}
 
 	@Override
