@@ -15,7 +15,8 @@ public class CreateImplication extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateImplication(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("implication");
+		this.setText("Implication");
 	}
 
 	@Override

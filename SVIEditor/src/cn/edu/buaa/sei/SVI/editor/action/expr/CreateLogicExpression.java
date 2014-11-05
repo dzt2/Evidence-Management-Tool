@@ -16,6 +16,8 @@ public class CreateLogicExpression extends SVIEditorCreateAction{
 
 	public CreateLogicExpression(SVITreeNode node) {
 		super(node);
+		this.setName("logic expression");
+		this.setText("LogicExpression");
 	}
 
 	@Override

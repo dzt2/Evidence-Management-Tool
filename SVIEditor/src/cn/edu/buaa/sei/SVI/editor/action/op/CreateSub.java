@@ -15,7 +15,8 @@ public class CreateSub extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateSub(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("sub");
+		this.setText("Sub");
 	}
 
 	@Override

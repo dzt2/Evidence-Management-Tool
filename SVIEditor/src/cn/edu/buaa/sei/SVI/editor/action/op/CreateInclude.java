@@ -15,7 +15,8 @@ public class CreateInclude extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateInclude(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("include");
+		this.setText("Include");
 	}
 
 	@Override

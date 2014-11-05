@@ -15,7 +15,8 @@ public class CreateBooleanVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateBooleanVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("boolean");
+		this.setText("Boolean");
 	}
 
 	@Override

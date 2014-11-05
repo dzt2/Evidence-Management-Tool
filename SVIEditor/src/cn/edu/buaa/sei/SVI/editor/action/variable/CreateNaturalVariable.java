@@ -15,7 +15,8 @@ public class CreateNaturalVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateNaturalVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("natural");
+		this.setText("Natural");
 	}
 
 	@Override

@@ -1,16 +1,9 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
 import javax.swing.JMenuItem;
 import javax.swing.JTree;
-import javax.swing.tree.TreeNode;
 
+import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorReferAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 
 public class ReferencerTreeNode extends VariableTreeNode{
@@ -27,10 +20,10 @@ public class ReferencerTreeNode extends VariableTreeNode{
 	}
 	
 	public void regist(){
-		JMenuItem item = new JMenuItem("refer");
+		JMenuItem item = new SVIEditorReferAction(this);
 		this.menu.add(item);
 		
-		final VariableTreeNode node = this;
+		/*final VariableTreeNode node = this;
 		item.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -55,16 +48,17 @@ public class ReferencerTreeNode extends VariableTreeNode{
 				}
 				System.out.println("Extracting all related "+nodes.size()+" variables...");
 				
-				/**
+				*//**
 				 * Showing the options of Dialog...
-				 * */
+				 * *//*
 				
-			}});
+			}});*/
 	}
 
 	public void setRefer(VariableTreeNode ref_node){
 		this.ref_node = ref_node;
 	}
+	public VariableTreeNode getRefer(){return this.ref_node;}
 	@Override
 	public boolean validate() {
 		return ref_node!=null;

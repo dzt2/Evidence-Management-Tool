@@ -15,7 +15,8 @@ public class CreateIntegerVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateIntegerVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("int");
+		this.setText("Integer");
 	}
 
 	@Override

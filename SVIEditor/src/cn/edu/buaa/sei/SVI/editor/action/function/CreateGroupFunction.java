@@ -15,7 +15,8 @@ public class CreateGroupFunction extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateGroupFunction(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("group function");
+		this.setText("GroupFunction");
 	}
 
 	@Override

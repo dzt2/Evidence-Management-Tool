@@ -15,7 +15,8 @@ public class CreateLogicVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateLogicVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("logic");
+		this.setText("LogicVariable");
 	}
 
 	@Override

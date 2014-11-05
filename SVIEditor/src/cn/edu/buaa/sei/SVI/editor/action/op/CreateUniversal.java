@@ -15,7 +15,8 @@ public class CreateUniversal extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateUniversal(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("universal");
+		this.setText("Universal");
 	}
 
 	@Override

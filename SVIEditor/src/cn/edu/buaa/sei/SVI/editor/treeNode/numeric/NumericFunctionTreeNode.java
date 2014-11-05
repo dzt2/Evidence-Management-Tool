@@ -4,6 +4,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTree;
 
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateNaturalVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateRationalVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateRealVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateZIntVariable;
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.FunctionTreeNode;
@@ -22,10 +26,10 @@ public class NumericFunctionTreeNode extends FunctionTreeNode{
 	protected void regist(){
 		JMenu item0 = (JMenu) this.menu.getComponent(0);
 		
-		JMenuItem item01 = new JMenuItem("NaturalTemplate");
-		JMenuItem item02 = new JMenuItem("RationalTemplate");
-		JMenuItem item03 = new JMenuItem("ZIntegerTemplate");
-		JMenuItem item04 = new JMenuItem("RealTemplate");
+		JMenuItem item01 = new CreateNaturalVariable(this);
+		JMenuItem item02 = new CreateRationalVariable(this);
+		JMenuItem item03 = new CreateZIntVariable(this);
+		JMenuItem item04 = new CreateRealVariable(this);
 		
 		item0.add(item01);
 		item0.add(item02);

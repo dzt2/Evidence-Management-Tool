@@ -15,7 +15,8 @@ public class CreateZIntVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateZIntVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("ZInteger");
+		this.setText("ZInteger");
 	}
 
 	@Override

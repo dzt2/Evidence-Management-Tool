@@ -15,7 +15,8 @@ public class CreateFilter extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateFilter(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("filter");
+		this.setText("Filter");
 	}
 
 	@Override

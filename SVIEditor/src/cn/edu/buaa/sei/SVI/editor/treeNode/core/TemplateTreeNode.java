@@ -1,22 +1,35 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
+import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorRemoveAction;
+import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorValidateAction;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateBooleanVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateCharVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateDoubleVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateFloatVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateFreeVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateGroupVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateIntegerVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateListVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateLogicVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateLongVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateMapVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateNaturalVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateRationalVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateRealVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateReferVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateSetVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateStringVariable;
+import cn.edu.buaa.sei.SVI.editor.action.variable.CreateZIntVariable;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 
 public class TemplateTreeNode extends SVITreeNode{
-
 	/**
 	 * 
 	 */
@@ -26,34 +39,35 @@ public class TemplateTreeNode extends SVITreeNode{
 
 	public TemplateTreeNode(JTree tree, String name, ImageIcon icon) {
 		super(tree, name, icon);
+		this._init();
 	}
 	protected void _init(){
 		JMenu i00 = new JMenu("create");
-		JMenuItem item1 = new JMenuItem("remove");
-		JMenuItem item2 = new JMenuItem("validate");
+		JMenuItem item1 = new SVIEditorRemoveAction(this);
+		JMenuItem item2 = new SVIEditorValidateAction(this);
 		
 		menu.add(i00); menu.add(item1); menu.add(item2);
 		
-		i00.add(new JMenuItem("Boolean"));
-		i00.add(new JMenuItem("Integer"));
-		i00.add(new JMenuItem("Long"));
-		i00.add(new JMenuItem("Float"));
-		i00.add(new JMenuItem("Double"));
-		i00.add(new JMenuItem("Character"));
-		i00.add(new JMenuItem("String"));
-		i00.add(new JMenuItem("Free"));
-		i00.add(new JMenuItem("Reference"));
-		i00.add(new JMenuItem("List"));
-		i00.add(new JMenuItem("Set"));
-		i00.add(new JMenuItem("Map"));
-		i00.add(new JMenuItem("Logic"));
-		i00.add(new JMenuItem("Group"));
-		i00.add(new JMenuItem("Natural"));
-		i00.add(new JMenuItem("ZInteger"));
-		i00.add(new JMenuItem("Rational"));
-		i00.add(new JMenuItem("Real"));
+		i00.add(new CreateBooleanVariable(this));
+		i00.add(new CreateIntegerVariable(this));
+		i00.add(new CreateLongVariable(this));
+		i00.add(new CreateFloatVariable(this));
+		i00.add(new CreateDoubleVariable(this));
+		i00.add(new CreateCharVariable(this));
+		i00.add(new CreateStringVariable(this));
+		i00.add(new CreateFreeVariable(this));
+		i00.add(new CreateReferVariable(this));
+		i00.add(new CreateListVariable(this));
+		i00.add(new CreateMapVariable(this));
+		i00.add(new CreateSetVariable(this));
+		i00.add(new CreateLogicVariable(this));
+		i00.add(new CreateGroupVariable(this));
+		i00.add(new CreateNaturalVariable(this));
+		i00.add(new CreateZIntVariable(this));
+		i00.add(new CreateRationalVariable(this));
+		i00.add(new CreateRealVariable(this));
 		
-		final SVITreeNode node = this;
+		/*final SVITreeNode node = this;
 		item2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -89,7 +103,7 @@ public class TemplateTreeNode extends SVITreeNode{
 			public void actionPerformed(ActionEvent e) {
 				model.removeNodeFromParent(node);
 			}
-		});
+		});*/
 	}
 
 	@Override

@@ -16,6 +16,8 @@ public class CreateGroupExpression extends SVIEditorCreateAction{
 
 	public CreateGroupExpression(SVITreeNode node) {
 		super(node);
+		this.setName("group expression");
+		this.setText("GroupExpression");
 	}
 
 	@Override

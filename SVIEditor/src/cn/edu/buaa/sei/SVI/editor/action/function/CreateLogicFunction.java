@@ -16,6 +16,8 @@ public class CreateLogicFunction extends SVIEditorCreateAction{
 
 	public CreateLogicFunction(SVITreeNode node) {
 		super(node);
+		this.setName("logic function");
+		this.setText("LogicFunction");
 	}
 
 	@Override

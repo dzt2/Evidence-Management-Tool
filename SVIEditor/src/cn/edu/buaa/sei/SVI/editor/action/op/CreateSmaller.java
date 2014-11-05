@@ -15,7 +15,8 @@ public class CreateSmaller extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateSmaller(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("<");
+		this.setText("Smaller");
 	}
 
 	@Override

@@ -15,7 +15,8 @@ public class CreateReferVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateReferVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("referencer");
+		this.setText("Referencer");
 	}
 
 	@Override

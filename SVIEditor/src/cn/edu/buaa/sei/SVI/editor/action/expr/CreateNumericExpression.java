@@ -15,7 +15,8 @@ public class CreateNumericExpression extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateNumericExpression(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("numeric expression");
+		this.setText("NumericExpression");
 	}
 
 	@Override

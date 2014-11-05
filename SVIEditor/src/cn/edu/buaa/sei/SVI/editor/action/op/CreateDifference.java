@@ -16,6 +16,8 @@ public class CreateDifference extends SVIEditorCreateAction{
 
 	public CreateDifference(SVITreeNode node) {
 		super(node);
+		this.setName("difference");
+		this.setText("Difference");
 	}
 
 	@Override

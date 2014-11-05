@@ -16,6 +16,8 @@ public class CreateConjunction extends SVIEditorCreateAction{
 
 	public CreateConjunction(SVITreeNode node) {
 		super(node);
+		this.setName("conjunction");
+		this.setText("Conjunction");
 	}
 
 	@Override

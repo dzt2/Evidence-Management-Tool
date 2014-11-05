@@ -16,6 +16,8 @@ public class CreateTableMapper extends SVIEditorCreateAction{
 
 	public CreateTableMapper(SVITreeNode node) {
 		super(node);
+		this.setName("table mapper");
+		this.setText("TableMapper");
 	}
 
 	@Override

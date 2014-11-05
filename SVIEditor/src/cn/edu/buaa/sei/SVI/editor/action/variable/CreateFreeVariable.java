@@ -15,7 +15,8 @@ public class CreateFreeVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateFreeVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("free");
+		this.setText("Free");
 	}
 
 	@Override

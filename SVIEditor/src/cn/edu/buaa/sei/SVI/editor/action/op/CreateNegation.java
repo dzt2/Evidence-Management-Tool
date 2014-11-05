@@ -15,7 +15,8 @@ public class CreateNegation extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateNegation(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("negation");
+		this.setText("Negation");
 	}
 
 	@Override

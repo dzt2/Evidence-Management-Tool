@@ -16,6 +16,8 @@ public class CreateNumericFunction extends SVIEditorCreateAction{
 
 	public CreateNumericFunction(SVITreeNode node) {
 		super(node);
+		this.setName("numeric function");
+		this.setText("NumericFunction");
 	}
 
 	@Override

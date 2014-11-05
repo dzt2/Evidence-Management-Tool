@@ -1,12 +1,10 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.logic;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 
+import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorValidateAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 
@@ -23,10 +21,10 @@ public class LowerTreeNode extends SVITreeNode{
 		this.init();
 	}
 	protected void init(){
-		JMenuItem item = new JMenuItem("validate");
+		JMenuItem item = new SVIEditorValidateAction(this);
 		this.menu.add(item);
 		
-		final SVITreeNode node = this;
+		/*final SVITreeNode node = this;
 		item.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -36,7 +34,7 @@ public class LowerTreeNode extends SVITreeNode{
 				else{
 					node.setIcon(IconSet.ERROR_ICON);
 				}
-			}});
+			}});*/
 	}
 
 	@Override

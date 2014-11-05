@@ -5,23 +5,23 @@ import javax.swing.JTree;
 import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorCreateAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.DefaultNodeNames;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
-import cn.edu.buaa.sei.SVI.editor.treeNode.group.ComplementTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.DivTreeNode;
 
-public class CreateComplement extends SVIEditorCreateAction{
+public class CreateDiv extends SVIEditorCreateAction{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CreateComplement(SVITreeNode node) {
+	public CreateDiv(SVITreeNode node) {
 		super(node);
-		this.setName("complement");
-		this.setText("Complement");
+		this.setName("div");
+		this.setText("Div");
 	}
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new ComplementTreeNode(tree,DefaultNodeNames.COMPLEMENT);
+		return new DivTreeNode(tree,DefaultNodeNames.DIV);
 	}
 }

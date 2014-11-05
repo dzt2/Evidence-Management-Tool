@@ -15,7 +15,8 @@ public class CreateListVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateListVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("List");
+		this.setText("List");
 	}
 
 	@Override

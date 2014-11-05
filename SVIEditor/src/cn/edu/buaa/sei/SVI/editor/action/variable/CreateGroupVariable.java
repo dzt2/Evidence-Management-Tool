@@ -15,7 +15,8 @@ public class CreateGroupVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateGroupVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("group");
+		this.setText("Group");
 	}
 
 	@Override

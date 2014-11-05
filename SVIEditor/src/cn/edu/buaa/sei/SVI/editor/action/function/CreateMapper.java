@@ -16,6 +16,8 @@ public class CreateMapper extends SVIEditorCreateAction{
 
 	public CreateMapper(SVITreeNode node) {
 		super(node);
+		this.setName("mapper");
+		this.setText("Mapper");
 	}
 
 	@Override

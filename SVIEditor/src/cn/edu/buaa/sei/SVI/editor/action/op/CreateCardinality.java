@@ -16,6 +16,8 @@ public class CreateCardinality extends SVIEditorCreateAction{
 
 	public CreateCardinality(SVITreeNode node) {
 		super(node);
+		this.setName("cardinality");
+		this.setText("Cardinality");
 	}
 
 	@Override

@@ -15,7 +15,8 @@ public class CreateExistential extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateExistential(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("exist");
+		this.setText("Existential");
 	}
 
 	@Override

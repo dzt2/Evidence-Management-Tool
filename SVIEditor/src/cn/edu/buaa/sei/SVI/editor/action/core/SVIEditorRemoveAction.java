@@ -15,6 +15,8 @@ public class SVIEditorRemoveAction extends SVIEditorAction{
 
 	public SVIEditorRemoveAction(SVITreeNode node) {
 		super(node);
+		this.setText("remove");
+		this.setName("remove");
 	}
 
 	@Override

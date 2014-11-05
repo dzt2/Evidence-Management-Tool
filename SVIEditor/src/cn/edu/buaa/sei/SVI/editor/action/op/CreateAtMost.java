@@ -16,6 +16,8 @@ public class CreateAtMost extends SVIEditorCreateAction{
 
 	public CreateAtMost(SVITreeNode node) {
 		super(node);
+		this.setName("at most");
+		this.setText("AtMost");
 	}
 
 	@Override

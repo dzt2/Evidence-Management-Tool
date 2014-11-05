@@ -16,6 +16,8 @@ public class CreateBigger extends SVIEditorCreateAction{
 
 	public CreateBigger(SVITreeNode node) {
 		super(node);
+		this.setName("bigger");
+		this.setText("Bigger");
 	}
 
 	@Override

@@ -16,6 +16,8 @@ public class CreateBetween extends SVIEditorCreateAction{
 
 	public CreateBetween(SVITreeNode node) {
 		super(node);
+		this.setName("between");
+		this.setText("Between");
 	}
 
 	@Override

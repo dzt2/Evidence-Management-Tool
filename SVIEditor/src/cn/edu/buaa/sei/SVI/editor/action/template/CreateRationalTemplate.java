@@ -15,7 +15,8 @@ public class CreateRationalTemplate extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateRationalTemplate(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("rational template");
+		this.setText("RationalTemplate");
 	}
 
 	@Override

@@ -16,6 +16,8 @@ public class CreateAdd extends SVIEditorCreateAction{
 
 	public CreateAdd(SVITreeNode node) {
 		super(node);
+		this.setName("add");
+		this.setText("Add");
 	}
 
 	@Override

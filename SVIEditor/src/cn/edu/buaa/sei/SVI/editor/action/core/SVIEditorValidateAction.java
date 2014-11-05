@@ -14,6 +14,8 @@ public class SVIEditorValidateAction extends SVIEditorAction{
 
 	public SVIEditorValidateAction(SVITreeNode node) {
 		super(node);
+		this.setName("validate");
+		this.setText("validate");
 	}
 
 	@Override

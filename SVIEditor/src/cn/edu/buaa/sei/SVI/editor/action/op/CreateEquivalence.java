@@ -15,7 +15,8 @@ public class CreateEquivalence extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateEquivalence(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("equivalence");
+		this.setText("Equilvalence");
 	}
 
 	@Override

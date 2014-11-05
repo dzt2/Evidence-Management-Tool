@@ -16,6 +16,8 @@ public class CreateDisjunction extends SVIEditorCreateAction{
 
 	public CreateDisjunction(SVITreeNode node) {
 		super(node);
+		this.setName("disjunction");
+		this.setText("Disjunction");
 	}
 
 	@Override

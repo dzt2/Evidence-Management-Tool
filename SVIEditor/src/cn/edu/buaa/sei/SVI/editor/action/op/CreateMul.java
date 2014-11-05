@@ -15,7 +15,8 @@ public class CreateMul extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateMul(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("multiplication");
+		this.setText("Mul");
 	}
 
 	@Override

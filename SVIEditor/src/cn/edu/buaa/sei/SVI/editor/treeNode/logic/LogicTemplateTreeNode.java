@@ -12,7 +12,6 @@ public class LogicTemplateTreeNode extends TemplateTreeNode{
 
 	public LogicTemplateTreeNode(JTree tree, String name) {
 		super(tree, name, IconSet.LOGIC_TEMP_ICON);
-		// TODO Auto-generated constructor stub
 	}
 
 }

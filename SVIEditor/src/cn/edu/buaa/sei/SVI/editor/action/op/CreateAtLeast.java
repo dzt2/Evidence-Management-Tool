@@ -16,6 +16,8 @@ public class CreateAtLeast extends SVIEditorCreateAction{
 
 	public CreateAtLeast(SVITreeNode node) {
 		super(node);
+		this.setName("at least");
+		this.setText("AtLeast");
 	}
 
 	@Override

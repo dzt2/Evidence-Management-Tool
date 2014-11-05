@@ -15,7 +15,8 @@ public class CreateUnion extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateUnion(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("union");
+		this.setText("Union");
 	}
 
 	@Override

@@ -15,7 +15,8 @@ public class CreateMapVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateMapVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("Map");
+		this.setText("Map");
 	}
 
 	@Override

@@ -15,7 +15,8 @@ public class CreateEBigger extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateEBigger(SVITreeNode node) {
-		super(node);
+		super(node);this.setName(">=");
+		this.setText("EBigger");
 	}
 
 	@Override

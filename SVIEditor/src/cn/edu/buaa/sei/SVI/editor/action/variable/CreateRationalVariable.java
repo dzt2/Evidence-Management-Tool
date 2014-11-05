@@ -15,7 +15,8 @@ public class CreateRationalVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateRationalVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("rational");
+		this.setText("Rational");
 	}
 
 	@Override

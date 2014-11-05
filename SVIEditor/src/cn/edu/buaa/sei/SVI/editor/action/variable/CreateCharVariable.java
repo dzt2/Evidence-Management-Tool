@@ -15,7 +15,8 @@ public class CreateCharVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateCharVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("char");
+		this.setText("Char");
 	}
 
 	@Override

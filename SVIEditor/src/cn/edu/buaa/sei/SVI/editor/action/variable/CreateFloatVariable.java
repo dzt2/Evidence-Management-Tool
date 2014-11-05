@@ -15,7 +15,8 @@ public class CreateFloatVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateFloatVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("float");
+		this.setText("Float");
 	}
 
 	@Override

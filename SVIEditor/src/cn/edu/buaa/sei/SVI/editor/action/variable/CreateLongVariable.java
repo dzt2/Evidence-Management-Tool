@@ -15,7 +15,8 @@ public class CreateLongVariable extends SVIEditorCreateAction{
 	private static final long serialVersionUID = 1L;
 
 	public CreateLongVariable(SVITreeNode node) {
-		super(node);
+		super(node);this.setName("long");
+		this.setText("Long");
 	}
 
 	@Override

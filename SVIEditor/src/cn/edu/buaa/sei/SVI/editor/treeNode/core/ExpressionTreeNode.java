@@ -1,17 +1,13 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeModel;
 
-import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
+import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorRemoveAction;
+import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorValidateAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 
 public abstract class ExpressionTreeNode extends SVITreeNode{
@@ -29,12 +25,12 @@ public abstract class ExpressionTreeNode extends SVITreeNode{
 	}
 	protected void _init(){
 		JMenu item0 = new JMenu("create");
-		JMenuItem item1 = new JMenuItem("remove");
-		JMenuItem item2 = new JMenuItem("validate");
+		JMenuItem item1 = new SVIEditorRemoveAction(this);
+		JMenuItem item2 = new SVIEditorValidateAction(this);
 		
 		menu.add(item0); menu.add(item1); menu.add(item2);
 		
-		final SVITreeNode node = this;
+		/*final SVITreeNode node = this;
 		item2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -71,7 +67,7 @@ public abstract class ExpressionTreeNode extends SVITreeNode{
 			public void actionPerformed(ActionEvent e) {
 				model.removeNodeFromParent(node);
 			}
-		});
+		});*/
 	}
 
 	@Override

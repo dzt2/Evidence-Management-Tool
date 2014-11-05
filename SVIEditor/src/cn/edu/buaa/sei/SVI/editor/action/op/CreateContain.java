@@ -16,6 +16,8 @@ public class CreateContain extends SVIEditorCreateAction{
 
 	public CreateContain(SVITreeNode node) {
 		super(node);
+		this.setName("contain");
+		this.setText("Contain");
 	}
 
 	@Override

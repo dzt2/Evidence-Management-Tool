@@ -1,8 +1,8 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.group;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JTree;
 
+import cn.edu.buaa.sei.SVI.editor.action.template.CreateGroupTemplate;
 import cn.edu.buaa.sei.SVI.editor.treeNode.IconSet;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.FunctionTreeNode;
@@ -21,9 +21,7 @@ public class GroupFunctionTreeNode extends FunctionTreeNode{
 	protected void regist(){
 		JMenu item0 = (JMenu) this.menu.getComponent(0);
 		
-		JMenuItem item01 = new JMenuItem("GroupTemplate");
-		
-		item0.add(item01);
+		item0.add(new CreateGroupTemplate(this));
 	}
 
 	@Override
