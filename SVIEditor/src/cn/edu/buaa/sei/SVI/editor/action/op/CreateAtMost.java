@@ -22,6 +22,6 @@ public class CreateAtMost extends SVIEditorCreateAction{
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new AtMostTreeNode(tree,DefaultNodeNames.NUM_FUNC);
+		return new AtMostTreeNode(tree,DefaultNodeNames.ATMOST);
 	}
 }

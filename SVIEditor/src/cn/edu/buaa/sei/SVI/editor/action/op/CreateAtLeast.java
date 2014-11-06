@@ -22,6 +22,6 @@ public class CreateAtLeast extends SVIEditorCreateAction{
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new AtLeastTreeNode(tree,DefaultNodeNames.NUM_FUNC);
+		return new AtLeastTreeNode(tree,DefaultNodeNames.ATLEAST);
 	}
 }

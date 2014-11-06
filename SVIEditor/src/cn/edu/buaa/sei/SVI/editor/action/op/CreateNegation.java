@@ -21,7 +21,7 @@ public class CreateNegation extends SVIEditorCreateAction{
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new NegationTreeNode(tree,DefaultNodeNames.NUM_FUNC);
+		return new NegationTreeNode(tree,DefaultNodeNames.NEGATION);
 	}
 
 }

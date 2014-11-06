@@ -21,7 +21,7 @@ public interface IconSet {
 	public static final ImageIcon CHAR_VAR_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/char.gif"));
 	public static final ImageIcon STRING_VAR_ICON = new ImageIcon(
-			IconSet.class.getClassLoader().getResource("icons/char.gif"));
+			IconSet.class.getClassLoader().getResource("icons/string.gif"));
 	public static final ImageIcon FREE_VAR_ICON = new ImageIcon(
 			IconSet.class.getClassLoader().getResource("icons/box.gif"));
 	public static final ImageIcon LIST_VAR_ICON = new ImageIcon(

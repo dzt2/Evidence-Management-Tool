@@ -5,7 +5,7 @@ import javax.swing.JTree;
 import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorCreateAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.DefaultNodeNames;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
-import cn.edu.buaa.sei.SVI.editor.treeNode.core.BooleanVariableTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.core.FreeVariableTreeNode;
 
 public class CreateFreeVariable extends SVIEditorCreateAction{
 	
@@ -21,6 +21,6 @@ public class CreateFreeVariable extends SVIEditorCreateAction{
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new BooleanVariableTreeNode(tree,DefaultNodeNames.FREE_VAR);
+		return new FreeVariableTreeNode(tree,DefaultNodeNames.FREE_VAR);
 	}
 }

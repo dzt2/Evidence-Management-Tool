@@ -1,7 +1,5 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode;
 
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
@@ -9,7 +7,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.StructRootTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.AddTreeNode;
@@ -71,7 +68,7 @@ public class Test {
 		root.add(item1);
 		
 		//final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		tree.setCellRenderer(new MyCellRenderer());
+		tree.setCellRenderer(new SVICellRenderer());
 		
 		tree.addMouseListener(new MouseListener(){
 			@Override
@@ -108,10 +105,10 @@ public class Test {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	static class MyCellRenderer extends DefaultTreeCellRenderer{
-		/**
+	/*static class MyCellRenderer extends DefaultTreeCellRenderer{
+		*//**
 		 * 
-		 */
+		 *//*
 		private static final long serialVersionUID = 1L;
 
 		@Override  
@@ -133,15 +130,15 @@ public class Test {
 				SVITreeNode node = (SVITreeNode) value;
 				this.setIcon(node.getIcon());
 			}
-			/*DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 			
 			if(node.isLeaf()){this.setIcon(new ImageIcon("icons/variable.gif"));}
 			else if(node.isRoot()){this.setIcon(new ImageIcon("icons/expression.gif"));}
-			else{this.setIcon(new ImageIcon("icons/add.gif"));}*/
+			else{this.setIcon(new ImageIcon("icons/add.gif"));}
 	        return this;  
 	    }
 		
-	}
+	}*/
 
 	public static JTree test1(){
 		StructRootTreeNode root = new StructRootTreeNode(null,"root");
@@ -156,7 +153,7 @@ public class Test {
 		root.add(item1);
 		
 		//final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		tree.setCellRenderer(new MyCellRenderer());
+		tree.setCellRenderer(new SVICellRenderer());
 		
 		tree.addMouseListener(new MouseListener(){
 			@Override

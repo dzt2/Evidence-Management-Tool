@@ -5,7 +5,7 @@ import javax.swing.JTree;
 import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorCreateAction;
 import cn.edu.buaa.sei.SVI.editor.treeNode.DefaultNodeNames;
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
-import cn.edu.buaa.sei.SVI.editor.treeNode.core.LongVariableTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.core.FloatVariableTreeNode;
 
 public class CreateFloatVariable extends SVIEditorCreateAction{
 	
@@ -21,6 +21,6 @@ public class CreateFloatVariable extends SVIEditorCreateAction{
 
 	@Override
 	protected SVITreeNode create(JTree tree) {
-		return new LongVariableTreeNode(tree,DefaultNodeNames.FLOAT_VAR);
+		return new FloatVariableTreeNode(tree,DefaultNodeNames.FLOAT_VAR);
 	}
 }

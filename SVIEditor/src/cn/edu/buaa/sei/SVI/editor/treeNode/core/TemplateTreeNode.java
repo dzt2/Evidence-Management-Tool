@@ -42,11 +42,10 @@ public class TemplateTreeNode extends SVITreeNode{
 		this._init();
 	}
 	protected void _init(){
+		
 		JMenu i00 = new JMenu("create");
 		JMenuItem item1 = new SVIEditorRemoveAction(this);
 		JMenuItem item2 = new SVIEditorValidateAction(this);
-		
-		menu.add(i00); menu.add(item1); menu.add(item2);
 		
 		i00.add(new CreateBooleanVariable(this));
 		i00.add(new CreateIntegerVariable(this));
@@ -66,6 +65,8 @@ public class TemplateTreeNode extends SVITreeNode{
 		i00.add(new CreateZIntVariable(this));
 		i00.add(new CreateRationalVariable(this));
 		i00.add(new CreateRealVariable(this));
+		
+		menu.add(i00); menu.add(item1); menu.add(item2);
 		
 		/*final SVITreeNode node = this;
 		item2.addActionListener(new ActionListener(){
