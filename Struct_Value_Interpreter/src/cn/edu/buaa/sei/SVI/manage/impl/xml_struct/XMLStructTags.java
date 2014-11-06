@@ -31,6 +31,7 @@ public class XMLStructTags {
 	public static final String MAP_TYPE = "Map";
 	
 	public static final String FREE_TYPE = "free";
+	public static final String REF_TYPE = "refer";
 	
 	public static final String LOGIC_TYPE = "logic";
 	public static final String DISCOURSE_DOMAIN = "domain";

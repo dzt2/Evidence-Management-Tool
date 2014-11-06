@@ -13,4 +13,5 @@ public interface ReferenceVariable extends Variable{
 	 * Set to a new referring Variable.
 	 * */
 	public void refer(Variable variable);
+	public Variable getRefer();
 }

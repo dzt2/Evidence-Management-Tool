@@ -29,6 +29,7 @@ import cn.edu.buaa.sei.SVI.struct.core.extend.NumericStruct;
 import cn.edu.buaa.sei.SVI.struct.core.function.Function;
 import cn.edu.buaa.sei.SVI.struct.core.function.FunctionTemplate;
 import cn.edu.buaa.sei.SVI.struct.core.variable.FreeVariable;
+import cn.edu.buaa.sei.SVI.struct.core.variable.ReferenceVariable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.base.BooleanVariable;
 import cn.edu.buaa.sei.SVI.struct.core.variable.base.CharacterVariable;
@@ -179,6 +180,17 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 			ie.setAttribute(XMLStructTags.TYPE, XMLStructTags.FREE_TYPE);
 			this.tmap.put(itor, ie);
 		}
+		else if(variable instanceof ReferenceVariable){
+			if(((ReferenceVariable) variable).getRefer()!=null){
+				Element ref_elm = this.createElement(((ReferenceVariable) variable).getRefer());
+				if(ref_elm==null)throw new Exception("Element for refer is failed");
+				if(ref_elm.getAttribute(XMLStructTags.ID)==null){
+					ref_elm.setAttribute(XMLStructTags.ID, nextID());
+				}
+				String id = ref_elm.getAttribute(XMLStructTags.ID);
+				element.setTextContent(id);
+			}
+		}
 		
 		this.tmap.put(variable, element);
 		return element;
@@ -204,6 +216,7 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 		else if(var instanceof SetVariable){return XMLStructTags.SET_TYPE;}
 		else if(var instanceof MapVariable){return XMLStructTags.MAP_TYPE;}
 		else if(var instanceof FreeVariable){return XMLStructTags.FREE_TYPE;}
+		else if(var instanceof ReferenceVariable){return XMLStructTags.REF_TYPE;}
 		else throw new Exception("Unknown Variable Type: {"+var.getClass().getCanonicalName()+"}@"+var.getName());
 	}
 	protected Element createExpression(Expression expr) throws Exception{
@@ -384,14 +397,14 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 			}
 		}
 		else if(op instanceof MultipleOperator){
-			Struct[] operands = op.getChildrenStructs();
+			Struct[] operands = ((MultipleOperator) op).getOperands();
 			int n = ((MultipleOperator) op).getDimension();
 			for(int i=0;i<n;i++)
 				this.linkStruct(op, operands[i]);
 		}
 		else if(op instanceof FlexibleOperator){
-			Struct[] operands = op.getChildrenStructs();
-			int n = operands.length;
+			Struct[] operands = ((FlexibleOperator) op).getOperands();
+			int n = ((FlexibleOperator) op).getOperands().length;
 			for(int i=0;i<n;i++)
 				this.linkStruct(op, operands[i]);
 		}
@@ -623,6 +636,13 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 			else if(type.equals(XMLStructTags.LIST_TYPE)){result = VariableFactory.createList(name);}
 			else if(type.equals(XMLStructTags.SET_TYPE)){result = VariableFactory.createSet(name);}
 			else if(type.equals(XMLStructTags.MAP_TYPE)){result = VariableFactory.createMap(name);}
+			else if(type.equals(XMLStructTags.REF_TYPE)){
+				if(this.rmap.containsKey(id_elements.containsKey(e.getTextContent()))){
+					result = VariableFactory.createReference(name);
+					((ReferenceVariable)result).refer((Variable) this.rmap.get(e.getTextContent()));
+				}
+				else result = null;
+			}
 			else throw new Exception("Unknown type attribute: "+type);
 		}
 		else if(tag.equals(XMLStructTags.DISCOURSE_DOMAIN_ITER)){

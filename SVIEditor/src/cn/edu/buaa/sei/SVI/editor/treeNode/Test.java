@@ -1,18 +1,34 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+
+import cn.edu.buaa.sei.SVI.editor.translator.TreeNode2Struct;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.StructRootTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.AddTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NaturalVariableTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NumericExpressionTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.ZIntVariableTreeNode;
+import cn.edu.buaa.sei.SVI.manage.IStructPrinter;
+import cn.edu.buaa.sei.SVI.manage.StructManager;
+import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
+import cn.edu.buaa.sei.SVI.manage.impl.xml_struct.XMLStructPrinter;
 
 public class Test {
 
@@ -56,16 +72,17 @@ public class Test {
 	public static void testWindow(){
 		MH();
 		/***/
-		StructRootTreeNode root = new StructRootTreeNode(null,"root");
+		final StructRootTreeNode root = new StructRootTreeNode(null,"root");
 		final JTree tree = new JTree(root);root.setTree(tree);
+		System.out.println(tree.getComponent(0).hashCode()+":"+root.hashCode());
 		
-		NumericExpressionTreeNode item1 = new NumericExpressionTreeNode(tree,"expression");
+		/*NumericExpressionTreeNode item1 = new NumericExpressionTreeNode(tree,"expression");
 		AddTreeNode item11 = new AddTreeNode(tree,"addition");
 		NaturalVariableTreeNode item111 = new NaturalVariableTreeNode(tree,"x");
 		ZIntVariableTreeNode item112 = new ZIntVariableTreeNode(tree,"y");
 		item1.add(item11);
 		item11.add(item111); item11.add(item112);
-		root.add(item1);
+		root.add(item1);*/
 		
 		//final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
 		tree.setCellRenderer(new SVICellRenderer());
@@ -97,10 +114,43 @@ public class Test {
 		
 		tree.setEditable(true);
 		
+		JPanel pan = new JPanel();
+		pan.setLayout(new BorderLayout());
+		pan.add(BorderLayout.CENTER,tree);
+		pan.add(BorderLayout.EAST,new JScrollBar());
+		pan.add(BorderLayout.SOUTH,new JScrollBar(JScrollBar.HORIZONTAL));
+		
+		JButton save = new JButton("save");
+		JButton load = new JButton("load");
+		JPanel cp = new JPanel();
+		cp.add(save); cp.add(load);
+		
+		save.addActionListener(new ActionListener(){
+			TreeNode2Struct translator = new TreeNode2Struct();
+			IStructPrinter printer = new XMLStructPrinter();
+			SVIStream resource = new SVIStream();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					StructManager manager = translator.getFromRoot(root);
+					File file = new File("test.xml");
+					resource.setOutputStream(new FileOutputStream(file));
+					printer.setOutputStream(resource);
+					printer.write(manager);
+					System.out.println("Writting file: "+file.getAbsolutePath());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					//JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE); 
+				}
+			}});
+		
+		
 		/***/
 		JFrame f = new JFrame();
 		f.setSize(300, 300);
-		f.add(new JScrollPane(tree));
+		f.setLayout(new BorderLayout());
+		f.add(BorderLayout.CENTER,pan);
+		f.add(BorderLayout.SOUTH,cp);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

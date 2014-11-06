@@ -22,7 +22,18 @@ public class Test {
 
 	public static void main(String[] args) {
 		try {
-			test2();
+			SVIStream resource = new SVIStream();
+			resource.setInputStream(new FileInputStream(new File("data/a.s")));
+			IStructImporter importer = new XMLStructImporter();
+			importer.setInput(resource);
+			StructManager manager = importer.read();
+			
+			System.out.println(manager.getTopStructs().iterator().next().toString());
+			resource.setOutputStream(new FileOutputStream(new File("data/c.xml")));
+			IStructPrinter printer = new XMLStructPrinter();
+			printer.setOutputStream(resource);
+			printer.write(manager);
+			System.out.println("Writting complete...");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

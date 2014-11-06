@@ -32,5 +32,7 @@ public class ReferenceVariableImpl implements ReferenceVariable{
 	public void refer(Variable variable){
 		this.ref=variable;
 	}
+	@Override
+	public Variable getRefer(){return this.ref;}
 
 }
