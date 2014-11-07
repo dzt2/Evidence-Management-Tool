@@ -1,8 +1,13 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 
 import cn.edu.buaa.sei.SVI.editor.action.core.SVIEditorValidateAction;
 import cn.edu.buaa.sei.SVI.editor.action.expr.CreateGroupExpression;
@@ -145,4 +150,29 @@ public class StructRootTreeNode extends SVITreeNode{
 	@Override
 	public boolean isEditable() {return false;}
 
+	public void reset(StructRootTreeNode node) throws Exception{
+		if(node==null)throw new Exception("Null root is invalid");
+		if(this.tree==null)throw new Exception("Null tree: not ready for reset");
+		
+		DefaultTreeModel model = (DefaultTreeModel) this.getTree().getModel();
+		List<SVITreeNode> children = new ArrayList<SVITreeNode>();
+		for(int i=0;i<this.getChildCount();i++){
+			children.add((SVITreeNode) this.getChildAt(i));
+		}
+		System.out.println("Initialization complete...");
+		
+		for(int i=0;i<children.size();i++){
+			model.removeNodeFromParent(children.get(i));
+		}
+		children.clear();
+		System.out.println("Removing all original children...");
+		
+		for(int i=0;i<node.getChildCount();i++){
+			model.insertNodeInto((MutableTreeNode) node.getChildAt(i), this, this.getChildCount());
+		}
+		System.out.println("Adding all new nodes...");
+		
+		model.reload();
+		this.getTree().repaint();
+	}
 }

@@ -41,14 +41,19 @@ public class XMLStructImporter implements IStructImporter{
 		NodeList list = this.root.getChildNodes();
 		
 		StructManager manager = new StructManagerImpl();
+		this.translator.restart();
+		
 		for(int i=0;i<list.getLength();i++)
 			if(list.item(i) instanceof Element){
 				Element top = (Element) list.item(i);
-				this.translator.restart();
 				Struct result = this.translator.retranslate(top);
 				if(result==null)throw new Exception("Translation failed: <"+top.getTagName()+">");
-				
 				manager.putTopStruct(result);
+			}
+		
+		for(int i=0;i<list.getLength();i++)
+			if(list.item(i) instanceof Element){
+				this.translator.reupdate((Element) list.item(i));
 			}
 		
 		return manager;

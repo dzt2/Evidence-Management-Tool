@@ -116,6 +116,7 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 		this.linked_set.clear();
 		this.id_elements.clear();
 		this.rmap.clear();
+		this.ref_elms.clear();
 	}
 	@Override
 	public void restart() {
@@ -522,6 +523,7 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 	
 	Map<String,Element> id_elements = new HashMap<String,Element>();
 	Map<Element,Struct> rmap = new HashMap<Element,Struct>();
+	Set<Element> ref_elms = new HashSet<Element>();
 	
 	@Override
 	public Struct retranslate(Element top) throws Exception {
@@ -683,11 +685,8 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 			else if(type.equals(XMLStructTags.SET_TYPE)){result = VariableFactory.createSet(name);}
 			else if(type.equals(XMLStructTags.MAP_TYPE)){result = VariableFactory.createMap(name);}
 			else if(type.equals(XMLStructTags.REF_TYPE)){
-				if(this.rmap.containsKey(id_elements.containsKey(e.getTextContent()))){
-					result = VariableFactory.createReference(name);
-					((ReferenceVariable)result).refer((Variable) this.rmap.get(e.getTextContent()));
-				}
-				else result = null;
+				result = VariableFactory.createReference(name);
+				this.ref_elms.add(e);
 			}
 			else throw new Exception("Unknown type attribute: "+type);
 		}
@@ -1186,6 +1185,25 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 		
 		return function;
 	}
-	
+	@Override
+	public void reupdate(Element top) throws Exception{
+		if(top==null)throw new Exception("Null top is invalid");
+		
+		for(Element ref_elm:this.ref_elms){
+			ReferenceVariable var = (ReferenceVariable) this.generate(ref_elm);
+			String id = ref_elm.getTextContent();
+			System.out.println("Finding refer: "+id);
+			
+			if(id==null||id.trim().length()==0)continue;
+			
+			if(!this.id_elements.containsKey(id))throw new Exception("Undefined id cannot be refered: "+id);
+			Element re = this.id_elements.get(id);
+			Variable target = (Variable) this.generate(re);
+			if(target==null)throw new Exception("Generation failed fot refer: "+id);
+			
+			var.refer(target);
+			System.out.println("Refer to target: "+target.toString());
+		}
+	}
 	
 }

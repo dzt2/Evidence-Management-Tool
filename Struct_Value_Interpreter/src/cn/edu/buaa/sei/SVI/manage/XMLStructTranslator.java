@@ -21,4 +21,5 @@ public interface XMLStructTranslator {
 	 * Translate an Element to Struct
 	 * */
 	public Struct retranslate(Element element) throws Exception;
+	public void reupdate(Element top) throws Exception;
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Iterator;
 
@@ -20,15 +21,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
+import cn.edu.buaa.sei.SVI.editor.translator.Struct2TreeNode;
 import cn.edu.buaa.sei.SVI.editor.translator.TreeNode2Struct;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.StructRootTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.AddTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NaturalVariableTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NumericExpressionTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.ZIntVariableTreeNode;
+import cn.edu.buaa.sei.SVI.manage.IStructImporter;
 import cn.edu.buaa.sei.SVI.manage.IStructPrinter;
 import cn.edu.buaa.sei.SVI.manage.StructManager;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
+import cn.edu.buaa.sei.SVI.manage.impl.xml_struct.XMLStructImporter;
 import cn.edu.buaa.sei.SVI.manage.impl.xml_struct.XMLStructPrinter;
 import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.variable.ReferenceVariable;
@@ -55,16 +59,6 @@ public class Test {
 		final StructRootTreeNode root = new StructRootTreeNode(null,"root");
 		final JTree tree = new JTree(root);root.setTree(tree);
 		System.out.println(tree.getComponent(0).hashCode()+":"+root.hashCode());
-		
-		/*NumericExpressionTreeNode item1 = new NumericExpressionTreeNode(tree,"expression");
-		AddTreeNode item11 = new AddTreeNode(tree,"addition");
-		NaturalVariableTreeNode item111 = new NaturalVariableTreeNode(tree,"x");
-		ZIntVariableTreeNode item112 = new ZIntVariableTreeNode(tree,"y");
-		item1.add(item11);
-		item11.add(item111); item11.add(item112);
-		root.add(item1);*/
-		
-		//final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
 		tree.setCellRenderer(new SVICellRenderer());
 		
 		tree.addMouseListener(new MouseListener(){
@@ -76,8 +70,6 @@ public class Test {
 				
 				SVITreeNode snode = (SVITreeNode) node;
 				if(e.getButton()==MouseEvent.BUTTON3){
-					/*System.out.println("Try to add new node at: #"+node.getUserObject().toString());
-					model.insertNodeInto(new DefaultMutableTreeNode("NewOne"), node, node.getChildCount());*/
 					JPopupMenu menu = snode.getPopupMenu();
 					menu.show(e.getComponent(), e.getX(), e.getY());
 				}
@@ -149,53 +141,39 @@ public class Test {
 					printer.setOutputStream(resource);
 					printer.write(manager);
 					System.out.println("Writting file: "+file.getAbsolutePath());
-					
-					/*File file = new File("test.xml");
-					resource.setOutputStream(new FileOutputStream(file));
-					printer.setOutputStream(resource);
-					printer.write(manager);
-					System.out.println("Writting file: "+file.getAbsolutePath());*/
 				} catch (Exception e1) {
 					e1.printStackTrace();
-					//JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE); 
 				}
 			}});
-	}
-	
-	/*static class MyCellRenderer extends DefaultTreeCellRenderer{
-		*//**
-		 * 
-		 *//*
-		private static final long serialVersionUID = 1L;
-
-		@Override  
-	    public Component getTreeCellRendererComponent(JTree tree, Object value,  
-	            boolean sel, boolean expanded, boolean leaf, int row,  
-	            boolean hasFocus)
-	    {
-			super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,  
-	                row, hasFocus);
-			setText(value.toString()); 
-			if(sel)setForeground(getTextSelectionColor());
-	        else setForeground(getTextNonSelectionColor());
-			
-			
-			Font f = new Font(Font.SANS_SERIF, Font.BOLD, 12);
-			this.setFont(f);
-			
-			if(value instanceof SVITreeNode){
-				SVITreeNode node = (SVITreeNode) value;
-				this.setIcon(node.getIcon());
-			}
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-			
-			if(node.isLeaf()){this.setIcon(new ImageIcon("icons/variable.gif"));}
-			else if(node.isRoot()){this.setIcon(new ImageIcon("icons/expression.gif"));}
-			else{this.setIcon(new ImageIcon("icons/add.gif"));}
-	        return this;  
-	    }
 		
-	}*/
+		load.addActionListener(new ActionListener(){
+			SVIStream resource = new SVIStream();
+			Struct2TreeNode translater = new Struct2TreeNode();
+			IStructImporter reader = new XMLStructImporter();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser dialog = new JFileChooser();
+				int ret = dialog.showOpenDialog(f);
+				if (ret != JFileChooser.APPROVE_OPTION) {
+					return;
+				}
+				
+				try {
+					File file = dialog.getSelectedFile();
+					System.out.println("Reading File: "+file.getAbsolutePath());
+					resource.setInputStream(new FileInputStream(file));
+					reader.setInput(resource);
+					System.out.println("Ready to read...");
+					StructManager manager = reader.read();
+					System.out.println("Reading complete!");
+					StructRootTreeNode _root = this.translater.tranlate(manager);
+					root.reset(_root);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}});
+	}
 
 	public static JTree test1(){
 		StructRootTreeNode root = new StructRootTreeNode(null,"root");
