@@ -46,13 +46,17 @@ public class XMLStructPrinter implements IStructPrinter{
 	public void write(StructManager manager) throws Exception {
 		if(manager==null)throw new Exception("Null manager is invalid");
 		
+		this.translator.restart();
 		Set<Struct> structs = manager.getTopStructs();
 		Set<Element> elements = new HashSet<Element>();
 		
 		for(Struct struct:structs){
-			this.translator.restart();
 			Element element = this.translator.translate(struct);
 			elements.add(element);
+		}
+		
+		for(Struct struct:structs){
+			this.translator.update(struct);
 		}
 		
 		for(Element ei:elements)

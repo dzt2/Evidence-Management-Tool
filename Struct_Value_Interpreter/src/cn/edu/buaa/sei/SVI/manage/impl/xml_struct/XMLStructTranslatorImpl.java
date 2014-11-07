@@ -131,6 +131,46 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 		
 		return root;
 	}
+	@Override
+	public void update(Struct top) throws Exception{
+		if(top==null||!this.tmap.containsKey(top))
+			throw new Exception("Null|Undefined top is invalid");
+		
+		Queue<Struct> queue = new LinkedList<Struct>();
+		queue.add(top);
+		
+		while(!queue.isEmpty()){
+			top = queue.poll();
+			Element element = this.tmap.get(top);
+			
+			if(top instanceof ReferenceVariable){
+				if(((ReferenceVariable) top).getRefer()!=null){
+					Element ref_elm = this.createElement(((ReferenceVariable) top).getRefer());
+					if(ref_elm==null)throw new Exception("Element for refer is failed");
+					
+					String id = ref_elm.getAttribute(XMLStructTags.ID);
+					if(id==null||id.trim().length()==0){
+						id = nextID();
+						ReferenceVariable ref = ((ReferenceVariable) top);
+						System.out.println(ref.getName()+"--> "+
+						ref.getRefer().getName()+"@"+ref.getRefer().hashCode()+": "+ref_elm.hashCode()+"<"+id+">");
+						
+						ref_elm.setAttribute(XMLStructTags.ID, id);
+						this.linked_set.put(ref.getRefer(), id);
+					}
+					element.setTextContent(id);
+				}
+			}
+			
+			if(top instanceof CompositeStruct){
+				Struct[] children = ((CompositeStruct) top).getChildrenStructs();
+				int n = ((CompositeStruct) top).getChildrenStructSize();
+				for(int i=0;i<n;i++)
+					queue.add(children[i]);
+			}
+			
+		}
+	}
 	
 	protected Element createElement(Struct top) throws Exception{
 		if(top==null)throw new Exception("Null top is invalid");
@@ -163,8 +203,9 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 	}
 	protected Element createVariable(Variable variable) throws Exception{
 		if(variable==null)throw new Exception("Null variable is invalid");
-		if(this.tmap.containsKey(variable))return this.tmap.get(variable);
-		
+		if(this.tmap.containsKey(variable)){
+			return this.tmap.get(variable);
+		}
 		Element element = doc.createElement(XMLStructTags.VARIABLE);
 		
 		String name = variable.getName();
@@ -179,23 +220,26 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 			ie.setAttribute(XMLStructTags.NAME, itor.getName());
 			ie.setAttribute(XMLStructTags.TYPE, XMLStructTags.FREE_TYPE);
 			this.tmap.put(itor, ie);
+			//System.out.println(itor.getName()+": "+itor.hashCode()+"{"+ie.hashCode()+"}");
 		}
-		else if(variable instanceof ReferenceVariable){
+		/*else if(variable instanceof ReferenceVariable){
 			if(((ReferenceVariable) variable).getRefer()!=null){
-				Element ref_elm = this.createVariable(((ReferenceVariable) variable).getRefer());
+				Element ref_elm = this.createElement(((ReferenceVariable) variable).getRefer());
 				if(ref_elm==null)throw new Exception("Element for refer is failed");
 				
 				String id = ref_elm.getAttribute(XMLStructTags.ID);
 				if(id==null||id.trim().length()==0){
 					id = nextID();
 					ref_elm.setAttribute(XMLStructTags.ID, id);
+					//System.out.println("Generating new id:"+id);
 				}
-				System.out.println("Writting refer variable id: "+ref_elm.getAttribute(XMLStructTags.ID));
 				element.setTextContent(id);
+				//System.out.println("Writting refer variable id: "+ref_elm.getAttribute(XMLStructTags.ID));
 			}
-		}
+		}*/
 		
 		this.tmap.put(variable, element);
+		//System.out.println("###"+variable.getName()+": "+variable.hashCode());
 		return element;
 	}
 	protected String getType(Variable var) throws Exception{
@@ -337,7 +381,6 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 				try {
 					throw new Exception("ID Space has been used out.");
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			id++;times++;

@@ -7,8 +7,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Iterator;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -28,35 +30,14 @@ import cn.edu.buaa.sei.SVI.manage.IStructPrinter;
 import cn.edu.buaa.sei.SVI.manage.StructManager;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIStream;
 import cn.edu.buaa.sei.SVI.manage.impl.xml_struct.XMLStructPrinter;
+import cn.edu.buaa.sei.SVI.struct.core.Struct;
+import cn.edu.buaa.sei.SVI.struct.core.variable.ReferenceVariable;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
 		testWindow();
-		/*JPanel cp = new JPanel();
-		cp.add(new JButton("LOW1"));
-		cp.add(new JButton("LOW2"));
-		
-		JPanel sp = new JPanel();
-		sp.add(new JButton("UP1"));
-		sp.add(new JButton("UP2"));
-		sp.add(new JButton("UP3"));
-		sp.add(new JScrollBar());*/
-		
-		
-		/*JPanel pan = new JPanel();
-		pan.setLayout(new BorderLayout());
-		pan.add(BorderLayout.CENTER,sp);
-		pan.add(BorderLayout.SOUTH,cp);*/
-		
-		/*JFrame f = new JFrame();
-		f.setSize(300, 300);
-		f.setLayout(new BorderLayout());
-		f.add(BorderLayout.CENTER,sp);
-		f.add(BorderLayout.SOUTH,cp);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 	}
 	
 	@SuppressWarnings("static-access")
@@ -124,6 +105,17 @@ public class Test {
 		JPanel cp = new JPanel();
 		cp.add(save); cp.add(load);
 		
+		
+		/***/
+		final JFrame f = new JFrame();
+		f.setSize(300, 300);
+		f.setLayout(new BorderLayout());
+		f.add(BorderLayout.CENTER,pan);
+		f.add(BorderLayout.SOUTH,cp);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 		save.addActionListener(new ActionListener(){
 			TreeNode2Struct translator = new TreeNode2Struct();
 			IStructPrinter printer = new XMLStructPrinter();
@@ -132,26 +124,42 @@ public class Test {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					StructManager manager = translator.getFromRoot(root);
-					File file = new File("test.xml");
+					
+					Iterator<Struct> itor = manager.getTopStructs().iterator();
+					while(itor.hasNext()){
+						Struct top = itor.next();
+						if(top instanceof ReferenceVariable){
+							System.out.println(((ReferenceVariable) top).getName()+" --> "
+									+ ((ReferenceVariable) top).getRefer().hashCode());
+						}
+						else{
+							System.out.println(top.getClass().getName()+": "+top.hashCode());
+						}
+					}
+					System.out.println("Ready to save...");
+					
+					JFileChooser dialog = new JFileChooser();
+					int ret = dialog.showSaveDialog(f);
+					if (ret != JFileChooser.APPROVE_OPTION) {
+						return;
+					}
+					
+					File file = dialog.getSelectedFile();
 					resource.setOutputStream(new FileOutputStream(file));
 					printer.setOutputStream(resource);
 					printer.write(manager);
 					System.out.println("Writting file: "+file.getAbsolutePath());
+					
+					/*File file = new File("test.xml");
+					resource.setOutputStream(new FileOutputStream(file));
+					printer.setOutputStream(resource);
+					printer.write(manager);
+					System.out.println("Writting file: "+file.getAbsolutePath());*/
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					//JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE); 
 				}
 			}});
-		
-		
-		/***/
-		JFrame f = new JFrame();
-		f.setSize(300, 300);
-		f.setLayout(new BorderLayout());
-		f.add(BorderLayout.CENTER,pan);
-		f.add(BorderLayout.SOUTH,cp);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	/*static class MyCellRenderer extends DefaultTreeCellRenderer{

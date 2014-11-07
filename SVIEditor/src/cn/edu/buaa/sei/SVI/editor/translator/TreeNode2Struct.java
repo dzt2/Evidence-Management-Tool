@@ -1,7 +1,9 @@
 package cn.edu.buaa.sei.SVI.editor.translator;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVITreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.core.BooleanVariableTreeNode;
@@ -90,6 +92,7 @@ public class TreeNode2Struct {
 	
 	public StructManager getFromRoot(StructRootTreeNode node) throws Exception{
 		if(node==null)throw new Exception("Null node is invalid");
+		this.map.clear();
 		
 		StructManager manager = SVIManageFactory.createStructManager();
 		int n = node.getChildCount();
@@ -98,6 +101,7 @@ public class TreeNode2Struct {
 			Struct top = this.getStruct((SVITreeNode) node.getChildAt(i));
 			manager.putTopStruct(top);
 		}
+		this.referAll(node);
 		
 		return manager;
 	}
@@ -114,7 +118,7 @@ public class TreeNode2Struct {
 		else throw new Exception("Unknown tree node: "+node.getClass().getCanonicalName());
 	}
 	
-	public Variable getVariable(VariableTreeNode node) throws Exception{
+	protected Variable getVariable(VariableTreeNode node) throws Exception{
 		if(node==null)throw new Exception("Null node is invalid");
 		
 		String name = node.getUserObject().toString();
@@ -130,11 +134,11 @@ public class TreeNode2Struct {
 		else if(node instanceof FreeVariableTreeNode){x = VariableFactory.createFreeVariable(name);}
 		else if(node instanceof ReferencerTreeNode){
 			ReferenceVariable var = VariableFactory.createReference(name);
-			if(((ReferencerTreeNode) node).getRefer()!=null){
+			/*if(((ReferencerTreeNode) node).getRefer()!=null){
 				Variable ref = (Variable) this.getStruct(((ReferencerTreeNode) node).getRefer());
 				System.out.println("Linking Ref: "+((ReferencerTreeNode) node).getRefer());
 				var.refer(ref);
-			}
+			}*/
 			x = var;
 		}
 		else if(node instanceof ListVariableTreeNode){x = VariableFactory.createList(name);}
@@ -142,7 +146,12 @@ public class TreeNode2Struct {
 		else if(node instanceof MapVariableTreeNode){x = VariableFactory.createMap(name);}
 		else if(node instanceof LogicVariableTreeNode){x = LogicFactory.createLogicVariable(name);}
 		else if(node instanceof GroupVariableTreeNode){x = GroupFactory.createGroupVariable(name);}
-		else if(node instanceof DiscourseDomainTreeNode){x = LogicFactory.createDiscourseDomain(name);}
+		else if(node instanceof DiscourseDomainTreeNode){
+			x = LogicFactory.createDiscourseDomain(name);
+			Variable itor = ((DiscourseDomain)x).getIterator();
+			SVITreeNode itor_node = (SVITreeNode) node.getChildAt(0);
+			this.map.put(itor_node, itor);
+		}
 		else if(node instanceof NaturalVariableTreeNode){x = NumericFactory.createNaturalVariable(name);}
 		else if(node instanceof ZIntVariableTreeNode){x = NumericFactory.createZIntegerVariable(name);}
 		else if(node instanceof RationalVariableTreeNode){x = NumericFactory.createRationalVariable(name);}
@@ -152,7 +161,7 @@ public class TreeNode2Struct {
 		this.map.put(node, x);
 		return x;
 	}
-	public Expression getExpression(ExpressionTreeNode node) throws Exception{
+	protected Expression getExpression(ExpressionTreeNode node) throws Exception{
 		if(node==null)throw new Exception("Null node is invalid");
 		if(node.getChildCount()!=1)
 			throw new Exception("Invalid Structure at Expression Node: "+node.getUserObject().toString());
@@ -162,7 +171,7 @@ public class TreeNode2Struct {
 		this.map.put(node, expr);
 		return expr;
 	}
-	public Expression getOperator(OperatorTreeNode node) throws Exception{
+	protected Expression getOperator(OperatorTreeNode node) throws Exception{
 		if(node==null)throw new Exception("Null node is invalid");
 		
 		Expression expr = null;
@@ -443,7 +452,7 @@ public class TreeNode2Struct {
 		this.map.put(node, expr);
 		return expr;
 	}
-	public Function getFunction(FunctionTreeNode node) throws Exception{
+	protected Function getFunction(FunctionTreeNode node) throws Exception{
 		if(node==null)throw new Exception("Null node is invalid");
 		if(node.getChildCount()!=1)
 			throw new Exception("Invalid Structure at Function Node: "+node.getUserObject().toString());
@@ -463,7 +472,7 @@ public class TreeNode2Struct {
 		this.map.put(node, func);
 		return func;
 	}
-	public Function getTemplate(TemplateTreeNode node)throws Exception{
+	protected Function getTemplate(TemplateTreeNode node)throws Exception{
 		if(node==null)throw new Exception("Null node is invalid");
 		String name = node.getUserObject().toString();
 		
@@ -491,5 +500,29 @@ public class TreeNode2Struct {
 		return func;
 	}
 	
-	
+	protected void referAll(StructRootTreeNode root) throws Exception{
+		if(root==null)throw new Exception("Null root is invalid");
+		
+		Queue<SVITreeNode> queue = new LinkedList<SVITreeNode>();
+		queue.add(root);
+		
+		while(!queue.isEmpty()){
+			SVITreeNode node = queue.poll();
+			if(node instanceof ReferencerTreeNode){
+				ReferencerTreeNode rnode = (ReferencerTreeNode) node;
+				//ReferenceVariable var = (ReferenceVariable) this.map.get(node);
+				if(rnode.getRefer()!=null){
+					ReferenceVariable var = (ReferenceVariable) this.map.get(rnode);
+					Variable ref = (Variable) this.getStruct(rnode.getRefer());
+					var.refer(ref);
+					System.out.println(var.getName()+"-->"+ref.getName());
+				}
+			}
+			
+			int n = node.getChildCount();
+			for(int i=0;i<n;i++)
+				queue.add((SVITreeNode) node.getChildAt(i));
+		}
+		
+	}
 }
