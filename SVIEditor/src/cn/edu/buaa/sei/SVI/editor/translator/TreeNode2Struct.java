@@ -132,6 +132,7 @@ public class TreeNode2Struct {
 			ReferenceVariable var = VariableFactory.createReference(name);
 			if(((ReferencerTreeNode) node).getRefer()!=null){
 				Variable ref = (Variable) this.getStruct(((ReferencerTreeNode) node).getRefer());
+				System.out.println("Linking Ref: "+((ReferencerTreeNode) node).getRefer());
 				var.refer(ref);
 			}
 			x = var;

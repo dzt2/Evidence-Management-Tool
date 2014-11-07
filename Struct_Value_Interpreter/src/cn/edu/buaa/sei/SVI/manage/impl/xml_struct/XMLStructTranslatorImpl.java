@@ -182,12 +182,15 @@ public class XMLStructTranslatorImpl implements XMLStructTranslator{
 		}
 		else if(variable instanceof ReferenceVariable){
 			if(((ReferenceVariable) variable).getRefer()!=null){
-				Element ref_elm = this.createElement(((ReferenceVariable) variable).getRefer());
+				Element ref_elm = this.createVariable(((ReferenceVariable) variable).getRefer());
 				if(ref_elm==null)throw new Exception("Element for refer is failed");
-				if(ref_elm.getAttribute(XMLStructTags.ID)==null){
-					ref_elm.setAttribute(XMLStructTags.ID, nextID());
-				}
+				
 				String id = ref_elm.getAttribute(XMLStructTags.ID);
+				if(id==null||id.trim().length()==0){
+					id = nextID();
+					ref_elm.setAttribute(XMLStructTags.ID, id);
+				}
+				System.out.println("Writting refer variable id: "+ref_elm.getAttribute(XMLStructTags.ID));
 				element.setTextContent(id);
 			}
 		}
