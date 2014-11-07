@@ -195,7 +195,10 @@ public class Struct2TreeNode {
 		VariableTreeNode node = null;
 		
 		if(var instanceof BooleanVariable){node = new BooleanVariableTreeNode(tree,var.getName());}
-		else if(var instanceof DiscourseDomain){node = new DiscourseDomainTreeNode(tree,var.getName());}
+		else if(var instanceof DiscourseDomain){
+			node = new DiscourseDomainTreeNode(tree,var.getName());
+			this.map.put(((DiscourseDomain) var).getIterator(), (SVITreeNode) node.getChildAt(0));
+		}
 		else if(var instanceof IntegerVariable){node = new IntVariableTreeNode(tree,var.getName());}
 		else if(var instanceof LongVariable){node = new LongVariableTreeNode(tree,var.getName());}
 		else if(var instanceof FloatVariable){node = new FloatVariableTreeNode(tree,var.getName());}
@@ -214,7 +217,6 @@ public class Struct2TreeNode {
 		else if(var instanceof FreeVariable){node = new FreeVariableTreeNode(tree,var.getName());}
 		else if(var instanceof ReferenceVariable){node = new ReferencerTreeNode(tree,var.getName());}
 		else throw new Exception("Unknown variable type: "+var.getClass().getCanonicalName());
-		
 		
 		this.map.put(var, node);
 		return node;
