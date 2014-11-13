@@ -29,7 +29,6 @@ public class DataImporterRunner {
 			for(LClassObject obj:objects)
 				System.out.println(printLClassObject(obj));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
