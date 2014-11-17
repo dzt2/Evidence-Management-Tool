@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -72,11 +73,12 @@ public class SVIEditorPanel extends JPanel{
 		
 		tree.setEditable(true);
 		this.setLayout(new BorderLayout());
-		this.add(BorderLayout.CENTER,tree);
 		
-		JButton save = new JButton("save");
-		JButton load = new JButton("load");
-		JButton trans = new JButton("update");
+		this.add(BorderLayout.CENTER,new JScrollPane(tree));
+		
+		JButton save = new JButton("Save Expressions");
+		JButton load = new JButton("Load Expressions");
+		JButton trans = new JButton("Update Expressions");
 		JPanel cp = new JPanel();
 		cp.add(save); cp.add(load);cp.add(trans);
 		this.add(BorderLayout.SOUTH,cp);
