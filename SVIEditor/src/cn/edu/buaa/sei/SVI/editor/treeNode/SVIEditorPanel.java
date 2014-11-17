@@ -76,7 +76,7 @@ public class SVIEditorPanel extends JPanel{
 		
 		JButton save = new JButton("save");
 		JButton load = new JButton("load");
-		JButton trans = new JButton("translate");
+		JButton trans = new JButton("update");
 		JPanel cp = new JPanel();
 		cp.add(save); cp.add(load);cp.add(trans);
 		this.add(BorderLayout.SOUTH,cp);
