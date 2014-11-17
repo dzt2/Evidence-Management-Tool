@@ -18,4 +18,5 @@
     <eLiterals name="Reliability" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SR" eSuperTypes="#//Requirement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SSS"/>
 </ecore:EPackage>
