@@ -2,8 +2,8 @@ package cn.edu.buaa.sei.emt.exLmf.viewer.model;
 import java.io.File;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.JFrame;
 
+import javax.swing.JFrame;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;

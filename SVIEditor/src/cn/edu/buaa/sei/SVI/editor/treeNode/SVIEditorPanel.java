@@ -114,10 +114,28 @@ public class SVIEditorPanel extends JPanel{
 					printer.setOutputStream(resource);
 					printer.write(manager);
 					System.out.println("Writting file: "+file.getAbsolutePath());
+					JOptionPane.showMessageDialog(null, printMessage(file), 
+							"Save Logic Propositions", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-			}});
+				
+			}
+			protected String printMessage(File file){
+				StringBuilder code = new StringBuilder();
+				code.append("Save to file: ").append(file.getAbsolutePath()).append("\n");
+				code.append("**************************************\n");
+				
+				Set<Struct> tops = manager.getTopStructs();
+				int i=0;
+				for(Struct top:tops){
+					code.append("[").append(++i).append("]: ").append(top.toString()).append("\n");
+				}
+				
+				code.append("**************************************\n");
+				return code.toString();
+			}
+		});
 		load.addActionListener(new ActionListener(){
 			SVIStream resource = new SVIStream();
 			Struct2TreeNode translater = new Struct2TreeNode();
@@ -141,11 +159,28 @@ public class SVIEditorPanel extends JPanel{
 					System.out.println("Reading complete!");
 					StructRootTreeNode _root = this.translater.tranlate(manager);
 					root.reset(_root);
+					JOptionPane.showMessageDialog(null, printMessage(file), 
+							"Save Logic Propositions", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				
-			}});
+			}
+			protected String printMessage(File file){
+				StringBuilder code = new StringBuilder();
+				code.append("Read from file: ").append(file.getAbsolutePath()).append("\n");
+				code.append("**************************************\n");
+				
+				Set<Struct> tops = manager.getTopStructs();
+				int i=0;
+				for(Struct top:tops){
+					code.append("[").append(++i).append("]: ").append(top.toString()).append("\n");
+				}
+				
+				code.append("**************************************\n");
+				return code.toString();
+			}
+		});
 		trans.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +188,7 @@ public class SVIEditorPanel extends JPanel{
 				try {
 					manager = translator.getFromRoot(root);
 					if(manager==null)throw new Exception();
-					JOptionPane.showMessageDialog(null, "Results generated: "+manager.getTopStructs().size(), "Translation", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, this.printMessage(), "Update propositions", JOptionPane.INFORMATION_MESSAGE);
 					
 					Set<Struct> tops = manager.getTopStructs();
 					System.out.println("****************************");
@@ -163,7 +198,22 @@ public class SVIEditorPanel extends JPanel{
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Translation Failed!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			}});
+			}
+			protected String printMessage(){
+				StringBuilder code = new StringBuilder();
+				code.append("Updating propositions: ").append(manager.getTopStructs().size()).append("\n");
+				code.append("**************************************\n");
+				
+				Set<Struct> tops = manager.getTopStructs();
+				int i=0;
+				for(Struct top:tops){
+					code.append("[").append(++i).append("]: ").append(top.toString()).append("\n");
+				}
+				
+				code.append("**************************************\n");
+				return code.toString();
+			}
+		});
 		
 	}
 	

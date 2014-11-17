@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
+import cn.edu.buaa.sei.exLmf.metamodel.LClassifier;
+import cn.edu.buaa.sei.exLmf.metamodel.LEnum;
 import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectGroup;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectWorld;
@@ -40,13 +43,14 @@ public class ExLMFEditorPane extends JPanel{
 	public ExLMFEditorPane(){
 		final ModelPanel pan = new ModelPanel();
 		JButton load_model = new JButton("Load Model");
-		JButton exit = new JButton("Exit");
+		//JButton exit = new JButton("Exit");
 		JButton read_data = new JButton("Import Data");
 		JButton read_DB = new JButton("Read DB");
 		JButton write_DB = new JButton("Write DB");
 		JPanel cp = new JPanel();
 		cp.add(load_model);cp.add(read_data);cp.add(write_DB);
-		cp.add(read_DB);cp.add(exit);
+		cp.add(read_DB);
+		//cp.add(exit);
 		
 		//final JFrame f = new JFrame();
 		//f.setSize(300, 300);
@@ -76,7 +80,26 @@ public class ExLMFEditorPane extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}});
+				JOptionPane.showMessageDialog(null, this.printMessage(root), "load model", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+			protected String printMessage(LPackage p){
+				if(p==null)return null;
+				StringBuilder code = new StringBuilder();
+				code.append(p.getAbsolutePath()).append("{").append(p.getTypes().size()).append(" types}\n");
+				List<LClassifier> types = p.getTypes();
+				code.append("-------------------------------------\n");
+				for(int i=0;i<types.size();i++){
+					code.append("\t--").append(types.get(i).getName());
+					if(types.get(i) instanceof LClass)code.append(": class");
+					else if(types.get(i) instanceof LEnum)code.append(": enum");
+					code.append("\n");
+				}
+				code.append("-------------------------------------\n");
+				return code.toString();
+			}
+			
+		});
 		read_data.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -93,9 +116,24 @@ public class ExLMFEditorPane extends JPanel{
 					readDataFromFiles(files);
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				JOptionPane.showMessageDialog(null, this.printMessage(cache), "Import Data", 
+						JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+			protected String printMessage(IObjectWorld cache){
+				if(cache==null)return null;
+				StringBuilder code = new StringBuilder();
+				code.append("*************************************************\n");
+				Map<LClass,IObjectGroup> map = cache.getGroups();
+				Set<LClass> keys = map.keySet();
+				for(LClass key:keys){
+					code.append(key.getAbsolutePath()).append(": ").
+					append(map.get(key).getObjects().size()).append("\n");
+				}
+				code.append("*************************************************\n");
+				return code.toString();
 			}
 		});
 		read_DB.addActionListener(new ActionListener(){
@@ -124,8 +162,23 @@ public class ExLMFEditorPane extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-			}});
+				JOptionPane.showMessageDialog(null, this.printMessage(cache), "Read DataBase", 
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			protected String printMessage(IObjectWorld cache){
+				if(cache==null)return null;
+				StringBuilder code = new StringBuilder();
+				code.append("*************************************************\n");
+				Map<LClass,IObjectGroup> map = cache.getGroups();
+				Set<LClass> keys = map.keySet();
+				for(LClass key:keys){
+					code.append(key.getAbsolutePath()).append(": ").
+					append(map.get(key).getObjects().size()).append("\n");
+				}
+				code.append("*************************************************\n");
+				return code.toString();
+			}
+		});
 		write_DB.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -150,12 +203,25 @@ public class ExLMFEditorPane extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}});
-		exit.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
 				
-			}});
+				JOptionPane.showMessageDialog(null, this.printMessage(cache), "Writting DataBase", 
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			protected String printMessage(IObjectWorld cache){
+				if(cache==null)return null;
+				StringBuilder code = new StringBuilder();
+				code.append("*************************************************\n");
+				Map<LClass,IObjectGroup> map = cache.getGroups();
+				Set<LClass> keys = map.keySet();
+				for(LClass key:keys){
+					code.append(key.getName()).append(".xml: ").
+					append(map.get(key).getObjects().size()).append("\n");
+				}
+				code.append("*************************************************\n");
+				return code.toString();
+			}
+		});
+		
 	}
 	
 	public void readModel(File file) throws Exception{
@@ -209,3 +275,4 @@ public class ExLMFEditorPane extends JPanel{
 	public IObjectWorld getData(){return this.cache;}
 	
 }
+
