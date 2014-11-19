@@ -45,6 +45,7 @@ public class EcoreModelReader implements IModelReader{
 	Map<EModelElement,LModelElement> map = new HashMap<EModelElement,LModelElement>();
 	
 	public EcoreModelReader(String name){
+		
 		this.name=name;
 		try {
 			this.creator = new ModelCreatorImpl("CREATOR");
