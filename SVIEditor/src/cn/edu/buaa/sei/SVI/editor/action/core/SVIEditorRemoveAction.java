@@ -25,6 +25,9 @@ public class SVIEditorRemoveAction extends SVIEditorAction{
 		JTree tree = node.getTree();
 		final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
 		model.removeNodeFromParent(node);
+		
+		//model.reload();
+		node.getTree().repaint();
 	}
 
 }

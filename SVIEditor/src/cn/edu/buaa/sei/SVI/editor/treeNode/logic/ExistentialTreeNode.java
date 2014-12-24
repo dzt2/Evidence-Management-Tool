@@ -18,7 +18,8 @@ public class ExistentialTreeNode extends OperatorTreeNode{
 	private static final long serialVersionUID = 1L;
 
 	public ExistentialTreeNode(JTree tree, String name) {
-		super(tree, name, IconSet.OP_EXISTENTIAL_ICON);this.op_init();
+		super(tree, name, IconSet.OP_EXISTENTIAL_ICON);
+		this.op_init();
 		DiscourseDomainTreeNode node = new DiscourseDomainTreeNode(tree,"domain");
 		this.add(node);
 	}

@@ -22,6 +22,7 @@ import cn.edu.buaa.sei.exLmf.translater.IModelReader;
 
 public class DataImporterRunner {
 
+	Number a;
 	public static void main(String[] args) {
 		try {
 			IObjectSpace os = input(new File("R.ecore"),new File("testobj.xml"));

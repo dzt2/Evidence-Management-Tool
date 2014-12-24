@@ -40,8 +40,16 @@ import cn.edu.buaa.sei.SVI.struct.core.variable.ReferenceVariable;
 public class Test {
 
 	public static void main(String[] args) {
+		MH();
+		final SVIEditorPanel svi_pan = new SVIEditorPanel();
+		JFrame f = new JFrame();
+		f.add(svi_pan);
 		
-		testWindow();
+		f.setTitle("DO178Logic");
+		f.setSize(300, 300);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//testWindow();
 	}
 	
 	@SuppressWarnings("static-access")

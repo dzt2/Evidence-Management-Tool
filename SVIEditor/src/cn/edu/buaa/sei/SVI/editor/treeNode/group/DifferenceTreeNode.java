@@ -5,7 +5,7 @@ import javax.swing.JTree;
 
 import cn.edu.buaa.sei.SVI.editor.action.expr.CreateGroupExpression;
 import cn.edu.buaa.sei.SVI.editor.action.function.CreateFilter;
-import cn.edu.buaa.sei.SVI.editor.action.function.CreateLogicFunction;
+import cn.edu.buaa.sei.SVI.editor.action.function.CreateGroupFunction;
 import cn.edu.buaa.sei.SVI.editor.action.function.CreateMapper;
 import cn.edu.buaa.sei.SVI.editor.action.function.CreateTableMapper;
 import cn.edu.buaa.sei.SVI.editor.action.variable.CreateGroupVariable;
@@ -31,6 +31,6 @@ public class DifferenceTreeNode extends BinaryOperatorTreeNode{
 		item0.add(new CreateFilter(this));
 		item0.add(new CreateMapper(this));
 		item0.add(new CreateTableMapper(this));
-		item0.add(new CreateLogicFunction(this));
+		item0.add(new CreateGroupFunction(this));
 	}
 }

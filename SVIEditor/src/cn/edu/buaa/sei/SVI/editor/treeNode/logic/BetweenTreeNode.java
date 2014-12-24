@@ -17,7 +17,8 @@ public class BetweenTreeNode extends OperatorTreeNode{
 	private static final long serialVersionUID = 1L;
 
 	public BetweenTreeNode(JTree tree, String name) {
-		super(tree, name, IconSet.OP_BETWEEN_ICON);this.op_init();
+		super(tree, name, IconSet.OP_BETWEEN_ICON);
+		this.op_init();
 		
 		LowerTreeNode lower = new LowerTreeNode(tree,"0");
 		this.add(lower);

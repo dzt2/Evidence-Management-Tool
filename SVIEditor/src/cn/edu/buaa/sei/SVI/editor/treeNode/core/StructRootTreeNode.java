@@ -1,6 +1,8 @@
 package cn.edu.buaa.sei.SVI.editor.treeNode.core;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -171,6 +173,19 @@ public class StructRootTreeNode extends SVITreeNode{
 			model.insertNodeInto((MutableTreeNode) node.getChildAt(i), this, this.getChildCount());
 		}
 		System.out.println("Adding all new nodes...");
+		
+		Queue<SVITreeNode> list = new LinkedList<SVITreeNode>();
+		list.add(this);
+		
+		while(!list.isEmpty()){
+			SVITreeNode cnode = list.poll();
+			if(cnode==null)continue;
+			
+			cnode.setTree(this.tree);
+			
+			for(int i=0;i<cnode.getChildCount();i++)
+				list.add((SVITreeNode) cnode.getChildAt(i));
+		}
 		
 		model.reload();
 		this.getTree().repaint();

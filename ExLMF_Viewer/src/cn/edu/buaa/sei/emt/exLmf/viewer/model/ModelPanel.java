@@ -1,5 +1,6 @@
 package cn.edu.buaa.sei.emt.exLmf.viewer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -41,6 +42,8 @@ public class ModelPanel extends JPanel{
 		
 		this.clearTree();
 		
+		this.root_node.setUserObject(root.getName());
+		
 		final DefaultTreeModel model = (DefaultTreeModel) this.tree.getModel();
 		List<LPackage> sps = root.getSubPackages();
 		for(int i=0;i<sps.size();i++){
@@ -58,9 +61,15 @@ public class ModelPanel extends JPanel{
 	protected void clearTree(){
 		final DefaultTreeModel model = (DefaultTreeModel) this.tree.getModel();
 		int n = this.root_node.getChildCount();
+		
+		List<MutableTreeNode> nlist = new ArrayList<MutableTreeNode>();
+		for(int i=0;i<n;i++)
+			nlist.add((MutableTreeNode) root_node.getChildAt(i));
+		
 		for(int i=0;i<n;i++){
-			model.removeNodeFromParent((MutableTreeNode) root_node.getChildAt(i));
+			model.removeNodeFromParent(nlist.get(i));
 		}
+		
 		this.root_node.removeAllChildren();
 		this.tree.repaint();
 		this.repaint();
@@ -101,13 +110,16 @@ public class ModelPanel extends JPanel{
 		if(type==null)throw new Exception("Null type is invalid");
 		
 		StringBuilder code = new StringBuilder();
-		code.append(type.getName()).append("-->[");
-		for(int i=0;i<type.getSuperTypes().size();i++){
-			code.append(type.getSuperTypes().get(i).getName());
-			if(i!=type.getSuperTypes().size())
-				code.append(", ");
+		code.append(type.getName());
+		if(!type.getSuperTypes().isEmpty()){
+			code.append("-->[");
+			for(int i=0;i<type.getSuperTypes().size();i++){
+				code.append(type.getSuperTypes().get(i).getName());
+				if(i!=type.getSuperTypes().size()-1)
+					code.append(", ");
+			}
+			code.append("]");
 		}
-		code.append("]");
 		
 		LClassNode node = new LClassNode(this.root_node.getTree(),code.toString());
 		

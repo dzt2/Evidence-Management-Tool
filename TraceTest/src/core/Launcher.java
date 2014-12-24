@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.URLDecoder;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -16,11 +19,19 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import cn.edu.buaa.sei.SVI.editor.treeNode.SVIEditorPanel;
-import cn.edu.buaa.sei.SVI.interpreter.logic.Inferencer;
+import cn.edu.buaa.sei.SVI.interpreter.core.Interpreter;
 import cn.edu.buaa.sei.SVI.manage.IStructAssigner;
 import cn.edu.buaa.sei.SVI.manage.InterpreterRegisterMachine;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIManageFactory;
@@ -28,18 +39,23 @@ import cn.edu.buaa.sei.SVI.struct.core.Struct;
 import cn.edu.buaa.sei.SVI.struct.core.function.Function;
 import cn.edu.buaa.sei.SVI.struct.core.function.impl.FunctionExecutor;
 import cn.edu.buaa.sei.SVI.struct.core.variable.Variable;
+import cn.edu.buaa.sei.SVI.struct.group.Group;
+import cn.edu.buaa.sei.SVI.struct.group.impl.SetGroup;
 import cn.edu.buaa.sei.SVI.struct.logic.LogicFunctionTemplate;
 import cn.edu.buaa.sei.emt.exLmf.viewer.model.ExLMFEditorPane;
 import cn.edu.buaa.sei.exLmf.metamodel.LClass;
 import cn.edu.buaa.sei.exLmf.metamodel.LClassObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LMultipleObject;
 import cn.edu.buaa.sei.exLmf.metamodel.LPackage;
+import cn.edu.buaa.sei.exLmf.ogm.IObjectGroup;
 import cn.edu.buaa.sei.exLmf.ogm.IObjectWorld;
 
 
 public class Launcher {
 	
 	final static InterpreterRegisterMachine rm = SVIManageFactory.getRegisterMachine();
+	
+	public static final String ROOT = "root";
 	
 	@SuppressWarnings("static-access")
 	public static void MH(){
@@ -94,7 +110,9 @@ public class Launcher {
 				File file = dialog.getSelectedFile();
 				try {
 					String class_name = getClassName(file);
+					
 					Class type = Class.forName(class_name);
+					
 					Object obj = type.newInstance();
 					
 					if(obj instanceof Assigner){
@@ -125,13 +143,50 @@ public class Launcher {
 			public void actionPerformed(ActionEvent e) {
 				Struct top = svi_pan.getResult().getTopStructs().iterator().next();
 				try {
+					Date start = new Date();
+					Interpreter interpreter = rm.get(top);
+					Date end = new Date();
+					Object result = interpreter.interpret(top);
+					if(result==null){
+						JOptionPane.showMessageDialog(null, "Computation failed: NULL", "Fail!", JOptionPane.ERROR_MESSAGE);
+					}
+					else if(result instanceof Boolean){
+						JOptionPane.showMessageDialog(null, "Inference Result: "+result, "Success!", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else if(result instanceof Number){
+						JOptionPane.showMessageDialog(null, "Computation Result: "+result.toString(), "Success!", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else if(result instanceof Group){
+						SetGroup grp = (SetGroup) result;
+						Iterator<Object> itor = grp.iterator();
+						
+						JFileChooser dialog = new JFileChooser();
+						int ret = dialog.showSaveDialog(null);
+						if (ret != JFileChooser.APPROVE_OPTION) {
+							return;
+						}
+						
+						File file = dialog.getSelectedFile();
+						if(file!=null){
+							int count = write(file,itor,db_pan.getData());
+							JOptionPane.showMessageDialog(null, "Writting "+count+" elements into: "+file.getAbsolutePath(), "Write Result", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+					
+					long time = end.getTime()-start.getTime();
+					JOptionPane.showMessageDialog(null, "Using time for: "+time+" msecs", "Time Testing...", JOptionPane.WARNING_MESSAGE);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				/*try {
 					Inferencer inferencer = (Inferencer) rm.get(top);
 					Boolean result = (Boolean) inferencer.interpret(top);
 					JOptionPane.showMessageDialog(null, "Computation Result: "+result, "Result", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
 			}});
 		
 		JFrame f = new JFrame();
@@ -144,7 +199,7 @@ public class Launcher {
 		BorderLayout frame = new BorderLayout();
 		frame.setHgap(20);
 		f.setLayout(frame);
-		f.setTitle("DO178Logic");
+		f.setTitle("Evidence Driven Verifier");
 		f.add(BorderLayout.CENTER,pan);
 		f.add(BorderLayout.SOUTH,sp);
 		
@@ -152,6 +207,55 @@ public class Launcher {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+	}
+	
+	public static int write(File file,Iterator<Object> data,IObjectWorld cache) throws Exception{
+		/**
+		 * Creating JDOM Tree
+		 * */
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		Document document = db.newDocument();
+		Element root = document.createElement(ROOT);
+		
+		int count=0;
+		while(data.hasNext()){
+			Object val = data.next();
+			if(val instanceof LClassObject){
+				LClassObject obj = (LClassObject) val;
+				LClass type = obj.getType();
+				if(!cache.containModelClass(type)){
+					System.err.println("Class \""+type.getAbsolutePath()+"\" has not been loaded");
+					continue;
+				}
+				IObjectGroup group = cache.getObjectGroup(type);
+				if(!group.isTagged(obj)){
+					System.err.println("Object "+type.getAbsolutePath()+"@"+obj.hashCode()+" not tagged in cache!");
+					continue;
+				}
+				String id = group.getTag(obj);
+				String tag = type.getAbsolutePath();
+				int k = tag.indexOf(".");
+				if(k>=0)tag = tag.substring(k+1).trim();
+				
+				Element element = document.createElement(tag);
+				element.setTextContent(id);
+				root.appendChild(element);
+				count++;
+			}
+		}
+		
+		/**
+		 * Writting the JDOM Data into file
+		 * */
+		document.appendChild(root);
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		Transformer transformer = tFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		StreamResult result = new StreamResult(new FileOutputStream(file));
+		transformer.transform(source, result);
+		
+		return count;
 	}
 	
 	@SuppressWarnings("deprecation")

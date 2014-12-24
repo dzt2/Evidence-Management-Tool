@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,6 +71,7 @@ public class ExLMFEditorPane extends JPanel{
 				}
 				
 				File file = dialog.getSelectedFile();
+				Date start = new Date();
 				try {
 					readModel(file);
 					if(root!=null)
@@ -80,8 +82,9 @@ public class ExLMFEditorPane extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				Date end = new Date();
 				JOptionPane.showMessageDialog(null, message(file), "Load Model", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Using time for: "+(end.getTime()-start.getTime())+" msecs", "Time for Load Model", JOptionPane.INFORMATION_MESSAGE);
 			}
 			protected String message(File file){
 				StringBuilder code = new StringBuilder();
@@ -117,13 +120,17 @@ public class ExLMFEditorPane extends JPanel{
 				}
 				
 				File[] files = dialog.getSelectedFiles();
+				Date start = new Date();
 				try {
 					readDataFromFiles(files);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				Date end = new Date();
 				JOptionPane.showMessageDialog(null, message(files), "Import Data", JOptionPane.INFORMATION_MESSAGE);
+				
+				JOptionPane.showMessageDialog(null, "Using time for: "+(end.getTime()-start.getTime())+" msecs", "Time for Importing Data", JOptionPane.INFORMATION_MESSAGE);
 			}
 			protected String message(File[] files){
 				StringBuilder code = new StringBuilder();
@@ -164,6 +171,7 @@ public class ExLMFEditorPane extends JPanel{
 					return;
 				}
 				
+				Date start = new Date();
 				try {
 					readDB(file);
 					pan.update(root);
@@ -174,7 +182,10 @@ public class ExLMFEditorPane extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				Date end = new Date();
 				JOptionPane.showMessageDialog(null, message(file), "Read DB", JOptionPane.INFORMATION_MESSAGE);
+				
+				JOptionPane.showMessageDialog(null, "Using time for: "+(end.getTime()-start.getTime())+" msecs", "Time for Read DB", JOptionPane.INFORMATION_MESSAGE);
 			}
 			protected String message(File file){
 				StringBuilder code = new StringBuilder();
@@ -209,6 +220,7 @@ public class ExLMFEditorPane extends JPanel{
 					return;
 				}
 				
+				Date start = new Date();
 				try {
 					writeDB(file);
 					System.out.println("Writting successfully into: "+file.getAbsolutePath());
@@ -217,7 +229,10 @@ public class ExLMFEditorPane extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				Date end = new Date();
+				
 				JOptionPane.showMessageDialog(null, message(file), "Write DB", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Using time for: "+(end.getTime()-start.getTime())+" msecs", "Time for writing DB", JOptionPane.INFORMATION_MESSAGE);
 			}
 			protected String message(File file){
 				StringBuilder code = new StringBuilder();

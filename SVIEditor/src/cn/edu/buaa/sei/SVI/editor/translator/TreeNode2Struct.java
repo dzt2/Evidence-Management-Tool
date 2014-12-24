@@ -59,11 +59,14 @@ import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.CardinalityTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.DivTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.ModTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.MulTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NaturalTemplateTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NaturalVariableTreeNode;
-import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.NumericTemplateTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.RationalTemplateTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.RationalVariableTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.RealTemplateTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.RealVariableTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.SubTreeNode;
+import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.ZIntTemplateTreeNode;
 import cn.edu.buaa.sei.SVI.editor.treeNode.numeric.ZIntVariableTreeNode;
 import cn.edu.buaa.sei.SVI.manage.StructManager;
 import cn.edu.buaa.sei.SVI.manage.impl.SVIManageFactory;
@@ -490,8 +493,20 @@ public class TreeNode2Struct {
 			GroupFunctionTemplate template = GroupFactory.createGroupFunctionTemplate(name, arguments);
 			func = GroupFactory.createGroupFunction(template);
 		}
-		else if(node instanceof NumericTemplateTreeNode){
+		else if(node instanceof NaturalTemplateTreeNode){
 			NumericFunctionTemplate template = NumericFactory.createNaturalFunctionTemplate(name, arguments);
+			func = NumericFactory.createNumericFunction(template, null, null);
+		}
+		else if(node instanceof RationalTemplateTreeNode){
+			NumericFunctionTemplate template = NumericFactory.createRationalFunctionTemplate(name, arguments);
+			func = NumericFactory.createNumericFunction(template, null, null);
+		}
+		else if(node instanceof RealTemplateTreeNode){
+			NumericFunctionTemplate template = NumericFactory.createRealFunctionTemplate(name, arguments);
+			func = NumericFactory.createNumericFunction(template, null, null);
+		}
+		else if(node instanceof ZIntTemplateTreeNode){
+			NumericFunctionTemplate template = NumericFactory.createZIntegerFunctionTemplate(name, arguments);
 			func = NumericFactory.createNumericFunction(template, null, null);
 		}
 		else throw new Exception("Unknown node type: "+node.getClass().getCanonicalName());

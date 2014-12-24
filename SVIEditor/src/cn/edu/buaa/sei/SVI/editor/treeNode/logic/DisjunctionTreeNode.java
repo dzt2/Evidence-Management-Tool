@@ -17,6 +17,7 @@ public class DisjunctionTreeNode extends FlexibleOperatorTreeNode{
 
 	public DisjunctionTreeNode(JTree tree, String name) {
 		super(tree, name, IconSet.OP_DISJUNCTION_ICON);
+		this.op_init();
 	}
 	
 	protected void op_init(){

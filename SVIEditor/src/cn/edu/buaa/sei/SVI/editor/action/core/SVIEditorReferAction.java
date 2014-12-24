@@ -1,7 +1,6 @@
 package cn.edu.buaa.sei.SVI.editor.action.core;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,19 +36,19 @@ public class SVIEditorReferAction extends SVIEditorAction{
 		tree.setCellRenderer(new SVICellRenderer());
 		
 		JPanel pan = new JPanel();
-		pan.setLayout(new GridLayout(2,1));
+		pan.setLayout(new BorderLayout());
 		JPanel up = new JPanel();
 		up.setLayout(new BorderLayout());
-		up.add(BorderLayout.CENTER,tree); 
-		up.add(BorderLayout.EAST,new JScrollPane());
-		up.add(BorderLayout.SOUTH,new JScrollPane());
-		pan.add(up);
+		up.add(BorderLayout.CENTER,new JScrollPane(tree)); 
+		//up.add(BorderLayout.EAST,new JScrollPane());
+		//up.add(BorderLayout.SOUTH,new JScrollPane());
+		pan.add(up,BorderLayout.CENTER);
 		
 		JButton ok = new JButton("Select");
 		JButton no = new JButton("Cancel");
 		JPanel down = new JPanel();
 		down.add(ok); down.add(no);
-		pan.add(down);
+		pan.add(down,BorderLayout.SOUTH);
 		
 		final JFrame frame = new JFrame();
 		frame.add(pan);

@@ -23,6 +23,10 @@ public abstract class SVIEditorCreateAction extends SVIEditorAction{
 		SVITreeNode newOne = create(node.getTree());
 		DefaultTreeModel model = (DefaultTreeModel) node.getTree().getModel();
 		model.insertNodeInto(newOne, node, node.getChildCount());
+		
+		System.out.println("Add New Node...");
+		//model.reload();
+		node.getTree().repaint();
 	}
 	protected abstract SVITreeNode create(JTree tree);
 
