@@ -15,5 +15,4 @@ public interface LModelElement {
 	public LAnnotation getAnnotation(int i) throws Exception;
 	public void removeAnnotation(LAnnotation annotation) throws Exception;
 	public boolean containAnnotation(LAnnotation annotation);
-	
 }

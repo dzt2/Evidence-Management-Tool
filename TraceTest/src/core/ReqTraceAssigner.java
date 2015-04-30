@@ -22,8 +22,8 @@ public class ReqTraceAssigner implements Assigner{
 			throws Exception {
 		if(model==null||db==null||top==null)throw new Exception("Null model|data|top is invalid");
 		
-		LClass HLRequirement = (LClass) model.getClassifierByName("HLRequirement");
-		LClass LLRequirement = (LClass) model.getClassifierByName("LLRequirement");
+		LClass HLRequirement = (LClass) model.getClassifierByName("HLR");
+		LClass LLRequirement = (LClass) model.getClassifierByName("LLR");
 		Set<LClassObject> hlrs = db.getObjectGroup(HLRequirement).getObjects();
 		Set<LClassObject> llrs = db.getObjectGroup(LLRequirement).getObjects();
 		
